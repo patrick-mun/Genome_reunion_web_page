@@ -201,6 +201,20 @@ nav.scrolled .nav-logo-text { color: var(--navy); }
   color: var(--coral);
 }
 
+.hero-subtitle {
+  font-family: var(--f-ui);
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  margin-top: -16px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .8s var(--ease-out) .25s, transform .8s var(--ease-out) .25s;
+}
+
 .hero-body {
   font-size: clamp(.95rem, 1.5vw, 1.1rem);
   font-weight: 300;
