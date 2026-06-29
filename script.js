@@ -31,9 +31,14 @@ if (nav) {
     if (el) el.textContent = text;
   };
 
-  setText('#partenariat .partenariat-text p:nth-of-type(2)', 'La participation au projet repose sur une information claire, un consentement libre et une anonymisation des données. Chaque prélèvement contribue à construire une ressource utile pour mieux documenter la diversité génétique réunionnaise.');
-  setText('#inscription .inscription-step:nth-child(3) .inscription-step-text strong', 'Contribuez au référentiel réunionnais');
-  setText('#inscription .inscription-step:nth-child(3) .inscription-step-text', 'Contribuez au référentiel réunionnais\nVotre participation aide à mieux documenter la diversité génétique de La Réunion, dans un cadre encadré par le consentement et la confidentialité des données.');
+  const setHTML = (selector, html) => {
+    const el = document.querySelector(selector);
+    if (el) el.innerHTML = html;
+  };
+
+  setText('#partenariat .partenariat-text p:nth-of-type(2)', 'L’Établissement Français du Sang (EFS) de La Réunion est l’interlocuteur pressenti pour organiser les prélèvements dans ses centres fixes et lors de collectes mobiles à travers l’île.');
+  setText('#partenariat .partenariat-text p:nth-of-type(3)', 'La participation au projet repose sur une information claire, un consentement libre et une anonymisation des données. Chaque prélèvement contribue à construire une ressource utile pour mieux documenter la diversité génétique réunionnaise.');
+  setHTML('#inscription .inscription-step:nth-child(3) .inscription-step-text', '<strong>Contribuez au référentiel réunionnais</strong>Votre participation aide à mieux documenter la diversité génétique de La Réunion, dans un cadre encadré par le consentement et la confidentialité des données.');
 })();
 
 /* ── STATS CONTENT NORMALIZATION ── */
