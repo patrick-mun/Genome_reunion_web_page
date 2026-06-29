@@ -20,7 +20,7 @@ if (nav) {
   const statsLabels = [
     'participants génotypés',
     'familles pour le phasage',
-    'WGS sélectionnés',
+    'génomes complets WGS',
     'modules d’aide à l’analyse'
   ];
 
@@ -37,35 +37,51 @@ if (nav) {
   });
 })();
 
-/* ── MEDICAL FORMULATIONS NORMALIZATION ── */
+/* ── SCIENTIFIC VOCABULARY NORMALIZATION ── */
 (function() {
   const setText = (selector, text) => {
     const el = document.querySelector(selector);
     if (el) el.textContent = text;
   };
 
-  setText('#hero-body', 'À La Réunion, chaque habitant porte l’héritage de plusieurs continents. Pourtant, les outils génomiques disponibles s’appuient encore sur des références qui représentent mal cette diversité. Génome Réunion vise à construire un référentiel local pour mieux documenter les variants réunionnais et améliorer leur interprétation.');
+  const setHTML = (selector, html) => {
+    const el = document.querySelector(selector);
+    if (el) el.innerHTML = html;
+  };
 
+  setHTML('#hero-title', 'Référentiel<br>génomique <em>réunionnais</em>');
+  setText('#hero-body', 'À La Réunion, chaque habitant porte l’héritage de plusieurs continents. Pourtant, les outils génomiques disponibles s’appuient encore sur des références qui représentent mal cette diversité. Génome Réunion vise à construire un référentiel génomique réunionnais pour mieux documenter les variants locaux et améliorer leur interprétation.');
+
+  setText('#probleme .big-stat-label', 'des individus présents dans les grandes bases génomiques mondiales sont d’origine européenne — les populations admixées restent donc moins bien documentées.');
+  setText('#probleme .big-stat-note', 'Bases de fréquences · panels de référence · outils d’interprétation');
   setText('#probleme .pb-item:nth-child(1) .pb-item-text', 'Les bases internationales documentent encore insuffisamment les profils pharmacogénétiques des populations admixées de l’océan Indien. Ce manque limite la lecture fine des variations locales.');
-  setText('#probleme .pb-item:nth-child(2) .pb-item-text', 'Sans fréquences locales, un variant peut être classé comme rare ou incertain alors qu’il correspond simplement à la diversité propre de la population réunionnaise.');
+  setText('#probleme .pb-item:nth-child(2) .pb-item-text', 'Sans base locale de fréquences de variants, un variant peut être classé comme rare ou incertain alors qu’il correspond simplement à la diversité propre de la population réunionnaise.');
   setText('#probleme .pb-item:nth-child(3) .pb-item-text', 'Les modèles construits sur d’autres populations peuvent perdre en précision lorsqu’ils sont appliqués à une population fortement admixée et fondatrice.');
 
-  setText('#change .change-title', 'Un socle local pour mieux comparer.');
-  setText('#change .change-card:nth-child(1) .change-card-title', 'Une base de fréquences locale');
+  setText('#change .change-title', 'Une base locale pour mieux comparer.');
+  setText('#change .change-card:nth-child(1) .change-card-title', 'Une base locale de fréquences de variants');
   setText('#change .change-card:nth-child(1) .change-card-text', 'Documenter les variants observés à La Réunion et leur fréquence, afin de disposer d’un point de comparaison propre au territoire.');
-  setText('#change .change-card:nth-child(2) .change-card-title', 'Des analyses plus contextualisées');
+  setText('#change .change-card:nth-child(2) .change-card-title', 'Un référentiel génomique réunionnais');
   setText('#change .change-card:nth-child(2) .change-card-text', 'Apporter aux équipes un référentiel local pour relire les résultats génétiques dans le contexte démographique et historique réunionnais.');
   setText('#change .change-card:nth-child(3) .change-card-title', 'Une ressource pour la recherche');
   setText('#change .change-card:nth-child(3) .change-card-text', 'Fournir une base scientifique pour étudier l’admixture, les effets fondateurs et les limites des outils génomiques actuels.');
 
-  setText('#outils .outils-title', 'Quatre modules\nd’aide à l’analyse.');
-  setText('#outils .outil-card:nth-child(1) .outil-title', 'Mieux interpréter les variants');
+  setHTML('#methode .methode-title', 'Trois étapes,<br>un référentiel local.');
+  setText('#methode .step:nth-child(1) .step-title', 'Cartographier la diversité génétique');
+  setText('#methode .step:nth-child(1) .step-body', '2 500 volontaires réunionnais sont génotypés par puce SNP afin de décrire la structure génétique de la cohorte et ses principales composantes.');
+  setText('#methode .step:nth-child(2) .step-title', 'Documenter le phasage familial');
+  setText('#methode .step:nth-child(2) .step-body', '100 familles nucléaires permettent de consolider le phasage haplotypique et de mieux suivre la transmission des segments génétiques.');
+  setText('#methode .step:nth-child(3) .step-title', 'Sélectionner les génomes complets WGS');
+  setText('#methode .step:nth-child(3) .step-body', '350 génomes complets WGS sont sélectionnés à partir des données SNP pour représenter au mieux la diversité géographique et génétique de La Réunion.');
+
+  setHTML('#outils .outils-title', 'Quatre modules<br>d’aide à l’analyse.');
+  setText('#outils .outil-card:nth-child(1) .outil-title', 'Interprétation des variants');
   setText('#outils .outil-card:nth-child(1) .outil-body', 'Aider à distinguer les variants potentiellement importants de ceux qui sont simplement fréquents dans la population réunionnaise.');
-  setText('#outils .outil-card:nth-child(2) .outil-title', 'Documenter la pharmacogénétique locale');
+  setText('#outils .outil-card:nth-child(2) .outil-title', 'Pharmacogénétique populationnelle');
   setText('#outils .outil-card:nth-child(2) .outil-body', 'Mieux connaître les profils génétiques susceptibles d’influencer les analyses pharmacogénétiques futures.');
-  setText('#outils .outil-card:nth-child(3) .outil-title', 'Décrire les composantes ancestrales');
-  setText('#outils .outil-card:nth-child(3) .outil-body', 'Comprendre la mosaïque d’héritages qui structure la population réunionnaise : Afrique, Madagascar, Inde du Sud, Europe et Asie.');
-  setText('#outils .outil-card:nth-child(4) .outil-title', 'Évaluer les scores génétiques');
+  setText('#outils .outil-card:nth-child(3) .outil-title', 'Structure d’admixture');
+  setText('#outils .outil-card:nth-child(3) .outil-body', 'Décrire la mosaïque d’héritages qui structure la population réunionnaise : Afrique, Madagascar, Inde du Sud, Europe et Asie.');
+  setText('#outils .outil-card:nth-child(4) .outil-title', 'Évaluation des scores génétiques');
   setText('#outils .outil-card:nth-child(4) .outil-body', 'Tester la pertinence des scores génétiques dans une population admixée avant toute interprétation locale.');
 })();
 
