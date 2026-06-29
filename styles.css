@@ -939,6 +939,38 @@ footer {
 .reveal-delay-3 { transition-delay: .3s; }
 .reveal-delay-4 { transition-delay: .4s; }
 
+/* ── PAILLE-EN-QUEUE (oiseau hero) ── */
+.bird-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.paille {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  transform-origin: center center;
+  filter: drop-shadow(0 3px 7px rgba(9,31,48,.45));
+}
+
+.paille svg { display: block; overflow: visible; }
+
+.paille-body  { fill: #ffffff; }
+.paille-wings path { fill: rgba(255,255,255,.93); }
+.paille-tail  {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+/* Lettres du titre rendues « perchables » : aucun impact visuel */
+.bird-letter { display: inline; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   nav { padding: 16px 24px; }
