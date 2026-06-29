@@ -161,6 +161,7 @@
   function makeBird(index) {
     const el = document.createElement('div');
     el.className = 'paille';
+    el.style.filter = 'none';
     el.innerHTML = birdSVG();
     layer.appendChild(el);
 
