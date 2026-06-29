@@ -939,11 +939,11 @@ footer {
 .reveal-delay-3 { transition-delay: .3s; }
 .reveal-delay-4 { transition-delay: .4s; }
 
-/* ── PAILLE-EN-QUEUE (oiseau hero) ── */
+/* ── PAILLE-EN-QUEUE (nuée sur toute la page) ── */
 .bird-layer {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 50;
   pointer-events: none;
   overflow: hidden;
 }
@@ -954,17 +954,26 @@ footer {
   left: 0;
   will-change: transform;
   transform-origin: center center;
-  filter: drop-shadow(0 3px 7px rgba(9,31,48,.45));
+  /* ombre portée : silhouette lisible sur fond clair comme sur fond sombre */
+  filter: drop-shadow(0 2px 4px rgba(9,31,48,.4));
 }
 
 .paille svg { display: block; overflow: visible; }
 
-.paille-body  { fill: #ffffff; }
-.paille-wings path { fill: rgba(255,255,255,.93); }
-.paille-tail  {
+.paille-body {
+  fill: #ffffff;
+  stroke: rgba(15,58,86,.22);
+  stroke-width: .5;
+}
+.paille-wings path {
+  fill: rgba(255,255,255,.95);
+  stroke: rgba(15,58,86,.18);
+  stroke-width: .4;
+}
+.paille-tail {
   fill: none;
   stroke: #ffffff;
-  stroke-width: 1.4;
+  stroke-width: 1.1;
   stroke-linecap: round;
 }
 
