@@ -1,8 +1,7 @@
 /* ════════════════════════════════════════════════════════════════
-   PAILLE-EN-QUEUE — nuée d'oiseaux emblématiques de La Réunion
-   Vol naturel sur TOUTE la page (couche fixe), se posent parfois
-   sur les lettres du titre quand celui-ci est à l'écran.
-   SVG + requestAnimationFrame, sans dépendance.
+   PAILLE-EN-QUEUE — oiseaux emblématiques de La Réunion
+   Trois oiseaux planent dans le hero et se posent parfois sur les
+   lettres du titre. SVG + requestAnimationFrame, sans dépendance.
    ════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -11,10 +10,11 @@
   if (prefersReduced) return;
   if (window.innerWidth < 760) return; // titre trop petit / perf sur mobile
 
+  const hero  = document.getElementById('hero');
   const title = document.getElementById('hero-title');
-  if (!title) return;
+  if (!hero || !title) return;
 
-  const NUM_BIRDS = 5;
+  const NUM_BIRDS = 3;
 
   /* ── 1. Encapsuler chaque lettre du titre dans un <span> mesurable ── */
   const letters = [];
@@ -40,18 +40,18 @@
     });
   }
   wrapLetters(title);
+  if (!letters.length) return;
 
-  /* ── 2. Couche fixe plein écran ── */
+  /* ── 2. Couche confinée au hero ── */
   const layer = document.createElement('div');
   layer.className = 'bird-layer';
   layer.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(layer);
+  hero.appendChild(layer);
 
   /* ── 3. Géométrie SVG : corps mince + longues ailes effilées ── */
   const VBW = 60, VBH = 66;
   const BODY = 'M30,4 C31,10 31.2,18 30.9,26 C30.6,32 30.2,36 30,38 ' +
                'C29.8,36 29.4,32 29.1,26 C28.8,18 29,10 30,4 Z';
-  // Aile gauche : longue, en flèche, pointe vers le bas-extérieur
   const WING_L = 'M28.5,16 C21,13.5 11,16.5 3,28 C2.4,29 3,30.2 4.2,30 ' +
                  'C13,27 21.5,24 28,21.5 Z';
   const WING_R = 'M31.5,16 C39,13.5 49,16.5 57,28 C57.6,29 57,30.2 55.8,30 ' +
@@ -83,27 +83,30 @@
     };
   }
 
-  function vw() { return window.innerWidth; }
-  function vh() { return window.innerHeight; }
-
-  // Lettre visible à l'écran ? (couche fixe → coords viewport directes)
-  function letterVisible(span) {
-    const r = span.getBoundingClientRect();
-    return r.width > 0 &&
-           r.top < vh() * 0.92 && r.bottom > vh() * 0.06 &&
-           r.left < vw() * 0.96 && r.right > vw() * 0.04;
+  // Position à vitesse constante le long d'une trajectoire échantillonnée
+  function sampleAlong(seg, t) {
+    const d = clamp(t, 0, 1) * seg.arc;
+    const cum = seg.cum;
+    let k = 1;
+    while (k < cum.length && cum[k] < d) k++;
+    const a = cum[k - 1], c = cum[k];
+    const f = c - a > 0 ? (d - a) / (c - a) : 0;
+    const pa = seg.pts[k - 1], pb = seg.pts[k];
+    return { x: pa.x + (pb.x - pa.x) * f, y: pa.y + (pb.y - pa.y) * f };
   }
+
+  function heroRect() { return hero.getBoundingClientRect(); }
+
+  // Perchoir d'une lettre, en coordonnées locales au hero
   function letterPerch(span) {
     const r = span.getBoundingClientRect();
-    return { x: r.left + r.width / 2, y: r.top - 8 };
+    const h = heroRect();
+    return { x: r.left + r.width / 2 - h.left, y: r.top - h.top - 8 };
   }
-  function visibleLetters() {
-    return letters.filter(letterVisible);
-  }
-
-  // Point libre n'importe où dans la fenêtre
+  // Point libre dans le ciel du hero (partie haute)
   function skyPoint() {
-    return { x: rand(vw() * 0.06, vw() * 0.94), y: rand(vh() * 0.08, vh() * 0.82) };
+    const h = heroRect();
+    return { x: rand(h.width * 0.1, h.width * 0.9), y: rand(h.height * 0.1, h.height * 0.52) };
   }
 
   /* ── 5. Un oiseau ── */
@@ -113,30 +116,26 @@
     el.innerHTML = birdSVG();
     layer.appendChild(el);
 
-    const scale = rand(0.55, 1.0);
-    el.style.width  = (VBW * scale) + 'px';
-    el.style.height = (VBH * scale) + 'px';
-    el.style.opacity = (0.72 + scale * 0.28).toFixed(2); // petits = plus lointains
+    const scale = rand(0.72, 1.0);
     const svg = el.querySelector('svg');
     svg.setAttribute('width',  VBW * scale);
     svg.setAttribute('height', VBH * scale);
+    el.style.opacity = (0.82 + scale * 0.18).toFixed(2);
 
-    // Entrée depuis un bord aléatoire
-    const edge = (Math.random() * 4) | 0;
-    let start;
-    if (edge === 0)      start = { x: -70, y: rand(0, vh() * 0.7) };
-    else if (edge === 1) start = { x: vw() + 70, y: rand(0, vh() * 0.7) };
-    else if (edge === 2) start = { x: rand(0, vw()), y: -70 };
-    else                 start = { x: rand(0, vw()), y: vh() + 70 };
+    const h = heroRect();
+    const fromLeft = Math.random() < 0.5;
+    const start = {
+      x: fromLeft ? -70 : (h.width || window.innerWidth) + 70,
+      y: rand(40, (h.height || window.innerHeight) * 0.55),
+    };
 
     return {
       el,
       wings: el.querySelector('[data-wings]'),
       tail:  el.querySelector('[data-tail]'),
       cw: VBW * scale, ch: VBH * scale,
-      speed: rand(170, 270),
-      perchProb: rand(0.35, 0.6),
-      perchDur: [rand(2000, 3500), rand(3500, 6000)],
+      speed: rand(72, 106),          // px/s — vol planant (vitesse constante)
+      perchProb: rand(0.4, 0.6),
       phaseOff: rand(0, 6.28),
       pos: { x: start.x, y: start.y },
       prev: { x: start.x, y: start.y },
@@ -147,7 +146,8 @@
       perchSpan: null,
       perchUntil: 0,
       endsOnPerch: false,
-      delay: i * 420 + rand(0, 300), // décalage d'apparition
+      pendingPerch: false,
+      delay: i * 1100 + rand(0, 500),
       born: false,
     };
   }
@@ -159,49 +159,64 @@
     const dist = Math.hypot(dx, dy) || 1;
     const ux = dx / dist, uy = dy / dist;
     const px = -uy, py = ux;
-    const sway = rand(-1, 1) * Math.min(dist * 0.5, 220);
+    const sway = rand(-1, 1) * Math.min(dist * 0.4, 170);
     const out = dist * 0.35;
     const lift = opts.lift || 0;
+    const p0 = s;
+    const p1 = { x: s.x + ux * out + px * sway, y: s.y + uy * out + py * sway + lift };
+    const p2 = { x: endPoint.x - ux * out + px * sway, y: endPoint.y - uy * out + py * sway };
+    const p3 = endPoint;
+
+    // Échantillonnage en polyligne + longueurs cumulées :
+    // on parcourra la courbe à VITESSE CONSTANTE (reparamétrage par longueur d'arc),
+    // ce qui supprime les accélérations parasites au milieu des trajectoires.
+    const N = 32;
+    const pts = [p0];
+    const cum = [0];
+    let prevP = p0;
+    for (let k = 1; k <= N; k++) {
+      const q = bezier(p0, p1, p2, p3, k / N);
+      pts.push(q);
+      cum.push(cum[k - 1] + Math.hypot(q.x - prevP.x, q.y - prevP.y));
+      prevP = q;
+    }
+    const arc = cum[N];
+
     b.seg = {
-      p0: s,
-      p1: { x: s.x + ux * out + px * sway, y: s.y + uy * out + py * sway + lift },
-      p2: { x: endPoint.x - ux * out + px * sway, y: endPoint.y - uy * out + py * sway },
-      p3: endPoint,
-      dur: clamp(dist / b.speed, 0.7, 3.0) * 1000 * (opts.durScale || 1),
+      pts, cum, arc,
+      dur: clamp(arc / b.speed, 2.2, 22.0) * 1000 * (opts.durScale || 1),
       t0: performance.now(),
     };
     b.state = 'flying';
   }
 
   function planNext(b) {
-    const vis = visibleLetters();
-    if (vis.length && Math.random() < b.perchProb) {
-      // viser une lettre visible : petite boucle puis perchage
+    if (Math.random() < b.perchProb) {
       if (Math.random() < 0.5) {
+        // boucle dans le ciel puis perchage
         b.endsOnPerch = false;
         b.pendingPerch = true;
-        startFlight(b, skyPoint(), { lift: -rand(40, 120), durScale: 0.9 });
+        startFlight(b, skyPoint(), { lift: -rand(30, 90), durScale: 1.0 });
       } else {
         b.endsOnPerch = true;
-        b.perchSpan = vis[(Math.random() * vis.length) | 0];
-        startFlight(b, letterPerch(b.perchSpan), { lift: -rand(30, 80) });
+        b.perchSpan = letters[(Math.random() * letters.length) | 0];
+        startFlight(b, letterPerch(b.perchSpan), { lift: -rand(20, 60) });
       }
     } else {
       b.endsOnPerch = false;
       b.pendingPerch = false;
-      startFlight(b, skyPoint(), { lift: -rand(0, 90) });
+      startFlight(b, skyPoint(), { lift: -rand(0, 70) });
     }
   }
 
   /* ── 6. Mise à jour d'un oiseau ── */
   function updateBird(b, now, dt) {
     if (!b.born) {
-      if (now < b.t0base + b.delay) { return; }
+      if (now < b.t0base + b.delay) return;
       b.born = true;
-      // premier vol
-      if (visibleLetters().length && Math.random() < b.perchProb) {
+      if (Math.random() < b.perchProb) {
         b.endsOnPerch = true;
-        b.perchSpan = visibleLetters()[(Math.random() * visibleLetters().length) | 0];
+        b.perchSpan = letters[(Math.random() * letters.length) | 0];
         startFlight(b, letterPerch(b.perchSpan), { durScale: 1.1 });
       } else {
         b.endsOnPerch = false;
@@ -210,32 +225,28 @@
     }
 
     if (b.state === 'flying' && b.seg) {
-      let t = (now - b.seg.t0) / b.seg.dur;
+      const t = (now - b.seg.t0) / b.seg.dur;
       if (t >= 1) {
-        b.pos = { x: b.seg.p3.x, y: b.seg.p3.y };
-        if (b.endsOnPerch && b.perchSpan && letterVisible(b.perchSpan)) {
+        const end = b.seg.pts[b.seg.pts.length - 1];
+        b.pos = { x: end.x, y: end.y };
+        if (b.endsOnPerch && b.perchSpan) {
           b.state = 'perched';
-          b.perchUntil = now + rand(b.perchDur[0], b.perchDur[1]);
-        } else if (b.pendingPerch && visibleLetters().length) {
+          b.perchUntil = now + rand(3500, 7500);
+        } else if (b.pendingPerch) {
           b.endsOnPerch = true;
           b.pendingPerch = false;
-          b.perchSpan = visibleLetters()[(Math.random() * visibleLetters().length) | 0];
-          startFlight(b, letterPerch(b.perchSpan), { lift: -rand(30, 70) });
+          b.perchSpan = letters[(Math.random() * letters.length) | 0];
+          startFlight(b, letterPerch(b.perchSpan), { lift: -rand(20, 50) });
         } else {
           planNext(b);
         }
       } else {
-        const te = t * t * (3 - 2 * t);
-        b.pos = bezier(b.seg.p0, b.seg.p1, b.seg.p2, b.seg.p3, te);
+        b.pos = sampleAlong(b.seg, t); // vitesse constante
       }
     } else if (b.state === 'perched' && b.perchSpan) {
-      if (!letterVisible(b.perchSpan)) {        // la lettre a quitté l'écran
-        planNext(b);
-      } else {
-        const p = letterPerch(b.perchSpan);     // suit la lettre (scroll/parallaxe)
-        b.pos = { x: p.x, y: p.y + Math.sin(now / 460 + b.phaseOff) * 1.3 };
-        if (now > b.perchUntil) planNext(b);
-      }
+      const p = letterPerch(b.perchSpan); // suit la lettre (parallaxe)
+      b.pos = { x: p.x, y: p.y + Math.sin(now / 520 + b.phaseOff) * 1.1 };
+      if (now > b.perchUntil) planNext(b);
     }
 
     /* cap + cadence d'ailes d'après le mouvement réel */
@@ -244,42 +255,49 @@
     const speed = Math.hypot(vx, vy);
     b.prev = { x: b.pos.x, y: b.pos.y };
 
-    if (speed > 14) {
+    if (speed > 10) {
       const target = Math.atan2(vy, vx) * 180 / Math.PI + 90;
       let diff = ((target - b.angle + 540) % 360) - 180;
-      b.angle += diff * clamp(dt * 7, 0, 1);
+      b.angle += diff * clamp(dt * 4.5, 0, 1); // virages doux
     } else if (b.state === 'perched') {
       let diff = ((0 - b.angle + 540) % 360) - 180;
-      b.angle += diff * clamp(dt * 2.5, 0, 1);
+      b.angle += diff * clamp(dt * 2.2, 0, 1);
     }
 
     const perched = b.state === 'perched';
-    const flapHz = perched ? 0 : clamp(6.5 + (-vy) * 0.012, 4.5, 12);
+    // battement lent et planant (≈ 2,4–4 Hz, plus vif en montée)
+    const flapHz = perched ? 0 : clamp(2.2 + (-vy) * 0.005, 1.6, 3.6);
     b.phase += dt * flapHz * Math.PI * 2;
 
-    const spanX = perched ? 0.4 : 0.42 + 0.58 * (0.5 + 0.5 * Math.sin(b.phase));
+    const spanX = perched ? 0.4 : 0.46 + 0.54 * (0.5 + 0.5 * Math.sin(b.phase));
     b.wings.setAttribute('transform',
       'translate(30,0) scale(' + spanX.toFixed(3) + ',1) translate(-30,0)');
 
-    const tailSway = (perched ? 1.4 : 6.5) * Math.sin(b.phase * 0.5 + 0.6 + b.phaseOff);
+    const tailSway = (perched ? 1.3 : 5) * Math.sin(b.phase * 0.5 + 0.6 + b.phaseOff);
     b.tail.setAttribute('transform', 'rotate(' + tailSway.toFixed(2) + ' 30 37)');
 
-    const bobFly = perched ? 0 : Math.sin(b.phase) * 1.1;
+    const bobFly = perched ? 0 : Math.sin(b.phase) * 0.9;
     b.el.style.transform =
       'translate(' + (b.pos.x - b.cw / 2).toFixed(2) + 'px,' +
                      (b.pos.y - b.ch / 2 + bobFly).toFixed(2) + 'px) ' +
       'rotate(' + b.angle.toFixed(2) + 'deg)';
   }
 
-  /* ── 7. Boucle globale ── */
+  /* ── 7. Boucle globale (en pause hors-écran) ── */
   const birds = [];
   for (let i = 0; i < NUM_BIRDS; i++) birds.push(makeBird(i));
-
-  let lastT = 0;
   const t0base = performance.now();
   birds.forEach((b) => { b.t0base = t0base; });
 
+  let lastT = 0;
+  let visible = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.02 })
+      .observe(hero);
+  }
+
   function frame(now) {
+    if (!visible) { lastT = now; requestAnimationFrame(frame); return; }
     let dt = (now - lastT) / 1000;
     if (!lastT) dt = 0.016;
     dt = Math.min(dt, 0.05);
