@@ -18,10 +18,11 @@ if (nav) {
 /* ── HERO REVEAL ── */
 window.addEventListener('load', () => {
   const heroEls = [
-    { id: 'hero-creole',  delay: 100 },
-    { id: 'hero-title',   delay: 200 },
-    { id: 'hero-body',    delay: 350 },
-    { id: 'hero-actions', delay: 480 },
+    { id: 'hero-creole',   delay: 100 },
+    { id: 'hero-title',    delay: 200 },
+    { id: 'hero-subtitle', delay: 330 },
+    { id: 'hero-body',     delay: 430 },
+    { id: 'hero-actions',  delay: 560 },
   ];
   heroEls.forEach(({ id, delay }) => {
     const el = document.getElementById(id);
