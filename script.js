@@ -15,6 +15,15 @@ if (nav) {
   });
 }
 
+/* ── PARTICIPATION HERO ALIGNMENT ── */
+(function() {
+  const pageHeroInner = document.querySelector('.page-hero-inner');
+  if (!pageHeroInner) return;
+
+  pageHeroInner.style.maxWidth = '900px';
+  pageHeroInner.style.margin = '0';
+})();
+
 /* ── STATS CONTENT NORMALIZATION ── */
 (function() {
   const statsLabels = [
