@@ -46,17 +46,17 @@ if (nav) {
 
   setText('#hero-body', 'À La Réunion, chaque habitant porte l’héritage de plusieurs continents. Pourtant, les outils génomiques disponibles s’appuient encore sur des références qui représentent mal cette diversité. Génome Réunion vise à construire un référentiel local pour mieux documenter les variants réunionnais et améliorer leur interprétation.');
 
-  setText('#probleme .pb-item:nth-child(1) .pb-item-text', 'La pharmacogénétique peut varier selon les profils génétiques. Des données locales permettront de mieux documenter ces variations dans le contexte réunionnais.');
-  setText('#probleme .pb-item:nth-child(2) .pb-item-text', 'Un variant rare dans les bases européennes peut être plus fréquent à La Réunion. Un référentiel local aide à distinguer un signal important d’une variation populationnelle bénigne.');
-  setText('#probleme .pb-item:nth-child(3) .pb-item-text', 'Les modèles construits sur d’autres populations peuvent être moins pertinents pour une population admixée. Des données locales permettront d’en évaluer les limites.');
+  setText('#probleme .pb-item:nth-child(1) .pb-item-text', 'Les bases internationales documentent encore insuffisamment les profils pharmacogénétiques des populations admixées de l’océan Indien. Ce manque limite la lecture fine des variations locales.');
+  setText('#probleme .pb-item:nth-child(2) .pb-item-text', 'Sans fréquences locales, un variant peut être classé comme rare ou incertain alors qu’il correspond simplement à la diversité propre de la population réunionnaise.');
+  setText('#probleme .pb-item:nth-child(3) .pb-item-text', 'Les modèles construits sur d’autres populations peuvent perdre en précision lorsqu’ils sont appliqués à une population fortement admixée et fondatrice.');
 
-  setText('#change .change-title', 'Des outils génomiques mieux adaptés à notre population.');
-  setText('#change .change-card:nth-child(1) .change-card-title', 'Une pharmacogénétique mieux documentée');
-  setText('#change .change-card:nth-child(1) .change-card-text', 'Le profil génétique peut influencer certaines analyses pharmacogénétiques. Un référentiel local aidera à interpréter ces informations dans le contexte réunionnais.');
-  setText('#change .change-card:nth-child(2) .change-card-title', 'Une interprétation plus fiable des variants');
-  setText('#change .change-card:nth-child(2) .change-card-text', 'Lorsqu’un variant est détecté, les données locales peuvent aider à savoir s’il est rare, fréquent ou déjà observé dans la population réunionnaise.');
-  setText('#change .change-card:nth-child(3) .change-card-title', 'Des scores à évaluer localement');
-  setText('#change .change-card:nth-child(3) .change-card-text', 'Les scores génétiques devront être testés et calibrés localement avant d’être interprétés comme outils d’aide à l’analyse.');
+  setText('#change .change-title', 'Un socle local pour mieux comparer.');
+  setText('#change .change-card:nth-child(1) .change-card-title', 'Une base de fréquences locale');
+  setText('#change .change-card:nth-child(1) .change-card-text', 'Documenter les variants observés à La Réunion et leur fréquence, afin de disposer d’un point de comparaison propre au territoire.');
+  setText('#change .change-card:nth-child(2) .change-card-title', 'Des analyses plus contextualisées');
+  setText('#change .change-card:nth-child(2) .change-card-text', 'Apporter aux équipes un référentiel local pour relire les résultats génétiques dans le contexte démographique et historique réunionnais.');
+  setText('#change .change-card:nth-child(3) .change-card-title', 'Une ressource pour la recherche');
+  setText('#change .change-card:nth-child(3) .change-card-text', 'Fournir une base scientifique pour étudier l’admixture, les effets fondateurs et les limites des outils génomiques actuels.');
 
   setText('#outils .outils-title', 'Quatre modules\nd’aide à l’analyse.');
   setText('#outils .outil-card:nth-child(1) .outil-title', 'Mieux interpréter les variants');
