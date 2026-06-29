@@ -97,12 +97,40 @@
 
   function heroRect() { return hero.getBoundingClientRect(); }
 
-  // Perchoir d'une lettre, en coordonnées locales au hero
-  function letterPerch(span) {
+  function stableLetters() {
+    const measured = letters.map((span) => ({ span, rect: span.getBoundingClientRect() }))
+      .filter((item) => item.rect.width > 0 && item.rect.height > 0);
+    if (!measured.length) return letters;
+
+    const avgWidth = measured.reduce((sum, item) => sum + item.rect.width, 0) / measured.length;
+    const pool = measured
+      .filter((item) => item.rect.width >= avgWidth * 0.58)
+      .filter((item) => !/^[ilI1]$/.test(item.span.textContent))
+      .map((item) => item.span);
+
+    return pool.length >= 4 ? pool : letters;
+  }
+
+  function chooseLetter(previous) {
+    const pool = stableLetters();
+    const candidates = previous
+      ? pool.filter((span) => span !== previous)
+      : pool;
+    const usable = candidates.length ? candidates : pool;
+    return usable[(Math.random() * usable.length) | 0];
+  }
+
+  // Perchoir d'une lettre, en coordonnées locales au hero.
+  // Le point correspond au centre visuel de l'oiseau, placé au-dessus du haut de la lettre.
+  function letterPerch(span, bird) {
     const r = span.getBoundingClientRect();
     const h = heroRect();
-    return { x: r.left + r.width / 2 - h.left, y: r.top - h.top - 8 };
+    const lift = bird ? bird.ch * 0.42 : 24;
+    const safeX = r.left + r.width * 0.5 - h.left;
+    const safeY = r.top - h.top - lift;
+    return { x: safeX, y: safeY };
   }
+
   // Point libre dans le ciel du hero (partie haute)
   function skyPoint() {
     const h = heroRect();
@@ -159,18 +187,32 @@
     const dist = Math.hypot(dx, dy) || 1;
     const ux = dx / dist, uy = dy / dist;
     const px = -uy, py = ux;
-    const sway = rand(-1, 1) * Math.min(dist * 0.4, 170);
-    const out = dist * 0.35;
+
+    const currentHeading = (b.angle - 90) * Math.PI / 180;
+    const hx = Math.cos(currentHeading), hy = Math.sin(currentHeading);
+    const targetAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+    const turn = Math.abs(((targetAngle - b.angle + 540) % 360) - 180) / 180;
+
+    const sway = rand(-1, 1) * Math.min(dist * 0.28, 150);
+    const out = clamp(dist * 0.36, 90, 280);
     const lift = opts.lift || 0;
+    const wide = 1 + turn * 0.85;
+
     const p0 = s;
-    const p1 = { x: s.x + ux * out + px * sway, y: s.y + uy * out + py * sway + lift };
-    const p2 = { x: endPoint.x - ux * out + px * sway, y: endPoint.y - uy * out + py * sway };
+    const p1 = {
+      x: s.x + hx * out * wide + px * sway * 0.35,
+      y: s.y + hy * out * wide + py * sway * 0.35 + lift - turn * 70
+    };
+    const p2 = {
+      x: endPoint.x - ux * out * 0.95 + px * sway * 0.55,
+      y: endPoint.y - uy * out * 0.95 + py * sway * 0.55 + lift * 0.25 - turn * 45
+    };
     const p3 = endPoint;
 
     // Échantillonnage en polyligne + longueurs cumulées :
     // on parcourra la courbe à VITESSE CONSTANTE (reparamétrage par longueur d'arc),
     // ce qui supprime les accélérations parasites au milieu des trajectoires.
-    const N = 32;
+    const N = 36;
     const pts = [p0];
     const cum = [0];
     let prevP = p0;
@@ -199,8 +241,8 @@
         startFlight(b, skyPoint(), { lift: -rand(30, 90), durScale: 1.0 });
       } else {
         b.endsOnPerch = true;
-        b.perchSpan = letters[(Math.random() * letters.length) | 0];
-        startFlight(b, letterPerch(b.perchSpan), { lift: -rand(20, 60) });
+        b.perchSpan = chooseLetter(b.perchSpan);
+        startFlight(b, letterPerch(b.perchSpan, b), { lift: -rand(20, 60) });
       }
     } else {
       b.endsOnPerch = false;
@@ -216,8 +258,8 @@
       b.born = true;
       if (Math.random() < b.perchProb) {
         b.endsOnPerch = true;
-        b.perchSpan = letters[(Math.random() * letters.length) | 0];
-        startFlight(b, letterPerch(b.perchSpan), { durScale: 1.1 });
+        b.perchSpan = chooseLetter();
+        startFlight(b, letterPerch(b.perchSpan, b), { durScale: 1.1 });
       } else {
         b.endsOnPerch = false;
         startFlight(b, skyPoint(), { durScale: 1.1 });
@@ -235,8 +277,8 @@
         } else if (b.pendingPerch) {
           b.endsOnPerch = true;
           b.pendingPerch = false;
-          b.perchSpan = letters[(Math.random() * letters.length) | 0];
-          startFlight(b, letterPerch(b.perchSpan), { lift: -rand(20, 50) });
+          b.perchSpan = chooseLetter(b.perchSpan);
+          startFlight(b, letterPerch(b.perchSpan, b), { lift: -rand(20, 50) });
         } else {
           planNext(b);
         }
@@ -244,7 +286,7 @@
         b.pos = sampleAlong(b.seg, t); // vitesse constante
       }
     } else if (b.state === 'perched' && b.perchSpan) {
-      const p = letterPerch(b.perchSpan); // suit la lettre (parallaxe)
+      const p = letterPerch(b.perchSpan, b); // suit la lettre (parallaxe)
       b.pos = { x: p.x, y: p.y + Math.sin(now / 520 + b.phaseOff) * 1.1 };
       if (now > b.perchUntil) planNext(b);
     }
@@ -258,7 +300,7 @@
     if (speed > 10) {
       const target = Math.atan2(vy, vx) * 180 / Math.PI + 90;
       let diff = ((target - b.angle + 540) % 360) - 180;
-      b.angle += diff * clamp(dt * 4.5, 0, 1); // virages doux
+      b.angle += diff * clamp(dt * 3.6, 0, 1); // virages plus amples et moins mécaniques
     } else if (b.state === 'perched') {
       let diff = ((0 - b.angle + 540) % 360) - 180;
       b.angle += diff * clamp(dt * 2.2, 0, 1);
