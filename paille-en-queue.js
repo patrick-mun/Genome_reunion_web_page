@@ -1,24 +1,31 @@
-/* ════════════════════════════════════════════════════════════════
-   PAILLE-EN-QUEUE — oiseaux emblématiques de La Réunion
-   Trois oiseaux planent dans le hero et se posent parfois sur les
-   lettres du titre. SVG + requestAnimationFrame, sans dépendance.
-   ════════════════════════════════════════════════════════════════ */
+/* Paille-en-queue du hero : vol courbe + pose réelle sur les lettres. */
 (function () {
   'use strict';
 
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) return;
-  if (window.innerWidth < 760) return; // titre trop petit / perf sur mobile
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.innerWidth < 760) return;
 
-  const hero  = document.getElementById('hero');
+  const hero = document.getElementById('hero');
   const title = document.getElementById('hero-title');
   if (!hero || !title) return;
 
   const NUM_BIRDS = 3;
+  const VBW = 72;
+  const VBH = 82;
+  const FOOT_X = 36;
+  const FOOT_Y = 47;
 
-  /* ── 1. Encapsuler chaque lettre du titre dans un <span> mesurable ── */
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  const rand = (min, max) => min + Math.random() * (max - min);
+
   const letters = [];
+
   function wrapLetters(node) {
+    if (title.querySelector('.bird-letter')) {
+      letters.push(...title.querySelectorAll('.bird-letter'));
+      return;
+    }
+
     Array.from(node.childNodes).forEach((child) => {
       if (child.nodeType === Node.TEXT_NODE) {
         const frag = document.createDocumentFragment();
@@ -35,317 +42,331 @@
         }
         node.replaceChild(frag, child);
       } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'BR') {
-        wrapLetters(child); // descend dans <em>
+        wrapLetters(child);
       }
     });
   }
+
   wrapLetters(title);
   if (!letters.length) return;
 
-  /* ── 2. Couche confinée au hero ── */
+  document.querySelectorAll('.bird-layer').forEach((oldLayer) => oldLayer.remove());
+
   const layer = document.createElement('div');
   layer.className = 'bird-layer';
   layer.setAttribute('aria-hidden', 'true');
   hero.appendChild(layer);
 
-  /* ── 3. Géométrie SVG : corps mince + longues ailes effilées ── */
-  const VBW = 60, VBH = 66;
-  const BODY = 'M30,4 C31,10 31.2,18 30.9,26 C30.6,32 30.2,36 30,38 ' +
-               'C29.8,36 29.4,32 29.1,26 C28.8,18 29,10 30,4 Z';
-  const WING_L = 'M28.5,16 C21,13.5 11,16.5 3,28 C2.4,29 3,30.2 4.2,30 ' +
-                 'C13,27 21.5,24 28,21.5 Z';
-  const WING_R = 'M31.5,16 C39,13.5 49,16.5 57,28 C57.6,29 57,30.2 55.8,30 ' +
-                 'C47,27 38.5,24 32,21.5 Z';
-
   function birdSVG() {
-    return '<svg viewBox="0 0 ' + VBW + ' ' + VBH + '">' +
-        '<g class="paille-tail" data-tail>' +
-          '<path d="M29.4,37 C28.8,46 28.4,55 28,64" />' +
-          '<path d="M30.6,37 C31.2,46 31.6,55 32,64" />' +
-        '</g>' +
-        '<g class="paille-wings" data-wings>' +
-          '<path d="' + WING_L + '" />' +
-          '<path d="' + WING_R + '" />' +
-        '</g>' +
-        '<path class="paille-body" d="' + BODY + '" />' +
-      '</svg>';
+    return '<svg viewBox="0 0 72 82">' +
+      '<g class="paille-tail" data-tail>' +
+        '<path d="M35.2,43 C34.6,55 33.6,68 32.6,80" />' +
+        '<path d="M36.8,43 C37.4,55 38.4,68 39.4,80" />' +
+      '</g>' +
+      '<g class="paille-wings" data-wings>' +
+        '<path d="M34,18 C25,12 10,16 2,35 C13,31 25,28 34,26 Z" />' +
+        '<path d="M38,18 C47,12 62,16 70,35 C59,31 47,28 38,26 Z" />' +
+        '<path d="M34,24 C23,30 13,40 7,55 C19,47 29,39 36,30 Z" opacity=".34" />' +
+        '<path d="M38,24 C49,30 59,40 65,55 C53,47 43,39 36,30 Z" opacity=".34" />' +
+      '</g>' +
+      '<path class="paille-body" d="M36,4 C40,12 40.8,26 38.4,41 C37.4,48 34.6,48 33.6,41 C31.2,26 32,12 36,4 Z" />' +
+      '<path d="M36,2 L41,8 L36.8,7 Z" fill="#E8654A" opacity=".95" />' +
+      '<circle cx="37.6" cy="9.5" r=".9" fill="#0F3A56" opacity=".55" />' +
+      '<path d="M33.8,45 L30.8,50 M38.2,45 L41.2,50" fill="none" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" opacity=".92" />' +
+    '</svg>';
   }
 
-  /* ── 4. Helpers ── */
-  const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
-  const rand  = (a, b) => a + Math.random() * (b - a);
+  function heroRect() {
+    return hero.getBoundingClientRect();
+  }
 
   function bezier(p0, p1, p2, p3, t) {
-    const mt = 1 - t, a = mt * mt * mt, b = 3 * mt * mt * t, c = 3 * mt * t * t, d = t * t * t;
+    const mt = 1 - t;
+    const a = mt * mt * mt;
+    const b = 3 * mt * mt * t;
+    const c = 3 * mt * t * t;
+    const d = t * t * t;
     return {
       x: a * p0.x + b * p1.x + c * p2.x + d * p3.x,
-      y: a * p0.y + b * p1.y + c * p2.y + d * p3.y,
+      y: a * p0.y + b * p1.y + c * p2.y + d * p3.y
     };
   }
 
-  // Position à vitesse constante le long d'une trajectoire échantillonnée
-  function sampleAlong(seg, t) {
-    const d = clamp(t, 0, 1) * seg.arc;
-    const cum = seg.cum;
+  function sampleAlong(segment, t) {
+    const distance = clamp(t, 0, 1) * segment.arc;
     let k = 1;
-    while (k < cum.length && cum[k] < d) k++;
-    const a = cum[k - 1], c = cum[k];
-    const f = c - a > 0 ? (d - a) / (c - a) : 0;
-    const pa = seg.pts[k - 1], pb = seg.pts[k];
-    return { x: pa.x + (pb.x - pa.x) * f, y: pa.y + (pb.y - pa.y) * f };
+    while (k < segment.cum.length && segment.cum[k] < distance) k++;
+
+    const previousDistance = segment.cum[k - 1];
+    const nextDistance = segment.cum[k];
+    const fraction = nextDistance > previousDistance ? (distance - previousDistance) / (nextDistance - previousDistance) : 0;
+    const p0 = segment.pts[k - 1];
+    const p1 = segment.pts[k];
+
+    return {
+      x: p0.x + (p1.x - p0.x) * fraction,
+      y: p0.y + (p1.y - p0.y) * fraction
+    };
   }
 
-  function heroRect() { return hero.getBoundingClientRect(); }
-
   function stableLetters() {
+    const h = heroRect();
     const measured = letters.map((span) => ({ span, rect: span.getBoundingClientRect() }))
-      .filter((item) => item.rect.width > 0 && item.rect.height > 0);
+      .filter((item) => item.rect.width > 0 && item.rect.height > 0)
+      .filter((item) => item.rect.left > h.left + 24 && item.rect.right < h.right - 24)
+      .filter((item) => item.rect.top > h.top + 40 && item.rect.bottom < h.bottom - 60);
+
     if (!measured.length) return letters;
 
     const avgWidth = measured.reduce((sum, item) => sum + item.rect.width, 0) / measured.length;
     const pool = measured
-      .filter((item) => item.rect.width >= avgWidth * 0.58)
-      .filter((item) => !/^[ilI1]$/.test(item.span.textContent))
+      .filter((item) => item.rect.width >= avgWidth * 0.68)
+      .filter((item) => !/^[ijIl1]$/.test(item.span.textContent))
       .map((item) => item.span);
 
-    return pool.length >= 4 ? pool : letters;
+    return pool.length >= 4 ? pool : measured.map((item) => item.span);
   }
 
   function chooseLetter(previous) {
     const pool = stableLetters();
-    const candidates = previous
-      ? pool.filter((span) => span !== previous)
-      : pool;
+    const candidates = previous ? pool.filter((span) => span !== previous) : pool;
     const usable = candidates.length ? candidates : pool;
     return usable[(Math.random() * usable.length) | 0];
   }
 
-  // Perchoir d'une lettre, en coordonnées locales au hero.
-  // Le point correspond au centre visuel de l'oiseau, placé au-dessus du haut de la lettre.
   function letterPerch(span, bird) {
     const r = span.getBoundingClientRect();
     const h = heroRect();
-    const lift = bird ? bird.ch * 0.42 : 24;
-    const safeX = r.left + r.width * 0.5 - h.left;
-    const safeY = r.top - h.top - lift;
-    return { x: safeX, y: safeY };
+
+    const footOffsetX = bird ? bird.footX - bird.cw / 2 : 0;
+    const footOffsetY = bird ? bird.footY - bird.ch / 2 : 7;
+
+    const targetFootX = r.left + r.width * 0.5 - h.left;
+    const targetFootY = r.top - h.top + 2;
+
+    return {
+      x: targetFootX - footOffsetX,
+      y: targetFootY - footOffsetY
+    };
   }
 
-  // Point libre dans le ciel du hero (partie haute)
   function skyPoint() {
     const h = heroRect();
-    return { x: rand(h.width * 0.1, h.width * 0.9), y: rand(h.height * 0.1, h.height * 0.52) };
+    return {
+      x: rand(h.width * 0.10, h.width * 0.90),
+      y: rand(h.height * 0.10, h.height * 0.50)
+    };
   }
 
-  /* ── 5. Un oiseau ── */
-  function makeBird(i) {
+  function makeBird(index) {
     const el = document.createElement('div');
     el.className = 'paille';
     el.innerHTML = birdSVG();
     layer.appendChild(el);
 
-    const scale = rand(0.72, 1.0);
+    const scale = rand(0.68, 0.96);
     const svg = el.querySelector('svg');
-    svg.setAttribute('width',  VBW * scale);
-    svg.setAttribute('height', VBH * scale);
-    el.style.opacity = (0.82 + scale * 0.18).toFixed(2);
+    const cw = VBW * scale;
+    const ch = VBH * scale;
+    svg.setAttribute('width', cw);
+    svg.setAttribute('height', ch);
+    el.style.opacity = (0.80 + scale * 0.20).toFixed(2);
 
     const h = heroRect();
     const fromLeft = Math.random() < 0.5;
     const start = {
-      x: fromLeft ? -70 : (h.width || window.innerWidth) + 70,
-      y: rand(40, (h.height || window.innerHeight) * 0.55),
+      x: fromLeft ? -80 : (h.width || window.innerWidth) + 80,
+      y: rand(40, (h.height || window.innerHeight) * 0.52)
     };
 
     return {
       el,
       wings: el.querySelector('[data-wings]'),
-      tail:  el.querySelector('[data-tail]'),
-      cw: VBW * scale, ch: VBH * scale,
-      speed: rand(72, 106),          // px/s — vol planant (vitesse constante)
-      perchProb: rand(0.4, 0.6),
-      phaseOff: rand(0, 6.28),
+      tail: el.querySelector('[data-tail]'),
+      cw,
+      ch,
+      footX: FOOT_X * scale,
+      footY: FOOT_Y * scale,
+      speed: rand(74, 104),
+      perchProb: rand(0.42, 0.62),
+      phaseOff: rand(0, Math.PI * 2),
       pos: { x: start.x, y: start.y },
       prev: { x: start.x, y: start.y },
-      angle: 90,
-      phase: rand(0, 6.28),
+      angle: fromLeft ? 90 : -90,
+      phase: rand(0, Math.PI * 2),
       state: 'flying',
       seg: null,
       perchSpan: null,
       perchUntil: 0,
       endsOnPerch: false,
       pendingPerch: false,
-      delay: i * 1100 + rand(0, 500),
+      delay: index * 1100 + rand(0, 500),
       born: false,
+      t0base: 0
     };
   }
 
-  function startFlight(b, endPoint, opts) {
+  function startFlight(bird, endPoint, opts) {
     opts = opts || {};
-    const s = { x: b.pos.x, y: b.pos.y };
-    const dx = endPoint.x - s.x, dy = endPoint.y - s.y;
+    const start = { x: bird.pos.x, y: bird.pos.y };
+    const dx = endPoint.x - start.x;
+    const dy = endPoint.y - start.y;
     const dist = Math.hypot(dx, dy) || 1;
-    const ux = dx / dist, uy = dy / dist;
-    const px = -uy, py = ux;
+    const ux = dx / dist;
+    const uy = dy / dist;
+    const px = -uy;
+    const py = ux;
 
-    const currentHeading = (b.angle - 90) * Math.PI / 180;
-    const hx = Math.cos(currentHeading), hy = Math.sin(currentHeading);
+    const currentHeading = (bird.angle - 90) * Math.PI / 180;
+    const hx = Math.cos(currentHeading);
+    const hy = Math.sin(currentHeading);
     const targetAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
-    const turn = Math.abs(((targetAngle - b.angle + 540) % 360) - 180) / 180;
+    const turn = Math.abs(((targetAngle - bird.angle + 540) % 360) - 180) / 180;
 
-    const sway = rand(-1, 1) * Math.min(dist * 0.28, 150);
-    const out = clamp(dist * 0.36, 90, 280);
+    const sway = rand(-1, 1) * Math.min(dist * 0.30, 155);
+    const out = clamp(dist * 0.38, 95, 300);
     const lift = opts.lift || 0;
-    const wide = 1 + turn * 0.85;
+    const wide = 1 + turn * 1.05;
 
-    const p0 = s;
+    const p0 = start;
     const p1 = {
-      x: s.x + hx * out * wide + px * sway * 0.35,
-      y: s.y + hy * out * wide + py * sway * 0.35 + lift - turn * 70
+      x: start.x + hx * out * wide + px * sway * 0.30,
+      y: start.y + hy * out * wide + py * sway * 0.30 + lift - turn * 86
     };
     const p2 = {
-      x: endPoint.x - ux * out * 0.95 + px * sway * 0.55,
-      y: endPoint.y - uy * out * 0.95 + py * sway * 0.55 + lift * 0.25 - turn * 45
+      x: endPoint.x - ux * out * 0.92 + px * sway * 0.58,
+      y: endPoint.y - uy * out * 0.92 + py * sway * 0.58 + lift * 0.20 - turn * 50
     };
     const p3 = endPoint;
 
-    // Échantillonnage en polyligne + longueurs cumulées :
-    // on parcourra la courbe à VITESSE CONSTANTE (reparamétrage par longueur d'arc),
-    // ce qui supprime les accélérations parasites au milieu des trajectoires.
-    const N = 36;
+    const N = 42;
     const pts = [p0];
     const cum = [0];
-    let prevP = p0;
+    let previous = p0;
     for (let k = 1; k <= N; k++) {
-      const q = bezier(p0, p1, p2, p3, k / N);
-      pts.push(q);
-      cum.push(cum[k - 1] + Math.hypot(q.x - prevP.x, q.y - prevP.y));
-      prevP = q;
+      const point = bezier(p0, p1, p2, p3, k / N);
+      pts.push(point);
+      cum.push(cum[k - 1] + Math.hypot(point.x - previous.x, point.y - previous.y));
+      previous = point;
     }
-    const arc = cum[N];
 
-    b.seg = {
-      pts, cum, arc,
-      dur: clamp(arc / b.speed, 2.2, 22.0) * 1000 * (opts.durScale || 1),
-      t0: performance.now(),
+    bird.seg = {
+      pts,
+      cum,
+      arc: cum[N],
+      dur: clamp(cum[N] / bird.speed, 2.4, 22.0) * 1000 * (opts.durScale || 1),
+      t0: performance.now()
     };
-    b.state = 'flying';
+    bird.state = 'flying';
   }
 
-  function planNext(b) {
-    if (Math.random() < b.perchProb) {
-      if (Math.random() < 0.5) {
-        // boucle dans le ciel puis perchage
-        b.endsOnPerch = false;
-        b.pendingPerch = true;
-        startFlight(b, skyPoint(), { lift: -rand(30, 90), durScale: 1.0 });
+  function planNext(bird) {
+    if (Math.random() < bird.perchProb) {
+      if (Math.random() < 0.45) {
+        bird.endsOnPerch = false;
+        bird.pendingPerch = true;
+        startFlight(bird, skyPoint(), { lift: -rand(30, 90) });
       } else {
-        b.endsOnPerch = true;
-        b.perchSpan = chooseLetter(b.perchSpan);
-        startFlight(b, letterPerch(b.perchSpan, b), { lift: -rand(20, 60) });
+        bird.endsOnPerch = true;
+        bird.perchSpan = chooseLetter(bird.perchSpan);
+        startFlight(bird, letterPerch(bird.perchSpan, bird), { lift: -rand(20, 56) });
       }
     } else {
-      b.endsOnPerch = false;
-      b.pendingPerch = false;
-      startFlight(b, skyPoint(), { lift: -rand(0, 70) });
+      bird.endsOnPerch = false;
+      bird.pendingPerch = false;
+      startFlight(bird, skyPoint(), { lift: -rand(0, 70) });
     }
   }
 
-  /* ── 6. Mise à jour d'un oiseau ── */
-  function updateBird(b, now, dt) {
-    if (!b.born) {
-      if (now < b.t0base + b.delay) return;
-      b.born = true;
-      if (Math.random() < b.perchProb) {
-        b.endsOnPerch = true;
-        b.perchSpan = chooseLetter();
-        startFlight(b, letterPerch(b.perchSpan, b), { durScale: 1.1 });
-      } else {
-        b.endsOnPerch = false;
-        startFlight(b, skyPoint(), { durScale: 1.1 });
-      }
+  function updateBird(bird, now, dt) {
+    if (!bird.born) {
+      if (now < bird.t0base + bird.delay) return;
+      bird.born = true;
+      bird.endsOnPerch = true;
+      bird.perchSpan = chooseLetter();
+      startFlight(bird, letterPerch(bird.perchSpan, bird), { durScale: 1.08 });
     }
 
-    if (b.state === 'flying' && b.seg) {
-      const t = (now - b.seg.t0) / b.seg.dur;
+    if (bird.state === 'flying' && bird.seg) {
+      const t = (now - bird.seg.t0) / bird.seg.dur;
       if (t >= 1) {
-        const end = b.seg.pts[b.seg.pts.length - 1];
-        b.pos = { x: end.x, y: end.y };
-        if (b.endsOnPerch && b.perchSpan) {
-          b.state = 'perched';
-          b.perchUntil = now + rand(3500, 7500);
-        } else if (b.pendingPerch) {
-          b.endsOnPerch = true;
-          b.pendingPerch = false;
-          b.perchSpan = chooseLetter(b.perchSpan);
-          startFlight(b, letterPerch(b.perchSpan, b), { lift: -rand(20, 50) });
+        const end = bird.seg.pts[bird.seg.pts.length - 1];
+        bird.pos = { x: end.x, y: end.y };
+        if (bird.endsOnPerch && bird.perchSpan) {
+          bird.state = 'perched';
+          bird.perchUntil = now + rand(3500, 7600);
+        } else if (bird.pendingPerch) {
+          bird.pendingPerch = false;
+          bird.endsOnPerch = true;
+          bird.perchSpan = chooseLetter(bird.perchSpan);
+          startFlight(bird, letterPerch(bird.perchSpan, bird), { lift: -rand(20, 50) });
         } else {
-          planNext(b);
+          planNext(bird);
         }
       } else {
-        b.pos = sampleAlong(b.seg, t); // vitesse constante
+        bird.pos = sampleAlong(bird.seg, t);
       }
-    } else if (b.state === 'perched' && b.perchSpan) {
-      const p = letterPerch(b.perchSpan, b); // suit la lettre (parallaxe)
-      b.pos = { x: p.x, y: p.y + Math.sin(now / 520 + b.phaseOff) * 1.1 };
-      if (now > b.perchUntil) planNext(b);
+    } else if (bird.state === 'perched' && bird.perchSpan) {
+      const point = letterPerch(bird.perchSpan, bird);
+      bird.pos = { x: point.x, y: point.y + Math.sin(now / 540 + bird.phaseOff) * 0.55 };
+      if (now > bird.perchUntil) planNext(bird);
     }
 
-    /* cap + cadence d'ailes d'après le mouvement réel */
-    const vx = (b.pos.x - b.prev.x) / dt;
-    const vy = (b.pos.y - b.prev.y) / dt;
+    const vx = (bird.pos.x - bird.prev.x) / dt;
+    const vy = (bird.pos.y - bird.prev.y) / dt;
     const speed = Math.hypot(vx, vy);
-    b.prev = { x: b.pos.x, y: b.pos.y };
+    bird.prev = { x: bird.pos.x, y: bird.pos.y };
 
     if (speed > 10) {
       const target = Math.atan2(vy, vx) * 180 / Math.PI + 90;
-      let diff = ((target - b.angle + 540) % 360) - 180;
-      b.angle += diff * clamp(dt * 3.6, 0, 1); // virages plus amples et moins mécaniques
-    } else if (b.state === 'perched') {
-      let diff = ((0 - b.angle + 540) % 360) - 180;
-      b.angle += diff * clamp(dt * 2.2, 0, 1);
+      const diff = ((target - bird.angle + 540) % 360) - 180;
+      bird.angle += diff * clamp(dt * 3.25, 0, 1);
+    } else if (bird.state === 'perched') {
+      const diff = ((0 - bird.angle + 540) % 360) - 180;
+      bird.angle += diff * clamp(dt * 2.8, 0, 1);
     }
 
-    const perched = b.state === 'perched';
-    // battement lent et planant (≈ 2,4–4 Hz, plus vif en montée)
-    const flapHz = perched ? 0 : clamp(2.2 + (-vy) * 0.005, 1.6, 3.6);
-    b.phase += dt * flapHz * Math.PI * 2;
+    const perched = bird.state === 'perched';
+    const flapHz = perched ? 0 : clamp(2.0 + (-vy) * 0.0045, 1.45, 3.35);
+    bird.phase += dt * flapHz * Math.PI * 2;
 
-    const spanX = perched ? 0.4 : 0.46 + 0.54 * (0.5 + 0.5 * Math.sin(b.phase));
-    b.wings.setAttribute('transform',
-      'translate(30,0) scale(' + spanX.toFixed(3) + ',1) translate(-30,0)');
+    const wingSpan = perched ? 0.42 : 0.50 + 0.50 * (0.5 + 0.5 * Math.sin(bird.phase));
+    bird.wings.setAttribute('transform', 'translate(36,0) scale(' + wingSpan.toFixed(3) + ',1) translate(-36,0)');
 
-    const tailSway = (perched ? 1.3 : 5) * Math.sin(b.phase * 0.5 + 0.6 + b.phaseOff);
-    b.tail.setAttribute('transform', 'rotate(' + tailSway.toFixed(2) + ' 30 37)');
+    const tailSway = (perched ? 0.9 : 4.8) * Math.sin(bird.phase * 0.5 + 0.6 + bird.phaseOff);
+    bird.tail.setAttribute('transform', 'rotate(' + tailSway.toFixed(2) + ' 36 43)');
 
-    const bobFly = perched ? 0 : Math.sin(b.phase) * 0.9;
-    b.el.style.transform =
-      'translate(' + (b.pos.x - b.cw / 2).toFixed(2) + 'px,' +
-                     (b.pos.y - b.ch / 2 + bobFly).toFixed(2) + 'px) ' +
-      'rotate(' + b.angle.toFixed(2) + 'deg)';
+    const bob = perched ? 0 : Math.sin(bird.phase) * 0.8;
+    bird.el.style.transform =
+      'translate(' + (bird.pos.x - bird.cw / 2).toFixed(2) + 'px,' +
+                     (bird.pos.y - bird.ch / 2 + bob).toFixed(2) + 'px) ' +
+      'rotate(' + bird.angle.toFixed(2) + 'deg)';
   }
 
-  /* ── 7. Boucle globale (en pause hors-écran) ── */
   const birds = [];
   for (let i = 0; i < NUM_BIRDS; i++) birds.push(makeBird(i));
   const t0base = performance.now();
-  birds.forEach((b) => { b.t0base = t0base; });
+  birds.forEach((bird) => { bird.t0base = t0base; });
 
   let lastT = 0;
   let visible = true;
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.02 })
-      .observe(hero);
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: 0.02 }).observe(hero);
   }
 
   function frame(now) {
-    if (!visible) { lastT = now; requestAnimationFrame(frame); return; }
+    if (!visible) {
+      lastT = now;
+      requestAnimationFrame(frame);
+      return;
+    }
     let dt = (now - lastT) / 1000;
     if (!lastT) dt = 0.016;
     dt = Math.min(dt, 0.05);
     lastT = now;
-    for (const b of birds) updateBird(b, now, dt);
+    birds.forEach((bird) => updateBird(bird, now, dt));
     requestAnimationFrame(frame);
   }
+
   requestAnimationFrame(frame);
 })();
