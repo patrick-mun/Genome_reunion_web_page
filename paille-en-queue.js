@@ -1,4 +1,4 @@
-/* Paille-en-queue du hero : vol courbe + pose réelle sur les lettres. */
+/* Paille-en-queue du hero : vol courbe + pose uniquement sur le titre principal. */
 (function () {
   'use strict';
 
@@ -21,11 +21,6 @@
   const letters = [];
 
   function wrapLetters(node) {
-    if (title.querySelector('.bird-letter')) {
-      letters.push(...title.querySelectorAll('.bird-letter'));
-      return;
-    }
-
     Array.from(node.childNodes).forEach((child) => {
       if (child.nodeType === Node.TEXT_NODE) {
         const frag = document.createDocumentFragment();
@@ -47,7 +42,12 @@
     });
   }
 
-  wrapLetters(title);
+  if (!title.querySelector('.bird-letter')) {
+    wrapLetters(title);
+  } else {
+    letters.push(...title.querySelectorAll(':scope .bird-letter'));
+  }
+
   if (!letters.length) return;
 
   document.querySelectorAll('.bird-layer').forEach((oldLayer) => oldLayer.remove());
@@ -73,24 +73,28 @@
   hero.appendChild(layer);
 
   function birdSVG() {
-  return '<svg viewBox="0 0 72 82">' +
-    '<g class="paille-tail" data-tail>' +
-      '<path d="M35.2,43 C34.6,55 33.6,68 32.6,80" />' +
-      '<path d="M36.8,43 C37.4,55 38.4,68 39.4,80" />' +
-    '</g>' +
-    '<g class="paille-wings" data-wings>' +
-      '<path style="stroke:none" d="M34,18 C25,12 10,16 2,35 C13,31 25,28 34,26 Z" />' +
-      '<path style="stroke:none" d="M38,18 C47,12 62,16 70,35 C59,31 47,28 38,26 Z" />' +
-    '</g>' +
-    '<path class="paille-body" style="stroke:none" d="M36,4 C40,12 40.8,26 38.4,41 C37.4,48 34.6,48 33.6,41 C31.2,26 32,12 36,4 Z" />' +
-    '<path d="M36,2 L41,8 L36.8,7 Z" fill="#E8654A" opacity=".95" />' +
-    '<circle cx="37.6" cy="9.5" r=".9" fill="#0F3A56" opacity=".55" />' +
-    '<path d="M33.8,45 L30.8,50 M38.2,45 L41.2,50" fill="none" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" opacity=".92" />' +
-  '</svg>';
-}
+    return '<svg viewBox="0 0 72 82">' +
+      '<g class="paille-tail" data-tail>' +
+        '<path d="M35.2,43 C34.6,55 33.6,68 32.6,80" />' +
+        '<path d="M36.8,43 C37.4,55 38.4,68 39.4,80" />' +
+      '</g>' +
+      '<g class="paille-wings" data-wings>' +
+        '<path style="stroke:none" d="M34,18 C25,12 10,16 2,35 C13,31 25,28 34,26 Z" />' +
+        '<path style="stroke:none" d="M38,18 C47,12 62,16 70,35 C59,31 47,28 38,26 Z" />' +
+      '</g>' +
+      '<path class="paille-body" style="stroke:none" d="M36,4 C40,12 40.8,26 38.4,41 C37.4,48 34.6,48 33.6,41 C31.2,26 32,12 36,4 Z" />' +
+      '<path d="M36,2 L41,8 L36.8,7 Z" fill="#E8654A" opacity=".95" />' +
+      '<circle cx="37.6" cy="9.5" r=".9" fill="#0F3A56" opacity=".55" />' +
+      '<path d="M33.8,45 L30.8,50 M38.2,45 L41.2,50" fill="none" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" opacity=".92" />' +
+    '</svg>';
+  }
 
   function heroRect() {
     return hero.getBoundingClientRect();
+  }
+
+  function titleRect() {
+    return title.getBoundingClientRect();
   }
 
   function bezier(p0, p1, p2, p3, t) {
@@ -122,14 +126,21 @@
     };
   }
 
+  function titleLettersOnly() {
+    return Array.from(title.querySelectorAll(':scope .bird-letter'));
+  }
+
   function stableLetters() {
     const h = heroRect();
-    const measured = letters.map((span) => ({ span, rect: span.getBoundingClientRect() }))
+    const t = titleRect();
+    const measured = titleLettersOnly()
+      .map((span) => ({ span, rect: span.getBoundingClientRect() }))
       .filter((item) => item.rect.width > 0 && item.rect.height > 0)
       .filter((item) => item.rect.left > h.left + 24 && item.rect.right < h.right - 24)
-      .filter((item) => item.rect.top > h.top + 40 && item.rect.bottom < h.bottom - 60);
+      .filter((item) => item.rect.top >= t.top - 4 && item.rect.bottom <= t.bottom + 4)
+      .filter((item) => item.rect.top > h.top + 80 && item.rect.bottom < h.bottom - 80);
 
-    if (!measured.length) return letters;
+    if (!measured.length) return titleLettersOnly();
 
     const avgWidth = measured.reduce((sum, item) => sum + item.rect.width, 0) / measured.length;
     const pool = measured
@@ -165,9 +176,10 @@
 
   function skyPoint() {
     const h = heroRect();
+    const t = titleRect();
     return {
       x: rand(h.width * 0.10, h.width * 0.90),
-      y: rand(h.height * 0.10, h.height * 0.50)
+      y: rand(Math.max(40, t.top - h.top - 120), Math.max(80, t.top - h.top - 40))
     };
   }
 
@@ -187,10 +199,11 @@
     el.style.opacity = (0.80 + scale * 0.20).toFixed(2);
 
     const h = heroRect();
+    const t = titleRect();
     const fromLeft = Math.random() < 0.5;
     const start = {
       x: fromLeft ? -80 : (h.width || window.innerWidth) + 80,
-      y: rand(40, (h.height || window.innerHeight) * 0.52)
+      y: rand(Math.max(40, t.top - h.top - 70), Math.min(h.height * 0.52, t.bottom - h.top + 40))
     };
 
     return {
