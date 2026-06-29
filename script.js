@@ -61,6 +61,8 @@ if ('IntersectionObserver' in window) {
         const counter = e.target.querySelector('.count');
         if (counter) {
           const target = parseInt(counter.dataset.target, 10);
+          if (!Number.isFinite(target)) return;
+
           const duration = 1200;
           const start = performance.now();
           const animate = (now) => {
@@ -86,9 +88,12 @@ if ('IntersectionObserver' in window) {
 
 /* ── LEGEND DOTS CSS ── */
 document.querySelectorAll('.legend-dot').forEach(el => {
+  if (el.querySelector('.legend-dot-marker')) return;
+
   const color = getComputedStyle(el).getPropertyValue('--c').trim();
   if (color) {
     const dot = document.createElement('span');
+    dot.className = 'legend-dot-marker';
     dot.style.cssText = `width:8px;height:8px;border-radius:2px;background:${color};display:inline-block;flex-shrink:0;`;
     el.prepend(dot);
   }
@@ -152,6 +157,8 @@ document.querySelectorAll('.legend-dot').forEach(el => {
   if (!donutSvg || !('IntersectionObserver' in window)) return;
 
   const circles = donutSvg.querySelectorAll('circle');
+  if (!circles.length) return;
+
   const circumference = 2 * Math.PI * 38;
 
   const finalValues = Array.from(circles).map(c => ({
