@@ -37,6 +37,38 @@ if (nav) {
   });
 })();
 
+/* ── MEDICAL FORMULATIONS NORMALIZATION ── */
+(function() {
+  const setText = (selector, text) => {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = text;
+  };
+
+  setText('#hero-body', 'À La Réunion, chaque habitant porte l’héritage de plusieurs continents. Pourtant, les outils génomiques disponibles s’appuient encore sur des références qui représentent mal cette diversité. Génome Réunion vise à construire un référentiel local pour mieux documenter les variants réunionnais et améliorer leur interprétation.');
+
+  setText('#probleme .pb-item:nth-child(1) .pb-item-text', 'La pharmacogénétique peut varier selon les profils génétiques. Des données locales permettront de mieux documenter ces variations dans le contexte réunionnais.');
+  setText('#probleme .pb-item:nth-child(2) .pb-item-text', 'Un variant rare dans les bases européennes peut être plus fréquent à La Réunion. Un référentiel local aide à distinguer un signal important d’une variation populationnelle bénigne.');
+  setText('#probleme .pb-item:nth-child(3) .pb-item-text', 'Les modèles construits sur d’autres populations peuvent être moins pertinents pour une population admixée. Des données locales permettront d’en évaluer les limites.');
+
+  setText('#change .change-title', 'Des outils génomiques mieux adaptés à notre population.');
+  setText('#change .change-card:nth-child(1) .change-card-title', 'Une pharmacogénétique mieux documentée');
+  setText('#change .change-card:nth-child(1) .change-card-text', 'Le profil génétique peut influencer certaines analyses pharmacogénétiques. Un référentiel local aidera à interpréter ces informations dans le contexte réunionnais.');
+  setText('#change .change-card:nth-child(2) .change-card-title', 'Une interprétation plus fiable des variants');
+  setText('#change .change-card:nth-child(2) .change-card-text', 'Lorsqu’un variant est détecté, les données locales peuvent aider à savoir s’il est rare, fréquent ou déjà observé dans la population réunionnaise.');
+  setText('#change .change-card:nth-child(3) .change-card-title', 'Des scores à évaluer localement');
+  setText('#change .change-card:nth-child(3) .change-card-text', 'Les scores génétiques devront être testés et calibrés localement avant d’être interprétés comme outils d’aide à l’analyse.');
+
+  setText('#outils .outils-title', 'Quatre modules\nd’aide à l’analyse.');
+  setText('#outils .outil-card:nth-child(1) .outil-title', 'Mieux interpréter les variants');
+  setText('#outils .outil-card:nth-child(1) .outil-body', 'Aider à distinguer les variants potentiellement importants de ceux qui sont simplement fréquents dans la population réunionnaise.');
+  setText('#outils .outil-card:nth-child(2) .outil-title', 'Documenter la pharmacogénétique locale');
+  setText('#outils .outil-card:nth-child(2) .outil-body', 'Mieux connaître les profils génétiques susceptibles d’influencer les analyses pharmacogénétiques futures.');
+  setText('#outils .outil-card:nth-child(3) .outil-title', 'Décrire les composantes ancestrales');
+  setText('#outils .outil-card:nth-child(3) .outil-body', 'Comprendre la mosaïque d’héritages qui structure la population réunionnaise : Afrique, Madagascar, Inde du Sud, Europe et Asie.');
+  setText('#outils .outil-card:nth-child(4) .outil-title', 'Évaluer les scores génétiques');
+  setText('#outils .outil-card:nth-child(4) .outil-body', 'Tester la pertinence des scores génétiques dans une population admixée avant toute interprétation locale.');
+})();
+
 /* ── HERO REVEAL ── */
 window.addEventListener('load', () => {
   const heroEls = [
