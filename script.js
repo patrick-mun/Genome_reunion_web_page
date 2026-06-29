@@ -1,14 +1,19 @@
 /* ── PROGRESS BAR ── */
-window.addEventListener('scroll', () => {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  document.getElementById('progress').style.width = (window.scrollY / max * 100) + '%';
-});
+const progressEl = document.getElementById('progress');
+if (progressEl) {
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progressEl.style.width = max > 0 ? (window.scrollY / max * 100) + '%' : '0%';
+  });
+}
 
 /* ── NAV SCROLLED ── */
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
+if (nav) {
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+}
 
 /* ── HERO REVEAL ── */
 window.addEventListener('load', () => {
@@ -32,44 +37,52 @@ window.addEventListener('load', () => {
 
 /* ── SCROLL REVEAL ── */
 const revealEls = document.querySelectorAll('.reveal');
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      revealObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-revealEls.forEach(el => revealObs.observe(el));
+if ('IntersectionObserver' in window) {
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObs.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('visible'));
+}
 
 /* ── STATS REVEAL + COUNTER ── */
 const statItems = document.querySelectorAll('.stat-item');
-const statObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      const counter = e.target.querySelector('.count');
-      if (counter) {
-        const target = parseInt(counter.dataset.target);
-        const duration = 1200;
-        const start = performance.now();
-        const animate = (now) => {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          counter.textContent = Math.round(eased * target).toLocaleString('fr-FR');
-          if (progress < 1) requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
+if ('IntersectionObserver' in window) {
+  const statObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        const counter = e.target.querySelector('.count');
+        if (counter) {
+          const target = parseInt(counter.dataset.target, 10);
+          const duration = 1200;
+          const start = performance.now();
+          const animate = (now) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = Math.round(eased * target).toLocaleString('fr-FR');
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+        statObs.unobserve(e.target);
       }
-      statObs.unobserve(e.target);
-    }
+    });
+  }, { threshold: 0.4 });
+  statItems.forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.08) + 's';
+    statObs.observe(el);
   });
-}, { threshold: 0.4 });
-statItems.forEach((el, i) => {
-  el.style.transitionDelay = (i * 0.08) + 's';
-  statObs.observe(el);
-});
+} else {
+  statItems.forEach(el => el.classList.add('visible'));
+}
 
 /* ── LEGEND DOTS CSS ── */
 document.querySelectorAll('.legend-dot').forEach(el => {
@@ -84,6 +97,8 @@ document.querySelectorAll('.legend-dot').forEach(el => {
 /* ── PARALLAXE SOURIS — HERO ── */
 (function() {
   const hero = document.getElementById('hero');
+  if (!hero || !('IntersectionObserver' in window)) return;
+
   const title = document.getElementById('hero-title');
   const creole = document.getElementById('hero-creole');
   const body = document.getElementById('hero-body');
@@ -111,7 +126,8 @@ document.querySelectorAll('.legend-dot').forEach(el => {
   });
 
   hero.addEventListener('mouseleave', () => {
-    targetX = 0; targetY = 0;
+    targetX = 0;
+    targetY = 0;
   });
 
   function lerp(a, b, t) { return a + (b - a) * t; }
@@ -120,7 +136,7 @@ document.querySelectorAll('.legend-dot').forEach(el => {
     currentX = lerp(currentX, targetX, 0.06);
     currentY = lerp(currentY, targetY, 0.06);
 
-    if (title)   title.style.transform   = `translate(${currentX * 1}px, ${currentY * 1}px)`;
+    if (title)   title.style.transform   = `translate(${currentX}px, ${currentY}px)`;
     if (creole)  creole.style.transform  = `translate(${currentX * .4}px, ${currentY * .4}px)`;
     if (body)    body.style.transform    = `translate(${currentX * .6}px, ${currentY * .6}px)`;
     if (actions) actions.style.transform = `translate(${currentX * .5}px, ${currentY * .5}px)`;
@@ -133,7 +149,7 @@ document.querySelectorAll('.legend-dot').forEach(el => {
 /* ── DONUT CHART — ANIMATION AU SCROLL ── */
 (function() {
   const donutSvg = document.querySelector('.donut');
-  if (!donutSvg) return;
+  if (!donutSvg || !('IntersectionObserver' in window)) return;
 
   const circles = donutSvg.querySelectorAll('circle');
   const circumference = 2 * Math.PI * 38;
@@ -157,7 +173,7 @@ document.querySelectorAll('.legend-dot').forEach(el => {
       circles.forEach((c, i) => {
         const final = finalValues[i];
         setTimeout(() => {
-          c.style.transition = `stroke-dasharray 0.7s cubic-bezier(.16,1,.3,1)`;
+          c.style.transition = 'stroke-dasharray 0.7s cubic-bezier(.16,1,.3,1)';
           c.setAttribute('stroke-dasharray', final.dasharray);
           c.setAttribute('stroke-dashoffset', final.dashoffset);
         }, i * 120);
