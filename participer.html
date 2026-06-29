@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Participer — Génome Réunion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── PAGE PARTICIPER ── */
+.page-hero {
+  min-height: 52vh;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 120px 48px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero-kicker {
+  font-family: var(--f-ui);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  margin-bottom: 16px;
+  opacity: 0;
+  transition: opacity .7s var(--ease-out) .1s, transform .7s var(--ease-out) .1s;
+  transform: translateY(16px);
+}
+
+.page-hero-title {
+  font-family: var(--f-display);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 300;
+  line-height: .95;
+  letter-spacing: -.03em;
+  color: var(--white);
+  margin-bottom: 20px;
+  opacity: 0;
+  transition: opacity .8s var(--ease-out) .2s, transform .8s var(--ease-out) .2s;
+  transform: translateY(20px);
+}
+.page-hero-title em { font-style: normal; color: var(--coral); }
+
+.page-hero-sub {
+  font-size: clamp(.9rem, 1.4vw, 1.05rem);
+  font-weight: 300;
+  color: rgba(255,255,255,.6);
+  line-height: 1.7;
+  max-width: 540px;
+  opacity: 0;
+  transition: opacity .8s var(--ease-out) .35s, transform .8s var(--ease-out) .35s;
+  transform: translateY(16px);
+}
+
+/* ── PARTENARIAT EFS ── */
+#partenariat {
+  background: var(--cream);
+  padding: 100px 48px;
+}
+
+.partenariat-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.partenariat-text h2 {
+  font-family: var(--f-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+
+.partenariat-text p {
+  font-size: .95rem;
+  color: var(--stone);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+.efs-badge {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 16px;
+  margin-top: 8px;
+  box-shadow: 0 4px 20px rgba(15,58,86,.05);
+}
+
+.efs-badge-text {
+  font-family: var(--f-ui);
+  font-size: .78rem;
+  color: var(--stone);
+  line-height: 1.5;
+}
+.efs-badge-text strong {
+  display: block;
+  font-size: .88rem;
+  color: var(--slate);
+  margin-bottom: 2px;
+}
+
+/* EFS Logo SVG card */
+.efs-logo-card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 20px;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  box-shadow: 0 8px 40px rgba(15,58,86,.07);
+  text-align: center;
+}
+
+.efs-logo-title {
+  font-family: var(--f-ui);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.efs-logo-sub {
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--stone);
+  line-height: 1.4;
+}
+
+.efs-tagline {
+  font-size: .8rem;
+  color: #E2001A;
+  font-family: var(--f-ui);
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+/* ── COLLECTES ── */
+#collectes {
+  background: var(--sand);
+  padding: 100px 48px;
+}
+
+.collectes-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.collectes-header {
+  margin-bottom: 64px;
+}
+
+.collectes-header h2 {
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.collectes-header p {
+  font-size: .95rem;
+  color: var(--stone);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.collectes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.collecte-block {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(15,58,86,.06);
+}
+
+.collecte-block-header {
+  padding: 28px 32px 20px;
+  border-bottom: 1px solid var(--sand);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.collecte-zone-badge {
+  font-family: var(--f-ui);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--white);
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+.badge-nord { background: var(--navy); }
+.badge-sud  { background: var(--teal); }
+
+.collecte-block-title {
+  font-family: var(--f-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+.collecte-block-address {
+  font-size: .78rem;
+  color: var(--stone);
+  margin-top: 4px;
+}
+
+/* Table */
+.collecte-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.collecte-table thead tr {
+  background: var(--cream);
+}
+
+.collecte-table th {
+  font-family: var(--f-ui);
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--stone);
+  padding: 12px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--sand);
+}
+
+.collecte-table td {
+  padding: 16px 20px;
+  font-size: .84rem;
+  color: var(--slate);
+  border-bottom: 1px solid var(--sand);
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.collecte-table tr:last-child td { border-bottom: none; }
+
+.collecte-table tr:hover td { background: rgba(159,211,224,.08); }
+
+.td-date {
+  font-family: var(--f-ui);
+  font-weight: 600;
+  font-size: .82rem;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.td-lieu {
+  font-weight: 500;
+  color: var(--slate);
+}
+
+.td-adresse {
+  color: var(--stone);
+  font-size: .78rem;
+}
+
+.td-horaire {
+  font-family: var(--f-ui);
+  font-size: .75rem;
+  color: var(--teal);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── INSCRIPTION CTA ── */
+#inscription {
+  background: var(--navy-deep);
+  padding: 100px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.inscription-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inscription-title {
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.inscription-title em { font-style: normal; color: var(--coral); }
+
+.inscription-sub {
+  font-size: .95rem;
+  color: rgba(255,255,255,.5);
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.inscription-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 48px;
+  text-align: left;
+}
+
+.inscription-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: rgba(255,255,255,.04);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.inscription-step-num {
+  font-family: var(--f-ui);
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: var(--coral);
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.inscription-step-text {
+  font-size: .88rem;
+  color: rgba(255,255,255,.7);
+  line-height: 1.6;
+}
+.inscription-step-text strong {
+  color: var(--white);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.btn-efs {
+  font-family: var(--f-ui);
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: #E2001A;
+  padding: 18px 40px;
+  border-radius: 100px;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform .25s var(--ease-spring), box-shadow .25s;
+}
+.btn-efs:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(226,0,26,.35);
+}
+
+.btn-outline {
+  font-family: var(--f-ui);
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 16px 32px;
+  border-radius: 100px;
+  display: inline-block;
+  transition: border-color .2s, color .2s;
+}
+.btn-outline:hover {
+  border-color: rgba(255,255,255,.4);
+  color: var(--white);
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .page-hero { padding: 100px 24px 60px; }
+  #partenariat { padding: 72px 24px; }
+  #collectes   { padding: 72px 24px; }
+  #inscription { padding: 72px 24px; }
+  .partenariat-inner { grid-template-columns: 1fr; gap: 48px; }
+  .collectes-grid    { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV (identique) -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 60" fill="none" role="img" aria-label="Génome Réunion">
+      <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(10,8)">
+        <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="#0F3A56"/>
+        <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="#1E6E8C" transform="translate(0,16)"/>
+        <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="#E8654A" transform="translate(0,32)"/>
+        <circle cx="84" cy="8"  r="2.6" fill="#0F3A56" stroke="none"/>
+        <circle cx="84" cy="24" r="2.6" fill="#1E6E8C" stroke="none"/>
+        <circle cx="84" cy="40" r="2.6" fill="#E8654A" stroke="none"/>
+      </g>
+    </svg>
+    <span class="nav-logo-text">Génome Réunion</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#probleme">Pourquoi</a></li>
+    <li><a href="index.html#methode">Comment</a></li>
+    <li><a href="index.html#equipe">Équipe</a></li>
+  </ul>
+  <a href="#inscription" class="nav-cta">S'inscrire</a>
+</nav>
+
+<!-- HERO PAGE -->
+<section class="page-hero">
+  <div class="hero-waves">
+    <svg class="wave-1" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
+               C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
+               L2880,220 L0,220 Z" fill="#091F30"/>
+    </svg>
+    <svg class="wave-2" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130
+               C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
+               C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
+               L2880,220 L0,220 Z" fill="#1E6E8C"/>
+    </svg>
+    <svg class="wave-3" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165
+               C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
+               C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
+               L2880,220 L0,220 Z" fill="#E8654A"/>
+    </svg>
+  </div>
+
+  <div class="page-hero-inner">
+    <p class="page-hero-kicker" id="ph-kicker">Participation au projet</p>
+    <h1 class="page-hero-title" id="ph-title">
+      Donnez un peu.<br>Changez <em>tout</em>.
+    </h1>
+    <p class="page-hero-sub" id="ph-sub">
+      Un simple prélèvement sanguin suffit. En participant à Génome Réunion, vous contribuez à bâtir la première référence génétique de l'île — pour vous, vos enfants, et toute la population réunionnaise.
+    </p>
+  </div>
+</section>
+
+<!-- PARTENARIAT EFS -->
+<section id="partenariat">
+  <div class="partenariat-inner">
+
+    <div class="partenariat-text reveal">
+      <p class="eyebrow">Partenariat officiel</p>
+      <h2>En partenariat avec<br>l'EFS Réunion.</h2>
+      <p>
+        L'<strong>Établissement Français du Sang (EFS) de La Réunion</strong> est notre partenaire opérationnel pour l'ensemble des collectes. Ses équipes médicales assurent les prélèvements dans les meilleures conditions, dans ses centres fixes et lors de collectes mobiles à travers l'île.
+      </p>
+      <p>
+        Chaque participant reçoit un bilan sanguin complet à titre de remerciement. Le don de génome, comme le don de sang, est un geste de solidarité pour toute la population réunionnaise.
+      </p>
+      <div class="efs-badge reveal reveal-delay-1">
+        <!-- EFS Logo SVG fidèle à leur identité -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" width="90" height="60" role="img" aria-label="Logo EFS">
+          <!-- Goutte / flamme EFS -->
+          <path d="M28,62 C28,62 10,46 10,32 C10,19 18,10 28,10 C38,10 46,19 46,32 C46,46 28,62 28,62 Z"
+                fill="#E2001A"/>
+          <!-- Reflet interne -->
+          <path d="M22,28 C22,28 18,32 18,36 C18,40 20,43 22,45"
+                stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- EFS texte -->
+          <text x="56" y="28" font-family="Arial Black, Arial" font-weight="900" font-size="20" fill="#E2001A" letter-spacing="1">EFS</text>
+          <text x="56" y="42" font-family="Arial, sans-serif" font-weight="400" font-size="6.2" fill="#3a3a3a" letter-spacing=".3">Établissement Français</text>
+          <text x="56" y="51" font-family="Arial, sans-serif" font-weight="400" font-size="6.2" fill="#3a3a3a" letter-spacing=".3">du Sang</text>
+          <text x="56" y="63" font-family="Arial, sans-serif" font-weight="700" font-size="6.5" fill="#E2001A" letter-spacing=".2">La Réunion</text>
+        </svg>
+        <div class="efs-badge-text">
+          <strong>Partenaire officiel des collectes</strong>
+          Prélèvements réalisés par des équipes médicales certifiées
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte logo EFS grande -->
+    <div class="efs-logo-card reveal reveal-delay-2">
+      <div class="efs-logo-title">Partenaire des collectes</div>
+
+      <!-- Grand logo EFS SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="160" height="160" role="img" aria-label="EFS Établissement Français du Sang">
+        <defs>
+          <radialGradient id="dropGrad" cx="40%" cy="30%" r="65%">
+            <stop offset="0%"   stop-color="#FF2A3B"/>
+            <stop offset="100%" stop-color="#B8000F"/>
+          </radialGradient>
+        </defs>
+        <!-- Forme goutte principale -->
+        <path d="M100,170 C100,170 44,128 44,88 C44,60 69,38 100,38 C131,38 156,60 156,88 C156,128 100,170 100,170 Z"
+              fill="url(#dropGrad)"/>
+        <!-- Reflet gauche -->
+        <path d="M72,68 C68,76 66,84 66,92 C66,100 68,107 72,113"
+              stroke="rgba(255,255,255,.28)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- EFS en blanc dans la goutte -->
+        <text x="100" y="105" font-family="Arial Black,Arial" font-weight="900" font-size="30"
+              fill="white" text-anchor="middle" letter-spacing="2">EFS</text>
+      </svg>
+
+      <div>
+        <div style="font-family:var(--f-display);font-size:1.1rem;font-weight:400;color:var(--navy);margin-bottom:4px;">
+          Établissement Français du Sang
+        </div>
+        <div style="font-family:var(--f-ui);font-size:.78rem;font-weight:600;color:#E2001A;letter-spacing:.06em;text-transform:uppercase;">
+          La Réunion
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--sand);padding-top:20px;width:100%;text-align:center;">
+        <div style="font-size:.8rem;color:var(--stone);line-height:1.6;">
+          Collectes organisées par l'EFS dans<br>
+          <strong style="color:var(--navy);">2 sites fixes</strong> &amp; <strong style="color:var(--navy);">collectes mobiles</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CALENDRIER DES COLLECTES -->
+<section id="collectes">
+  <div class="collectes-inner">
+    <div class="collectes-header reveal">
+      <p class="eyebrow">Calendrier</p>
+      <h2>Prochaines dates<br>de collecte.</h2>
+      <p>Rendez-vous dans l'un des centres EFS ou lors d'une collecte mobile proche de chez vous. Inscription préalable recommandée.</p>
+    </div>
+
+    <div class="collectes-grid">
+
+      <!-- EFS NORD -->
+      <div class="collecte-block reveal">
+        <div class="collecte-block-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <span class="collecte-zone-badge badge-nord">Nord</span>
+            </div>
+            <div class="collecte-block-title">EFS Saint-Denis</div>
+            <div class="collecte-block-address">
+              Centre fixe · 5 rue Lacaussade, 97400 Saint-Denis
+            </div>
+          </div>
+        </div>
+        <table class="collecte-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Lieu</th>
+              <th>Horaires</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-date">Jeu. 3 juil. 2026</td>
+              <td>
+                <div class="td-lieu">Centre EFS Saint-Denis</div>
+                <div class="td-adresse">5 rue Lacaussade, Saint-Denis</div>
+              </td>
+              <td class="td-horaire">8h – 13h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Mar. 8 juil. 2026</td>
+              <td>
+                <div class="td-lieu">Mairie de Sainte-Marie</div>
+                <div class="td-adresse">Pl. du 20 Décembre, Sainte-Marie</div>
+              </td>
+              <td class="td-horaire">9h – 15h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Sam. 12 juil. 2026</td>
+              <td>
+                <div class="td-lieu">Centre commercial Carrefour Nord</div>
+                <div class="td-adresse">Rte de la Digue, Sainte-Suzanne</div>
+              </td>
+              <td class="td-horaire">8h30 – 13h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Lun. 21 juil. 2026</td>
+              <td>
+                <div class="td-lieu">CHU Félix Guyon</div>
+                <div class="td-adresse">Allée des Topazes, Saint-Denis</div>
+              </td>
+              <td class="td-horaire">8h – 12h30</td>
+            </tr>
+            <tr>
+              <td class="td-date">Mer. 30 juil. 2026</td>
+              <td>
+                <div class="td-lieu">Mairie de Sainte-Clotilde</div>
+                <div class="td-adresse">Rue Louis Vaillant, Saint-Denis</div>
+              </td>
+              <td class="td-horaire">9h – 14h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Jeu. 7 août 2026</td>
+              <td>
+                <div class="td-lieu">Médiathèque de Saint-André</div>
+                <div class="td-adresse">Rue du Stade, Saint-André</div>
+              </td>
+              <td class="td-horaire">8h30 – 13h30</td>
+            </tr>
+            <tr>
+              <td class="td-date">Sam. 23 août 2026</td>
+              <td>
+                <div class="td-lieu">Centre EFS Saint-Denis</div>
+                <div class="td-adresse">5 rue Lacaussade, Saint-Denis</div>
+              </td>
+              <td class="td-horaire">8h – 12h</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EFS SUD -->
+      <div class="collecte-block reveal reveal-delay-1">
+        <div class="collecte-block-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <span class="collecte-zone-badge badge-sud">Sud</span>
+            </div>
+            <div class="collecte-block-title">EFS Saint-Pierre</div>
+            <div class="collecte-block-address">
+              Centre fixe · ZAC Terre Sainte, 97410 Saint-Pierre
+            </div>
+          </div>
+        </div>
+        <table class="collecte-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Lieu</th>
+              <th>Horaires</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-date">Ven. 4 juil. 2026</td>
+              <td>
+                <div class="td-lieu">Centre EFS Saint-Pierre</div>
+                <div class="td-adresse">ZAC Terre Sainte, Saint-Pierre</div>
+              </td>
+              <td class="td-horaire">8h – 13h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Mer. 9 juil. 2026</td>
+              <td>
+                <div class="td-lieu">Mairie du Tampon</div>
+                <div class="td-adresse">Rue Raphaël Babet, Le Tampon</div>
+              </td>
+              <td class="td-horaire">9h – 15h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Sam. 19 juil. 2026</td>
+              <td>
+                <div class="td-lieu">Centre commercial Leclerc Sud</div>
+                <div class="td-adresse">Rte de Terre Sainte, Saint-Pierre</div>
+              </td>
+              <td class="td-horaire">8h30 – 13h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Mar. 22 juil. 2026</td>
+              <td>
+                <div class="td-lieu">CHU Groupe Hospitalier Sud</div>
+                <div class="td-adresse">BP 350, 97448 Saint-Pierre Cedex</div>
+              </td>
+              <td class="td-horaire">8h – 12h30</td>
+            </tr>
+            <tr>
+              <td class="td-date">Sam. 2 août 2026</td>
+              <td>
+                <div class="td-lieu">Mairie de Saint-Louis</div>
+                <div class="td-adresse">1 rue de l'Église, Saint-Louis</div>
+              </td>
+              <td class="td-horaire">9h – 14h</td>
+            </tr>
+            <tr>
+              <td class="td-date">Jeu. 14 août 2026</td>
+              <td>
+                <div class="td-lieu">Salle polyvalente de Cilaos</div>
+                <div class="td-adresse">Rte de Bras-Sec, Cilaos</div>
+              </td>
+              <td class="td-horaire">8h30 – 13h30</td>
+            </tr>
+            <tr>
+              <td class="td-date">Ven. 28 août 2026</td>
+              <td>
+                <div class="td-lieu">Centre EFS Saint-Pierre</div>
+                <div class="td-adresse">ZAC Terre Sainte, Saint-Pierre</div>
+              </td>
+              <td class="td-horaire">8h – 12h</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Note -->
+    <p class="reveal" style="margin-top:28px;font-size:.78rem;color:var(--stone);font-style:italic;text-align:center;">
+      Calendrier mis à jour régulièrement. Inscription préalable recommandée. Vous recevrez une convocation par courrier avant chaque date.
+    </p>
+  </div>
+</section>
+
+<!-- INSCRIPTION -->
+<section id="inscription">
+  <div class="inscription-inner">
+    <p class="eyebrow light reveal">Comment participer</p>
+    <h2 class="inscription-title reveal reveal-delay-1">Simple,<br><em>rapide</em>, utile.</h2>
+    <p class="inscription-sub reveal reveal-delay-2">
+      La participation se déroule en trois étapes. Comptez environ 30 minutes sur place.
+    </p>
+
+    <div class="inscription-steps">
+      <div class="inscription-step reveal">
+        <span class="inscription-step-num">01</span>
+        <div class="inscription-step-text">
+          <strong>Inscrivez-vous en ligne ou sur place</strong>
+          Choisissez une date de collecte proche de chez vous et réservez votre créneau. L'inscription est gratuite et sans engagement.
+        </div>
+      </div>
+      <div class="inscription-step reveal reveal-delay-1">
+        <span class="inscription-step-num">02</span>
+        <div class="inscription-step-text">
+          <strong>Rendez-vous à la collecte avec votre pièce d'identité</strong>
+          Une équipe médicale EFS réalise un petit prélèvement sanguin et vous explique l'étude. Un formulaire de consentement est signé sur place.
+        </div>
+      </div>
+      <div class="inscription-step reveal reveal-delay-2">
+        <span class="inscription-step-num">03</span>
+        <div class="inscription-step-text">
+          <strong>Recevez votre bilan sanguin</strong>
+          En remerciement, vous recevez gratuitement un bilan sanguin complet dans les semaines suivant votre participation.
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-buttons reveal reveal-delay-3">
+      <a href="mailto:genome.reunion@chu-reunion.fr" class="btn-efs">Je m'inscris</a>
+      <a href="index.html" class="btn-outline">En savoir plus</a>
+    </div>
+
+    <!-- Contact -->
+    <p class="reveal" style="margin-top:32px;font-size:.78rem;color:rgba(255,255,255,.3);">
+      Questions ? Contactez-nous : <a href="mailto:genome.reunion@chu-reunion.fr" style="color:rgba(255,255,255,.5);text-decoration:none;">genome.reunion@chu-reunion.fr</a>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Le premier référentiel génomique dédié à la population réunionnaise.</div>
+  <ul class="footer-nav">
+    <li><a href="index.html#probleme">Pourquoi</a></li>
+    <li><a href="index.html#methode">Comment</a></li>
+    <li><a href="index.html#equipe">Équipe</a></li>
+    <li><a href="#inscription">S'inscrire</a></li>
+  </ul>
+  <div class="footer-copy">CHU de La Réunion · Service de Génétique · V3.5</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+/* Hero page reveal */
+window.addEventListener('load', () => {
+  [
+    { id: 'ph-kicker', delay: 120 },
+    { id: 'ph-title',  delay: 240 },
+    { id: 'ph-sub',    delay: 380 },
+  ].forEach(({ id, delay }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, delay);
+  });
+});
+</script>
+</body>
+</html>
