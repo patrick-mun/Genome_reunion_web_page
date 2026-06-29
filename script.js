@@ -15,6 +15,28 @@ if (nav) {
   });
 }
 
+/* ── STATS CONTENT NORMALIZATION ── */
+(function() {
+  const statsLabels = [
+    'participants génotypés',
+    'familles pour le phasage',
+    'WGS sélectionnés',
+    'modules d’aide à l’analyse'
+  ];
+
+  document.querySelectorAll('#stats .stat-item').forEach((item, index) => {
+    const label = item.querySelector('.stat-label');
+    if (label && statsLabels[index]) {
+      label.textContent = statsLabels[index];
+    }
+
+    const statSuffix = item.querySelector('.stat-num span:not(.count)');
+    if (statSuffix) {
+      statSuffix.remove();
+    }
+  });
+})();
+
 /* ── HERO REVEAL ── */
 window.addEventListener('load', () => {
   const heroEls = [
