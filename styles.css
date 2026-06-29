@@ -939,11 +939,11 @@ footer {
 .reveal-delay-3 { transition-delay: .3s; }
 .reveal-delay-4 { transition-delay: .4s; }
 
-/* ── PAILLE-EN-QUEUE (nuée sur toute la page) ── */
+/* ── PAILLE-EN-QUEUE (confiné au hero) ── */
 .bird-layer {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 50;
+  z-index: 3;
   pointer-events: none;
   overflow: hidden;
 }
