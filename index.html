@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Génome Réunion</title>
-<meta name="description" content="Génome Réunion construit un référentiel génomique local pour améliorer l'interprétation des variants et la médecine personnalisée à La Réunion.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
@@ -12,8 +11,10 @@
 </head>
 <body>
 
+<!-- Progress bar -->
 <div id="progress"></div>
 
+<!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 60" fill="none" role="img" aria-label="Génome Réunion">
@@ -30,214 +31,261 @@
   </a>
   <ul class="nav-links">
     <li><a href="#probleme">Pourquoi</a></li>
-    <li><a href="#methode">Méthode</a></li>
+    <li><a href="#methode">Comment</a></li>
     <li><a href="#equipe">Équipe</a></li>
   </ul>
-  <a href="participer.html" class="nav-cta">S'informer</a>
+  <a href="participer.html" class="nav-cta">Participer</a>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
+
   <div class="hero-waves">
     <svg class="wave-1" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50 C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90 L2880,220 L0,220 Z" fill="#091F30"/>
+      <path d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
+               C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
+               L2880,220 L0,220 Z" fill="#091F30"/>
     </svg>
     <svg class="wave-2" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130 C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135 C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130 L2880,220 L0,220 Z" fill="#1E6E8C"/>
+      <path d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130
+               C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
+               C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
+               L2880,220 L0,220 Z" fill="#1E6E8C"/>
     </svg>
     <svg class="wave-3" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165 C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160 C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158 L2880,220 L0,220 Z" fill="#E8654A"/>
+      <path d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165
+               C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
+               C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
+               L2880,220 L0,220 Z" fill="#E8654A"/>
     </svg>
   </div>
 
   <div class="hero-inner">
     <p class="hero-creole" id="hero-creole">Nout' léritaz, nout' santé.</p>
     <h1 class="hero-title" id="hero-title">
-      Un référentiel<br>génomique pour<br><em>La Réunion</em>.
+      Le génome<br>de <em>La Réunion</em><br>par La Réunion.
     </h1>
     <p class="hero-body" id="hero-body">
-      Génome Réunion vise à mieux représenter la diversité génétique réunionnaise dans les outils de diagnostic, de recherche et de médecine personnalisée. Le projet construit une base locale de variants pour interpréter les données génétiques avec des références adaptées au territoire.
+      À La Réunion, chaque habitant porte l'héritage de plusieurs continents. Pourtant les outils médicaux ont été conçus pour d'autres populations. Génome Réunion bâtit la première référence génétique de l'île, pour que chaque soin s'adapte enfin à vous.
     </p>
     <div class="hero-actions" id="hero-actions">
-      <a href="participer.html" class="btn-primary">S'informer sur le projet</a>
+      <a href="participer.html" class="btn-primary">Je veux participer</a>
       <a href="#probleme" class="btn-ghost">Pourquoi c'est important</a>
     </div>
   </div>
 </section>
 
+<!-- STATS -->
 <section id="stats">
   <div class="stat-item">
     <div class="stat-num"><span class="count" data-target="2500">0</span></div>
-    <div class="stat-label">participants génotypés sur puce SNP</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num"><span class="count" data-target="350">0</span></div>
-    <div class="stat-label">génomes complets sélectionnés pour le WGS</div>
+    <div class="stat-label">Réunionnais·es participants</div>
   </div>
   <div class="stat-item">
     <div class="stat-num"><span class="count" data-target="100">0</span></div>
-    <div class="stat-label">familles nucléaires pour le phasage</div>
+    <div class="stat-label">Familles étudiées</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num"><span class="count" data-target="4">0</span></div>
-    <div class="stat-label">modules d'aide à l'analyse clinique</div>
+    <div class="stat-num"><span class="count" data-target="350">0</span></div>
+    <div class="stat-label">Génomes complets séquencés</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num"><span class="count" data-target="4">0</span> <span style="font-size:1.2rem;color:var(--teal-light)">IA</span></div>
+    <div class="stat-label">Modules cliniques</div>
   </div>
 </section>
 
+<!-- PROBLÈME -->
 <section id="probleme" class="section">
   <div class="section-inner">
     <div class="probleme-hero">
-      <p class="eyebrow reveal">Pourquoi ce référentiel est nécessaire</p>
+      <p class="eyebrow reveal">Pourquoi c'est urgent</p>
       <div class="big-stat reveal reveal-delay-1"><em>≥ 80</em>%</div>
       <p class="big-stat-label reveal reveal-delay-2">
-        des participants aux grandes études génétiques internationales restent majoritairement d'ascendance européenne. Les populations admixées et ultramarines sont encore insuffisamment représentées.
+        des individus dans les bases génétiques mondiales sont d'origine européenne — laissant les autres populations sans référence.
       </p>
-      <p class="big-stat-note reveal reveal-delay-2">enjeu de représentativité · diagnostic · médecine personnalisée</p>
+      <p class="big-stat-note reveal reveal-delay-2">gnomAD · 1000 Genomes · HGMD</p>
     </div>
-
     <div class="probleme-cards">
       <div class="pb-item reveal">
-        <div class="pb-item-num">Diagnostic</div>
-        <p class="pb-item-text">Un variant très rare dans les bases internationales peut être plus fréquent à La Réunion. Sans fréquence locale, son interprétation peut rester incertaine.</p>
+        <div class="pb-item-num">Posologie</div>
+        <p class="pb-item-text">Un médicament dosé pour un Européen peut être trop fort ou insuffisant pour un patient réunionnais. Votre métabolisme génétique est différent.</p>
       </div>
       <div class="pb-item reveal reveal-delay-1">
-        <div class="pb-item-num">Pharmacogénétique</div>
-        <p class="pb-item-text">Pour certains médicaments, les variants génétiques influencent la réponse au traitement. Des données locales peuvent aider à mieux documenter ces profils.</p>
+        <div class="pb-item-num">Diagnostic</div>
+        <p class="pb-item-text">Un variant classé "rare" en Europe peut être parfaitement courant et bénin à La Réunion — mais personne ne le sait encore.</p>
       </div>
       <div class="pb-item reveal reveal-delay-2">
-        <div class="pb-item-num">Équité</div>
-        <p class="pb-item-text">Mieux représenter la population réunionnaise dans les référentiels génomiques, c'est réduire un biais scientifique qui peut devenir un biais de santé.</p>
+        <div class="pb-item-num">Prévention</div>
+        <p class="pb-item-text">Votre risque de diabète ou d'hypertension, calculé sur des données européennes, peut ne pas vous correspondre du tout.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- CE QUE ÇA CHANGE -->
 <section id="change" class="section">
   <div class="section-inner">
-    <p class="eyebrow light reveal">Ce que le projet apporte</p>
-    <h2 class="change-title reveal reveal-delay-1">Des références locales pour mieux interpréter les données génétiques.</h2>
+    <p class="eyebrow light reveal">Ce que ça change</p>
+    <h2 class="change-title reveal reveal-delay-1">Une médecine enfin pensée pour nous.</h2>
     <div class="change-grid">
       <div class="change-card reveal">
         <div class="change-card-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
-        <div class="change-card-title">Base de fréquences locale</div>
-        <p class="change-card-text">Documenter les variants observés à La Réunion et distinguer plus finement les variants fréquents localement des variants réellement rares.</p>
+        <div class="change-card-title">Le bon médicament, à la bonne dose</div>
+        <p class="change-card-text">Votre héritage génétique détermine comment votre corps réagit aux médicaments. Avec une référence locale, les traitements pourront être ajustés à votre profil réel.</p>
       </div>
       <div class="change-card reveal reveal-delay-1">
         <div class="change-card-icon">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         </div>
-        <div class="change-card-title">Interprétation clinique améliorée</div>
-        <p class="change-card-text">Réduire l'incertitude autour de certains VUS et soutenir les biologistes dans l'analyse des variants constitutionnels et pharmacogénétiques.</p>
+        <div class="change-card-title">Un diagnostic plus rapide</div>
+        <p class="change-card-text">Quand un médecin trouve quelque chose d'inhabituel dans votre ADN, il peut vérifier si c'est simplement fréquent à La Réunion — et vous rassurer plus vite.</p>
       </div>
       <div class="change-card reveal reveal-delay-2">
         <div class="change-card-icon">
           <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
-        <div class="change-card-title">Recherche structurante</div>
-        <p class="change-card-text">Créer une ressource pour la génétique des populations, l'étude des effets fondateurs et les collaborations dans l'océan Indien.</p>
+        <div class="change-card-title">Une prévention sur mesure</div>
+        <p class="change-card-text">Des scores de risque calculés sur votre population réelle. Pas une estimation conçue pour quelqu'un d'autre.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- CARREFOUR GÉNÉTIQUE -->
 <section id="carrefour" class="section">
   <div class="section-inner">
     <div class="carrefour-layout">
       <div>
-        <p class="eyebrow reveal">Une population admixée et fondatrice</p>
+        <p class="eyebrow reveal">Une richesse unique au monde</p>
         <h2 class="carrefour-title reveal reveal-delay-1">La Réunion,<br>carrefour génétique.</h2>
         <p class="carrefour-body reveal reveal-delay-2">
-          L'histoire de La Réunion associe des apports africains, malgaches, indiens, européens, chinois et comoriens, avec un peuplement insulaire relativement récent. Cette histoire a produit une population fortement admixée, mais aussi des effets fondateurs locaux importants pour la génétique médicale.
+          Façonnée par l'Afrique, Madagascar, l'Inde du Sud, l'Europe et la Chine, la population réunionnaise porte une diversité génétique exceptionnelle. Chaque personne est une combinaison unique d'héritages. C'est précisément cette richesse que Génome Réunion met en lumière.
         </p>
-        <div style="display:flex;gap:32px;flex-wrap:wrap;" class="reveal reveal-delay-3">
+        <div style="display:flex;gap:32px;" class="reveal reveal-delay-3">
           <div>
             <div style="font-family:var(--f-display);font-size:1.8rem;font-weight:300;color:var(--navy);">5+</div>
-            <div style="font-size:.78rem;color:var(--stone);">grandes composantes ancestrales</div>
+            <div style="font-size:.78rem;color:var(--stone);">grandes ascendances</div>
           </div>
           <div>
             <div style="font-family:var(--f-display);font-size:1.8rem;font-weight:300;color:var(--navy);">360</div>
-            <div style="font-size:.78rem;color:var(--stone);">ans de peuplement insulaire</div>
+            <div style="font-size:.78rem;color:var(--stone);">ans de peuplement métissé</div>
           </div>
         </div>
       </div>
 
-      <div class="reveal reveal-delay-2" style="background:var(--white);border:1px solid var(--sand);border-radius:16px;padding:32px;box-shadow:0 8px 40px rgba(15,58,86,.06);">
-        <p class="eyebrow coral" style="margin-bottom:16px;">Approche scientifique</p>
-        <div class="ancestry-legend" style="margin-top:0;">
-          <div class="legend-item"><span class="legend-dot" style="--c:#0F3A56">Génotypage SNP de la cohorte</span></div>
-          <div class="legend-item"><span class="legend-dot" style="--c:#1E6E8C">PCA et analyse d'admixture</span></div>
-          <div class="legend-item"><span class="legend-dot" style="--c:#E8654A">Contrôle de la parenté et des ROH</span></div>
-          <div class="legend-item"><span class="legend-dot" style="--c:#C0852C">Sélection WGS représentative</span></div>
-          <div class="legend-item"><span class="legend-dot" style="--c:#9FD3E0">Base locale de variants</span></div>
+      <!-- Donut chart -->
+      <div class="reveal reveal-delay-2">
+        <svg class="donut" viewBox="0 0 100 100">
+          <!-- Afrique/Malgache 45% → 162° -->
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#0F3A56" stroke-width="14"
+            stroke-dasharray="106.8 237.9" stroke-dashoffset="0"/>
+          <!-- Inde 25% → 90° -->
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#1E6E8C" stroke-width="14"
+            stroke-dasharray="59.7 285.0" stroke-dashoffset="-106.8"/>
+          <!-- Européen 15% → 54° -->
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#E8654A" stroke-width="14"
+            stroke-dasharray="35.8 308.9" stroke-dashoffset="-166.5"/>
+          <!-- Zarabe 8% → 28.8° -->
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#C0852C" stroke-width="14"
+            stroke-dasharray="19.1 325.6" stroke-dashoffset="-202.3"/>
+          <!-- Chine 7% → 25.2° -->
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#9FD3E0" stroke-width="14"
+            stroke-dasharray="16.7 328.0" stroke-dashoffset="-221.4"/>
+        </svg>
+
+        <div class="ancestry-legend" style="max-width:260px;margin:0 auto;">
+          <div class="legend-item">
+            <span class="legend-dot" style="--c:#0F3A56">Afrique &amp; Malgache</span>
+            <span class="legend-pct">45 %</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="--c:#1E6E8C">Inde du Sud</span>
+            <span class="legend-pct">25 %</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="--c:#E8654A">Européen</span>
+            <span class="legend-pct">15 %</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="--c:#C0852C">Zarabe / Gujarati</span>
+            <span class="legend-pct">8 %</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="--c:#9FD3E0">Chine / Asie</span>
+            <span class="legend-pct">7 %</span>
+          </div>
+          <p style="font-size:.68rem;color:var(--stone);font-style:italic;margin-top:8px;">Valeurs illustratives</p>
         </div>
-        <p style="font-size:.78rem;color:var(--stone);line-height:1.7;margin-top:20px;">
-          Les proportions ancestrales individuelles seront estimées par les données génétiques du projet, et non présupposées par des catégories sociales ou ethniques.
-        </p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- MÉTHODE -->
 <section id="methode" class="section">
   <div class="section-inner">
-    <p class="eyebrow reveal">Méthode</p>
-    <h2 class="methode-title reveal reveal-delay-1">Trois étapes,<br>un référentiel local.</h2>
+    <p class="eyebrow reveal">Comment ça marche</p>
+    <h2 class="methode-title reveal reveal-delay-1">Trois étapes,<br>un seul objectif.</h2>
     <div class="methode-steps">
       <div class="step reveal">
         <span class="step-count">Étape 01</span>
-        <h3 class="step-title">Cohorte et génotypage</h3>
-        <p class="step-body">Environ 2 500 volontaires sont génotypés sur puce SNP afin de décrire la structure génétique de la cohorte et les grands axes de diversité.</p>
+        <h3 class="step-title">La grande carte</h3>
+        <p class="step-body">2 500 Réunionnais·es volontaires donnent un échantillon. On analyse leur profil génétique pour dessiner la première carte de la diversité génétique de l'île.</p>
       </div>
       <div class="step reveal reveal-delay-1">
         <span class="step-count">Étape 02</span>
-        <h3 class="step-title">Sélection des WGS</h3>
-        <p class="step-body">350 individus sont sélectionnés selon une méthodologie reproductible combinant représentativité géographique, diversité génétique, admixture, parenté et ROH.</p>
+        <h3 class="step-title">L'héritage familial</h3>
+        <p class="step-body">100 familles réunionnaises servent de témoins pour valider le phasage haplotypique — comprendre comment les gènes se transmettent dans notre population métissée.</p>
       </div>
       <div class="step reveal reveal-delay-2">
         <span class="step-count">Étape 03</span>
-        <h3 class="step-title">Référentiel clinique</h3>
-        <p class="step-body">Les génomes complets alimentent une base de variants locale utilisable pour l'interprétation, la recherche et le développement d'outils d'aide à l'analyse.</p>
+        <h3 class="step-title">La référence complète</h3>
+        <p class="step-body">350 génomes complets séquencés, sélectionnés pour représenter au mieux toute la diversité réunionnaise. La fondation de la médecine de précision locale.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- OUTILS -->
 <section id="outils" class="section">
   <div class="section-inner">
-    <p class="eyebrow light reveal">Applications prévues</p>
-    <h2 class="outils-title reveal reveal-delay-1">Quatre modules<br>d'aide à l'analyse clinique.</h2>
+    <p class="eyebrow light reveal">Ce que ça permet</p>
+    <h2 class="outils-title reveal reveal-delay-1">Quatre outils<br>pour votre santé.</h2>
     <div class="outils-grid">
       <div class="outil-card reveal">
         <div class="outil-num">01</div>
-        <h3 class="outil-title">Pathogénicité des variants</h3>
-        <p class="outil-body">Aider à distinguer variants probablement bénins, variants pathogènes et variants de signification incertaine dans le contexte réunionnais.</p>
+        <h3 class="outil-title">Identifier les gènes qui comptent</h3>
+        <p class="outil-body">Distinguer avec certitude les variants liés à une maladie de ceux qui sont simplement fréquents dans notre population.</p>
       </div>
       <div class="outil-card reveal reveal-delay-1">
         <div class="outil-num">02</div>
-        <h3 class="outil-title">Pharmacogénétique</h3>
-        <p class="outil-body">Documenter les profils pharmacogénétiques locaux et préparer une meilleure intégration clinique lorsque les données seront validées.</p>
+        <h3 class="outil-title">Le médicament adapté à vous</h3>
+        <p class="outil-body">La bonne molécule, au bon dosage, selon votre profil génétique réel — pas un profil conçu pour un Européen moyen.</p>
       </div>
       <div class="outil-card reveal reveal-delay-2">
         <div class="outil-num">03</div>
-        <h3 class="outil-title">Admixture et histoire populationnelle</h3>
-        <p class="outil-body">Décrire les composantes ancestrales et les effets fondateurs sans réduire les individus à des catégories sociales ou déclaratives.</p>
+        <h3 class="outil-title">Vos racines génétiques</h3>
+        <p class="outil-body">Comprendre la mosaïque d'héritages qui forme votre génome : Afrique, Madagascar, Inde du Sud, Europe, Asie.</p>
       </div>
       <div class="outil-card reveal reveal-delay-3">
         <div class="outil-num">04</div>
-        <h3 class="outil-title">Scores de risque</h3>
-        <p class="outil-body">Explorer le recalibrage de scores de risque polygénique, avec prudence, validation et limites clairement documentées.</p>
+        <h3 class="outil-title">Votre risque, vraiment le vôtre</h3>
+        <p class="outil-body">Des scores de risque polygénique calibrés sur la population réunionnaise réelle, pour une prévention enfin personnalisée.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ÉQUIPE -->
 <section id="equipe" class="section">
   <div class="section-inner">
     <p class="eyebrow reveal">Un projet collectif</p>
     <h2 class="equipe-title reveal reveal-delay-1">Génome Réunion,<br>une équipe locale.</h2>
     <p class="equipe-sub reveal reveal-delay-2">
-      Projet porté par le Service de Génétique du CHU de La Réunion, avec des collaborations scientifiques, hospitalières et territoriales en cours de structuration.
+      Porté par le Service de Génétique Moléculaire du CHU de La Réunion, avec le soutien de partenaires locaux et nationaux.
     </p>
 
     <div class="team-grid">
@@ -245,28 +293,28 @@
         <div class="team-avatar" style="background:var(--navy);">BD</div>
         <div>
           <div class="team-name">Pr Bérénice Doray</div>
-          <div class="team-role">Cheffe du Service de Génétique · CHU de La Réunion</div>
+          <div class="team-role">Chef de service · Génétique médicale</div>
         </div>
       </div>
       <div class="team-card reveal reveal-delay-1">
         <div class="team-avatar" style="background:var(--coral);">PM</div>
         <div>
           <div class="team-name">Patrick Munier</div>
-          <div class="team-role">Initiateur et coordinateur · Génétique des populations</div>
+          <div class="team-role">Porteur · Initiateur et coordinateur · Génétique des populations</div>
         </div>
       </div>
       <div class="team-card reveal reveal-delay-2">
         <div class="team-avatar" style="background:var(--teal);">TH</div>
         <div>
           <div class="team-name">Dr Thomas Huby</div>
-          <div class="team-role">Co-porteur scientifique · Génétique moléculaire</div>
+          <div class="team-role">Co-porteur scientifique · Coordinateur</div>
         </div>
       </div>
       <div class="team-card reveal reveal-delay-3">
         <div class="team-avatar" style="background:var(--amber);">SG</div>
         <div>
           <div class="team-name">Susie Guilly</div>
-          <div class="team-role">Ingénieure · Service de Génétique</div>
+          <div class="team-role">Ingénieure de recherche</div>
         </div>
       </div>
       <div class="team-card reveal reveal-delay-4">
@@ -278,51 +326,73 @@
       </div>
     </div>
 
-    <p class="partners-title reveal">Partenaires et collaborations</p>
+    <p class="partners-title reveal">Partenaires</p>
     <div class="partners-row reveal reveal-delay-1">
-      <span class="partner-pill">CHU de La Réunion</span>
-      <span class="partner-pill">EFS Réunion</span>
-      <span class="partner-pill">CRB</span>
+      <!-- Logo POPgen SVG inline -->
+      <a href="#" class="partner-logo-link" title="POPgen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1023 968" height="36" style="display:block;opacity:.75;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.75">
+          <defs><style>.pl1{fill:#2c2e35}.pl2{fill:#fb4d2b}.pl3{fill:#fc7d34}.pl4{fill:#662d91}</style></defs>
+          <path class="pl1" d="M421.13,680.51a22.6,22.6,0,0,0,2.47-.17c2-.28,2.93.64,3.3,2.47.43,2.24-1.27,2.22-2.62,2.47-2.11.39-4.23.75-6.36,1-17.27,2-27.32-6-29.48-23.24-1.19-9.55-.92-19.13-.93-28.7,0-3.55-1.2-5.06-4.73-4.62h-.43c-2.57-.26-6.6.86-6.46-2.89s4.11-1.21,6.28-1.86a14,14,0,0,1,2.58-.15c.86-.09,1.72-.4,1.72-1.51a1.58,1.58,0,0,0-1.59-1.54h-.13c-2.72-.09-5.44-.1-8.15-.13-1.72,0-3.26-.38-3.26-2.49s1.71-2,3.11-2c2.28-.08,4.57,0,6.87-.1,1.11,0,2.51,0,2.36-1.72-.12-1.28-1.25-1.41-2.28-1.42-2.43,0-4.86,0-7.29,0-1.57,0-3.43.12-3.31-2.26.1-2.15,1.78-2.28,3.44-2.31,2,0,4,0,6-.1.86,0,1.81-.22,1.77-1.37s-.94-1.39-1.81-1.43c-1.86-.09-3.72,0-5.58-.12-1.07,0-2.57.26-2.57-1.46a2.66,2.66,0,0,1,2.13-2.84,8.88,8.88,0,0,1,2.57-.2c3.49.24,3.61-1.36,2.11-3.8-.86-1.42-1.13-3.83-3-3.83s-2.29,2.31-3.15,3.74c-7.53,12.63-4.48,32.57,8.16,40.8a4.09,4.09,0,0,1,2.18,2.52c.23,1.22.52,2.72-.46,3.69s-2.17,0-3.15-.42c-12.64-5.89-17.3-16.84-18.55-29.75a34.48,34.48,0,0,1,5.15-21.77,38,38,0,0,0,4.08-10.67c10.5-39.57,35.59-65.17,75.08-75.88,22.46-6.09,44.81-3.63,66.58,4.34,4.72,1.72,8.88,4.58,13.27,7,2.66,1.45,2.58,2.92.46,4.91s-4,3.86-6,5.83-3.72,3.77-5.54,5.71c-2,2.11-3.53,2-5.92.65A80.4,80.4,0,0,0,402.64,563a79.19,79.19,0,0,0-11.07,30.43c-.27,1.86-.38,3.65.71,5.37,3.87,6.15,5,13.08,5.09,20.14.15,10,0,20,0,30.06a80.9,80.9,0,0,0,.93,12.82c1.89,12.7,9.32,19,22.83,18.73Z"/>
+          <path class="pl2" d="M462.53,590.88a12,12,0,0,0,0,24c28.44.3,58.53.31,83.59.2,3.83,0,5,1.11,4.25,5-4.06,19.72-14,35.72-29.53,48.44-4.86,4-9.58,6-16.32,4.08-7.81-2.27-15.31-.15-21.33,5.79-.86.85-2,1.91-1,3.28a2.33,2.33,0,0,0,3.69.5c3-2.35,3.94-1.11,3.85,2.13a11.92,11.92,0,0,0,.23,3,2.4,2.4,0,0,0,2.42,2c1.42-.07,1.17-1.41,1.21-2.33.11-1.85,0-3.73.12-5.57.06-1.25,0-3,1.77-2.86,1.55.09,1.2,1.71,1.2,2.77.05,2.43.05,4.86.05,7.29,0,1.64.09,3.48,2.22,3.48,2.42,0,1.8-2.1,1.95-3.54.32-3.13-.6-6.4.68-9.59.5.28.91.44.93.58.16,3.27.25,6.55.4,9.82.06,1.12-.12,2.58,1.55,2.58a2.43,2.43,0,0,0,2.58-2.34c.14-2,.08-4,.14-6,0-.83-.06-2.18.93-2.09,2.49.24,3.73,2.47,5.25,4.1,1.06,1.13,1.15,2.35,0,3.77a15.34,15.34,0,0,1-16.7,4.63c-4.79-1.72-8.7-4.86-12.7-7.9-6.37-4.83-12.54-10-20.27-12.66a34.17,34.17,0,0,0-21.91-.12c-1.82.56-2.48,1.67-1.91,3.59.51,1.69,1.51,1.88,3,1.39,11.21-3.88,20,.82,28.18,7.9,4.32,3.74,8.56,7.6,13.13,11,8,6,16.76,6.59,25.89,2.45a108.84,108.84,0,0,0,13.57-7.33c34.84-22.11,51.82-53.72,50.47-95-.2-6-.57-6.33-6.42-6.33h-42c-23.19.16-40.32-.2-63.05-.2Z"/>
+          <path class="pl3" d="M464.68,712.49c-15.83,0-27.16-7.73-32.79-22.15-1.82-4.67-3.35-9.45-4.95-14.18-1-2.95-2.25-3.64-4.76-1.17-1.85,1.81-3.94,5.92-6.72,2.88-1.89-2.1,2.41-3.68,3.62-5.68,1-1.68,4.68-2.9,2.77-4.88s-3.23,1.55-4.74,2.66a45.14,45.14,0,0,0-4.89,4.79c-1.16,1.17-2.38,1.64-3.7.31s-.21-2.35.67-3.26c2.28-2.36,4.68-4.62,6.87-7,.86-.86,2.91-1.88,1.13-3.38-1.49-1.26-2.58.48-3.51,1.44-2.15,2.09-4.22,4.29-6.38,6.35-1.09,1-2.23,2.68-3.89.86s0-2.84,1-3.95c2.1-2.15,4.25-4.24,6.33-6.42.65-.66,1.84-1.41,1-2.47s-2.11-.4-3,.39c-1.79,1.66-3.44,3.44-5.26,5.06-.76.68-1.51,2.34-2.7,1.26a2.86,2.86,0,0,1-.31-3.93,38.84,38.84,0,0,1,3.53-3.73c1.66-1.6,1.72-2.84-.66-3.72a10.75,10.75,0,0,1-2.67-1.33c-1.5-1.12-1.36-2.81-.91-4.29.6-2.06,2.27-1.17,3.59-.94,18.43,3.2,31,12.66,34.24,32.09a9.23,9.23,0,0,0,.36,1.72c.7,2,.29,5.15,2.2,5.69s2.5-2.57,3.72-4,3-2.32,4.49-1.32c1.71,1.18-.26,2.48-.86,3.57-1.29,2.21-2.76,4.34-4.25,6.45-1.71,2.37-.47,4.44,1.3,5.51,1.95,1.18,2.35-1.4,3.12-2.5,2.29-3.28,4.4-6.69,6.57-10.06.86-1.38,2.05-2.11,3.57-1.08s.41,2.29-.21,3.31c-2.45,4-4.89,8.07-7.48,12-1.14,1.76-1.27,3,.71,4.23s3,.63,4-1.23c2.44-4.37,5.05-8.65,7.61-12.94.65-1.08,1.22-2.49,2.93-1.54s1.55,2.23.72,3.64c-2.33,3.94-4.73,7.84-7,11.83-.67,1.19-2.52,2.81-.16,3.88,1.91.86,4.39,2.19,6-.79,1.82-3.44,3.56-6.87,5.4-10.24.64-1.18,1.14-3,3.11-1.85,1.63.91,1.38,2.31.65,3.71-1.2,2.29-2.43,4.54-3.59,6.88-.43.85-1.28,1.85-.62,2.78.79,1.12,2.1.57,3.18.33a29.54,29.54,0,0,0,8.75-3.52,7.79,7.79,0,0,1,2.68-1.27,3.28,3.28,0,0,1,3.61,1.72c.6,1.37-.91,1.91-1.78,2.52-6.63,4.7-13.92,7.28-21.73,7Z"/>
+          <path d="M596.64,702.12a11,11,0,0,1-11-11V531.29a11,11,0,0,1,11-11H706.11a10.73,10.73,0,1,1,0,21.46H620.7a11,11,0,0,0-11,11v33.68a11,11,0,0,0,11,11h78.59a10.67,10.67,0,1,1,0,21.34H620.7a11,11,0,0,0-11,11v39.89a11,11,0,0,0,11,11h89.63a10.73,10.73,0,1,1,0,21.46Z"/>
+          <path d="M742.47,702.12a11,11,0,0,1-11-11V531.29a11,11,0,0,1,11-11h2.68c6.05,0,13.76,4.11,17.12,9.14L845.54,653.9c3.36,5,6.12,4.2,6.12-1.85V531.29a11,11,0,0,1,11-11h1.07a11,11,0,0,1,11,11V691.12a11,11,0,0,1-11,11H861c-6,0-13.75-4.12-17.11-9.15L760.65,568.38c-3.36-5-6.11-4.2-6.11,1.85V691.12a11,11,0,0,1-11,11Z"/>
+          <path d="M322.27,467.94a10.53,10.53,0,0,1-10.5-10.5V287.52a10.54,10.54,0,0,1,10.5-10.5h51c5.78,0,15.23.13,21,.29,0,0,11.86.32,18.54,1.53q14.07,2.36,23.58,8.93a46.87,46.87,0,0,1,15.3,18.42,58.55,58.55,0,0,1,5.79,26.05q0,24.36-15.49,41.22C431.67,384.7,396.43,389,396.43,389a206,206,0,0,1-20.92,1.28h-28a10.53,10.53,0,0,0-10.5,10.5v56.62a10.53,10.53,0,0,1-10.5,10.5ZM337,357.29a10.52,10.52,0,0,0,10.5,10.5H375.9c5.77,0,15.19-.51,20.94-1.13,0,0,17.47-1.9,24.33-8s10.29-14.63,10.29-25.66q0-12-6.06-20.51a28.36,28.36,0,0,0-15.95-11.27c-4.26-1.12-13.08-1.38-13.08-1.38-5.77-.17-15.22-.31-21-.31H347.54a10.53,10.53,0,0,0-10.5,10.5Z"/>
+          <path d="M663.53,467.94a10.53,10.53,0,0,1-10.5-10.5V287.52a10.54,10.54,0,0,1,10.5-10.5h51c5.78,0,15.22.13,21,.29,0,0,11.86.32,18.54,1.53q14.07,2.36,23.57,8.93A46.81,46.81,0,0,1,793,306.19a58.55,58.55,0,0,1,5.79,26.05q0,24.36-15.5,41.22C772.93,384.7,737.69,389,737.69,389a206.24,206.24,0,0,1-20.93,1.28h-28a10.53,10.53,0,0,0-10.5,10.5v56.62a10.53,10.53,0,0,1-10.5,10.5ZM678.3,357.29a10.52,10.52,0,0,0,10.5,10.5h28.36c5.77,0,15.19-.51,20.93-1.13,0,0,17.48-1.9,24.34-8s10.28-14.63,10.28-25.66q0-12-6.05-20.51a28.36,28.36,0,0,0-15.95-11.27c-4.26-1.12-13.08-1.38-13.08-1.38-5.77-.17-15.22-.31-21-.31H688.8a10.53,10.53,0,0,0-10.5,10.5Z"/>
+          <path d="M462.86,375.91q0-45.45,24.41-71.17t63-25.72q25.29,0,45.58,12.08a79,79,0,0,1,30.95,33.69q10.65,21.61,10.65,49,0,27.78-11.21,49.69t-31.76,33.19a90.67,90.67,0,0,1-44.33,11.27q-25.78,0-46.08-12.45a80.08,80.08,0,0,1-30.76-34A103.06,103.06,0,0,1,462.86,375.91Zm24.91.37q0,33,17.74,52t44.52,19q27.27,0,44.9-19.18t17.62-54.42q0-22.29-7.54-38.92A57.94,57.94,0,0,0,583,309a59.77,59.77,0,0,0-32.56-9.15,61.8,61.8,0,0,0-44.15,17.62Q487.77,335.07,487.77,376.28Z"/>
+          <path class="pl4" d="M853.72,484.34l66.47-96.92C870.82,400.94,848.8,434.32,853.72,484.34Z"/>
+        </svg>
+      </a>
       <span class="partner-pill">Université de La Réunion</span>
-      <span class="partner-pill">POPgen</span>
       <span class="partner-pill">Région Réunion</span>
+      <a href="participer.html" class="partner-logo-link" title="EFS — Établissement Français du Sang">
+        <img src="images/efs-logo.svg" alt="EFS" height="36" style="display:block;opacity:.75;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.75">
+      </a>
+      <span class="partner-pill">CRB</span>
     </div>
-    <p style="font-size:.75rem;color:var(--stone);line-height:1.6;margin-top:16px;" class="reveal reveal-delay-2">
-      La liste des partenaires sera ajustée selon les conventions, autorisations et financements effectivement validés.
-    </p>
   </div>
 </section>
 
+<!-- CTA -->
 <section id="participer">
   <div class="cta-inner">
-    <h2 class="cta-title reveal">Mieux représenter<br><em>La Réunion</em><br>dans la génomique.</h2>
+    <h2 class="cta-title reveal">Construisons<br>ensemble <em>notre</em><br>référence.</h2>
     <p class="cta-sub reveal reveal-delay-1">
-      Le projet est en cours de structuration. Les modalités de participation seront précisées dans le cadre réglementaire, éthique et hospitalier approprié.
+      Chaque participant contribue à bâtir la première ressource génomique réunionnaise. Pour vous, vos enfants, et toute La Réunion.
     </p>
-    <a href="participer.html" class="btn-large reveal reveal-delay-2">Comprendre la participation</a>
+    <a href="participer.html" class="btn-large reveal reveal-delay-2">Je veux participer</a>
   </div>
   <div class="hero-waves">
     <svg class="wave-1" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50 C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90 L2880,220 L0,220 Z" fill="#091F30"/>
+      <path d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
+               C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
+               L2880,220 L0,220 Z" fill="#091F30"/>
     </svg>
     <svg class="wave-2" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130 C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135 C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130 L2880,220 L0,220 Z" fill="#1E6E8C"/>
+      <path d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130
+               C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
+               C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
+               L2880,220 L0,220 Z" fill="#1E6E8C"/>
     </svg>
     <svg class="wave-3" viewBox="0 0 2880 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165 C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160 C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158 L2880,220 L0,220 Z" fill="#E8654A"/>
+      <path d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165
+               C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
+               C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
+               L2880,220 L0,220 Z" fill="#E8654A"/>
     </svg>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-brand">Référentiel génomique réunionnais · Document de communication projet</div>
+  <div class="footer-brand">Le premier référentiel génomique dédié à la population réunionnaise.</div>
   <ul class="footer-nav">
     <li><a href="#probleme">Pourquoi</a></li>
-    <li><a href="#methode">Méthode</a></li>
+    <li><a href="#methode">Comment</a></li>
     <li><a href="#equipe">Équipe</a></li>
-    <li><a href="participer.html">S'informer</a></li>
+    <li><a href="#participer">Participer</a></li>
   </ul>
-  <div class="footer-copy">CHU de La Réunion · Service de Génétique · Version communication</div>
+  <div class="footer-copy">CHU de La Réunion · Service de Génétique · V3.5</div>
 </footer>
 
 <script src="script.js"></script>
