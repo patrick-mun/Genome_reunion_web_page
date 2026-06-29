@@ -1,42 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="EFS — Établissement Français du Sang · Du donneur aux patients">
-  <defs>
-    <!-- Police cursive simulée via path pour la signature -->
-    <style>
-      .efs-circle   { fill: none; stroke: #1A2C72; stroke-width: 8; }
-      .efs-arc      { fill: none; stroke: #1A2C72; stroke-width: 9; stroke-linecap: round; }
-      .efs-letters  { font-family: 'Georgia', 'Times New Roman', serif; font-weight: 700; font-size: 108px; fill: #1A2C72; letter-spacing: 6px; }
-      .efs-subtitle { font-family: 'Arial', 'Helvetica', sans-serif; font-weight: 700; font-size: 22px; fill: #1A2C72; letter-spacing: 2.5px; }
-      .efs-script   { font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; font-size: 44px; fill: #D81921; }
-      .efs-line     { stroke: #D81921; stroke-width: 2.5; }
-      .efs-tri      { fill: #D81921; }
-    </style>
-  </defs>
+  <style>
+    .bg  { fill: white; stroke: #1B2D72; stroke-width: 7; }
+    .arc { fill: none; stroke: #1B2D72; stroke-width: 9; stroke-linecap: butt; }
+    .efs { font-family: 'Georgia', 'Times New Roman', serif; font-weight: bold; font-size: 108px; fill: #1B2D72; }
+    .sub { font-family: 'Arial Narrow', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 16.5px; fill: #1B2D72; letter-spacing: 1px; }
+    .ln  { stroke: #D0011B; stroke-width: 2; }
+    .tri { fill: #D0011B; }
+    .sig { font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; font-size: 50px; fill: #D0011B; }
+  </style>
 
-  <!-- Cercle extérieur -->
-  <circle cx="250" cy="250" r="238" class="efs-circle"/>
+  <!-- Fond blanc + cercle bleu -->
+  <circle cx="250" cy="250" r="238" class="bg"/>
 
-  <!-- Arc supérieur (demi-cercle intérieur) -->
-  <path d="M 108,230 A 148,148 0 0,1 392,230" class="efs-arc"/>
+  <!-- Arc supérieur : de (88,248) à (412,248), centre (250,248), r=162 → sommet à (250,86) -->
+  <path d="M 88,248 A 162,162 0 0,1 412,248" class="arc"/>
 
-  <!-- Triangles rouges aux extrémités de l'arc -->
-  <!-- Gauche : triangle pointe en haut -->
-  <polygon points="108,238 100,258 116,258" class="efs-tri"/>
-  <!-- Droite : triangle pointe en bas -->
-  <polygon points="392,222 384,242 400,242" class="efs-tri"/>
+  <!-- Triangle gauche ▲ (pointe vers le haut, sous extrémité gauche de l'arc) -->
+  <polygon points="88,237  79,256  97,256" class="tri"/>
 
-  <!-- Lettres EFS -->
-  <text x="250" y="218" text-anchor="middle" class="efs-letters">EFS</text>
+  <!-- Triangle droit ▼ (pointe vers le bas, sous extrémité droite de l'arc) -->
+  <polygon points="412,256  403,237  421,237" class="tri"/>
 
-  <!-- Ligne séparatrice rouge double -->
-  <line x1="72" y1="298" x2="428" y2="298" class="efs-line"/>
-  <line x1="72" y1="304" x2="428" y2="304" class="efs-line"/>
+  <!-- EFS — centré dans l'arc -->
+  <text x="250" y="222" text-anchor="middle" class="efs">EFS</text>
 
   <!-- ÉTABLISSEMENT FRANÇAIS DU SANG -->
-  <text x="250" y="288" text-anchor="middle" class="efs-subtitle">ÉTABLISSEMENT FRANÇAIS DU SANG</text>
+  <text x="250" y="276" text-anchor="middle" class="sub">ÉTABLISSEMENT FRANÇAIS DU SANG</text>
 
-  <!-- Signature cursive "Du donneur aux patients" -->
-  <!-- Ligne 1 -->
-  <text x="250" y="366" text-anchor="middle" class="efs-script">Du donneur</text>
-  <!-- Ligne 2 -->
-  <text x="250" y="420" text-anchor="middle" class="efs-script">aux patients</text>
+  <!-- Double ligne rouge -->
+  <line x1="68" y1="287" x2="432" y2="287" class="ln"/>
+  <line x1="68" y1="294" x2="432" y2="294" class="ln"/>
+
+  <!-- Signature cursive -->
+  <text x="250" y="363" text-anchor="middle" class="sig">Du donneur</text>
+  <text x="250" y="423" text-anchor="middle" class="sig">aux patients</text>
 </svg>
