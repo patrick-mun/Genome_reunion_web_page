@@ -1,4 +1,4 @@
-/* Paille-en-queue du hero : vol courbe + pose uniquement sur le titre principal. */
+/* Paille-en-queue du hero : les oiseaux ne s'arrêtent que sur le titre principal. */
 (function () {
   'use strict';
 
@@ -174,15 +174,6 @@
     };
   }
 
-  function skyPoint() {
-    const h = heroRect();
-    const t = titleRect();
-    return {
-      x: rand(h.width * 0.10, h.width * 0.90),
-      y: rand(Math.max(40, t.top - h.top - 120), Math.max(80, t.top - h.top - 40))
-    };
-  }
-
   function makeBird(index) {
     const el = document.createElement('div');
     el.className = 'paille';
@@ -214,8 +205,7 @@
       ch,
       footX: FOOT_X * scale,
       footY: FOOT_Y * scale,
-      speed: rand(74, 104),
-      perchProb: rand(0.42, 0.62),
+      speed: rand(78, 108),
       phaseOff: rand(0, Math.PI * 2),
       pos: { x: start.x, y: start.y },
       prev: { x: start.x, y: start.y },
@@ -225,8 +215,6 @@
       seg: null,
       perchSpan: null,
       perchUntil: 0,
-      endsOnPerch: false,
-      pendingPerch: false,
       delay: index * 1100 + rand(0, 500),
       born: false,
       t0base: 0
@@ -281,35 +269,21 @@
       pts,
       cum,
       arc: cum[N],
-      dur: clamp(cum[N] / bird.speed, 2.4, 22.0) * 1000 * (opts.durScale || 1),
+      dur: clamp(cum[N] / bird.speed, 2.4, 18.0) * 1000 * (opts.durScale || 1),
       t0: performance.now()
     };
     bird.state = 'flying';
   }
 
   function planNext(bird) {
-    if (Math.random() < bird.perchProb) {
-      if (Math.random() < 0.45) {
-        bird.endsOnPerch = false;
-        bird.pendingPerch = true;
-        startFlight(bird, skyPoint(), { lift: -rand(30, 90) });
-      } else {
-        bird.endsOnPerch = true;
-        bird.perchSpan = chooseLetter(bird.perchSpan);
-        startFlight(bird, letterPerch(bird.perchSpan, bird), { lift: -rand(20, 56) });
-      }
-    } else {
-      bird.endsOnPerch = false;
-      bird.pendingPerch = false;
-      startFlight(bird, skyPoint(), { lift: -rand(0, 70) });
-    }
+    bird.perchSpan = chooseLetter(bird.perchSpan);
+    startFlight(bird, letterPerch(bird.perchSpan, bird), { lift: -rand(28, 92) });
   }
 
   function updateBird(bird, now, dt) {
     if (!bird.born) {
       if (now < bird.t0base + bird.delay) return;
       bird.born = true;
-      bird.endsOnPerch = true;
       bird.perchSpan = chooseLetter();
       startFlight(bird, letterPerch(bird.perchSpan, bird), { durScale: 1.08 });
     }
@@ -319,17 +293,8 @@
       if (t >= 1) {
         const end = bird.seg.pts[bird.seg.pts.length - 1];
         bird.pos = { x: end.x, y: end.y };
-        if (bird.endsOnPerch && bird.perchSpan) {
-          bird.state = 'perched';
-          bird.perchUntil = now + rand(3500, 7600);
-        } else if (bird.pendingPerch) {
-          bird.pendingPerch = false;
-          bird.endsOnPerch = true;
-          bird.perchSpan = chooseLetter(bird.perchSpan);
-          startFlight(bird, letterPerch(bird.perchSpan, bird), { lift: -rand(20, 50) });
-        } else {
-          planNext(bird);
-        }
+        bird.state = 'perched';
+        bird.perchUntil = now + rand(3200, 6800);
       } else {
         bird.pos = sampleAlong(bird.seg, t);
       }
