@@ -1,4 +1,4 @@
-/* Paille-en-queue du hero : les oiseaux ne s'arrêtent que sur le titre principal. */
+/* Paille-en-queue du hero : vol dans tout le hero, pose uniquement sur le titre principal. */
 (function () {
   'use strict';
 
@@ -174,10 +174,19 @@
     };
   }
 
+  function skyPoint() {
+    const h = heroRect();
+    return {
+      x: rand(h.width * 0.06, h.width * 0.94),
+      y: rand(h.height * 0.08, h.height * 0.72)
+    };
+  }
+
   function makeBird(index) {
     const el = document.createElement('div');
     el.className = 'paille';
     el.style.filter = 'none';
+    el.style.opacity = '0';
     el.innerHTML = birdSVG();
     layer.appendChild(el);
 
@@ -187,15 +196,19 @@
     const ch = VBH * scale;
     svg.setAttribute('width', cw);
     svg.setAttribute('height', ch);
-    el.style.opacity = (0.80 + scale * 0.20).toFixed(2);
+    const finalOpacity = (0.80 + scale * 0.20).toFixed(2);
 
     const h = heroRect();
-    const t = titleRect();
     const fromLeft = Math.random() < 0.5;
     const start = {
-      x: fromLeft ? -80 : (h.width || window.innerWidth) + 80,
-      y: rand(Math.max(40, t.top - h.top - 70), Math.min(h.height * 0.52, t.bottom - h.top + 40))
+      x: fromLeft ? -90 : (h.width || window.innerWidth) + 90,
+      y: rand(h.height * 0.10, h.height * 0.65)
     };
+    const startAngle = fromLeft ? 90 : -90;
+    el.style.transform =
+      'translate(' + (start.x - cw / 2).toFixed(2) + 'px,' +
+                     (start.y - ch / 2).toFixed(2) + 'px) ' +
+      'rotate(' + startAngle.toFixed(2) + 'deg)';
 
     return {
       el,
@@ -205,17 +218,19 @@
       ch,
       footX: FOOT_X * scale,
       footY: FOOT_Y * scale,
-      speed: rand(78, 108),
+      finalOpacity,
+      speed: rand(82, 118),
       phaseOff: rand(0, Math.PI * 2),
       pos: { x: start.x, y: start.y },
       prev: { x: start.x, y: start.y },
-      angle: fromLeft ? 90 : -90,
+      angle: startAngle,
       phase: rand(0, Math.PI * 2),
       state: 'flying',
       seg: null,
+      targetType: 'letter',
       perchSpan: null,
       perchUntil: 0,
-      delay: index * 1100 + rand(0, 500),
+      delay: index * 900 + rand(0, 500),
       born: false,
       t0base: 0
     };
@@ -238,8 +253,8 @@
     const targetAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
     const turn = Math.abs(((targetAngle - bird.angle + 540) % 360) - 180) / 180;
 
-    const sway = rand(-1, 1) * Math.min(dist * 0.30, 155);
-    const out = clamp(dist * 0.38, 95, 300);
+    const sway = rand(-1, 1) * Math.min(dist * 0.30, 170);
+    const out = clamp(dist * 0.38, 95, 320);
     const lift = opts.lift || 0;
     const wide = 1 + turn * 1.05;
 
@@ -269,13 +284,20 @@
       pts,
       cum,
       arc: cum[N],
-      dur: clamp(cum[N] / bird.speed, 2.4, 18.0) * 1000 * (opts.durScale || 1),
+      dur: clamp(cum[N] / bird.speed, 1.8, 18.0) * 1000 * (opts.durScale || 1),
       t0: performance.now()
     };
     bird.state = 'flying';
   }
 
   function planNext(bird) {
+    if (Math.random() < 0.55) {
+      bird.targetType = 'sky';
+      startFlight(bird, skyPoint(), { lift: -rand(40, 110), durScale: 0.95 });
+      return;
+    }
+
+    bird.targetType = 'letter';
     bird.perchSpan = chooseLetter(bird.perchSpan);
     startFlight(bird, letterPerch(bird.perchSpan, bird), { lift: -rand(28, 92) });
   }
@@ -284,8 +306,8 @@
     if (!bird.born) {
       if (now < bird.t0base + bird.delay) return;
       bird.born = true;
-      bird.perchSpan = chooseLetter();
-      startFlight(bird, letterPerch(bird.perchSpan, bird), { durScale: 1.08 });
+      bird.el.style.opacity = bird.finalOpacity;
+      planNext(bird);
     }
 
     if (bird.state === 'flying' && bird.seg) {
@@ -293,32 +315,40 @@
       if (t >= 1) {
         const end = bird.seg.pts[bird.seg.pts.length - 1];
         bird.pos = { x: end.x, y: end.y };
-        bird.state = 'perched';
-        bird.perchUntil = now + rand(3200, 6800);
+        bird.prev = { x: end.x, y: end.y };
+
+        if (bird.targetType === 'letter' && bird.perchSpan) {
+          bird.state = 'perched';
+          bird.angle = 0;
+          bird.perchUntil = now + rand(3000, 6200);
+        } else {
+          planNext(bird);
+        }
       } else {
         bird.pos = sampleAlong(bird.seg, t);
       }
     } else if (bird.state === 'perched' && bird.perchSpan) {
       const point = letterPerch(bird.perchSpan, bird);
-      bird.pos = { x: point.x, y: point.y + Math.sin(now / 540 + bird.phaseOff) * 0.55 };
+      bird.pos = { x: point.x, y: point.y + Math.sin(now / 540 + bird.phaseOff) * 0.35 };
+      bird.prev = { x: bird.pos.x, y: bird.pos.y };
+      bird.angle = 0;
       if (now > bird.perchUntil) planNext(bird);
     }
 
+    const perched = bird.state === 'perched';
     const vx = (bird.pos.x - bird.prev.x) / dt;
     const vy = (bird.pos.y - bird.prev.y) / dt;
     const speed = Math.hypot(vx, vy);
     bird.prev = { x: bird.pos.x, y: bird.pos.y };
 
-    if (speed > 10) {
+    if (!perched && speed > 10) {
       const target = Math.atan2(vy, vx) * 180 / Math.PI + 90;
       const diff = ((target - bird.angle + 540) % 360) - 180;
       bird.angle += diff * clamp(dt * 3.25, 0, 1);
-    } else if (bird.state === 'perched') {
-      const diff = ((0 - bird.angle + 540) % 360) - 180;
-      bird.angle += diff * clamp(dt * 2.8, 0, 1);
+    } else if (perched) {
+      bird.angle = 0;
     }
 
-    const perched = bird.state === 'perched';
     const flapHz = perched ? 0 : clamp(2.0 + (-vy) * 0.0045, 1.45, 3.35);
     bird.phase += dt * flapHz * Math.PI * 2;
 
