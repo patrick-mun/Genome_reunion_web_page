@@ -193,14 +193,3 @@ document.querySelectorAll('.legend-dot').forEach(el => {
 
   donutObs.observe(donutSvg);
 })();
-
-/* ── MARGOUILLAT MULTI-PAGES ── */
-(function() {
-  if (window.__GENOME_MARGOUILLAT_LOADER__) return;
-  window.__GENOME_MARGOUILLAT_LOADER__ = true;
-
-  const script = document.createElement('script');
-  script.src = 'margouillat.js';
-  script.defer = true;
-  document.body.appendChild(script);
-})();
