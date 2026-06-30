@@ -1,7 +1,8 @@
 /* ════════════════════════════════════════════════════════════════
-   MARGOUILLAT — animation sprite filaire
-   Remplace l’ancienne animation SVG du margouillat.
-   Principe : GIF transparent en 8 poses + déplacement par petits pas.
+   MARGOUILLAT — marche synchronisée par sprite-sheet
+   Remplace l’ancien SVG et le GIF autonome.
+   Principe : 8 poses PNG transparentes contrôlées par JS.
+   Chaque pose correspond à un micro-déplacement, pour éviter l’effet glisse.
    ════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -12,23 +13,26 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.innerWidth < 900) return;
 
-  const SPRITE_SRC = 'data:image/gif;base64,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';
-
   const CONFIG = {
-    minDelay: 5000,
-    maxDelay: 16000,
-    minStepMs: 270,
-    maxStepMs: 360,
-    minWidth: 95,
-    maxWidth: 150,
-    opacity: 0.18,
+    spriteUrl: 'assets/margouillat_walk_sprite_160.png?v=3',
+    frameCount: 8,
+    frameRatio: 1.5,
+    minDelay: 5500,
+    maxDelay: 17000,
+    frameDurations: [320, 260, 260, 300, 340, 260, 260, 360],
+    minWidth: 115,
+    maxWidth: 175,
+    minStepPx: 9,
+    maxStepPx: 14,
+    opacity: 0.24,
     zIndex: 4,
-    contentZIndex: 5
+    contentZIndex: 5,
+    fadeMs: 700
   };
 
   const hero = document.getElementById('hero');
   const sections = Array.from(document.querySelectorAll('section'))
-    .filter(section => section.offsetHeight > 160)
+    .filter(section => section.offsetHeight > 180)
     .filter(section => section.id !== 'hero')
     .filter(section => !hero || !hero.contains(section));
 
@@ -46,27 +50,31 @@
       overflow: hidden;
       contain: layout paint style;
     }
+
     .gr-margouillat {
       position: absolute;
       left: -9999px;
       top: -9999px;
-      width: 120px;
-      height: auto;
+      width: 140px;
+      aspect-ratio: 2 / 3;
       opacity: 0;
       visibility: hidden;
       transform-origin: 50% 50%;
       will-change: left, top, transform, opacity;
-      transition: opacity 700ms ease;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,.08));
+      transition: opacity ${CONFIG.fadeMs}ms ease;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,.10));
       mix-blend-mode: screen;
     }
-    .gr-margouillat img {
-      display: block;
+
+    .gr-margouillat-sprite {
       width: 100%;
-      height: auto;
-      user-select: none;
-      -webkit-user-drag: none;
+      height: 100%;
+      background-image: url('${CONFIG.spriteUrl}');
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: 800% 100%;
     }
+
     @media (prefers-reduced-motion: reduce) {
       .gr-margouillat-layer { display: none !important; }
     }
@@ -92,17 +100,15 @@
   const walker = document.createElement('div');
   walker.className = 'gr-margouillat';
 
-  const img = document.createElement('img');
-  img.src = SPRITE_SRC;
-  img.alt = '';
-  img.draggable = false;
+  const sprite = document.createElement('div');
+  sprite.className = 'gr-margouillat-sprite';
 
-  walker.appendChild(img);
+  walker.appendChild(sprite);
   layer.appendChild(walker);
   document.body.appendChild(layer);
 
   let timer = null;
-  let stepTimer = null;
+  let frameTimer = null;
   let active = false;
 
   function rand(min, max) {
@@ -112,7 +118,7 @@
   function visibleSections() {
     return sections.filter(section => {
       const r = section.getBoundingClientRect();
-      return r.bottom > 120 && r.top < window.innerHeight - 120 && r.width > 260 && r.height > 260;
+      return r.bottom > 120 && r.top < window.innerHeight - 120 && r.width > 260 && r.height > 280;
     });
   }
 
@@ -121,16 +127,21 @@
     timer = window.setTimeout(spawn, delay ?? rand(CONFIG.minDelay, CONFIG.maxDelay));
   }
 
+  function setFrame(frame, width, height) {
+    sprite.style.backgroundSize = `${width * CONFIG.frameCount}px ${height}px`;
+    sprite.style.backgroundPosition = `${-frame * width}px 0px`;
+  }
+
   function hide() {
     active = false;
-    window.clearInterval(stepTimer);
+    window.clearTimeout(frameTimer);
     walker.style.opacity = '0';
     window.setTimeout(() => {
       if (active) return;
       walker.style.visibility = 'hidden';
       walker.style.left = '-9999px';
       walker.style.top = '-9999px';
-    }, 750);
+    }, CONFIG.fadeMs + 80);
   }
 
   function spawn() {
@@ -148,49 +159,56 @@
     const section = candidates[Math.floor(Math.random() * candidates.length)];
     const r = section.getBoundingClientRect();
     const width = Math.round(rand(CONFIG.minWidth, CONFIG.maxWidth));
-    const height = width * 1.5;
+    const height = Math.round(width * CONFIG.frameRatio);
     const direction = Math.random() > 0.5 ? 1 : -1;
-    const margin = width * 0.75;
+    const margin = width * 0.95;
 
     const startX = direction === 1 ? r.left - margin : r.right + margin;
     const endX = direction === 1 ? r.right + margin : r.left - margin;
-    const baseY = rand(r.top + height * 0.55, r.bottom - height * 0.55);
-    const drift = rand(-Math.min(90, r.height * 0.14), Math.min(90, r.height * 0.14));
+    const totalDistance = Math.abs(endX - startX);
+    const stepPx = rand(CONFIG.minStepPx, CONFIG.maxStepPx);
+    const steps = Math.max(38, Math.min(88, Math.round(totalDistance / stepPx)));
+
+    const baseY = rand(r.top + height * 0.62, r.bottom - height * 0.62);
+    const drift = rand(-Math.min(80, r.height * 0.12), Math.min(80, r.height * 0.12));
+    const rotationBase = direction === 1 ? 90 : -90;
     const dx = endX - startX;
-    const distance = Math.abs(dx);
-    const steps = Math.max(34, Math.min(76, Math.round(distance / rand(7, 10))));
-    const stepMs = rand(CONFIG.minStepMs, CONFIG.maxStepMs);
-    const angle = direction === 1 ? 90 : -90;
 
     active = true;
     walker.style.width = width + 'px';
     walker.style.visibility = 'visible';
     walker.style.opacity = '0';
 
-    let i = 0;
+    let step = 0;
+    let frame = 0;
 
     function place() {
-      const p = i / steps;
+      const p = step / steps;
       const x = startX + dx * p;
       const y = baseY + Math.sin(p * Math.PI) * drift;
-      const wiggle = Math.sin(p * Math.PI * 8) * 2.2;
+      const bodyWiggle = Math.sin(frame / CONFIG.frameCount * Math.PI * 2) * 1.6;
 
+      setFrame(frame, width, height);
       walker.style.left = x.toFixed(1) + 'px';
       walker.style.top = y.toFixed(1) + 'px';
-      walker.style.transform = 'translate(-50%, -50%) rotate(' + (angle + wiggle).toFixed(2) + 'deg)';
+      walker.style.transform = `translate(-50%, -50%) rotate(${(rotationBase + bodyWiggle).toFixed(2)}deg)`;
 
-      if (i === 1) walker.style.opacity = String(CONFIG.opacity);
-      if (i > steps - 6) walker.style.opacity = '0';
+      if (step === 1) walker.style.opacity = String(CONFIG.opacity);
+      if (step > steps - 8) walker.style.opacity = '0';
 
-      i += 1;
-      if (i > steps) {
+      step += 1;
+      frame = (frame + 1) % CONFIG.frameCount;
+
+      if (step > steps) {
         hide();
         schedule();
+        return;
       }
+
+      frameTimer = window.setTimeout(place, CONFIG.frameDurations[frame] || 300);
     }
 
     place();
-    stepTimer = window.setInterval(place, stepMs);
   }
 
   document.addEventListener('visibilitychange', () => {
@@ -204,8 +222,8 @@
 
   window.addEventListener('pagehide', () => {
     window.clearTimeout(timer);
-    window.clearInterval(stepTimer);
+    window.clearTimeout(frameTimer);
   });
 
-  schedule(2500);
+  schedule(2200);
 })();
