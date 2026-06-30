@@ -4,6 +4,8 @@ Site web statique de communication pour le projet **Génome Réunion**.
 
 Ce dépôt contient une page visuelle destinée à présenter le projet à un public non spécialiste, tout en gardant une exigence de prudence scientifique et institutionnelle.
 
+**Site en ligne :** https://patrick-mun.github.io/Genome_reunion_web_page/index.html
+
 ---
 
 ## Objectif du site
