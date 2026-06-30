@@ -22,14 +22,21 @@ Le site doit expliquer simplement :
 
 ```text
 .
-├── index.html              # Page d'accueil
-├── participer.html         # Page d'information participation
-├── styles.css              # Styles principaux
-├── script.js               # Animations et comportements communs
-├── images/                 # Images et logos
-├── PLAN_CORRECTION.md      # Plan de correction progressive
-├── index.md                # Index de contexte pour reprise de travail
-└── README.md               # Présentation du dépôt
+├── index.html                  # Page d'accueil
+├── participer.html             # Page d'information participation
+├── README.md                   # Présentation du dépôt
+│
+├── assets/                     # Ressources statiques
+│   ├── css/
+│   │   └── styles.css          # Styles principaux
+│   ├── js/
+│   │   ├── script.js           # Animations et comportements communs
+│   │   └── paille-en-queue.js  # Animation décorative du hero
+│   └── images/                 # Images et logos
+│
+└── docs/                       # Documentation de travail interne
+    ├── PLAN_CORRECTION.md      # Plan de correction progressive
+    └── index.md               # Index de contexte pour reprise de travail
 ```
 
 ---
@@ -38,8 +45,8 @@ Le site doit expliquer simplement :
 
 Deux fichiers servent à encadrer les prochaines modifications :
 
-- [`PLAN_CORRECTION.md`](PLAN_CORRECTION.md) : plan étape par étape des corrections à réaliser ;
-- [`index.md`](index.md) : résumé opérationnel du contexte, des fichiers et des points sensibles.
+- [`docs/PLAN_CORRECTION.md`](docs/PLAN_CORRECTION.md) : plan étape par étape des corrections à réaliser ;
+- [`docs/index.md`](docs/index.md) : résumé opérationnel du contexte, des fichiers et des points sensibles.
 
 Ces fichiers doivent être consultés avant toute modification importante.
 

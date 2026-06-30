@@ -85,7 +85,7 @@ Points sensibles :
 
 ---
 
-### `styles.css`
+### `assets/css/styles.css`
 
 Feuille de style principale.
 
@@ -104,7 +104,7 @@ Règle : ne pas modifier les styles tant que les corrections textuelles ne sont 
 
 ---
 
-### `script.js`
+### `assets/js/script.js`
 
 Script commun du site.
 
@@ -125,7 +125,7 @@ Point technique identifié :
 
 ---
 
-### `images/efs-logo.svg`
+### `assets/images/efs-logo.svg`
 
 Logo EFS SVG utilisé dans la page participation.
 
