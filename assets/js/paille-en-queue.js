@@ -69,6 +69,8 @@
     };
   }
 
+  /* Arc-length parameterisation : garantit une vitesse visuelle constante
+     quelle que soit la courbure du chemin bezier. */
   function sampleAlong(segment, t) {
     const distance = clamp(t, 0, 1) * segment.arc;
     let k = 1;
@@ -158,6 +160,9 @@
     };
   }
 
+  /* Construit un segment bezier depuis la position courante vers endPoint
+     en alignant la tangente de départ sur le cap actuel de l'oiseau,
+     pour éviter tout changement de direction brutal. */
   function startFlight(bird, endPoint, opts) {
     opts = opts || {};
     const start = { x: bird.pos.x, y: bird.pos.y };
@@ -291,7 +296,7 @@
 
     let dt = (now - lastT) / 1000;
     if (!lastT) dt = 0.016;
-    dt = Math.min(dt, 0.05);
+    dt = Math.min(dt, 0.05); /* cap pour éviter un saut de position si l'onglet était en arrière-plan */
     lastT = now;
 
     birds.forEach((bird) => updateBird(bird, now, dt));
