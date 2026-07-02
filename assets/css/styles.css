@@ -852,7 +852,7 @@ nav.scrolled .nav-logo-text { color: var(--navy); }
 
 .cta-inner {
   position: relative;
-  z-index: 1;
+  z-index: 2; /* au-dessus de la couche margouillat (z-index 1) */
 }
 
 .cta-title {
@@ -995,13 +995,18 @@ footer {
 .bird-letter { display: inline; }
 
 /* ── MARGOUILLAT (gecko des sections) ── */
+/* Couche pleine page insérée par margouillat.js. z-index 1 : au-dessus des
+   fonds de section (statiques, peints sous les éléments positionnés) mais
+   sous les contenus remontés à z-index 2 juste après. Le margouillat passe
+   ainsi sous les cartes et les textes tout en restant visible sur les fonds. */
 .gecko-layer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 0;
-  z-index: 40;
+  overflow: visible;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -1009,12 +1014,21 @@ footer {
   position: absolute;
   top: 0;
   left: 0;
-  color: #2b2b2b;
+  will-change: transform;
   transform-origin: center center;
-  will-change: transform, top, left;
-  filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.18));
+  filter: drop-shadow(0 2px 3px rgba(9,31,48,.28));
 }
 .gecko svg { display: block; overflow: visible; }
+
+/* Contenus passés devant le margouillat (cartes, textes, footer) */
+.section-inner,
+.stat-item,
+.footer-brand,
+.footer-nav,
+.footer-copy {
+  position: relative;
+  z-index: 2;
+}
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
