@@ -17,6 +17,19 @@
   const VBH = 150;
   const SCALE = 0.55;
 
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const GREEN = '#8CC152';
+  const DARK = '#3E5A2B';
+  const PAD = '#C8E6A0';
+
+  /* Queue : chaîne de « bones » dont on calcule la ligne médiane par
+     cinématique directe, puis on en déduit un contour qui s'effile
+     régulièrement de la base vers la pointe. Une seule forme lisse,
+     sans articulations visibles. */
+  const TAIL_NB = 11;
+  const TAIL_L = 6.0;
+  const TAIL_BASE = { x: 45, y: 83.5 };
+
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const rand = (min, max) => min + Math.random() * (max - min);
 
@@ -33,10 +46,6 @@
      sombre des pattes et de la queue est simulé par un trait large sombre
      sous le trait vert. */
   function geckoSVG() {
-    const GREEN = '#8CC152';
-    const DARK = '#3E5A2B';
-    const PAD = '#C8E6A0';
-
     function leg(name, d, toes) {
       return '<g data-' + name + '>' +
         '<path d="' + d + '" fill="none" stroke="' + DARK + '" stroke-width="7" stroke-linecap="round"/>' +
@@ -47,17 +56,12 @@
         '</g>';
     }
 
-    function tailSeg(d, w) {
-      return '<path d="' + d + '" fill="none" stroke="' + DARK + '" stroke-width="' + (w + 2.4) + '" stroke-linecap="round"/>' +
-             '<path d="' + d + '" fill="none" stroke="' + GREEN + '" stroke-width="' + w + '" stroke-linecap="round"/>';
-    }
-
     return '<svg viewBox="0 0 90 150">' +
       '<g data-sway>' +
+        /* la géométrie de la queue est injectée par JS et animée image par image */
         '<g data-tail>' +
-          tailSeg('M45,84 C42,97 52,104 48,116', 8) +
-          tailSeg('M48,116 C45,126 52,132 53,140', 4.4) +
-          tailSeg('M53,140 C53.5,143.5 52.5,146 50.5,148.5', 1.9) +
+          '<path data-tail-dark fill="' + DARK + '"/>' +
+          '<path data-tail-green fill="' + GREEN + '"/>' +
         '</g>' +
         leg('leg-fl', 'M34,42 C25,39 19,33 15,26', [[11.5, 23], [14, 20.2], [17.6, 19.8]]) +
         leg('leg-fr', 'M56,42 C65,39 71,33 75,26', [[78.5, 23], [76, 20.2], [72.4, 19.8]]) +
@@ -81,6 +85,44 @@
         '</g>' +
       '</g>' +
     '</svg>';
+  }
+
+  /* Construit le contour effilé de la queue pour un jeu d'angles donnés.
+     angles[i] = flexion (radians) du bone i ; on avance de TAIL_L le long
+     du cap courant, puis on épaissit de part et d'autre de la médiane avec
+     une largeur qui décroît vers la pointe. */
+  function tailOutline(angles, halfWidth, taperPow) {
+    let x = TAIL_BASE.x;
+    let y = TAIL_BASE.y;
+    let heading = Math.PI / 2; /* vers le bas = arrière du margouillat */
+    const spine = [{ x, y }];
+    for (let i = 0; i < angles.length; i++) {
+      heading += angles[i];
+      x += Math.cos(heading) * TAIL_L;
+      y += Math.sin(heading) * TAIL_L;
+      spine.push({ x, y });
+    }
+
+    const n = spine.length;
+    const left = [];
+    const right = [];
+    for (let i = 0; i < n; i++) {
+      const a = spine[Math.max(0, i - 1)];
+      const b = spine[Math.min(n - 1, i + 1)];
+      let dx = b.x - a.x;
+      let dy = b.y - a.y;
+      const len = Math.hypot(dx, dy) || 1;
+      dx /= len;
+      dy /= len;
+      const w = halfWidth * Math.pow(1 - i / (n - 1), taperPow);
+      left.push([spine[i].x - dy * w, spine[i].y + dx * w]);
+      right.push([spine[i].x + dy * w, spine[i].y - dx * w]);
+    }
+
+    let d = 'M' + left[0][0].toFixed(2) + ',' + left[0][1].toFixed(2);
+    for (let i = 1; i < n; i++) d += 'L' + left[i][0].toFixed(2) + ',' + left[i][1].toFixed(2);
+    for (let i = n - 1; i >= 0; i--) d += 'L' + right[i][0].toFixed(2) + ',' + right[i][1].toFixed(2);
+    return d + 'Z';
   }
 
   /* Zone de promenade en coordonnées document : toute la page sauf le hero
@@ -111,7 +153,8 @@
 
   const parts = {
     sway: el.querySelector('[data-sway]'),
-    tail: el.querySelector('[data-tail]'),
+    tailDark: el.querySelector('[data-tail-dark]'),
+    tailGreen: el.querySelector('[data-tail-green]'),
     head: el.querySelector('[data-head]'),
     legFL: el.querySelector('[data-leg-fl]'),
     legFR: el.querySelector('[data-leg-fr]'),
@@ -258,9 +301,17 @@
     const bodySway = Math.sin(gecko.phase) * 3 * gecko.run;
     parts.sway.setAttribute('transform', 'rotate(' + bodySway.toFixed(2) + ' 45 56)');
 
-    const tailRun = Math.sin(gecko.phase * 0.5) * 13 * gecko.run;
-    const tailIdle = Math.sin(now * 0.0012 + gecko.idleOff) * 7 * (1 - gecko.run);
-    parts.tail.setAttribute('transform', 'rotate(' + (tailRun + tailIdle).toFixed(2) + ' 45 84)');
+    /* Onde qui se propage de la base vers la pointe : coup de fouet quand
+       il court, léger balancement au repos. L'amplitude croît vers la pointe. */
+    const tailAngles = new Array(TAIL_NB);
+    for (let i = 0; i < TAIL_NB; i++) {
+      const towardTip = 0.35 + 0.65 * (i / (TAIL_NB - 1));
+      const runWave = Math.sin(gecko.phase * 0.55 - i * 0.5) * (0.05 + 0.15 * gecko.run) * towardTip;
+      const idleWave = Math.sin(now * 0.0011 + gecko.idleOff - i * 0.42) * 0.05 * (1 - gecko.run) * towardTip;
+      tailAngles[i] = runWave + idleWave;
+    }
+    parts.tailDark.setAttribute('d', tailOutline(tailAngles, 5.9, 0.72));
+    parts.tailGreen.setAttribute('d', tailOutline(tailAngles, 4.6, 0.72));
 
     const headIdle = Math.sin(now * 0.0007 + gecko.idleOff * 2) * 9 * (1 - gecko.run);
     parts.head.setAttribute('transform', 'rotate(' + headIdle.toFixed(2) + ' 45 30)');
