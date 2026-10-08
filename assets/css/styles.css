@@ -38,7 +38,7 @@ body {
 }
 
 /* ── PROGRESS BAR ── */
-#progress {
+.progress-bar {
   position: fixed;
   top: 0;
   left: 0;
@@ -165,7 +165,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── HERO ── */
-#hero {
+.hero {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -355,7 +355,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── STATS BAR ── */
-#stats {
+.stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-hairline);
@@ -414,7 +414,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── SECTION PROBLÈME ── */
-#probleme {
+.probleme {
   background: var(--cream);
 }
 
@@ -490,7 +490,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── SECTION CE QUE ÇA CHANGE ── */
-#change {
+.change {
   color: var(--white);
   background: var(--navy);
 }
@@ -561,7 +561,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── SECTION CARREFOUR ── */
-#carrefour {
+.carrefour {
   background: var(--sand);
 }
 
@@ -679,7 +679,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── SECTION MÉTHODE ── */
-#methode {
+.methode {
   background: var(--cream);
 }
 
@@ -743,7 +743,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── SECTION OUTILS ── */
-#outils {
+.outils {
   background: var(--navy-deep);
 }
 
@@ -804,7 +804,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── SECTION ÉQUIPE ── */
-#equipe {
+.equipe {
   background: var(--cream);
 }
 
@@ -967,7 +967,7 @@ nav.scrolled .nav-logo-text {
 }
 
 /* ── CTA ── */
-#participer {
+.cta {
   position: relative;
   padding: var(--space-9) var(--space-7);
   overflow: hidden;
@@ -1203,11 +1203,11 @@ footer {
     padding: var(--space-8) var(--space-5);
   }
 
-  #hero {
+  .hero {
     padding: var(--space-9) var(--space-5) var(--space-8);
   }
 
-  #stats {
+  .stats {
     grid-template-columns: repeat(2, 1fr);
     padding: var(--space-5);
   }

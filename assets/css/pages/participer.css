@@ -74,7 +74,7 @@
 }
 
 /* ── PARTENARIAT EFS ── */
-#partenariat {
+.partenariat {
   padding: var(--space-9) var(--space-7);
   background: var(--cream);
 }
@@ -156,7 +156,7 @@
 }
 
 /* ── COLLECTES ── */
-#collectes {
+.collectes {
   padding: var(--space-9) var(--space-7);
   background: var(--sand);
 }
@@ -307,7 +307,7 @@
 }
 
 /* ── INSCRIPTION CTA ── */
-#inscription {
+.inscription {
   position: relative;
   padding: var(--space-9) var(--space-7);
   overflow: hidden;
@@ -440,15 +440,15 @@
     padding: var(--space-9) var(--space-5) var(--space-8);
   }
 
-  #partenariat {
+  .partenariat {
     padding: var(--space-8) var(--space-5);
   }
 
-  #collectes {
+  .collectes {
     padding: var(--space-8) var(--space-5);
   }
 
-  #inscription {
+  .inscription {
     padding: var(--space-8) var(--space-5);
   }
 
