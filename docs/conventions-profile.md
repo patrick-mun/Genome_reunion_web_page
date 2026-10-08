@@ -17,10 +17,10 @@ Les versions installées sont figées dans `package-lock.json`.
 
 ## Organisation du JS (JS-02)
 
-| Rôle | Chemin |
-|---|---|
+| Rôle                    | Chemin             |
+| ----------------------- | ------------------ |
 | Point d'entrée par page | `assets/js/pages/` |
-| Modules partagés | `assets/js/lib/` |
+| Modules partagés        | `assets/js/lib/`   |
 
 Cible de migration : aujourd'hui les scripts sont à plat dans `assets/js/`.
 
@@ -37,12 +37,12 @@ l'étape des tokens).
 
 Cible de migration : aujourd'hui tout est dans `assets/css/styles.css`.
 
-| Rôle | Chemin |
-|---|---|
-| Tokens (valeurs uniquement) | `assets/css/tokens.css` |
-| Base (reset, base, layout, utilitaires) | `assets/css/base.css` |
-| Composants (un fichier par composant) | `assets/css/components/` |
-| Pages (un fichier par page) | `assets/css/pages/` |
+| Rôle                                    | Chemin                   |
+| --------------------------------------- | ------------------------ |
+| Tokens (valeurs uniquement)             | `assets/css/tokens.css`  |
+| Base (reset, base, layout, utilitaires) | `assets/css/base.css`    |
+| Composants (un fichier par composant)   | `assets/css/components/` |
+| Pages (un fichier par page)             | `assets/css/pages/`      |
 
 ## Sens des media queries (CSS-05)
 
@@ -60,6 +60,6 @@ d'après les opacités réellement utilisées (.12, .3, .5, .75, .92…).
 
 ## Dérogations
 
-| Règle | Choix du projet | Raison |
-|---|---|---|
-| (aucune) | | |
+| Règle    | Choix du projet | Raison |
+| -------- | --------------- | ------ |
+| (aucune) |                 |        |
