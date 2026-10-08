@@ -11,13 +11,14 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <script type="module" src="assets/js/pages/home.js"></script>
   </head>
   <body>
     <!-- Progress bar -->
-    <div id="progress"></div>
+    <div id="progress" class="js-progress"></div>
 
     <!-- NAV -->
-    <nav id="nav">
+    <nav id="nav" class="js-nav">
       <a href="#" class="nav-logo">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +55,7 @@
     </nav>
 
     <!-- HERO -->
-    <section id="hero">
+    <section id="hero" class="js-hero">
       <div class="hero-waves">
         <svg
           class="wave-1"
@@ -100,16 +101,27 @@
       </div>
 
       <div class="hero-inner">
-        <p class="hero-creole" id="hero-creole">Nout' léritaz, nout' santé.</p>
-        <h1 class="hero-title" id="hero-title">Mieux lire<br /><em>nos génomes</em></h1>
-        <p class="hero-subtitle" id="hero-subtitle">Référentiel génomique réunionnais</p>
-        <p class="hero-body" id="hero-body">
+        <p class="hero-creole" id="hero-creole" data-hero-reveal="100" data-parallax-depth="0.4">
+          Nout' léritaz, nout' santé.
+        </p>
+        <h1 class="hero-title" id="hero-title" data-hero-reveal="200" data-parallax-depth="1">
+          Mieux lire<br /><em>nos génomes</em>
+        </h1>
+        <p class="hero-subtitle" id="hero-subtitle" data-hero-reveal="330">
+          Référentiel génomique réunionnais
+        </p>
+        <p class="hero-body" id="hero-body" data-hero-reveal="430" data-parallax-depth="0.6">
           À La Réunion, chaque habitant porte l'héritage de plusieurs continents. Pourtant, les
           outils génomiques disponibles s'appuient encore sur des références qui représentent mal
           cette diversité. Génome Réunion vise à construire un référentiel génomique réunionnais
           pour mieux documenter les variants locaux et améliorer leur interprétation.
         </p>
-        <div class="hero-actions" id="hero-actions">
+        <div
+          class="hero-actions"
+          id="hero-actions"
+          data-hero-reveal="560"
+          data-parallax-depth="0.5"
+        >
           <a href="participer.html" class="btn-primary">Je veux participer</a>
           <a href="#probleme" class="btn-ghost">Pourquoi c'est important</a>
         </div>
@@ -118,26 +130,26 @@
 
     <!-- STATS -->
     <section id="stats">
-      <div class="stat-item">
+      <div class="stat-item js-stat-item">
         <div class="stat-num">
-          <span class="count" data-target="2500">0</span>
+          <span class="count js-count" data-target="2500">0</span>
         </div>
         <div class="stat-label">participants génotypés</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item js-stat-item">
         <div class="stat-num">
-          <span class="count" data-target="100">0</span>
+          <span class="count js-count" data-target="100">0</span>
         </div>
         <div class="stat-label">familles pour le phasage</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item js-stat-item">
         <div class="stat-num">
-          <span class="count" data-target="350">0</span>
+          <span class="count js-count" data-target="350">0</span>
         </div>
         <div class="stat-label">génomes complets WGS</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num"><span class="count" data-target="4">0</span></div>
+      <div class="stat-item js-stat-item">
+        <div class="stat-num"><span class="count js-count" data-target="4">0</span></div>
         <div class="stat-label">modules d'aide à l'analyse</div>
       </div>
     </section>
@@ -146,18 +158,18 @@
     <section id="probleme" class="section">
       <div class="section-inner">
         <div class="probleme-hero">
-          <p class="eyebrow reveal">Pourquoi c'est urgent</p>
-          <div class="big-stat reveal reveal-delay-1"><em>≥ 80</em>%</div>
-          <p class="big-stat-label reveal reveal-delay-2">
+          <p class="eyebrow reveal js-reveal">Pourquoi c'est urgent</p>
+          <div class="big-stat reveal reveal-delay-1 js-reveal"><em>≥ 80</em>%</div>
+          <p class="big-stat-label reveal reveal-delay-2 js-reveal">
             des individus présents dans les grandes bases génomiques mondiales sont d'origine
             européenne — les populations admixées restent donc moins bien documentées.
           </p>
-          <p class="big-stat-note reveal reveal-delay-2">
+          <p class="big-stat-note reveal reveal-delay-2 js-reveal">
             Bases de fréquences · panels de référence · outils d'interprétation
           </p>
         </div>
         <div class="probleme-cards">
-          <div class="pb-item reveal">
+          <div class="pb-item reveal js-reveal">
             <div class="pb-item-num">Posologie</div>
             <p class="pb-item-text">
               Les bases internationales documentent encore insuffisamment les profils
@@ -165,7 +177,7 @@
               lecture fine des variations locales.
             </p>
           </div>
-          <div class="pb-item reveal reveal-delay-1">
+          <div class="pb-item reveal reveal-delay-1 js-reveal">
             <div class="pb-item-num">Diagnostic</div>
             <p class="pb-item-text">
               Sans base locale de fréquences de variants, un variant peut être classé comme rare ou
@@ -173,7 +185,7 @@
               réunionnaise.
             </p>
           </div>
-          <div class="pb-item reveal reveal-delay-2">
+          <div class="pb-item reveal reveal-delay-2 js-reveal">
             <div class="pb-item-num">Prévention</div>
             <p class="pb-item-text">
               Les modèles construits sur d'autres populations peuvent perdre en précision lorsqu'ils
@@ -187,10 +199,12 @@
     <!-- CE QUE ÇA CHANGE -->
     <section id="change" class="section">
       <div class="section-inner">
-        <p class="eyebrow light reveal">Ce que ça change</p>
-        <h2 class="change-title reveal reveal-delay-1">Une base locale pour mieux comparer.</h2>
+        <p class="eyebrow light reveal js-reveal">Ce que ça change</p>
+        <h2 class="change-title reveal reveal-delay-1 js-reveal">
+          Une base locale pour mieux comparer.
+        </h2>
         <div class="change-grid">
-          <div class="change-card reveal">
+          <div class="change-card reveal js-reveal">
             <div class="change-card-icon">
               <svg viewBox="0 0 24 24">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
@@ -202,7 +216,7 @@
               point de comparaison propre au territoire.
             </p>
           </div>
-          <div class="change-card reveal reveal-delay-1">
+          <div class="change-card reveal reveal-delay-1 js-reveal">
             <div class="change-card-icon">
               <svg viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8" />
@@ -215,7 +229,7 @@
               contexte démographique et historique réunionnais.
             </p>
           </div>
-          <div class="change-card reveal reveal-delay-2">
+          <div class="change-card reveal reveal-delay-2 js-reveal">
             <div class="change-card-icon">
               <svg viewBox="0 0 24 24">
                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -237,17 +251,17 @@
       <div class="section-inner">
         <div class="carrefour-layout">
           <div>
-            <p class="eyebrow reveal">Une richesse unique au monde</p>
-            <h2 class="carrefour-title reveal reveal-delay-1">
+            <p class="eyebrow reveal js-reveal">Une richesse unique au monde</p>
+            <h2 class="carrefour-title reveal reveal-delay-1 js-reveal">
               La Réunion,<br />carrefour génétique.
             </h2>
-            <p class="carrefour-body reveal reveal-delay-2">
+            <p class="carrefour-body reveal reveal-delay-2 js-reveal">
               Façonnée par l'Afrique, Madagascar, l'Inde du Sud, l'Europe et la Chine, la population
               réunionnaise porte une diversité génétique exceptionnelle. Chaque personne est une
               combinaison unique d'héritages. C'est précisément cette richesse que Génome Réunion
               met en lumière.
             </p>
-            <div style="display: flex; gap: 32px" class="reveal reveal-delay-3">
+            <div style="display: flex; gap: 32px" class="reveal reveal-delay-3 js-reveal">
               <div>
                 <div
                   style="
@@ -278,8 +292,8 @@
           </div>
 
           <!-- Donut chart -->
-          <div class="reveal reveal-delay-2">
-            <svg class="donut" viewBox="0 0 100 100">
+          <div class="reveal reveal-delay-2 js-reveal">
+            <svg class="donut js-donut" viewBox="0 0 100 100">
               <!-- Afrique/Malgache 45% → 162° -->
               <circle
                 cx="50"
@@ -339,23 +353,25 @@
 
             <div class="ancestry-legend" style="max-width: 260px; margin: 0 auto">
               <div class="legend-item">
-                <span class="legend-dot" style="--c: #0f3a56">Afrique &amp; Malgache</span>
+                <span class="legend-dot js-legend-dot" style="--c: #0f3a56"
+                  >Afrique &amp; Malgache</span
+                >
                 <span class="legend-pct">45 %</span>
               </div>
               <div class="legend-item">
-                <span class="legend-dot" style="--c: #1e6e8c">Inde du Sud</span>
+                <span class="legend-dot js-legend-dot" style="--c: #1e6e8c">Inde du Sud</span>
                 <span class="legend-pct">25 %</span>
               </div>
               <div class="legend-item">
-                <span class="legend-dot" style="--c: #e8654a">Européen</span>
+                <span class="legend-dot js-legend-dot" style="--c: #e8654a">Européen</span>
                 <span class="legend-pct">15 %</span>
               </div>
               <div class="legend-item">
-                <span class="legend-dot" style="--c: #c0852c">Zarabe / Gujarati</span>
+                <span class="legend-dot js-legend-dot" style="--c: #c0852c">Zarabe / Gujarati</span>
                 <span class="legend-pct">8 %</span>
               </div>
               <div class="legend-item">
-                <span class="legend-dot" style="--c: #9fd3e0">Chine / Asie</span>
+                <span class="legend-dot js-legend-dot" style="--c: #9fd3e0">Chine / Asie</span>
                 <span class="legend-pct">7 %</span>
               </div>
               <p
@@ -372,12 +388,12 @@
     <!-- MÉTHODE -->
     <section id="methode" class="section">
       <div class="section-inner">
-        <p class="eyebrow reveal">Comment ça marche</p>
-        <h2 class="methode-title reveal reveal-delay-1">
+        <p class="eyebrow reveal js-reveal">Comment ça marche</p>
+        <h2 class="methode-title reveal reveal-delay-1 js-reveal">
           Trois étapes,<br />un référentiel local.
         </h2>
         <div class="methode-steps">
-          <div class="step reveal">
+          <div class="step reveal js-reveal">
             <span class="step-count">Étape 01</span>
             <h3 class="step-title">Cartographier la diversité génétique</h3>
             <p class="step-body">
@@ -385,7 +401,7 @@
               génétique de la cohorte et ses principales composantes.
             </p>
           </div>
-          <div class="step reveal reveal-delay-1">
+          <div class="step reveal reveal-delay-1 js-reveal">
             <span class="step-count">Étape 02</span>
             <h3 class="step-title">Documenter le phasage familial</h3>
             <p class="step-body">
@@ -393,7 +409,7 @@
               suivre la transmission des segments génétiques.
             </p>
           </div>
-          <div class="step reveal reveal-delay-2">
+          <div class="step reveal reveal-delay-2 js-reveal">
             <span class="step-count">Étape 03</span>
             <h3 class="step-title">Sélectionner les génomes complets WGS</h3>
             <p class="step-body">
@@ -408,10 +424,12 @@
     <!-- OUTILS -->
     <section id="outils" class="section">
       <div class="section-inner">
-        <p class="eyebrow light reveal">Ce que ça permet</p>
-        <h2 class="outils-title reveal reveal-delay-1">Quatre modules<br />d'aide à l'analyse.</h2>
+        <p class="eyebrow light reveal js-reveal">Ce que ça permet</p>
+        <h2 class="outils-title reveal reveal-delay-1 js-reveal">
+          Quatre modules<br />d'aide à l'analyse.
+        </h2>
         <div class="outils-grid">
-          <div class="outil-card reveal">
+          <div class="outil-card reveal js-reveal">
             <div class="outil-num">01</div>
             <h3 class="outil-title">Interprétation des variants</h3>
             <p class="outil-body">
@@ -419,7 +437,7 @@
               fréquents dans la population réunionnaise.
             </p>
           </div>
-          <div class="outil-card reveal reveal-delay-1">
+          <div class="outil-card reveal reveal-delay-1 js-reveal">
             <div class="outil-num">02</div>
             <h3 class="outil-title">Pharmacogénétique populationnelle</h3>
             <p class="outil-body">
@@ -427,7 +445,7 @@
               pharmacogénétiques futures.
             </p>
           </div>
-          <div class="outil-card reveal reveal-delay-2">
+          <div class="outil-card reveal reveal-delay-2 js-reveal">
             <div class="outil-num">03</div>
             <h3 class="outil-title">Structure d'admixture</h3>
             <p class="outil-body">
@@ -435,7 +453,7 @@
               Madagascar, Inde du Sud, Europe et Asie.
             </p>
           </div>
-          <div class="outil-card reveal reveal-delay-3">
+          <div class="outil-card reveal reveal-delay-3 js-reveal">
             <div class="outil-num">04</div>
             <h3 class="outil-title">Évaluation des scores génétiques</h3>
             <p class="outil-body">
@@ -450,22 +468,24 @@
     <!-- ÉQUIPE -->
     <section id="equipe" class="section">
       <div class="section-inner">
-        <p class="eyebrow reveal">Un projet collectif</p>
-        <h2 class="equipe-title reveal reveal-delay-1">Génome Réunion,<br />une équipe locale.</h2>
-        <p class="equipe-sub reveal reveal-delay-2">
+        <p class="eyebrow reveal js-reveal">Un projet collectif</p>
+        <h2 class="equipe-title reveal reveal-delay-1 js-reveal">
+          Génome Réunion,<br />une équipe locale.
+        </h2>
+        <p class="equipe-sub reveal reveal-delay-2 js-reveal">
           Porté par le Service de Génétique Moléculaire du CHU de La Réunion, avec le soutien de
           partenaires locaux et nationaux.
         </p>
 
         <div class="team-grid">
-          <div class="team-card reveal">
+          <div class="team-card reveal js-reveal">
             <div class="team-avatar" style="background: var(--navy)">BD</div>
             <div>
               <div class="team-name">Pr Bérénice Doray</div>
               <div class="team-role">Chef de service · Génétique médicale</div>
             </div>
           </div>
-          <div class="team-card reveal reveal-delay-1">
+          <div class="team-card reveal reveal-delay-1 js-reveal">
             <div class="team-avatar" style="background: var(--coral)">PM</div>
             <div>
               <div class="team-name">Patrick Munier</div>
@@ -474,21 +494,21 @@
               </div>
             </div>
           </div>
-          <div class="team-card reveal reveal-delay-2">
+          <div class="team-card reveal reveal-delay-2 js-reveal">
             <div class="team-avatar" style="background: var(--teal)">TH</div>
             <div>
               <div class="team-name">Dr Thomas Huby</div>
               <div class="team-role">Co-porteur scientifique · Coordinateur</div>
             </div>
           </div>
-          <div class="team-card reveal reveal-delay-3">
+          <div class="team-card reveal reveal-delay-3 js-reveal">
             <div class="team-avatar" style="background: var(--amber)">SG</div>
             <div>
               <div class="team-name">Susie Guilly</div>
               <div class="team-role">Ingénieure de recherche</div>
             </div>
           </div>
-          <div class="team-card reveal reveal-delay-4">
+          <div class="team-card reveal reveal-delay-4 js-reveal">
             <div class="team-avatar" style="background: #41494f">FF</div>
             <div>
               <div class="team-name">Dr Fanny Ferroul</div>
@@ -497,8 +517,8 @@
           </div>
         </div>
 
-        <p class="partners-title reveal">Partenaires</p>
-        <div class="partners-row reveal reveal-delay-1">
+        <p class="partners-title reveal js-reveal">Partenaires</p>
+        <div class="partners-row reveal reveal-delay-1 js-reveal">
           <!-- Logo POPgen SVG inline -->
           <a href="#" class="partner-logo-link" title="POPgen">
             <svg
@@ -582,12 +602,16 @@
     <!-- CTA -->
     <section id="participer">
       <div class="cta-inner">
-        <h2 class="cta-title reveal">Construisons<br />ensemble <em>notre</em><br />référence.</h2>
-        <p class="cta-sub reveal reveal-delay-1">
+        <h2 class="cta-title reveal js-reveal">
+          Construisons<br />ensemble <em>notre</em><br />référence.
+        </h2>
+        <p class="cta-sub reveal reveal-delay-1 js-reveal">
           Chaque participant contribue à bâtir la première ressource génomique réunionnaise. Pour
           vous, vos enfants, et toute La Réunion.
         </p>
-        <a href="participer.html" class="btn-large reveal reveal-delay-2">Je veux participer</a>
+        <a href="participer.html" class="btn-large reveal reveal-delay-2 js-reveal"
+          >Je veux participer</a
+        >
       </div>
       <div class="hero-waves">
         <svg
@@ -647,9 +671,5 @@
       </ul>
       <div class="footer-copy">CHU de La Réunion · Service de Génétique · V3.5</div>
     </footer>
-
-    <script src="assets/js/script.js"></script>
-    <script src="assets/js/paille-en-queue.js"></script>
-    <script src="assets/js/margouillat.js"></script>
   </body>
 </html>

@@ -47,8 +47,8 @@ Le site doit expliquer :
 │
 ├── assets/
 │   ├── css/styles.css          # Styles principaux
-│   ├── js/script.js            # Animations et comportements communs
-│   ├── js/paille-en-queue.js   # Animation décorative du hero (oiseau)
+│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
+│   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   └── images/efs-logo.svg     # Logo EFS
 │
 └── docs/
@@ -125,25 +125,29 @@ Règle : ne pas modifier les styles tant que les corrections textuelles ne sont 
 
 ---
 
-### `assets/js/script.js`
+### `assets/js/pages/` et `assets/js/lib/`
 
-Script commun aux deux pages.
+Le JS est découpé en modules ES chargés par `<script type="module">` dans le `<head>`.
+Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`) qui
+appelle les fonctions `init…` des modules de `lib/`.
 
-Contient :
+Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-…`
+(jamais par `id` ni par classe de style) :
 
-- barre de progression au scroll ;
-- changement de style de navigation au scroll ;
-- animations d'apparition au scroll (`.reveal`) ;
-- compteurs statistiques animés ;
-- légende du donut (injection des marqueurs de couleur) ;
-- parallaxe souris sur le hero ;
-- animation du donut chart au scroll.
+- `progress-bar.js` : barre de progression au scroll (`.js-progress`) ;
+- `nav-scroll.js` : style de la navigation au scroll (`.js-nav`) ;
+- `hero-reveal.js` : apparition du hero (`[data-hero-reveal]`, délai en ms) ;
+- `scroll-reveal.js` : apparition au scroll (`.js-reveal`) ;
+- `stats-counter.js` : compteurs animés (`.js-stat-item`, `.js-count`) ;
+- `legend-dots.js` : marqueurs de couleur de la légende (`.js-legend-dot`) ;
+- `hero-parallax.js` : parallaxe souris (`[data-parallax-depth]`) ;
+- `donut-chart.js` : animation du donut au scroll (`.js-donut`).
 
-Toutes les fonctions sont gardées (`if (el)`) et fonctionnent sans erreur sur `participer.html`.
+Chaque module vérifie que ses éléments existent avant de s'en servir.
 
 ---
 
-### `assets/js/paille-en-queue.js`
+### `assets/js/lib/paille-en-queue.js`
 
 Animation décorative du hero : 3 oiseaux (paille-en-queue) en vol continu.
 

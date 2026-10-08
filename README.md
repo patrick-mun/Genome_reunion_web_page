@@ -32,8 +32,8 @@ Le site doit expliquer simplement :
 │   ├── css/
 │   │   └── styles.css          # Styles principaux
 │   ├── js/
-│   │   ├── script.js           # Animations et comportements communs
-│   │   └── paille-en-queue.js  # Animation décorative du hero
+│   │   ├── pages/              # Point d'entrée par page (modules ES)
+│   │   └── lib/                # Modules partagés (animations, comportements)
 │   └── images/                 # Images et logos
 │
 └── docs/                       # Documentation de travail interne

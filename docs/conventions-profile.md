@@ -22,8 +22,6 @@ Les versions installées sont figées dans `package-lock.json`.
 | Point d'entrée par page | `assets/js/pages/` |
 | Modules partagés        | `assets/js/lib/`   |
 
-Cible de migration : aujourd'hui les scripts sont à plat dans `assets/js/`.
-
 ## Titre de page (HTML-02)
 
 Format du `<title>` : `Page — Génome Réunion` (la page d'accueil : `Génome Réunion`).

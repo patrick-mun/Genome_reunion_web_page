@@ -1,23 +1,30 @@
-/* Margouillat des sections : gecko cartoon qui se promène au hasard en fond
-   de page, sous les cartes et les textes. Le placement en profondeur repose
+/* ============================================================
+   assets/js/lib/margouillat.js
+   Rôle : margouillat des sections, gecko cartoon qui se promène au hasard en fond de page.
+   Pages concernées : accueil.
+   Accroches : .js-hero, .js-gecko-layer (couche créée par ce module).
+   ============================================================ */
+
+/* Le gecko passe sous les cartes et les textes. Le placement en profondeur repose
    sur styles.css : la couche .gecko-layer est à z-index 1 (au-dessus des
    fonds de section, statiques) et les contenus sont remontés à z-index 2.
    Le hero reste le territoire des paille-en-queue : le margouillat ne monte
    jamais au-dessus du bas du hero. */
-(function () {
-  'use strict';
 
+/**
+ * Lance la promenade du margouillat (inactif en mouvement réduit ou sur petit écran).
+ */
+export function initMargouillat() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.innerWidth < 760) return;
 
-  const hero = document.getElementById('hero');
+  const hero = document.querySelector('.js-hero');
   if (!hero) return;
 
   const VBW = 90;
   const VBH = 150;
   const SCALE = 0.55;
 
-  const SVGNS = 'http://www.w3.org/2000/svg';
   const GREEN = '#8CC152';
   const DARK = '#3E5A2B';
   const PAD = '#C8E6A0';
@@ -33,10 +40,10 @@
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const rand = (min, max) => min + Math.random() * (max - min);
 
-  document.querySelectorAll('.gecko-layer').forEach((oldLayer) => oldLayer.remove());
+  document.querySelectorAll('.js-gecko-layer').forEach((oldLayer) => oldLayer.remove());
 
   const layer = document.createElement('div');
-  layer.className = 'gecko-layer';
+  layer.className = 'gecko-layer js-gecko-layer';
   layer.setAttribute('aria-hidden', 'true');
   document.body.appendChild(layer);
 
@@ -189,9 +196,12 @@
     }
 
     let d = 'M' + left[0][0].toFixed(2) + ',' + left[0][1].toFixed(2);
-    for (let i = 1; i < n; i++) d += 'L' + left[i][0].toFixed(2) + ',' + left[i][1].toFixed(2);
-    for (let i = n - 1; i >= 0; i--)
+    for (let i = 1; i < n; i++) {
+      d += 'L' + left[i][0].toFixed(2) + ',' + left[i][1].toFixed(2);
+    }
+    for (let i = n - 1; i >= 0; i--) {
       d += 'L' + right[i][0].toFixed(2) + ',' + right[i][1].toFixed(2);
+    }
     return d + 'Z';
   }
 
@@ -217,7 +227,7 @@
 
   const cw = VBW * SCALE;
   const ch = VBH * SCALE;
-  const svg = el.querySelector('svg');
+  const svg = el.firstElementChild;
   svg.setAttribute('width', cw);
   svg.setAttribute('height', ch);
 
@@ -420,4 +430,4 @@
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
-})();
+}

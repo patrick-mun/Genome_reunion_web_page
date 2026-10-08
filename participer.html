@@ -456,12 +456,13 @@
         }
       }
     </style>
+    <script type="module" src="assets/js/pages/participer.js"></script>
   </head>
   <body>
-    <div id="progress"></div>
+    <div id="progress" class="js-progress"></div>
 
     <!-- NAV (identique) -->
-    <nav id="nav">
+    <nav id="nav" class="js-nav">
       <a href="index.html" class="nav-logo">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -544,9 +545,13 @@
       </div>
 
       <div class="page-hero-inner">
-        <p class="page-hero-kicker" id="ph-kicker">Participation au projet</p>
-        <h1 class="page-hero-title" id="ph-title">Donnez un peu.<br />Changez <em>tout</em>.</h1>
-        <p class="page-hero-sub" id="ph-sub">
+        <p class="page-hero-kicker" id="ph-kicker" data-hero-reveal="120">
+          Participation au projet
+        </p>
+        <h1 class="page-hero-title" id="ph-title" data-hero-reveal="240">
+          Donnez un peu.<br />Changez <em>tout</em>.
+        </h1>
+        <p class="page-hero-sub" id="ph-sub" data-hero-reveal="380">
           Un simple prélèvement sanguin suffit. En participant à Génome Réunion, vous contribuez à
           bâtir la première référence génétique de l'île — pour vous, vos enfants, et toute la
           population réunionnaise.
@@ -557,7 +562,7 @@
     <!-- PARTENARIAT EFS -->
     <section id="partenariat">
       <div class="partenariat-inner">
-        <div class="partenariat-text reveal">
+        <div class="partenariat-text reveal js-reveal">
           <p class="eyebrow">Partenariat</p>
           <h2>En partenariat avec<br />l'EFS Réunion.</h2>
           <p>
@@ -570,7 +575,7 @@
             une anonymisation des données. Chaque prélèvement contribue à construire une ressource
             utile pour mieux documenter la diversité génétique réunionnaise.
           </p>
-          <div class="efs-badge reveal reveal-delay-1">
+          <div class="efs-badge reveal reveal-delay-1 js-reveal">
             <img
               src="assets/images/efs-logo.svg"
               alt="EFS — Établissement Français du Sang"
@@ -586,7 +591,7 @@
         </div>
 
         <!-- Carte logo EFS grande -->
-        <div class="efs-logo-card reveal reveal-delay-2">
+        <div class="efs-logo-card reveal reveal-delay-2 js-reveal">
           <div class="efs-logo-title">Partenaire des collectes</div>
 
           <img
@@ -618,7 +623,7 @@
     <!-- CALENDRIER DES COLLECTES -->
     <section id="collectes">
       <div class="collectes-inner">
-        <div class="collectes-header reveal">
+        <div class="collectes-header reveal js-reveal">
           <p class="eyebrow">Calendrier</p>
           <h2>Prochaines dates<br />de collecte.</h2>
           <p>
@@ -629,7 +634,7 @@
 
         <div class="collectes-grid">
           <!-- EFS NORD -->
-          <div class="collecte-block reveal">
+          <div class="collecte-block reveal js-reveal">
             <div class="collecte-block-header">
               <div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
@@ -711,7 +716,7 @@
           </div>
 
           <!-- EFS SUD -->
-          <div class="collecte-block reveal reveal-delay-1">
+          <div class="collecte-block reveal reveal-delay-1 js-reveal">
             <div class="collecte-block-header">
               <div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
@@ -795,7 +800,7 @@
 
         <!-- Note -->
         <p
-          class="reveal"
+          class="reveal js-reveal"
           style="
             margin-top: 28px;
             font-size: 0.78rem;
@@ -813,16 +818,16 @@
     <!-- INSCRIPTION -->
     <section id="inscription">
       <div class="inscription-inner">
-        <p class="eyebrow light reveal">Comment participer</p>
-        <h2 class="inscription-title reveal reveal-delay-1">
+        <p class="eyebrow light reveal js-reveal">Comment participer</p>
+        <h2 class="inscription-title reveal reveal-delay-1 js-reveal">
           Simple,<br /><em>rapide</em>, utile.
         </h2>
-        <p class="inscription-sub reveal reveal-delay-2">
+        <p class="inscription-sub reveal reveal-delay-2 js-reveal">
           La participation se déroule en trois étapes. Comptez environ 30 minutes sur place.
         </p>
 
         <div class="inscription-steps">
-          <div class="inscription-step reveal">
+          <div class="inscription-step reveal js-reveal">
             <span class="inscription-step-num">01</span>
             <div class="inscription-step-text">
               <strong>Inscrivez-vous en ligne ou sur place</strong>
@@ -830,7 +835,7 @@
               L'inscription est gratuite et sans engagement.
             </div>
           </div>
-          <div class="inscription-step reveal reveal-delay-1">
+          <div class="inscription-step reveal reveal-delay-1 js-reveal">
             <span class="inscription-step-num">02</span>
             <div class="inscription-step-text">
               <strong>Rendez-vous à la collecte avec votre pièce d'identité</strong>
@@ -838,7 +843,7 @@
               Un formulaire de consentement est signé sur place.
             </div>
           </div>
-          <div class="inscription-step reveal reveal-delay-2">
+          <div class="inscription-step reveal reveal-delay-2 js-reveal">
             <span class="inscription-step-num">03</span>
             <div class="inscription-step-text">
               <strong>Contribuez au référentiel réunionnais</strong>Votre participation aide à mieux
@@ -848,14 +853,14 @@
           </div>
         </div>
 
-        <div class="cta-buttons reveal reveal-delay-3">
+        <div class="cta-buttons reveal reveal-delay-3 js-reveal">
           <a href="mailto:genome.reunion@chu-reunion.fr" class="btn-efs">Je m'inscris</a>
           <a href="index.html" class="btn-outline">En savoir plus</a>
         </div>
 
         <!-- Contact -->
         <p
-          class="reveal"
+          class="reveal js-reveal"
           style="margin-top: 32px; font-size: 0.78rem; color: rgba(255, 255, 255, 0.3)"
         >
           Questions ? Contactez-nous :
@@ -881,24 +886,5 @@
       </ul>
       <div class="footer-copy">CHU de La Réunion · Service de Génétique · V3.5</div>
     </footer>
-
-    <script src="assets/js/script.js"></script>
-    <script>
-      /* Hero page reveal */
-      window.addEventListener('load', () => {
-        [
-          { id: 'ph-kicker', delay: 120 },
-          { id: 'ph-title', delay: 240 },
-          { id: 'ph-sub', delay: 380 },
-        ].forEach(({ id, delay }) => {
-          const el = document.getElementById(id);
-          if (!el) return;
-          setTimeout(() => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-          }, delay);
-        });
-      });
-    </script>
   </body>
 </html>

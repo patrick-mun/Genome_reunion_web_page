@@ -1,11 +1,18 @@
-/* Paille-en-queue du hero : vol décoratif continu, sans pose sur les lettres. */
-(function () {
-  'use strict';
+/* ============================================================
+   assets/js/lib/paille-en-queue.js
+   Rôle : paille-en-queue du hero, vol décoratif continu sans pose sur les lettres.
+   Pages concernées : accueil.
+   Accroches : .js-hero, .js-bird-layer (couche créée par ce module).
+   ============================================================ */
 
+/**
+ * Lance le vol des paille-en-queue dans le hero (inactif en mouvement réduit ou sur petit écran).
+ */
+export function initPailleEnQueue() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.innerWidth < 760) return;
 
-  const hero = document.getElementById('hero');
+  const hero = document.querySelector('.js-hero');
   if (!hero) return;
 
   const NUM_BIRDS = 3;
@@ -15,7 +22,7 @@
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const rand = (min, max) => min + Math.random() * (max - min);
 
-  document.querySelectorAll('.bird-layer').forEach((oldLayer) => oldLayer.remove());
+  document.querySelectorAll('.js-bird-layer').forEach((oldLayer) => oldLayer.remove());
 
   const birdStyle = document.createElement('style');
   birdStyle.textContent = `
@@ -33,7 +40,7 @@
   document.head.appendChild(birdStyle);
 
   const layer = document.createElement('div');
-  layer.className = 'bird-layer';
+  layer.className = 'bird-layer js-bird-layer';
   layer.setAttribute('aria-hidden', 'true');
   hero.appendChild(layer);
 
@@ -130,7 +137,7 @@
     layer.appendChild(el);
 
     const scale = rand(0.68, 0.96);
-    const svg = el.querySelector('svg');
+    const svg = el.firstElementChild;
     const cw = VBW * scale;
     const ch = VBH * scale;
     svg.setAttribute('width', cw);
@@ -335,4 +342,4 @@
   }
 
   requestAnimationFrame(frame);
-})();
+}
