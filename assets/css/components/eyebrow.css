@@ -1,0 +1,21 @@
+/* ============================================================
+   assets/css/components/eyebrow.css
+   Rôle : surtitre en capitales au-dessus des titres de section.
+   Pages concernées : accueil, participer.
+   ============================================================ */
+
+/* ── EYEBROW ── */
+
+.eyebrow {
+  margin-bottom: var(--space-5);
+  font-family: var(--f-ui);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.eyebrow.light {
+  color: var(--teal-light);
+}

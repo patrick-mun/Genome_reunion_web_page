@@ -31,9 +31,10 @@ Le site doit expliquer simplement :
 ├── assets/                     # Ressources statiques
 │   ├── css/
 │   │   ├── tokens.css          # Valeurs de conception (couleurs, échelles)
-│   │   ├── styles.css          # Styles principaux
-│   │   └── pages/
-│   │       └── participer.css  # Styles propres à participer.html
+│   │   ├── base.css            # Reset, html, body
+│   │   ├── utilities.css       # Apparition au défilement (.reveal), chargé en dernier
+│   │   ├── components/         # Un fichier par composant partagé (nav, footer, vagues…)
+│   │   └── pages/              # Un fichier par page (home.css, participer.css)
 │   ├── js/
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)

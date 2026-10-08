@@ -32,14 +32,13 @@ Valeurs de conception : `assets/css/tokens.css` (seul fichier où les valeurs br
 
 ## Organisation des fichiers (CSS-02)
 
-Migration en cours : `tokens.css` et `pages/participer.css` existent ; le reste est encore dans `styles.css`.
-
-| Rôle                                    | Chemin                   |
-| --------------------------------------- | ------------------------ |
-| Tokens (valeurs uniquement)             | `assets/css/tokens.css`  |
-| Base (reset, base, layout, utilitaires) | `assets/css/base.css`    |
-| Composants (un fichier par composant)   | `assets/css/components/` |
-| Pages (un fichier par page)             | `assets/css/pages/`      |
+| Rôle                                    | Chemin                     |
+| --------------------------------------- | -------------------------- |
+| Tokens (valeurs uniquement)             | `assets/css/tokens.css`    |
+| Base (reset, base, layout, utilitaires) | `assets/css/base.css`      |
+| Composants (un fichier par composant)   | `assets/css/components/`   |
+| Pages (un fichier par page)             | `assets/css/pages/`        |
+| Utilitaires (chargés en dernier)        | `assets/css/utilities.css` |
 
 ## Sens des media queries (CSS-05)
 

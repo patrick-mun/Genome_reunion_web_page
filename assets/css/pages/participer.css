@@ -17,6 +17,12 @@
   background: var(--navy);
 }
 
+@media (max-width: 900px) {
+  .page-hero {
+    padding: var(--space-9) var(--space-5) var(--space-8);
+  }
+}
+
 .page-hero-inner {
   position: relative;
   z-index: 1;
@@ -97,6 +103,12 @@
   background: var(--cream);
 }
 
+@media (max-width: 900px) {
+  .partenariat {
+    padding: var(--space-8) var(--space-5);
+  }
+}
+
 .partenariat-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -104,6 +116,13 @@
   gap: var(--space-8);
   max-width: 1080px;
   margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .partenariat-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
 }
 
 .partenariat-text h2 {
@@ -179,6 +198,12 @@
   background: var(--sand);
 }
 
+@media (max-width: 900px) {
+  .collectes {
+    padding: var(--space-8) var(--space-5);
+  }
+}
+
 .collectes-inner {
   max-width: 1080px;
   margin: 0 auto;
@@ -209,6 +234,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .collectes-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .collecte-block {
@@ -331,6 +362,12 @@
   overflow: hidden;
   text-align: center;
   background: var(--navy-deep);
+}
+
+@media (max-width: 900px) {
+  .inscription {
+    padding: var(--space-8) var(--space-5);
+  }
 }
 
 .inscription-inner {
@@ -456,34 +493,6 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-4);
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .page-hero {
-    padding: var(--space-9) var(--space-5) var(--space-8);
-  }
-
-  .partenariat {
-    padding: var(--space-8) var(--space-5);
-  }
-
-  .collectes {
-    padding: var(--space-8) var(--space-5);
-  }
-
-  .inscription {
-    padding: var(--space-8) var(--space-5);
-  }
-
-  .partenariat-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-7);
-  }
-
-  .collectes-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ── COMPLÉMENTS DE PAGE ── */
