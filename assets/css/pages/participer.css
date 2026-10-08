@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 120px 48px 72px;
+  padding: var(--space-9) var(--space-7) var(--space-8);
   position: relative;
   overflow: hidden;
 }
@@ -27,12 +27,12 @@
 
 .page-hero-kicker {
   font-family: var(--f-ui);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--teal-light);
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
   opacity: 0;
   transition:
     opacity 0.7s var(--ease-out) 0.1s,
@@ -42,12 +42,12 @@
 
 .page-hero-title {
   font-family: var(--f-display);
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-size: var(--text-fluid-7);
   font-weight: 300;
   line-height: 0.95;
   letter-spacing: -0.03em;
   color: var(--white);
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
   opacity: 0;
   transition:
     opacity 0.8s var(--ease-out) 0.2s,
@@ -60,9 +60,9 @@
 }
 
 .page-hero-sub {
-  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  font-size: var(--text-fluid-1);
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--white-60);
   line-height: 1.7;
   max-width: 540px;
   opacity: 0;
@@ -75,7 +75,7 @@
 /* ── PARTENARIAT EFS ── */
 #partenariat {
   background: var(--cream);
-  padding: 100px 48px;
+  padding: var(--space-9) var(--space-7);
 }
 
 .partenariat-inner {
@@ -83,70 +83,70 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  gap: var(--space-8);
   align-items: center;
 }
 
 .partenariat-text h2 {
   font-family: var(--f-display);
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-size: var(--text-fluid-3);
   font-weight: 300;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--navy);
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
 }
 
 .partenariat-text p {
-  font-size: 0.95rem;
+  font-size: var(--text-md);
   color: var(--stone);
   line-height: 1.75;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
 .efs-badge {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 28px 32px;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-6);
   background: var(--white);
   border: 1px solid var(--sand);
-  border-radius: 16px;
-  margin-top: 8px;
-  box-shadow: 0 4px 20px rgba(15, 58, 86, 0.05);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-2);
+  box-shadow: var(--shadow-sm);
 }
 
 .efs-badge-text {
   font-family: var(--f-ui);
-  font-size: 0.78rem;
+  font-size: var(--text-sm);
   color: var(--stone);
   line-height: 1.5;
 }
 .efs-badge-text strong {
   display: block;
-  font-size: 0.88rem;
+  font-size: var(--text-md);
   color: var(--slate);
-  margin-bottom: 2px;
+  margin-bottom: var(--space-line);
 }
 
 /* EFS Logo SVG card */
 .efs-logo-card {
   background: var(--white);
   border: 1px solid var(--sand);
-  border-radius: 20px;
-  padding: 48px 40px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-7) var(--space-7);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  box-shadow: 0 8px 40px rgba(15, 58, 86, 0.07);
+  gap: var(--space-5);
+  box-shadow: var(--shadow-md);
   text-align: center;
 }
 
 .efs-logo-title {
   font-family: var(--f-ui);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -156,7 +156,7 @@
 /* ── COLLECTES ── */
 #collectes {
   background: var(--sand);
-  padding: 100px 48px;
+  padding: var(--space-9) var(--space-7);
 }
 
 .collectes-inner {
@@ -165,21 +165,21 @@
 }
 
 .collectes-header {
-  margin-bottom: 64px;
+  margin-bottom: var(--space-8);
 }
 
 .collectes-header h2 {
   font-family: var(--f-display);
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: var(--text-fluid-4);
   font-weight: 300;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--navy);
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
 }
 
 .collectes-header p {
-  font-size: 0.95rem;
+  font-size: var(--text-md);
   color: var(--stone);
   line-height: 1.7;
   max-width: 560px;
@@ -188,33 +188,33 @@
 .collectes-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: var(--space-6);
 }
 
 .collecte-block {
   background: var(--white);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(15, 58, 86, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .collecte-block-header {
-  padding: 28px 32px 20px;
+  padding: var(--space-6) var(--space-6) var(--space-5);
   border-bottom: 1px solid var(--sand);
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-4);
 }
 
 .collecte-zone-badge {
   font-family: var(--f-ui);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--white);
-  padding: 4px 12px;
-  border-radius: 100px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
 }
 .badge-nord {
   background: var(--navy);
@@ -225,16 +225,16 @@
 
 .collecte-block-title {
   font-family: var(--f-display);
-  font-size: 1.3rem;
+  font-size: var(--text-xl);
   font-weight: 400;
   color: var(--navy);
   line-height: 1.2;
 }
 
 .collecte-block-address {
-  font-size: 0.78rem;
+  font-size: var(--text-sm);
   color: var(--stone);
-  margin-top: 4px;
+  margin-top: var(--space-1);
 }
 
 /* Table */
@@ -249,19 +249,19 @@
 
 .collecte-table th {
   font-family: var(--f-ui);
-  font-size: 0.62rem;
+  font-size: var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--stone);
-  padding: 12px 20px;
+  padding: var(--space-3) var(--space-5);
   text-align: left;
   border-bottom: 1px solid var(--sand);
 }
 
 .collecte-table td {
-  padding: 16px 20px;
-  font-size: 0.84rem;
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
   color: var(--slate);
   border-bottom: 1px solid var(--sand);
   vertical-align: top;
@@ -273,13 +273,13 @@
 }
 
 .collecte-table tr:hover td {
-  background: rgba(159, 211, 224, 0.08);
+  background: var(--teal-light-10);
 }
 
 .td-date {
   font-family: var(--f-ui);
   font-weight: 600;
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
   color: var(--navy);
   white-space: nowrap;
 }
@@ -291,12 +291,12 @@
 
 .td-adresse {
   color: var(--stone);
-  font-size: 0.78rem;
+  font-size: var(--text-sm);
 }
 
 .td-horaire {
   font-family: var(--f-ui);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--teal);
   font-weight: 500;
   white-space: nowrap;
@@ -305,7 +305,7 @@
 /* ── INSCRIPTION CTA ── */
 #inscription {
   background: var(--navy-deep);
-  padding: 100px 48px;
+  padding: var(--space-9) var(--space-7);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -320,12 +320,12 @@
 
 .inscription-title {
   font-family: var(--f-display);
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: var(--text-fluid-5);
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--white);
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 .inscription-title em {
   font-style: normal;
@@ -333,61 +333,61 @@
 }
 
 .inscription-sub {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--text-md);
+  color: var(--white-60);
   line-height: 1.7;
-  margin-bottom: 40px;
+  margin-bottom: var(--space-7);
 }
 
 .inscription-steps {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 48px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
   text-align: left;
 }
 
 .inscription-step {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
-  padding: 20px 24px;
+  gap: var(--space-4);
+  background: var(--white-05);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-5);
 }
 
 .inscription-step-num {
   font-family: var(--f-ui);
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.12em;
   color: var(--coral);
-  padding-top: 2px;
+  padding-top: var(--space-line);
   flex-shrink: 0;
 }
 
 .inscription-step-text {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--text-md);
+  color: var(--white-80);
   line-height: 1.6;
 }
 .inscription-step-text strong {
   color: var(--white);
   font-weight: 500;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: var(--space-1);
 }
 
 .btn-efs {
   font-family: var(--f-ui);
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--white);
-  background: #e2001a;
-  padding: 18px 40px;
-  border-radius: 100px;
+  background: var(--efs-red);
+  padding: var(--space-4) var(--space-7);
+  border-radius: var(--radius-pill);
   text-decoration: none;
   display: inline-block;
   transition:
@@ -396,32 +396,32 @@
 }
 .btn-efs:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 40px rgba(226, 0, 26, 0.35);
+  box-shadow: var(--shadow-efs);
 }
 
 .btn-outline {
   font-family: var(--f-ui);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--white-60);
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 16px 32px;
-  border-radius: 100px;
+  border: 1px solid var(--white-20);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-pill);
   display: inline-block;
   transition:
     border-color 0.2s,
     color 0.2s;
 }
 .btn-outline:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: var(--white-40);
   color: var(--white);
 }
 
 .cta-buttons {
   display: flex;
-  gap: 16px;
+  gap: var(--space-4);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -429,20 +429,20 @@
 /* Responsive */
 @media (max-width: 900px) {
   .page-hero {
-    padding: 100px 24px 60px;
+    padding: var(--space-9) var(--space-5) var(--space-8);
   }
   #partenariat {
-    padding: 72px 24px;
+    padding: var(--space-8) var(--space-5);
   }
   #collectes {
-    padding: 72px 24px;
+    padding: var(--space-8) var(--space-5);
   }
   #inscription {
-    padding: 72px 24px;
+    padding: var(--space-8) var(--space-5);
   }
   .partenariat-inner {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: var(--space-7);
   }
   .collectes-grid {
     grid-template-columns: 1fr;
@@ -459,12 +459,12 @@
 }
 .efs-logo-card-footer {
   border-top: 1px solid var(--sand);
-  padding-top: 20px;
+  padding-top: var(--space-5);
   width: 100%;
   text-align: center;
 }
 .efs-logo-card-note {
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   color: var(--stone);
   line-height: 1.6;
 }
@@ -474,22 +474,22 @@
 .collecte-zone {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 .collectes-note {
-  margin-top: 28px;
-  font-size: 0.78rem;
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
   color: var(--stone);
   font-style: italic;
   text-align: center;
 }
 .inscription-contact {
-  margin-top: 32px;
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.3);
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--white-40);
 }
 .inscription-contact-link {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--white-60);
   text-decoration: none;
 }

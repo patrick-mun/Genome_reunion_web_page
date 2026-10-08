@@ -46,6 +46,7 @@ Le site doit expliquer :
 ├── README.md                   # Présentation du dépôt
 │
 ├── assets/
+│   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
 │   ├── css/styles.css          # Styles principaux
 │   ├── css/pages/participer.css # Styles propres à participer.html
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)

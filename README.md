@@ -30,6 +30,7 @@ Le site doit expliquer simplement :
 │
 ├── assets/                     # Ressources statiques
 │   ├── css/
+│   │   ├── tokens.css          # Valeurs de conception (couleurs, échelles)
 │   │   ├── styles.css          # Styles principaux
 │   │   └── pages/
 │   │       └── participer.css  # Styles propres à participer.html

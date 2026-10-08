@@ -28,12 +28,11 @@ Format du `<title>` : `Page — Génome Réunion` (la page d'accueil : `Génome 
 
 ## Fichier de tokens
 
-Valeurs de conception documentées dans `docs/design-tokens.md` (à créer à
-l'étape des tokens).
+Valeurs de conception : `assets/css/tokens.css` (seul fichier où les valeurs brutes sont permises).
 
 ## Organisation des fichiers (CSS-02)
 
-Cible de migration : aujourd'hui tout est dans `assets/css/styles.css`.
+Migration en cours : `tokens.css` et `pages/participer.css` existent ; le reste est encore dans `styles.css`.
 
 | Rôle                                    | Chemin                   |
 | --------------------------------------- | ------------------------ |
@@ -49,12 +48,17 @@ lors de l'éclatement des media queries).
 
 ## Échelle d'espacement (CSS-11)
 
-4, 8, 12, 16, 24, 32, 48, 72 px (`--space-1` … `--space-8`).
+4, 8, 12, 16, 24, 32, 48, 72, 120 px (`--space-1` … `--space-9`), plus deux filets `--space-hairline` (1 px) et `--space-line` (2 px) pour les grilles à séparateurs.
 
 ## Échelle d'opacité (CSS-14)
 
-10, 20, 40, 60, 80 % (`--<couleur>-<pourcentage>`, ex. `--white-60`). À ajuster
-d'après les opacités réellement utilisées (.12, .3, .5, .75, .92…).
+5, 10, 20, 40, 60, 80, 95 % (`--<couleur>-<pourcentage>`, ex. `--white-60`, `--navy-05`).
+
+## Échelles de texte, de rayons et d'ombres (CSS-12, CSS-15)
+
+Texte : `--text-2xs` à `--text-2xl` (0,65 à 1,8 rem) et `--text-fluid-1` à `--text-fluid-9` (`clamp()` par rang).
+Rayons : `--radius-xs`, `-sm`, `-md`, `-lg`, `-pill`.
+Ombres : `--shadow-sm`, `-md`, `-lg`, `-accent-sm`, `-accent-md`, `-accent-lg`, `-efs`.
 
 ## Dérogations
 
