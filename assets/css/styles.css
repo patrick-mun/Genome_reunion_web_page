@@ -570,6 +570,21 @@ nav.scrolled .nav-logo-text {
   margin-bottom: 20px;
 }
 
+.carrefour-stats {
+  display: flex;
+  gap: 32px;
+}
+.carrefour-stat-num {
+  font-family: var(--f-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--navy);
+}
+.carrefour-stat-label {
+  font-size: 0.78rem;
+  color: var(--stone);
+}
+
 .carrefour-body {
   font-size: 0.95rem;
   color: var(--stone);
@@ -586,7 +601,8 @@ nav.scrolled .nav-logo-text {
 }
 
 .ancestry-legend {
-  margin-top: 24px;
+  max-width: 260px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -612,6 +628,29 @@ nav.scrolled .nav-logo-text {
   height: 8px;
   border-radius: 2px;
   flex-shrink: 0;
+}
+
+.legend-dot-africa {
+  --c: var(--navy);
+}
+.legend-dot-india {
+  --c: var(--teal);
+}
+.legend-dot-europe {
+  --c: var(--coral);
+}
+.legend-dot-zarabe {
+  --c: var(--amber);
+}
+.legend-dot-asia {
+  --c: var(--teal-light);
+}
+
+.ancestry-legend-note {
+  font-size: 0.68rem;
+  color: var(--stone);
+  font-style: italic;
+  margin-top: 8px;
 }
 
 .legend-pct {
@@ -805,6 +844,22 @@ nav.scrolled .nav-logo-text {
   color: var(--white);
   letter-spacing: 0.02em;
   flex-shrink: 0;
+}
+
+.team-avatar-1 {
+  background: var(--navy);
+}
+.team-avatar-2 {
+  background: var(--coral);
+}
+.team-avatar-3 {
+  background: var(--teal);
+}
+.team-avatar-4 {
+  background: var(--amber);
+}
+.team-avatar-5 {
+  background: #41494f;
 }
 
 .team-name {
