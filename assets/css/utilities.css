@@ -42,3 +42,10 @@
 .reveal-delay-4 {
   transition-delay: 0.4s;
 }
+
+/* ── LIGNES DE TEXTE ── */
+
+/* Chaque segment d'un titre reste sur sa propre ligne, sans <br> de mise en page (HTML-43). */
+.text-line {
+  display: block;
+}
