@@ -46,9 +46,13 @@ Le site doit expliquer :
 ├── README.md                   # Présentation du dépôt
 │
 ├── assets/
-│   ├── css/styles.css          # Styles principaux
-│   ├── js/script.js            # Animations et comportements communs
-│   ├── js/paille-en-queue.js   # Animation décorative du hero (oiseau)
+│   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
+│   ├── css/base.css            # Reset, html, body
+│   ├── css/components/         # nav, footer, vagues, lien d'évitement, barre de progression, eyebrow
+│   ├── css/pages/              # home.css, participer.css
+│   ├── css/utilities.css       # .reveal, chargé en dernier
+│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
+│   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   └── images/efs-logo.svg     # Logo EFS
 │
 └── docs/
@@ -106,44 +110,48 @@ Points sensibles :
 
 ---
 
-### `assets/css/styles.css`
+### `assets/css/`
 
-Feuille de style principale.
+Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ordre :
 
-Contient :
-
-- variables de couleurs (tokens CSS dans `:root`) ;
-- typographies (Spectral, DM Sans, Space Grotesk) ;
-- navigation ;
-- hero ;
-- sections ;
-- cartes ;
-- responsive ;
-- animations CSS.
-
-Règle : ne pas modifier les styles tant que les corrections textuelles ne sont pas validées visuellement.
+1. `tokens.css` : valeurs de conception, seul endroit où les valeurs brutes sont permises ;
+2. `base.css` : reset, `html`, `body` ;
+3. `components/*.css` : composants partagés par les deux pages, chacun avec ses media queries ;
+4. `pages/home.css` ou `pages/participer.css` : styles propres à une page ;
+5. `utilities.css` : `.reveal`, chargé en dernier car il doit l'emporter sur les transitions des composants.
 
 ---
 
-### `assets/js/script.js`
+### `assets/js/pages/` et `assets/js/lib/`
 
-Script commun aux deux pages.
+Le JS est découpé en modules ES chargés par `<script type="module">` dans le `<head>`.
+Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`) qui
+appelle les fonctions `init…` des modules de `lib/`.
 
-Contient :
+Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-…`
+(jamais par `id` ni par classe de style) :
 
-- barre de progression au scroll ;
-- changement de style de navigation au scroll ;
-- animations d'apparition au scroll (`.reveal`) ;
-- compteurs statistiques animés ;
-- légende du donut (injection des marqueurs de couleur) ;
-- parallaxe souris sur le hero ;
-- animation du donut chart au scroll.
+- `progress-bar.js` : barre de progression au scroll (`.js-progress`) ;
+- `nav-scroll.js` : style de la navigation au scroll (`.js-nav`) ;
+- `hero-reveal.js` : apparition du hero (`[data-hero-reveal]`, délai en ms) ;
+- `scroll-reveal.js` : apparition au scroll (`.js-reveal`) ;
+- `stats-counter.js` : compteurs animés (`.js-stat-item`, `.js-count`) ;
+- `legend-dots.js` : marqueurs de couleur de la légende (`.js-legend-dot`) ;
+- `hero-parallax.js` : parallaxe souris (`[data-parallax-depth]`) ;
+- `donut-chart.js` : animation du donut au scroll (`.js-donut`) ;
+- `motion.js` : préférence `prefers-reduced-motion` et état de pause manuelle (classe `is-motion-paused` sur `<html>`) ;
+- `motion-toggle.js` : bouton « Mettre en pause les animations » du pied de page (`.js-motion-toggle`), qui suspend les vagues, la parallaxe, les oiseaux et le margouillat (WCAG 2.2.2) ;
+- `placement.js` : pose `--x`, `--y` et `--angle` sur un élément animé (utilisé par les animations du hero et des sections).
 
-Toutes les fonctions sont gardées (`if (el)`) et fonctionnent sans erreur sur `participer.html`.
+Le JS ne pose aucun style direct (JS-11) : il bascule des classes d'état (`is-revealed`, `is-drawn`, `is-born`, `is-scrolled`) ou pose des variables CSS (`--progress`, `--reveal-delay`, `--parallax-x`, `--x`…) que le CSS consomme.
+
+Chaque module vérifie que ses éléments existent avant de s'en servir.
+
+Mouvement réduit : en `prefers-reduced-motion: reduce`, les animations JS (parallaxe, oiseaux, margouillat, compteurs, donut) ne démarrent pas, et le CSS neutralise chaque mouvement par un bloc `@media` placé juste après sa règle.
 
 ---
 
-### `assets/js/paille-en-queue.js`
+### `assets/js/lib/paille-en-queue.js`
 
 Animation décorative du hero : 3 oiseaux (paille-en-queue) en vol continu.
 

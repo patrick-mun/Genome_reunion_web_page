@@ -1,0 +1,120 @@
+/* ============================================================
+   assets/css/components/nav.css
+   Rôle : barre de navigation fixe, ses liens et son état défilé.
+   Pages concernées : toutes.
+   ============================================================ */
+
+/* ── NAV ── */
+
+/* Couleurs des liens et du logo portées par des variables locales : l'état
+   .is-scrolled (posé par le JS) les redéfinit sans multiplier les sélecteurs. */
+
+.nav {
+  --nav-link-color: var(--white-60);
+  --nav-link-hover-color: var(--white);
+  --nav-logo-color: var(--white);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-7);
+  transition:
+    background 0.4s var(--ease-out),
+    backdrop-filter 0.4s;
+}
+
+@media (max-width: 900px) {
+  .nav {
+    padding: var(--space-4) var(--space-5);
+  }
+}
+
+.nav.is-scrolled {
+  --nav-link-color: var(--stone);
+  --nav-link-hover-color: var(--navy);
+  --nav-logo-color: var(--navy);
+  background: var(--cream-95);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--sand);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.nav-logo svg {
+  width: auto;
+  height: 36px;
+}
+
+.nav-logo-text {
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--nav-logo-color);
+  transition: color 0.4s;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-6);
+  list-style: none;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+.nav-link {
+  font-family: var(--f-ui);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--nav-link-color);
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--nav-link-hover-color);
+}
+
+.nav-cta {
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--f-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--coral);
+  border-radius: var(--radius-pill);
+  transition:
+    transform 0.2s var(--ease-spring),
+    box-shadow 0.2s;
+}
+
+.nav-cta:hover {
+  box-shadow: var(--shadow-accent-sm);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-cta:hover {
+    transform: none;
+  }
+}

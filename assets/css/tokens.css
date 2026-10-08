@@ -1,0 +1,100 @@
+/* ============================================================
+   assets/css/tokens.css
+   Rôle : valeurs de conception du projet (couleurs, polices, échelles
+   d'espacement, de texte, de rayons et d'ombres). Aucune règle de style ici.
+   Pages concernées : toutes (chargé avant styles.css).
+   ============================================================ */
+
+:root {
+  /* ── COULEURS ── */
+  --navy: #0f3a56;
+  --navy-deep: #091f30;
+  --teal: #1e6e8c;
+  --teal-light: #9fd3e0;
+  --teal-mid: #cfe3ea;
+  --coral: #e8654a;
+  --amber: #c0852c;
+  --cream: #fbfaf7;
+  --sand: #edeae2;
+  --slate: #16242e;
+  --stone: #6a7178;
+  --graphite: #41494f;
+  --white: #fff;
+  --efs-red: #e2001a; /* rouge de la marque EFS, réservé à la page Participer */
+
+  /* ── OPACITÉS (CSS-14) : --<couleur>-<pourcentage> ── */
+  --navy-05: rgb(15 58 86 / 5%);
+  --navy-10: rgb(15 58 86 / 10%);
+  --navy-20: rgb(15 58 86 / 20%);
+  --navy-deep-20: rgb(9 31 48 / 20%);
+  --navy-deep-40: rgb(9 31 48 / 40%);
+  --teal-light-10: rgb(159 211 224 / 10%);
+  --coral-10: rgb(232 101 74 / 10%);
+  --coral-40: rgb(232 101 74 / 40%);
+  --white-05: rgb(255 255 255 / 5%);
+  --white-10: rgb(255 255 255 / 10%);
+  --white-20: rgb(255 255 255 / 20%);
+  --white-40: rgb(255 255 255 / 40%);
+  --white-60: rgb(255 255 255 / 60%);
+  --white-80: rgb(255 255 255 / 80%);
+  --white-95: rgb(255 255 255 / 95%);
+  --cream-95: rgb(251 250 247 / 95%);
+  --efs-red-40: rgb(226 0 26 / 40%);
+
+  /* ── POLICES ── */
+  --f-display: 'Spectral', georgia, serif;
+  --f-body: 'DM Sans', system-ui, sans-serif;
+  --f-ui: 'Space Grotesk', system-ui, sans-serif;
+
+  /* ── ESPACEMENT (CSS-11) : rang 1 à 9, plus deux filets ── */
+  --space-hairline: 1px;
+  --space-line: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --space-9: 120px;
+
+  /* ── TEXTE (CSS-12) : tailles fixes par rôle, tailles fluides par rang ── */
+  --text-2xs: 0.65rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8rem;
+  --text-md: 0.9rem;
+  --text-base: 1rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.3rem;
+  --text-2xl: 1.8rem;
+  --text-fluid-1: clamp(0.95rem, 1.5vw, 1.1rem);
+  --text-fluid-2: clamp(1rem, 2vw, 1.3rem);
+  --text-fluid-3: clamp(1.8rem, 3vw, 2.8rem);
+  --text-fluid-4: clamp(2rem, 3.5vw, 3.2rem);
+  --text-fluid-5: clamp(2rem, 4vw, 3.4rem);
+  --text-fluid-6: clamp(2.4rem, 5vw, 5rem);
+  --text-fluid-7: clamp(2.8rem, 6vw, 5.5rem);
+  --text-fluid-8: clamp(3.2rem, 8vw, 7.5rem);
+  --text-fluid-9: clamp(6rem, 16vw, 13rem);
+
+  /* ── RAYONS ── */
+  --radius-xs: 2px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 100px;
+
+  /* ── OMBRES ── */
+  --shadow-sm: 0 4px 24px var(--navy-05);
+  --shadow-md: 0 12px 32px var(--navy-10);
+  --shadow-lg: 0 16px 40px var(--navy-10);
+  --shadow-accent-sm: 0 8px 24px var(--coral-40);
+  --shadow-accent-md: 0 12px 32px var(--coral-40);
+  --shadow-accent-lg: 0 20px 48px var(--coral-40);
+  --shadow-efs: 0 16px 40px var(--efs-red-40);
+
+  /* ── MOUVEMENT ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}

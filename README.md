@@ -30,10 +30,14 @@ Le site doit expliquer simplement :
 │
 ├── assets/                     # Ressources statiques
 │   ├── css/
-│   │   └── styles.css          # Styles principaux
+│   │   ├── tokens.css          # Valeurs de conception (couleurs, échelles)
+│   │   ├── base.css            # Reset, html, body
+│   │   ├── utilities.css       # Apparition au défilement (.reveal), chargé en dernier
+│   │   ├── components/         # Un fichier par composant partagé (nav, footer, vagues…)
+│   │   └── pages/              # Un fichier par page (home.css, participer.css)
 │   ├── js/
-│   │   ├── script.js           # Animations et comportements communs
-│   │   └── paille-en-queue.js  # Animation décorative du hero
+│   │   ├── pages/              # Point d'entrée par page (modules ES)
+│   │   └── lib/                # Modules partagés (animations, comportements)
 │   └── images/                 # Images et logos
 │
 └── docs/                       # Documentation de travail interne

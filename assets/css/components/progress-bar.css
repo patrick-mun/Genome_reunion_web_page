@@ -1,0 +1,18 @@
+/* ============================================================
+   assets/css/components/progress-bar.css
+   Rôle : barre de progression de lecture en haut de page.
+   Pages concernées : toutes.
+   ============================================================ */
+
+/* ── PROGRESS BAR ── */
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: var(--progress, 0%);
+  height: 2px;
+  background: var(--coral);
+  transition: width 0.1s linear;
+}

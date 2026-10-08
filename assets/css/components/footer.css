@@ -1,0 +1,88 @@
+/* ============================================================
+   assets/css/components/footer.css
+   Rôle : pied de page, ses liens et le bouton de pause des animations.
+   Pages concernées : toutes.
+   ============================================================ */
+
+/* ── FOOTER ── */
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-7);
+  background: var(--navy-deep);
+  border-top: 1px solid var(--white-05);
+}
+
+@media (max-width: 900px) {
+  footer {
+    flex-direction: column;
+    padding: var(--space-6) var(--space-5);
+  }
+}
+
+.footer-brand {
+  font-family: var(--f-display);
+  font-size: var(--text-md);
+  font-style: italic;
+  color: var(--white-40);
+}
+
+.footer-nav {
+  display: flex;
+  gap: var(--space-6);
+  list-style: none;
+}
+
+.footer-link {
+  font-family: var(--f-ui);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--white-40);
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: var(--white-80);
+}
+
+.footer-copy {
+  font-family: var(--f-ui);
+  font-size: var(--text-xs);
+  color: var(--white-20);
+}
+
+/* Contenus du pied de page passés devant le margouillat (z-index 1 sur l'accueil) */
+.footer-brand,
+.footer-nav,
+.footer-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.motion-toggle {
+  display: block;
+  margin-top: var(--space-2);
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+  color: var(--white-60);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.motion-toggle:hover {
+  color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-toggle {
+    display: none;
+  }
+}

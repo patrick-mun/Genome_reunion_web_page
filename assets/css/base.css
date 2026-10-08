@@ -1,0 +1,33 @@
+/* ============================================================
+   assets/css/base.css
+   Rôle : reset, styles de base du document (html, body).
+   Pages concernées : toutes.
+   ============================================================ */
+
+/* ── RESET ── */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--f-body);
+  color: var(--slate);
+  background: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}

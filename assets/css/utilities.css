@@ -1,0 +1,51 @@
+/* ============================================================
+   assets/css/utilities.css
+   Rôle : apparition au défilement (.reveal) ; chargé en dernier car il doit l'emporter sur les transitions des composants.
+   Pages concernées : toutes.
+   ============================================================ */
+
+/* ── REVEAL AU SCROLL ── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+
+/* ── LIGNES DE TEXTE ── */
+
+/* Chaque segment d'un titre reste sur sa propre ligne, sans <br> de mise en page (HTML-43). */
+.text-line {
+  display: block;
+}

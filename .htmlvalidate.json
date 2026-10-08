@@ -1,0 +1,49 @@
+{
+  "extends": [
+    "html-validate:recommended"
+  ],
+  "rules": {
+    "heading-level": [
+      "error",
+      {
+        "allowMultipleH1": false
+      }
+    ],
+    "no-style-tag": "error",
+    "no-inline-style": "error",
+    "attr-case": "error",
+    "element-case": "error",
+    "attr-quotes": "error",
+    "void-style": [
+      "error",
+      {
+        "style": "selfclose"
+      }
+    ],
+    "no-self-closing": "off",
+    "attribute-boolean-style": [
+      "error",
+      {
+        "style": "omit"
+      }
+    ],
+    "id-pattern": [
+      "error",
+      {
+        "pattern": "kebabcase"
+      }
+    ],
+    "unique-landmark": "error",
+    "prefer-button": "error",
+    "prefer-native-element": "error",
+    "input-missing-label": "error",
+    "long-title": "error",
+    "empty-title": "error",
+    "doctype-style": [
+      "error",
+      {
+        "style": "lowercase"
+      }
+    ]
+  }
+}

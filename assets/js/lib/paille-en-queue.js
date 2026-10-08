@@ -1,11 +1,21 @@
-/* Paille-en-queue du hero : vol décoratif continu, sans pose sur les lettres. */
-(function () {
-  'use strict';
+/* ============================================================
+   assets/js/lib/paille-en-queue.js
+   Rôle : paille-en-queue du hero, vol décoratif continu sans pose sur les lettres.
+   Pages concernées : accueil.
+   Accroches : .js-hero, .js-bird-layer (couche créée par ce module). Position via --x, --y, --angle.
+   ============================================================ */
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+import { isMotionPaused, prefersReducedMotion } from './motion.js';
+import { placeElement } from './placement.js';
+
+/**
+ * Lance le vol des paille-en-queue dans le hero (inactif en mouvement réduit ou sur petit écran).
+ */
+export function initPailleEnQueue() {
+  if (prefersReducedMotion()) return;
   if (window.innerWidth < 760) return;
 
-  const hero = document.getElementById('hero');
+  const hero = document.querySelector('.js-hero');
   if (!hero) return;
 
   const NUM_BIRDS = 3;
@@ -15,7 +25,7 @@
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const rand = (min, max) => min + Math.random() * (max - min);
 
-  document.querySelectorAll('.bird-layer').forEach((oldLayer) => oldLayer.remove());
+  document.querySelectorAll('.js-bird-layer').forEach((oldLayer) => oldLayer.remove());
 
   const birdStyle = document.createElement('style');
   birdStyle.textContent = `
@@ -33,24 +43,26 @@
   document.head.appendChild(birdStyle);
 
   const layer = document.createElement('div');
-  layer.className = 'bird-layer';
+  layer.className = 'bird-layer js-bird-layer';
   layer.setAttribute('aria-hidden', 'true');
   hero.appendChild(layer);
 
   function birdSVG() {
-    return '<svg viewBox="0 0 72 82">' +
+    return (
+      '<svg viewBox="0 0 72 82">' +
       '<g class="paille-tail" data-tail>' +
-        '<path d="M35.2,43 C34.6,55 33.6,68 32.6,80" />' +
-        '<path d="M36.8,43 C37.4,55 38.4,68 39.4,80" />' +
+      '<path d="M35.2,43 C34.6,55 33.6,68 32.6,80" />' +
+      '<path d="M36.8,43 C37.4,55 38.4,68 39.4,80" />' +
       '</g>' +
       '<g class="paille-wings" data-wings>' +
-        '<path style="stroke:none" d="M34,18 C25,12 10,16 2,35 C13,31 25,28 34,26 Z" />' +
-        '<path style="stroke:none" d="M38,18 C47,12 62,16 70,35 C59,31 47,28 38,26 Z" />' +
+      '<path style="stroke:none" d="M34,18 C25,12 10,16 2,35 C13,31 25,28 34,26 Z" />' +
+      '<path style="stroke:none" d="M38,18 C47,12 62,16 70,35 C59,31 47,28 38,26 Z" />' +
       '</g>' +
       '<path class="paille-body" style="stroke:none" d="M36,4 C40,12 40.8,26 38.4,41 C37.4,48 34.6,48 33.6,41 C31.2,26 32,12 36,4 Z" />' +
       '<path d="M36,2 L41,8 L36.8,7 Z" fill="#E8654A" opacity=".95" />' +
       '<circle cx="37.6" cy="9.5" r=".9" fill="#0F3A56" opacity=".55" />' +
-    '</svg>';
+      '</svg>'
+    );
   }
 
   function heroRect() {
@@ -65,7 +77,7 @@
     const d = t * t * t;
     return {
       x: a * p0.x + b * p1.x + c * p2.x + d * p3.x,
-      y: a * p0.y + b * p1.y + c * p2.y + d * p3.y
+      y: a * p0.y + b * p1.y + c * p2.y + d * p3.y,
     };
   }
 
@@ -78,13 +90,16 @@
 
     const previousDistance = segment.cum[k - 1];
     const nextDistance = segment.cum[k];
-    const fraction = nextDistance > previousDistance ? (distance - previousDistance) / (nextDistance - previousDistance) : 0;
+    const fraction =
+      nextDistance > previousDistance
+        ? (distance - previousDistance) / (nextDistance - previousDistance)
+        : 0;
     const p0 = segment.pts[k - 1];
     const p1 = segment.pts[k];
 
     return {
       x: p0.x + (p1.x - p0.x) * fraction,
-      y: p0.y + (p1.y - p0.y) * fraction
+      y: p0.y + (p1.y - p0.y) * fraction,
     };
   }
 
@@ -92,7 +107,7 @@
     const h = heroRect();
     return {
       x: rand(h.width * 0.06, h.width * 0.94),
-      y: rand(h.height * 0.08, h.height * 0.72)
+      y: rand(h.height * 0.08, h.height * 0.72),
     };
   }
 
@@ -100,15 +115,15 @@
     const h = heroRect();
     const margin = 120;
     if (side === 'left') {
-      return { x: -margin, y: rand(h.height * 0.10, h.height * 0.70) };
+      return { x: -margin, y: rand(h.height * 0.1, h.height * 0.7) };
     }
     if (side === 'right') {
-      return { x: h.width + margin, y: rand(h.height * 0.10, h.height * 0.70) };
+      return { x: h.width + margin, y: rand(h.height * 0.1, h.height * 0.7) };
     }
     if (side === 'top') {
-      return { x: rand(h.width * 0.10, h.width * 0.90), y: -margin };
+      return { x: rand(h.width * 0.1, h.width * 0.9), y: -margin };
     }
-    return { x: rand(h.width * 0.10, h.width * 0.90), y: h.height + margin };
+    return { x: rand(h.width * 0.1, h.width * 0.9), y: h.height + margin };
   }
 
   function randomOffscreenPoint() {
@@ -119,13 +134,12 @@
   function makeBird(index) {
     const el = document.createElement('div');
     el.className = 'paille';
-    el.style.filter = 'none';
-    el.style.opacity = '0';
+    // eslint-disable-next-line no-restricted-properties -- SVG construit uniquement à partir de constantes du module
     el.innerHTML = birdSVG();
     layer.appendChild(el);
 
     const scale = rand(0.68, 0.96);
-    const svg = el.querySelector('svg');
+    const svg = el.firstElementChild;
     const cw = VBW * scale;
     const ch = VBH * scale;
     svg.setAttribute('width', cw);
@@ -135,10 +149,7 @@
     const start = offscreenPoint(index % 2 === 0 ? 'left' : 'right');
     const startAngle = start.x < 0 ? 90 : -90;
 
-    el.style.transform =
-      'translate(' + (start.x - cw / 2).toFixed(2) + 'px,' +
-                     (start.y - ch / 2).toFixed(2) + 'px) ' +
-      'rotate(' + startAngle.toFixed(2) + 'deg)';
+    placeElement(el, start.x - cw / 2, start.y - ch / 2, startAngle);
 
     return {
       el,
@@ -156,7 +167,7 @@
       seg: null,
       delay: index * 850 + rand(0, 500),
       born: false,
-      t0base: 0
+      t0base: 0,
     };
   }
 
@@ -174,25 +185,25 @@
     const px = -uy;
     const py = ux;
 
-    const currentHeading = (bird.angle - 90) * Math.PI / 180;
+    const currentHeading = ((bird.angle - 90) * Math.PI) / 180;
     const hx = Math.cos(currentHeading);
     const hy = Math.sin(currentHeading);
-    const targetAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+    const targetAngle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
     const turn = Math.abs(((targetAngle - bird.angle + 540) % 360) - 180) / 180;
 
     const sway = rand(-1, 1) * Math.min(dist * 0.32, 190);
-    const out = clamp(dist * 0.40, 110, 360);
+    const out = clamp(dist * 0.4, 110, 360);
     const lift = opts.lift || rand(-90, 60);
-    const wide = 1 + turn * 1.10;
+    const wide = 1 + turn * 1.1;
 
     const p0 = start;
     const p1 = {
       x: start.x + hx * out * wide + px * sway * 0.35,
-      y: start.y + hy * out * wide + py * sway * 0.35 + lift - turn * 90
+      y: start.y + hy * out * wide + py * sway * 0.35 + lift - turn * 90,
     };
     const p2 = {
       x: endPoint.x - ux * out * 0.92 + px * sway * 0.58,
-      y: endPoint.y - uy * out * 0.92 + py * sway * 0.58 + lift * 0.20 - turn * 55
+      y: endPoint.y - uy * out * 0.92 + py * sway * 0.58 + lift * 0.2 - turn * 55,
     };
     const p3 = endPoint;
 
@@ -212,13 +223,16 @@
       cum,
       arc: cum[N],
       dur: clamp(cum[N] / bird.speed, 2.1, 18.0) * 1000 * (opts.durScale || 1),
-      t0: performance.now()
+      t0: performance.now(),
     };
   }
 
   function planNext(bird) {
     const target = Math.random() < 0.22 ? randomOffscreenPoint() : skyPoint();
-    startFlight(bird, target, { lift: rand(-115, 70), durScale: rand(0.92, 1.18) });
+    startFlight(bird, target, {
+      lift: rand(-115, 70),
+      durScale: rand(0.92, 1.18),
+    });
   }
 
   function resetFromOffscreen(bird) {
@@ -233,7 +247,8 @@
     if (!bird.born) {
       if (now < bird.t0base + bird.delay) return;
       bird.born = true;
-      bird.el.style.opacity = bird.finalOpacity;
+      bird.el.style.setProperty('--opacity', bird.finalOpacity);
+      bird.el.classList.add('is-born');
       resetFromOffscreen(bird);
     }
 
@@ -255,40 +270,47 @@
     bird.prev = { x: bird.pos.x, y: bird.pos.y };
 
     if (speed > 8) {
-      const target = Math.atan2(vy, vx) * 180 / Math.PI + 90;
+      const target = (Math.atan2(vy, vx) * 180) / Math.PI + 90;
       const diff = ((target - bird.angle + 540) % 360) - 180;
-      bird.angle += diff * clamp(dt * 3.10, 0, 1);
+      bird.angle += diff * clamp(dt * 3.1, 0, 1);
     }
 
     const flapHz = clamp(2.0 + Math.min(speed, 180) * 0.004, 1.6, 3.6);
     bird.phase += dt * flapHz * Math.PI * 2;
 
-    const wingSpan = 0.50 + 0.50 * (0.5 + 0.5 * Math.sin(bird.phase));
-    bird.wings.setAttribute('transform', 'translate(36,0) scale(' + wingSpan.toFixed(3) + ',1) translate(-36,0)');
+    const wingSpan = 0.5 + 0.5 * (0.5 + 0.5 * Math.sin(bird.phase));
+    bird.wings.setAttribute(
+      'transform',
+      'translate(36,0) scale(' + wingSpan.toFixed(3) + ',1) translate(-36,0)',
+    );
 
     const tailSway = 4.8 * Math.sin(bird.phase * 0.5 + 0.6 + bird.phaseOff);
     bird.tail.setAttribute('transform', 'rotate(' + tailSway.toFixed(2) + ' 36 43)');
 
     const bob = Math.sin(bird.phase) * 0.8;
-    bird.el.style.transform =
-      'translate(' + (bird.pos.x - bird.cw / 2).toFixed(2) + 'px,' +
-                     (bird.pos.y - bird.ch / 2 + bob).toFixed(2) + 'px) ' +
-      'rotate(' + bird.angle.toFixed(2) + 'deg)';
+    placeElement(bird.el, bird.pos.x - bird.cw / 2, bird.pos.y - bird.ch / 2 + bob, bird.angle);
   }
 
   const birds = [];
   for (let i = 0; i < NUM_BIRDS; i++) birds.push(makeBird(i));
   const t0base = performance.now();
-  birds.forEach((bird) => { bird.t0base = t0base; });
+  birds.forEach((bird) => {
+    bird.t0base = t0base;
+  });
 
   let lastT = 0;
   let visible = true;
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: 0.02 }).observe(hero);
+    new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+      },
+      { threshold: 0.02 },
+    ).observe(hero);
   }
 
   function frame(now) {
-    if (!visible) {
+    if (!visible || isMotionPaused()) {
       lastT = now;
       requestAnimationFrame(frame);
       return;
@@ -296,7 +318,10 @@
 
     let dt = (now - lastT) / 1000;
     if (!lastT) dt = 0.016;
-    dt = Math.min(dt, 0.05); /* cap pour éviter un saut de position si l'onglet était en arrière-plan */
+    dt = Math.min(
+      dt,
+      0.05,
+    ); /* cap pour éviter un saut de position si l'onglet était en arrière-plan */
     lastT = now;
 
     birds.forEach((bird) => updateBird(bird, now, dt));
@@ -304,4 +329,4 @@
   }
 
   requestAnimationFrame(frame);
-})();
+}

@@ -1,0 +1,24 @@
+/* ============================================================
+   assets/css/components/skip-link.css
+   Rôle : lien d'évitement « Aller au contenu » (WCAG 2.4.1).
+   Pages concernées : toutes.
+   ============================================================ */
+
+/* ── LIEN D'ÉVITEMENT ── */
+
+/* Premier élément focalisable de la page : masqué hors écran, visible au focus clavier. */
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  padding: var(--space-3) var(--space-5);
+  color: var(--white);
+  background: var(--navy);
+  transform: translateY(-100%);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
