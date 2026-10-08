@@ -8,7 +8,7 @@
 const SCROLLED_THRESHOLD_PX = 60;
 
 /**
- * Bascule la classe `scrolled` de la navigation selon le défilement.
+ * Bascule la classe `is-scrolled` de la navigation selon le défilement.
  */
 export function initNavScroll() {
   const nav = document.querySelector('.js-nav');
@@ -17,7 +17,7 @@ export function initNavScroll() {
   window.addEventListener(
     'scroll',
     () => {
-      nav.classList.toggle('scrolled', window.scrollY > SCROLLED_THRESHOLD_PX);
+      nav.classList.toggle('is-scrolled', window.scrollY > SCROLLED_THRESHOLD_PX);
     },
     { passive: true },
   );

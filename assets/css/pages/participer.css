@@ -247,7 +247,7 @@
   border-collapse: collapse;
 }
 
-.collecte-table thead tr {
+.collecte-head-row {
   background: var(--cream);
 }
 
@@ -272,11 +272,11 @@
   vertical-align: top;
 }
 
-.collecte-table tr:last-child td {
+.collecte-row:last-child td {
   border-bottom: none;
 }
 
-.collecte-table tr:hover td {
+.collecte-row:hover td {
   background: var(--teal-light-10);
 }
 

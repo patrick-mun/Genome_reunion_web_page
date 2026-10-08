@@ -26,7 +26,7 @@
 
     <header>
       <!-- NAV (identique) -->
-      <nav id="nav" class="js-nav">
+      <nav id="nav" class="nav js-nav">
         <a href="index.html" class="nav-logo">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,9 +58,9 @@
           <span class="nav-logo-text">Génome Réunion</span>
         </a>
         <ul class="nav-links">
-          <li><a href="index.html#probleme">Pourquoi</a></li>
-          <li><a href="index.html#methode">Comment</a></li>
-          <li><a href="index.html#equipe">Équipe</a></li>
+          <li><a class="nav-link" href="index.html#probleme">Pourquoi</a></li>
+          <li><a class="nav-link" href="index.html#methode">Comment</a></li>
+          <li><a class="nav-link" href="index.html#equipe">Équipe</a></li>
         </ul>
         <a href="#inscription" class="nav-cta">S'inscrire</a>
       </nav>
@@ -210,14 +210,14 @@
               </div>
               <table class="collecte-table">
                 <thead>
-                  <tr>
+                  <tr class="collecte-head-row">
                     <th>Date</th>
                     <th>Lieu</th>
                     <th>Horaires</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Jeu. 3 juil. 2026</td>
                     <td>
                       <div class="td-lieu">Centre EFS Saint-Denis</div>
@@ -225,7 +225,7 @@
                     </td>
                     <td class="td-horaire">8h – 13h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Mar. 8 juil. 2026</td>
                     <td>
                       <div class="td-lieu">Mairie de Sainte-Marie</div>
@@ -233,7 +233,7 @@
                     </td>
                     <td class="td-horaire">9h – 15h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Sam. 12 juil. 2026</td>
                     <td>
                       <div class="td-lieu">Centre commercial Carrefour Nord</div>
@@ -241,7 +241,7 @@
                     </td>
                     <td class="td-horaire">8h30 – 13h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Lun. 21 juil. 2026</td>
                     <td>
                       <div class="td-lieu">CHU Félix Guyon</div>
@@ -249,7 +249,7 @@
                     </td>
                     <td class="td-horaire">8h – 12h30</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Mer. 30 juil. 2026</td>
                     <td>
                       <div class="td-lieu">Mairie de Sainte-Clotilde</div>
@@ -257,7 +257,7 @@
                     </td>
                     <td class="td-horaire">9h – 14h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Jeu. 7 août 2026</td>
                     <td>
                       <div class="td-lieu">Médiathèque de Saint-André</div>
@@ -265,7 +265,7 @@
                     </td>
                     <td class="td-horaire">8h30 – 13h30</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Sam. 23 août 2026</td>
                     <td>
                       <div class="td-lieu">Centre EFS Saint-Denis</div>
@@ -292,14 +292,14 @@
               </div>
               <table class="collecte-table">
                 <thead>
-                  <tr>
+                  <tr class="collecte-head-row">
                     <th>Date</th>
                     <th>Lieu</th>
                     <th>Horaires</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Ven. 4 juil. 2026</td>
                     <td>
                       <div class="td-lieu">Centre EFS Saint-Pierre</div>
@@ -307,7 +307,7 @@
                     </td>
                     <td class="td-horaire">8h – 13h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Mer. 9 juil. 2026</td>
                     <td>
                       <div class="td-lieu">Mairie du Tampon</div>
@@ -315,7 +315,7 @@
                     </td>
                     <td class="td-horaire">9h – 15h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Sam. 19 juil. 2026</td>
                     <td>
                       <div class="td-lieu">Centre commercial Leclerc Sud</div>
@@ -323,7 +323,7 @@
                     </td>
                     <td class="td-horaire">8h30 – 13h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Mar. 22 juil. 2026</td>
                     <td>
                       <div class="td-lieu">CHU Groupe Hospitalier Sud</div>
@@ -331,7 +331,7 @@
                     </td>
                     <td class="td-horaire">8h – 12h30</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Sam. 2 août 2026</td>
                     <td>
                       <div class="td-lieu">Mairie de Saint-Louis</div>
@@ -339,7 +339,7 @@
                     </td>
                     <td class="td-horaire">9h – 14h</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Jeu. 14 août 2026</td>
                     <td>
                       <div class="td-lieu">Salle polyvalente de Cilaos</div>
@@ -347,7 +347,7 @@
                     </td>
                     <td class="td-horaire">8h30 – 13h30</td>
                   </tr>
-                  <tr>
+                  <tr class="collecte-row">
                     <td class="td-date">Ven. 28 août 2026</td>
                     <td>
                       <div class="td-lieu">Centre EFS Saint-Pierre</div>
@@ -428,10 +428,10 @@
         Le premier référentiel génomique dédié à la population réunionnaise.
       </div>
       <ul class="footer-nav">
-        <li><a href="index.html#probleme">Pourquoi</a></li>
-        <li><a href="index.html#methode">Comment</a></li>
-        <li><a href="index.html#equipe">Équipe</a></li>
-        <li><a href="#inscription">S'inscrire</a></li>
+        <li><a class="footer-link" href="index.html#probleme">Pourquoi</a></li>
+        <li><a class="footer-link" href="index.html#methode">Comment</a></li>
+        <li><a class="footer-link" href="index.html#equipe">Équipe</a></li>
+        <li><a class="footer-link" href="#inscription">S'inscrire</a></li>
       </ul>
       <div class="footer-copy">CHU de La Réunion · Service de Génétique · V3.5</div>
     </footer>
