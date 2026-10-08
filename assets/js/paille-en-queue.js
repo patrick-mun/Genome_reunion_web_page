@@ -1,11 +1,11 @@
 /* Paille-en-queue du hero : vol décoratif continu, sans pose sur les lettres. */
 (function () {
-  "use strict";
+  'use strict';
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.innerWidth < 760) return;
 
-  const hero = document.getElementById("hero");
+  const hero = document.getElementById('hero');
   if (!hero) return;
 
   const NUM_BIRDS = 3;
@@ -15,11 +15,9 @@
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const rand = (min, max) => min + Math.random() * (max - min);
 
-  document
-    .querySelectorAll(".bird-layer")
-    .forEach((oldLayer) => oldLayer.remove());
+  document.querySelectorAll('.bird-layer').forEach((oldLayer) => oldLayer.remove());
 
-  const birdStyle = document.createElement("style");
+  const birdStyle = document.createElement('style');
   birdStyle.textContent = `
     .bird-layer .paille,
     .bird-layer .paille svg {
@@ -34,9 +32,9 @@
   `;
   document.head.appendChild(birdStyle);
 
-  const layer = document.createElement("div");
-  layer.className = "bird-layer";
-  layer.setAttribute("aria-hidden", "true");
+  const layer = document.createElement('div');
+  layer.className = 'bird-layer';
+  layer.setAttribute('aria-hidden', 'true');
   hero.appendChild(layer);
 
   function birdSVG() {
@@ -45,15 +43,15 @@
       '<g class="paille-tail" data-tail>' +
       '<path d="M35.2,43 C34.6,55 33.6,68 32.6,80" />' +
       '<path d="M36.8,43 C37.4,55 38.4,68 39.4,80" />' +
-      "</g>" +
+      '</g>' +
       '<g class="paille-wings" data-wings>' +
       '<path style="stroke:none" d="M34,18 C25,12 10,16 2,35 C13,31 25,28 34,26 Z" />' +
       '<path style="stroke:none" d="M38,18 C47,12 62,16 70,35 C59,31 47,28 38,26 Z" />' +
-      "</g>" +
+      '</g>' +
       '<path class="paille-body" style="stroke:none" d="M36,4 C40,12 40.8,26 38.4,41 C37.4,48 34.6,48 33.6,41 C31.2,26 32,12 36,4 Z" />' +
       '<path d="M36,2 L41,8 L36.8,7 Z" fill="#E8654A" opacity=".95" />' +
       '<circle cx="37.6" cy="9.5" r=".9" fill="#0F3A56" opacity=".55" />' +
-      "</svg>"
+      '</svg>'
     );
   }
 
@@ -106,56 +104,56 @@
   function offscreenPoint(side) {
     const h = heroRect();
     const margin = 120;
-    if (side === "left") {
+    if (side === 'left') {
       return { x: -margin, y: rand(h.height * 0.1, h.height * 0.7) };
     }
-    if (side === "right") {
+    if (side === 'right') {
       return { x: h.width + margin, y: rand(h.height * 0.1, h.height * 0.7) };
     }
-    if (side === "top") {
+    if (side === 'top') {
       return { x: rand(h.width * 0.1, h.width * 0.9), y: -margin };
     }
     return { x: rand(h.width * 0.1, h.width * 0.9), y: h.height + margin };
   }
 
   function randomOffscreenPoint() {
-    const sides = ["left", "right", "top"];
+    const sides = ['left', 'right', 'top'];
     return offscreenPoint(sides[(Math.random() * sides.length) | 0]);
   }
 
   function makeBird(index) {
-    const el = document.createElement("div");
-    el.className = "paille";
-    el.style.filter = "none";
-    el.style.opacity = "0";
+    const el = document.createElement('div');
+    el.className = 'paille';
+    el.style.filter = 'none';
+    el.style.opacity = '0';
     el.innerHTML = birdSVG();
     layer.appendChild(el);
 
     const scale = rand(0.68, 0.96);
-    const svg = el.querySelector("svg");
+    const svg = el.querySelector('svg');
     const cw = VBW * scale;
     const ch = VBH * scale;
-    svg.setAttribute("width", cw);
-    svg.setAttribute("height", ch);
+    svg.setAttribute('width', cw);
+    svg.setAttribute('height', ch);
     const finalOpacity = (0.78 + scale * 0.22).toFixed(2);
 
-    const start = offscreenPoint(index % 2 === 0 ? "left" : "right");
+    const start = offscreenPoint(index % 2 === 0 ? 'left' : 'right');
     const startAngle = start.x < 0 ? 90 : -90;
 
     el.style.transform =
-      "translate(" +
+      'translate(' +
       (start.x - cw / 2).toFixed(2) +
-      "px," +
+      'px,' +
       (start.y - ch / 2).toFixed(2) +
-      "px) " +
-      "rotate(" +
+      'px) ' +
+      'rotate(' +
       startAngle.toFixed(2) +
-      "deg)";
+      'deg)';
 
     return {
       el,
-      wings: el.querySelector("[data-wings]"),
-      tail: el.querySelector("[data-tail]"),
+      wings: el.querySelector('[data-wings]'),
+      tail: el.querySelector('[data-tail]'),
       cw,
       ch,
       finalOpacity,
@@ -204,12 +202,7 @@
     };
     const p2 = {
       x: endPoint.x - ux * out * 0.92 + px * sway * 0.58,
-      y:
-        endPoint.y -
-        uy * out * 0.92 +
-        py * sway * 0.58 +
-        lift * 0.2 -
-        turn * 55,
+      y: endPoint.y - uy * out * 0.92 + py * sway * 0.58 + lift * 0.2 - turn * 55,
     };
     const p3 = endPoint;
 
@@ -220,9 +213,7 @@
     for (let k = 1; k <= N; k++) {
       const point = bezier(p0, p1, p2, p3, k / N);
       pts.push(point);
-      cum.push(
-        cum[k - 1] + Math.hypot(point.x - previous.x, point.y - previous.y),
-      );
+      cum.push(cum[k - 1] + Math.hypot(point.x - previous.x, point.y - previous.y));
       previous = point;
     }
 
@@ -287,26 +278,23 @@
 
     const wingSpan = 0.5 + 0.5 * (0.5 + 0.5 * Math.sin(bird.phase));
     bird.wings.setAttribute(
-      "transform",
-      "translate(36,0) scale(" + wingSpan.toFixed(3) + ",1) translate(-36,0)",
+      'transform',
+      'translate(36,0) scale(' + wingSpan.toFixed(3) + ',1) translate(-36,0)',
     );
 
     const tailSway = 4.8 * Math.sin(bird.phase * 0.5 + 0.6 + bird.phaseOff);
-    bird.tail.setAttribute(
-      "transform",
-      "rotate(" + tailSway.toFixed(2) + " 36 43)",
-    );
+    bird.tail.setAttribute('transform', 'rotate(' + tailSway.toFixed(2) + ' 36 43)');
 
     const bob = Math.sin(bird.phase) * 0.8;
     bird.el.style.transform =
-      "translate(" +
+      'translate(' +
       (bird.pos.x - bird.cw / 2).toFixed(2) +
-      "px," +
+      'px,' +
       (bird.pos.y - bird.ch / 2 + bob).toFixed(2) +
-      "px) " +
-      "rotate(" +
+      'px) ' +
+      'rotate(' +
       bird.angle.toFixed(2) +
-      "deg)";
+      'deg)';
   }
 
   const birds = [];
@@ -318,7 +306,7 @@
 
   let lastT = 0;
   let visible = true;
-  if ("IntersectionObserver" in window) {
+  if ('IntersectionObserver' in window) {
     new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;

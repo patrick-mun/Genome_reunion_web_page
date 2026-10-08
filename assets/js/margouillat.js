@@ -5,22 +5,22 @@
    Le hero reste le territoire des paille-en-queue : le margouillat ne monte
    jamais au-dessus du bas du hero. */
 (function () {
-  "use strict";
+  'use strict';
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.innerWidth < 760) return;
 
-  const hero = document.getElementById("hero");
+  const hero = document.getElementById('hero');
   if (!hero) return;
 
   const VBW = 90;
   const VBH = 150;
   const SCALE = 0.55;
 
-  const SVGNS = "http://www.w3.org/2000/svg";
-  const GREEN = "#8CC152";
-  const DARK = "#3E5A2B";
-  const PAD = "#C8E6A0";
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const GREEN = '#8CC152';
+  const DARK = '#3E5A2B';
+  const PAD = '#C8E6A0';
 
   /* Queue : chaîne de « bones » dont on calcule la ligne médiane par
      cinématique directe, puis on en déduit un contour qui s'effile
@@ -33,13 +33,11 @@
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const rand = (min, max) => min + Math.random() * (max - min);
 
-  document
-    .querySelectorAll(".gecko-layer")
-    .forEach((oldLayer) => oldLayer.remove());
+  document.querySelectorAll('.gecko-layer').forEach((oldLayer) => oldLayer.remove());
 
-  const layer = document.createElement("div");
-  layer.className = "gecko-layer";
-  layer.setAttribute("aria-hidden", "true");
+  const layer = document.createElement('div');
+  layer.className = 'gecko-layer';
+  layer.setAttribute('aria-hidden', 'true');
   document.body.appendChild(layer);
 
   /* Gecko cartoon vu de dessus, tête vers le haut du viewBox.
@@ -50,9 +48,9 @@
   function geckoSVG() {
     function leg(name, d, toes) {
       return (
-        "<g data-" +
+        '<g data-' +
         name +
-        ">" +
+        '>' +
         '<path d="' +
         d +
         '" fill="none" stroke="' +
@@ -76,39 +74,39 @@
               DARK +
               '" stroke-width="1.1"/>',
           )
-          .join("") +
-        "</g>"
+          .join('') +
+        '</g>'
       );
     }
 
     return (
       '<svg viewBox="0 0 90 150">' +
-      "<g data-sway>" +
+      '<g data-sway>' +
       /* la géométrie de la queue est injectée par JS et animée image par image */
-      "<g data-tail>" +
+      '<g data-tail>' +
       '<path data-tail-dark fill="' +
       DARK +
       '"/>' +
       '<path data-tail-green fill="' +
       GREEN +
       '"/>' +
-      "</g>" +
-      leg("leg-fl", "M34,42 C25,39 19,33 15,26", [
+      '</g>' +
+      leg('leg-fl', 'M34,42 C25,39 19,33 15,26', [
         [11.5, 23],
         [14, 20.2],
         [17.6, 19.8],
       ]) +
-      leg("leg-fr", "M56,42 C65,39 71,33 75,26", [
+      leg('leg-fr', 'M56,42 C65,39 71,33 75,26', [
         [78.5, 23],
         [76, 20.2],
         [72.4, 19.8],
       ]) +
-      leg("leg-bl", "M36,72 C25,72 18,77 13,85", [
+      leg('leg-bl', 'M36,72 C25,72 18,77 13,85', [
         [9.4, 87.6],
         [12.3, 90.6],
         [16, 90.2],
       ]) +
-      leg("leg-br", "M54,72 C65,72 72,77 77,85", [
+      leg('leg-br', 'M54,72 C65,72 72,77 77,85', [
         [80.6, 87.6],
         [77.7, 90.6],
         [74, 90.2],
@@ -128,7 +126,7 @@
       '<ellipse cx="43.5" cy="68" rx="2.2" ry="1.7" fill="' +
       DARK +
       '" opacity=".28"/>' +
-      "<g data-head>" +
+      '<g data-head>' +
       '<path d="M45,4 C55,5 61,13 60,22 C59,31 53,35 45,36 C37,35 31,31 30,22 C29,13 35,5 45,4 Z"' +
       ' fill="' +
       GREEN +
@@ -152,9 +150,9 @@
       '<path d="M39,27 Q45,31 51,27" fill="none" stroke="' +
       DARK +
       '" stroke-width="1.7" stroke-linecap="round"/>' +
-      "</g>" +
-      "</g>" +
-      "</svg>"
+      '</g>' +
+      '</g>' +
+      '</svg>'
     );
   }
 
@@ -190,12 +188,11 @@
       right.push([spine[i].x + dy * w, spine[i].y - dx * w]);
     }
 
-    let d = "M" + left[0][0].toFixed(2) + "," + left[0][1].toFixed(2);
-    for (let i = 1; i < n; i++)
-      d += "L" + left[i][0].toFixed(2) + "," + left[i][1].toFixed(2);
+    let d = 'M' + left[0][0].toFixed(2) + ',' + left[0][1].toFixed(2);
+    for (let i = 1; i < n; i++) d += 'L' + left[i][0].toFixed(2) + ',' + left[i][1].toFixed(2);
     for (let i = n - 1; i >= 0; i--)
-      d += "L" + right[i][0].toFixed(2) + "," + right[i][1].toFixed(2);
-    return d + "Z";
+      d += 'L' + right[i][0].toFixed(2) + ',' + right[i][1].toFixed(2);
+    return d + 'Z';
   }
 
   /* Zone de promenade en coordonnées document : toute la page sauf le hero
@@ -213,26 +210,26 @@
     };
   }
 
-  const el = document.createElement("div");
-  el.className = "gecko";
+  const el = document.createElement('div');
+  el.className = 'gecko';
   el.innerHTML = geckoSVG();
   layer.appendChild(el);
 
   const cw = VBW * SCALE;
   const ch = VBH * SCALE;
-  const svg = el.querySelector("svg");
-  svg.setAttribute("width", cw);
-  svg.setAttribute("height", ch);
+  const svg = el.querySelector('svg');
+  svg.setAttribute('width', cw);
+  svg.setAttribute('height', ch);
 
   const parts = {
-    sway: el.querySelector("[data-sway]"),
-    tailDark: el.querySelector("[data-tail-dark]"),
-    tailGreen: el.querySelector("[data-tail-green]"),
-    head: el.querySelector("[data-head]"),
-    legFL: el.querySelector("[data-leg-fl]"),
-    legFR: el.querySelector("[data-leg-fr]"),
-    legBL: el.querySelector("[data-leg-bl]"),
-    legBR: el.querySelector("[data-leg-br]"),
+    sway: el.querySelector('[data-sway]'),
+    tailDark: el.querySelector('[data-tail-dark]'),
+    tailGreen: el.querySelector('[data-tail-green]'),
+    head: el.querySelector('[data-head]'),
+    legFL: el.querySelector('[data-leg-fl]'),
+    legFR: el.querySelector('[data-leg-fr]'),
+    legBL: el.querySelector('[data-leg-bl]'),
+    legBR: el.querySelector('[data-leg-br]'),
   };
 
   const spawnBounds = bounds();
@@ -247,7 +244,7 @@
     },
     prev: null,
     angle: rand(0, 360),
-    state: "pause",
+    state: 'pause',
     until: performance.now() + rand(700, 2200),
     targetAngle: 0,
     seg: null,
@@ -259,7 +256,7 @@
 
   const pointer = { x: -1e5, y: -1e5, has: false };
   document.addEventListener(
-    "mousemove",
+    'mousemove',
     (event) => {
       pointer.x = event.clientX + window.scrollX;
       pointer.y = event.clientY + window.scrollY;
@@ -268,7 +265,7 @@
     { passive: true },
   );
 
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     const b = bounds();
     gecko.pos.x = clamp(gecko.pos.x, b.minX, b.maxX);
     gecko.pos.y = clamp(gecko.pos.y, b.minY, b.maxY);
@@ -295,11 +292,9 @@
 
   /* Le margouillat pivote sur place avant de détaler, comme le vrai. */
   function beginTurnTo(target, speed) {
-    gecko.state = "turn";
+    gecko.state = 'turn';
     gecko.targetAngle =
-      (Math.atan2(target.y - gecko.pos.y, target.x - gecko.pos.x) * 180) /
-        Math.PI +
-      90;
+      (Math.atan2(target.y - gecko.pos.y, target.x - gecko.pos.x) * 180) / Math.PI + 90;
     gecko.seg = {
       from: { x: gecko.pos.x, y: gecko.pos.y },
       to: target,
@@ -312,7 +307,7 @@
     const dist = Math.hypot(seg.to.x - seg.from.x, seg.to.y - seg.from.y);
     seg.dur = clamp(dist / seg.speed, 0.28, 4.5) * 1000;
     seg.t0 = now;
-    gecko.state = "dash";
+    gecko.state = 'dash';
   }
 
   function fleeFromPointer() {
@@ -334,17 +329,16 @@
   const smoothstep = (t) => t * t * (3 - 2 * t);
 
   function update(now, dt) {
-    if (gecko.state === "pause") {
+    if (gecko.state === 'pause') {
       if (pointer.has) {
         const dx = gecko.pos.x - pointer.x;
         const dy = gecko.pos.y - pointer.y;
         if (dx * dx + dy * dy < 110 * 110) fleeFromPointer();
       }
-      if (gecko.state === "pause" && now >= gecko.until)
-        beginTurnTo(pickTarget());
+      if (gecko.state === 'pause' && now >= gecko.until) beginTurnTo(pickTarget());
     }
 
-    if (gecko.state === "turn") {
+    if (gecko.state === 'turn') {
       const diff = ((gecko.targetAngle - gecko.angle + 540) % 360) - 180;
       const step = 460 * dt;
       if (Math.abs(diff) <= step || Math.abs(diff) < 4) {
@@ -355,24 +349,20 @@
       }
     }
 
-    if (gecko.state === "dash") {
+    if (gecko.state === 'dash') {
       const t = clamp((now - gecko.seg.t0) / gecko.seg.dur, 0, 1);
       const eased = smoothstep(t);
-      gecko.pos.x =
-        gecko.seg.from.x + (gecko.seg.to.x - gecko.seg.from.x) * eased;
-      gecko.pos.y =
-        gecko.seg.from.y + (gecko.seg.to.y - gecko.seg.from.y) * eased;
+      gecko.pos.x = gecko.seg.from.x + (gecko.seg.to.x - gecko.seg.from.x) * eased;
+      gecko.pos.y = gecko.seg.from.y + (gecko.seg.to.y - gecko.seg.from.y) * eased;
       if (t >= 1) {
-        gecko.state = "pause";
+        gecko.state = 'pause';
         /* pause courte le plus souvent, longue « pose lézard » parfois */
-        gecko.until =
-          now + (Math.random() < 0.22 ? rand(4500, 9000) : rand(900, 3800));
+        gecko.until = now + (Math.random() < 0.22 ? rand(4500, 9000) : rand(900, 3800));
         gecko.seg = null;
       }
     }
 
-    const speed =
-      Math.hypot(gecko.pos.x - gecko.prev.x, gecko.pos.y - gecko.prev.y) / dt;
+    const speed = Math.hypot(gecko.pos.x - gecko.prev.x, gecko.pos.y - gecko.prev.y) / dt;
     gecko.prev = { x: gecko.pos.x, y: gecko.pos.y };
     gecko.run += ((speed > 40 ? 1 : 0) - gecko.run) * clamp(dt * 6, 0, 1);
 
@@ -381,28 +371,13 @@
     gecko.phase += speed * dt * ((Math.PI * 2) / 46);
 
     const swing = Math.sin(gecko.phase) * 24 * (0.25 + 0.75 * gecko.run);
-    parts.legFL.setAttribute(
-      "transform",
-      "rotate(" + swing.toFixed(2) + " 34 42)",
-    );
-    parts.legFR.setAttribute(
-      "transform",
-      "rotate(" + (-swing).toFixed(2) + " 56 42)",
-    );
-    parts.legBL.setAttribute(
-      "transform",
-      "rotate(" + (-swing).toFixed(2) + " 36 72)",
-    );
-    parts.legBR.setAttribute(
-      "transform",
-      "rotate(" + swing.toFixed(2) + " 54 72)",
-    );
+    parts.legFL.setAttribute('transform', 'rotate(' + swing.toFixed(2) + ' 34 42)');
+    parts.legFR.setAttribute('transform', 'rotate(' + (-swing).toFixed(2) + ' 56 42)');
+    parts.legBL.setAttribute('transform', 'rotate(' + (-swing).toFixed(2) + ' 36 72)');
+    parts.legBR.setAttribute('transform', 'rotate(' + swing.toFixed(2) + ' 54 72)');
 
     const bodySway = Math.sin(gecko.phase) * 3 * gecko.run;
-    parts.sway.setAttribute(
-      "transform",
-      "rotate(" + bodySway.toFixed(2) + " 45 56)",
-    );
+    parts.sway.setAttribute('transform', 'rotate(' + bodySway.toFixed(2) + ' 45 56)');
 
     /* Onde qui se propage de la base vers la pointe : coup de fouet quand
        il court, léger balancement au repos. L'amplitude croît vers la pointe. */
@@ -410,35 +385,26 @@
     for (let i = 0; i < TAIL_NB; i++) {
       const towardTip = 0.35 + 0.65 * (i / (TAIL_NB - 1));
       const runWave =
-        Math.sin(gecko.phase * 0.55 - i * 0.5) *
-        (0.05 + 0.15 * gecko.run) *
-        towardTip;
+        Math.sin(gecko.phase * 0.55 - i * 0.5) * (0.05 + 0.15 * gecko.run) * towardTip;
       const idleWave =
-        Math.sin(now * 0.0011 + gecko.idleOff - i * 0.42) *
-        0.05 *
-        (1 - gecko.run) *
-        towardTip;
+        Math.sin(now * 0.0011 + gecko.idleOff - i * 0.42) * 0.05 * (1 - gecko.run) * towardTip;
       tailAngles[i] = runWave + idleWave;
     }
-    parts.tailDark.setAttribute("d", tailOutline(tailAngles, 5.9, 0.72));
-    parts.tailGreen.setAttribute("d", tailOutline(tailAngles, 4.6, 0.72));
+    parts.tailDark.setAttribute('d', tailOutline(tailAngles, 5.9, 0.72));
+    parts.tailGreen.setAttribute('d', tailOutline(tailAngles, 4.6, 0.72));
 
-    const headIdle =
-      Math.sin(now * 0.0007 + gecko.idleOff * 2) * 9 * (1 - gecko.run);
-    parts.head.setAttribute(
-      "transform",
-      "rotate(" + headIdle.toFixed(2) + " 45 30)",
-    );
+    const headIdle = Math.sin(now * 0.0007 + gecko.idleOff * 2) * 9 * (1 - gecko.run);
+    parts.head.setAttribute('transform', 'rotate(' + headIdle.toFixed(2) + ' 45 30)');
 
     el.style.transform =
-      "translate(" +
+      'translate(' +
       (gecko.pos.x - cw / 2).toFixed(2) +
-      "px," +
+      'px,' +
       (gecko.pos.y - ch / 2).toFixed(2) +
-      "px) " +
-      "rotate(" +
+      'px) ' +
+      'rotate(' +
       gecko.angle.toFixed(2) +
-      "deg)";
+      'deg)';
   }
 
   let lastT = 0;

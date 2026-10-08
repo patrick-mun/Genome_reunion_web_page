@@ -1,72 +1,71 @@
 /* ── PROGRESS BAR ── */
-const progressEl = document.getElementById("progress");
+const progressEl = document.getElementById('progress');
 if (progressEl) {
-  window.addEventListener("scroll", () => {
+  window.addEventListener('scroll', () => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    progressEl.style.width =
-      max > 0 ? (window.scrollY / max) * 100 + "%" : "0%";
+    progressEl.style.width = max > 0 ? (window.scrollY / max) * 100 + '%' : '0%';
   });
 }
 
 /* ── NAV SCROLLED ── */
-const nav = document.getElementById("nav");
+const nav = document.getElementById('nav');
 if (nav) {
-  window.addEventListener("scroll", () => {
-    nav.classList.toggle("scrolled", window.scrollY > 60);
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 }
 
 /* ── HERO REVEAL ── */
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   const heroEls = [
-    { id: "hero-creole", delay: 100 },
-    { id: "hero-title", delay: 200 },
-    { id: "hero-subtitle", delay: 330 },
-    { id: "hero-body", delay: 430 },
-    { id: "hero-actions", delay: 560 },
+    { id: 'hero-creole', delay: 100 },
+    { id: 'hero-title', delay: 200 },
+    { id: 'hero-subtitle', delay: 330 },
+    { id: 'hero-body', delay: 430 },
+    { id: 'hero-actions', delay: 560 },
   ];
   heroEls.forEach(({ id, delay }) => {
     const el = document.getElementById(id);
     if (!el) return;
     setTimeout(() => {
-      el.style.opacity = "1";
-      el.style.transition = "opacity .8s cubic-bezier(.16,1,.3,1)";
-      el.style.transform = "translateY(0)";
+      el.style.opacity = '1';
+      el.style.transition = 'opacity .8s cubic-bezier(.16,1,.3,1)';
+      el.style.transform = 'translateY(0)';
       setTimeout(() => {
-        el.style.transition = "";
+        el.style.transition = '';
       }, 900);
     }, delay);
   });
 });
 
 /* ── SCROLL REVEAL ── */
-const revealEls = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
   const revealObs = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add("visible");
+          e.target.classList.add('visible');
           revealObs.unobserve(e.target);
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
   );
   revealEls.forEach((el) => revealObs.observe(el));
 } else {
-  revealEls.forEach((el) => el.classList.add("visible"));
+  revealEls.forEach((el) => el.classList.add('visible'));
 }
 
 /* ── STATS REVEAL + COUNTER ── */
-const statItems = document.querySelectorAll(".stat-item");
-if ("IntersectionObserver" in window) {
+const statItems = document.querySelectorAll('.stat-item');
+if ('IntersectionObserver' in window) {
   const statObs = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add("visible");
-          const counter = e.target.querySelector(".count");
+          e.target.classList.add('visible');
+          const counter = e.target.querySelector('.count');
           if (counter) {
             const target = parseInt(counter.dataset.target, 10);
             if (!Number.isFinite(target)) return;
@@ -77,9 +76,7 @@ if ("IntersectionObserver" in window) {
               const elapsed = now - start;
               const progress = Math.min(elapsed / duration, 1);
               const eased = 1 - Math.pow(1 - progress, 3);
-              counter.textContent = Math.round(eased * target).toLocaleString(
-                "fr-FR",
-              );
+              counter.textContent = Math.round(eased * target).toLocaleString('fr-FR');
               if (progress < 1) requestAnimationFrame(animate);
             };
             requestAnimationFrame(animate);
@@ -91,21 +88,21 @@ if ("IntersectionObserver" in window) {
     { threshold: 0.4 },
   );
   statItems.forEach((el, i) => {
-    el.style.transitionDelay = i * 0.08 + "s";
+    el.style.transitionDelay = i * 0.08 + 's';
     statObs.observe(el);
   });
 } else {
-  statItems.forEach((el) => el.classList.add("visible"));
+  statItems.forEach((el) => el.classList.add('visible'));
 }
 
 /* ── LEGEND DOTS CSS ── */
-document.querySelectorAll(".legend-dot").forEach((el) => {
-  if (el.querySelector(".legend-dot-marker")) return;
+document.querySelectorAll('.legend-dot').forEach((el) => {
+  if (el.querySelector('.legend-dot-marker')) return;
 
-  const color = getComputedStyle(el).getPropertyValue("--c").trim();
+  const color = getComputedStyle(el).getPropertyValue('--c').trim();
   if (color) {
-    const dot = document.createElement("span");
-    dot.className = "legend-dot-marker";
+    const dot = document.createElement('span');
+    dot.className = 'legend-dot-marker';
     dot.style.cssText = `width:8px;height:8px;border-radius:2px;background:${color};display:inline-block;flex-shrink:0;`;
     el.prepend(dot);
   }
@@ -113,13 +110,13 @@ document.querySelectorAll(".legend-dot").forEach((el) => {
 
 /* ── PARALLAXE SOURIS — HERO ── */
 (function () {
-  const hero = document.getElementById("hero");
-  if (!hero || !("IntersectionObserver" in window)) return;
+  const hero = document.getElementById('hero');
+  if (!hero || !('IntersectionObserver' in window)) return;
 
-  const title = document.getElementById("hero-title");
-  const creole = document.getElementById("hero-creole");
-  const body = document.getElementById("hero-body");
-  const actions = document.getElementById("hero-actions");
+  const title = document.getElementById('hero-title');
+  const creole = document.getElementById('hero-creole');
+  const body = document.getElementById('hero-body');
+  const actions = document.getElementById('hero-actions');
 
   let targetX = 0,
     targetY = 0;
@@ -139,7 +136,7 @@ document.querySelectorAll(".legend-dot").forEach((el) => {
   );
   heroObs.observe(hero);
 
-  hero.addEventListener("mousemove", (e) => {
+  hero.addEventListener('mousemove', (e) => {
     if (!heroActive) return;
     const rect = hero.getBoundingClientRect();
     const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -148,7 +145,7 @@ document.querySelectorAll(".legend-dot").forEach((el) => {
     targetY = ny * 8;
   });
 
-  hero.addEventListener("mouseleave", () => {
+  hero.addEventListener('mouseleave', () => {
     targetX = 0;
     targetY = 0;
   });
@@ -161,14 +158,10 @@ document.querySelectorAll(".legend-dot").forEach((el) => {
     currentX = lerp(currentX, targetX, 0.06);
     currentY = lerp(currentY, targetY, 0.06);
 
-    if (title)
-      title.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    if (creole)
-      creole.style.transform = `translate(${currentX * 0.4}px, ${currentY * 0.4}px)`;
-    if (body)
-      body.style.transform = `translate(${currentX * 0.6}px, ${currentY * 0.6}px)`;
-    if (actions)
-      actions.style.transform = `translate(${currentX * 0.5}px, ${currentY * 0.5}px)`;
+    if (title) title.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    if (creole) creole.style.transform = `translate(${currentX * 0.4}px, ${currentY * 0.4}px)`;
+    if (body) body.style.transform = `translate(${currentX * 0.6}px, ${currentY * 0.6}px)`;
+    if (actions) actions.style.transform = `translate(${currentX * 0.5}px, ${currentY * 0.5}px)`;
 
     requestAnimationFrame(tick);
   }
@@ -177,22 +170,22 @@ document.querySelectorAll(".legend-dot").forEach((el) => {
 
 /* ── DONUT CHART — ANIMATION AU SCROLL ── */
 (function () {
-  const donutSvg = document.querySelector(".donut");
-  if (!donutSvg || !("IntersectionObserver" in window)) return;
+  const donutSvg = document.querySelector('.donut');
+  if (!donutSvg || !('IntersectionObserver' in window)) return;
 
-  const circles = donutSvg.querySelectorAll("circle");
+  const circles = donutSvg.querySelectorAll('circle');
   if (!circles.length) return;
 
   const circumference = 2 * Math.PI * 38;
 
   const finalValues = Array.from(circles).map((c) => ({
-    dasharray: c.getAttribute("stroke-dasharray"),
-    dashoffset: parseFloat(c.getAttribute("stroke-dashoffset") || 0),
+    dasharray: c.getAttribute('stroke-dasharray'),
+    dashoffset: parseFloat(c.getAttribute('stroke-dashoffset') || 0),
   }));
 
   circles.forEach((c) => {
-    c.setAttribute("stroke-dasharray", `0 ${circumference}`);
-    c.style.transition = "none";
+    c.setAttribute('stroke-dasharray', `0 ${circumference}`);
+    c.style.transition = 'none';
   });
 
   let animated = false;
@@ -205,10 +198,9 @@ document.querySelectorAll(".legend-dot").forEach((el) => {
         circles.forEach((c, i) => {
           const final = finalValues[i];
           setTimeout(() => {
-            c.style.transition =
-              "stroke-dasharray 0.7s cubic-bezier(.16,1,.3,1)";
-            c.setAttribute("stroke-dasharray", final.dasharray);
-            c.setAttribute("stroke-dashoffset", final.dashoffset);
+            c.style.transition = 'stroke-dasharray 0.7s cubic-bezier(.16,1,.3,1)';
+            c.setAttribute('stroke-dasharray', final.dasharray);
+            c.setAttribute('stroke-dashoffset', final.dashoffset);
           }, i * 120);
         });
 
