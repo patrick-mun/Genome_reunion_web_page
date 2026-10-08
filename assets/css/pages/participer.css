@@ -81,6 +81,16 @@
   transform: translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .page-hero-kicker,
+  .page-hero-title,
+  .page-hero-sub {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ── PARTENARIAT EFS ── */
 .partenariat {
   padding: var(--space-9) var(--space-7);
@@ -412,6 +422,12 @@
 .btn-efs:hover {
   box-shadow: var(--shadow-efs);
   transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-efs:hover {
+    transform: none;
+  }
 }
 
 .btn-outline {

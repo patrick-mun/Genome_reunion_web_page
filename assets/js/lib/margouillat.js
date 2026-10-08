@@ -5,6 +5,7 @@
    Accroches : .js-hero, .js-gecko-layer (couche créée par ce module). Position via --x, --y, --angle.
    ============================================================ */
 
+import { isMotionPaused, prefersReducedMotion } from './motion.js';
 import { placeElement } from './placement.js';
 
 /* Le gecko passe sous les cartes et les textes. Le placement en profondeur repose
@@ -17,7 +18,7 @@ import { placeElement } from './placement.js';
  * Lance la promenade du margouillat (inactif en mouvement réduit ou sur petit écran).
  */
 export function initMargouillat() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (prefersReducedMotion()) return;
   if (window.innerWidth < 760) return;
 
   const hero = document.querySelector('.js-hero');
@@ -414,6 +415,11 @@ export function initMargouillat() {
 
   let lastT = 0;
   function frame(now) {
+    if (isMotionPaused()) {
+      lastT = now;
+      requestAnimationFrame(frame);
+      return;
+    }
     let dt = (now - lastT) / 1000;
     if (!lastT) dt = 0.016;
     dt = Math.min(

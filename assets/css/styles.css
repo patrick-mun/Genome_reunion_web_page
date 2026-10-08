@@ -11,6 +11,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   font-family: var(--f-body);
   color: var(--slate);
@@ -145,6 +151,12 @@ body {
   transform: translateY(-2px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .nav-cta:hover {
+    transform: none;
+  }
+}
+
 /* ── EYEBROW ── */
 .eyebrow {
   margin-bottom: var(--space-5);
@@ -204,6 +216,21 @@ body {
 .wave-3 {
   opacity: 0.2;
   animation: wave-pan 9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-1,
+  .wave-2,
+  .wave-3 {
+    animation: none;
+  }
+}
+
+/* Pause manuelle (bouton du pied de page) : les vagues restent figées sur place. */
+.is-motion-paused .wave-1,
+.is-motion-paused .wave-2,
+.is-motion-paused .wave-3 {
+  animation-play-state: paused;
 }
 
 @keyframes wave-pan {
@@ -309,6 +336,18 @@ body {
   transform: translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero-creole,
+  .hero-title,
+  .hero-subtitle,
+  .hero-body,
+  .hero-actions {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Parallaxe souris : hero-parallax.js pose --parallax-x et --parallax-y. La
    propriété `translate` se compose avec `transform` (apparition) sans la remplacer. */
 .hero-creole,
@@ -316,6 +355,15 @@ body {
 .hero-body,
 .hero-actions {
   translate: var(--parallax-x, 0) var(--parallax-y, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-creole,
+  .hero-title,
+  .hero-body,
+  .hero-actions {
+    translate: none;
+  }
 }
 
 .btn-primary {
@@ -341,6 +389,13 @@ body {
 
 .btn-primary:active {
   transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover,
+  .btn-primary:active {
+    transform: none;
+  }
 }
 
 .btn-ghost {
@@ -369,6 +424,12 @@ body {
   transform: translateY(3px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .btn-ghost:hover::after {
+    transform: none;
+  }
+}
+
 /* ── STATS BAR ── */
 .stats {
   display: grid;
@@ -390,6 +451,14 @@ body {
     transform 0.6s var(--ease-out);
   transition-delay: var(--reveal-delay, 0s);
   border-right: 1px solid var(--white-05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .stat-item:last-child {
@@ -489,6 +558,12 @@ body {
 .pb-item:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb-item:hover {
+    transform: none;
+  }
 }
 
 .pb-item-num {
@@ -635,6 +710,12 @@ body {
 /* Arcs tracés progressivement une fois l'anneau entré dans l'écran. */
 .donut.is-drawn circle {
   transition: stroke-dasharray 0.7s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .donut.is-drawn circle {
+    transition: none;
+  }
 }
 
 .ancestry-legend {
@@ -883,6 +964,12 @@ body {
   transform: translateY(-4px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .team-card:hover {
+    transform: none;
+  }
+}
+
 .team-avatar {
   display: flex;
   flex-shrink: 0;
@@ -1059,6 +1146,13 @@ body {
   transform: scale(0.97);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .btn-large:hover,
+  .btn-large:active {
+    transform: none;
+  }
+}
+
 /* ── FOOTER ── */
 footer {
   display: flex;
@@ -1104,6 +1198,28 @@ footer {
   color: var(--white-20);
 }
 
+.motion-toggle {
+  display: block;
+  margin-top: var(--space-2);
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+  color: var(--white-60);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.motion-toggle:hover {
+  color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-toggle {
+    display: none;
+  }
+}
+
 /* ── REVEAL AU SCROLL ── */
 .reveal {
   opacity: 0;
@@ -1111,6 +1227,14 @@ footer {
   transition:
     opacity 0.7s var(--ease-out),
     transform 0.7s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .reveal.visible {
@@ -1274,16 +1398,5 @@ footer {
   footer {
     flex-direction: column;
     padding: var(--space-6) var(--space-5);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    /* stylelint-disable-next-line declaration-no-important -- neutralise toute transition, y compris celles posées en ligne par le JS */
-    transition: none !important;
-    /* stylelint-disable-next-line declaration-no-important -- neutralise toute animation CSS ou JS pour le mouvement réduit */
-    animation: none !important;
   }
 }

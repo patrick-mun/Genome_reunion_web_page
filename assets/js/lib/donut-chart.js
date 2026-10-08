@@ -5,6 +5,8 @@
    Accroches : .js-donut (la transition des arcs est portée par la classe is-drawn).
    ============================================================ */
 
+import { prefersReducedMotion } from './motion.js';
+
 const DONUT_RADIUS = 38;
 const ARC_STAGGER_MS = 120;
 
@@ -13,7 +15,7 @@ const ARC_STAGGER_MS = 120;
  */
 export function initDonutChart() {
   const donutSvg = document.querySelector('.js-donut');
-  if (!donutSvg || !('IntersectionObserver' in window)) return;
+  if (!donutSvg || !('IntersectionObserver' in window) || prefersReducedMotion()) return;
 
   const circles = Array.from(donutSvg.children);
   if (!circles.length) return;

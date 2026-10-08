@@ -5,13 +5,14 @@
    Accroches : .js-hero, .js-bird-layer (couche créée par ce module). Position via --x, --y, --angle.
    ============================================================ */
 
+import { isMotionPaused, prefersReducedMotion } from './motion.js';
 import { placeElement } from './placement.js';
 
 /**
  * Lance le vol des paille-en-queue dans le hero (inactif en mouvement réduit ou sur petit écran).
  */
 export function initPailleEnQueue() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (prefersReducedMotion()) return;
   if (window.innerWidth < 760) return;
 
   const hero = document.querySelector('.js-hero');
@@ -309,7 +310,7 @@ export function initPailleEnQueue() {
   }
 
   function frame(now) {
-    if (!visible) {
+    if (!visible || isMotionPaused()) {
       lastT = now;
       requestAnimationFrame(frame);
       return;

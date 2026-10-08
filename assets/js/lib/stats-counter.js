@@ -5,6 +5,8 @@
    Accroches : .js-stat-item (délai dans --reveal-delay), .js-count (cible dans data-target).
    ============================================================ */
 
+import { prefersReducedMotion } from './motion.js';
+
 const COUNT_DURATION_MS = 1200;
 const STAT_STAGGER_S = 0.08;
 
@@ -15,6 +17,11 @@ const STAT_STAGGER_S = 0.08;
 function animateCounter(counter) {
   const target = parseInt(counter.dataset.target, 10);
   if (!Number.isFinite(target)) return;
+
+  if (prefersReducedMotion()) {
+    counter.textContent = target.toLocaleString('fr-FR');
+    return;
+  }
 
   const start = performance.now();
   const animate = (now) => {

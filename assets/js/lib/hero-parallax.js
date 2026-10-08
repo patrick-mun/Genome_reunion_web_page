@@ -5,6 +5,8 @@
    Accroches : .js-hero, [data-parallax-depth] (coefficient ; décalage dans --parallax-x et --parallax-y).
    ============================================================ */
 
+import { isMotionPaused, prefersReducedMotion } from './motion.js';
+
 const MAX_OFFSET_X_PX = 12;
 const MAX_OFFSET_Y_PX = 8;
 const EASING = 0.06;
@@ -16,7 +18,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
  */
 export function initHeroParallax() {
   const hero = document.querySelector('.js-hero');
-  if (!hero || !('IntersectionObserver' in window)) return;
+  if (!hero || !('IntersectionObserver' in window) || prefersReducedMotion()) return;
 
   const layers = Array.from(hero.querySelectorAll('[data-parallax-depth]')).map((el) => ({
     el,
@@ -56,6 +58,10 @@ export function initHeroParallax() {
   });
 
   function tick() {
+    if (isMotionPaused()) {
+      requestAnimationFrame(tick);
+      return;
+    }
     currentX = lerp(currentX, targetX, EASING);
     currentY = lerp(currentY, targetY, EASING);
 
