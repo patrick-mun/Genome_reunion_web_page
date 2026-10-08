@@ -2,7 +2,7 @@
    assets/js/lib/donut-chart.js
    Rôle : tracé progressif des arcs du graphique en anneau au défilement.
    Pages concernées : accueil.
-   Accroches : .js-donut.
+   Accroches : .js-donut (la transition des arcs est portée par la classe is-drawn).
    ============================================================ */
 
 const DONUT_RADIUS = 38;
@@ -27,7 +27,6 @@ export function initDonutChart() {
 
   circles.forEach((c) => {
     c.setAttribute('stroke-dasharray', `0 ${circumference}`);
-    c.style.transition = 'none';
   });
 
   let animated = false;
@@ -36,11 +35,11 @@ export function initDonutChart() {
     ([entry]) => {
       if (!entry.isIntersecting || animated) return;
       animated = true;
+      donutSvg.classList.add('is-drawn');
 
       circles.forEach((c, i) => {
         const final = finalValues[i];
         setTimeout(() => {
-          c.style.transition = 'stroke-dasharray 0.7s cubic-bezier(.16,1,.3,1)';
           c.setAttribute('stroke-dasharray', final.dasharray);
           c.setAttribute('stroke-dashoffset', final.dashoffset);
         }, i * ARC_STAGGER_MS);

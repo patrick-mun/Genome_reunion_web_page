@@ -6,18 +6,14 @@
    ============================================================ */
 
 /**
- * Insère un repère de couleur (variable CSS `--c`) devant chaque légende.
+ * Insère un repère devant chaque légende ; sa couleur vient de la variable CSS `--c` de l'entrée.
  */
 export function initLegendDots() {
   document.querySelectorAll('.js-legend-dot').forEach((el) => {
     if (el.querySelector('.js-legend-dot-marker')) return;
 
-    const color = getComputedStyle(el).getPropertyValue('--c').trim();
-    if (!color) return;
-
     const dot = document.createElement('span');
     dot.className = 'legend-dot-marker js-legend-dot-marker';
-    dot.style.cssText = `width:8px;height:8px;border-radius:2px;background:${color};display:inline-block;flex-shrink:0;`;
     el.prepend(dot);
   });
 }

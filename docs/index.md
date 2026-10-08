@@ -143,7 +143,10 @@ Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-�
 - `stats-counter.js` : compteurs animés (`.js-stat-item`, `.js-count`) ;
 - `legend-dots.js` : marqueurs de couleur de la légende (`.js-legend-dot`) ;
 - `hero-parallax.js` : parallaxe souris (`[data-parallax-depth]`) ;
-- `donut-chart.js` : animation du donut au scroll (`.js-donut`).
+- `donut-chart.js` : animation du donut au scroll (`.js-donut`) ;
+- `placement.js` : pose `--x`, `--y` et `--angle` sur un élément animé (utilisé par les animations du hero et des sections).
+
+Le JS ne pose aucun style direct (JS-11) : il bascule des classes d'état (`is-revealed`, `is-drawn`, `is-born`, `is-scrolled`) ou pose des variables CSS (`--progress`, `--reveal-delay`, `--parallax-x`, `--x`…) que le CSS consomme.
 
 Chaque module vérifie que ses éléments existent avant de s'en servir.
 

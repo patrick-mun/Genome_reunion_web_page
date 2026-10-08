@@ -18,7 +18,7 @@ import { initStatsCounter } from '../lib/stats-counter.js';
 
 initProgressBar();
 initNavScroll();
-initHeroReveal({ inlineTransition: true });
+initHeroReveal();
 initScrollReveal();
 initStatsCounter();
 initLegendDots();

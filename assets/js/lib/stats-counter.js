@@ -2,7 +2,7 @@
    assets/js/lib/stats-counter.js
    Rôle : apparition des chiffres clés et compteur animé.
    Pages concernées : accueil.
-   Accroches : .js-stat-item, .js-count (cible dans data-target).
+   Accroches : .js-stat-item (délai dans --reveal-delay), .js-count (cible dans data-target).
    ============================================================ */
 
 const COUNT_DURATION_MS = 1200;
@@ -50,7 +50,7 @@ export function initStatsCounter() {
     { threshold: 0.4 },
   );
   statItems.forEach((el, i) => {
-    el.style.transitionDelay = `${i * STAT_STAGGER_S}s`;
+    el.style.setProperty('--reveal-delay', `${i * STAT_STAGGER_S}s`);
     statObs.observe(el);
   });
 }

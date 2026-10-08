@@ -73,6 +73,14 @@
     transform 0.8s var(--ease-out) 0.35s;
 }
 
+/* État d'apparition posé par hero-reveal.js après le délai de data-hero-reveal. */
+.page-hero-kicker.is-revealed,
+.page-hero-title.is-revealed,
+.page-hero-sub.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── PARTENARIAT EFS ── */
 .partenariat {
   padding: var(--space-9) var(--space-7);

@@ -2,8 +2,10 @@
    assets/js/lib/margouillat.js
    Rôle : margouillat des sections, gecko cartoon qui se promène au hasard en fond de page.
    Pages concernées : accueil.
-   Accroches : .js-hero, .js-gecko-layer (couche créée par ce module).
+   Accroches : .js-hero, .js-gecko-layer (couche créée par ce module). Position via --x, --y, --angle.
    ============================================================ */
+
+import { placeElement } from './placement.js';
 
 /* Le gecko passe sous les cartes et les textes. Le placement en profondeur repose
    sur styles.css : la couche .gecko-layer est à z-index 1 (au-dessus des
@@ -222,6 +224,7 @@ export function initMargouillat() {
 
   const el = document.createElement('div');
   el.className = 'gecko';
+  // eslint-disable-next-line no-restricted-properties -- SVG construit uniquement à partir de constantes du module
   el.innerHTML = geckoSVG();
   layer.appendChild(el);
 
@@ -406,15 +409,7 @@ export function initMargouillat() {
     const headIdle = Math.sin(now * 0.0007 + gecko.idleOff * 2) * 9 * (1 - gecko.run);
     parts.head.setAttribute('transform', 'rotate(' + headIdle.toFixed(2) + ' 45 30)');
 
-    el.style.transform =
-      'translate(' +
-      (gecko.pos.x - cw / 2).toFixed(2) +
-      'px,' +
-      (gecko.pos.y - ch / 2).toFixed(2) +
-      'px) ' +
-      'rotate(' +
-      gecko.angle.toFixed(2) +
-      'deg)';
+    placeElement(el, gecko.pos.x - cw / 2, gecko.pos.y - ch / 2, gecko.angle);
   }
 
   let lastT = 0;

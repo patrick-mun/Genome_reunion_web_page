@@ -2,7 +2,7 @@
    assets/js/lib/hero-parallax.js
    Rôle : léger décalage des textes du hero qui suit la souris.
    Pages concernées : accueil.
-   Accroches : .js-hero, [data-parallax-depth] (coefficient de déplacement).
+   Accroches : .js-hero, [data-parallax-depth] (coefficient ; décalage dans --parallax-x et --parallax-y).
    ============================================================ */
 
 const MAX_OFFSET_X_PX = 12;
@@ -60,7 +60,8 @@ export function initHeroParallax() {
     currentY = lerp(currentY, targetY, EASING);
 
     layers.forEach(({ el, depth }) => {
-      el.style.transform = `translate(${currentX * depth}px, ${currentY * depth}px)`;
+      el.style.setProperty('--parallax-x', `${currentX * depth}px`);
+      el.style.setProperty('--parallax-y', `${currentY * depth}px`);
     });
 
     requestAnimationFrame(tick);

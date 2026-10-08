@@ -2,8 +2,10 @@
    assets/js/lib/paille-en-queue.js
    Rôle : paille-en-queue du hero, vol décoratif continu sans pose sur les lettres.
    Pages concernées : accueil.
-   Accroches : .js-hero, .js-bird-layer (couche créée par ce module).
+   Accroches : .js-hero, .js-bird-layer (couche créée par ce module). Position via --x, --y, --angle.
    ============================================================ */
+
+import { placeElement } from './placement.js';
 
 /**
  * Lance le vol des paille-en-queue dans le hero (inactif en mouvement réduit ou sur petit écran).
@@ -131,8 +133,7 @@ export function initPailleEnQueue() {
   function makeBird(index) {
     const el = document.createElement('div');
     el.className = 'paille';
-    el.style.filter = 'none';
-    el.style.opacity = '0';
+    // eslint-disable-next-line no-restricted-properties -- SVG construit uniquement à partir de constantes du module
     el.innerHTML = birdSVG();
     layer.appendChild(el);
 
@@ -147,15 +148,7 @@ export function initPailleEnQueue() {
     const start = offscreenPoint(index % 2 === 0 ? 'left' : 'right');
     const startAngle = start.x < 0 ? 90 : -90;
 
-    el.style.transform =
-      'translate(' +
-      (start.x - cw / 2).toFixed(2) +
-      'px,' +
-      (start.y - ch / 2).toFixed(2) +
-      'px) ' +
-      'rotate(' +
-      startAngle.toFixed(2) +
-      'deg)';
+    placeElement(el, start.x - cw / 2, start.y - ch / 2, startAngle);
 
     return {
       el,
@@ -253,7 +246,8 @@ export function initPailleEnQueue() {
     if (!bird.born) {
       if (now < bird.t0base + bird.delay) return;
       bird.born = true;
-      bird.el.style.opacity = bird.finalOpacity;
+      bird.el.style.setProperty('--opacity', bird.finalOpacity);
+      bird.el.classList.add('is-born');
       resetFromOffscreen(bird);
     }
 
@@ -293,15 +287,7 @@ export function initPailleEnQueue() {
     bird.tail.setAttribute('transform', 'rotate(' + tailSway.toFixed(2) + ' 36 43)');
 
     const bob = Math.sin(bird.phase) * 0.8;
-    bird.el.style.transform =
-      'translate(' +
-      (bird.pos.x - bird.cw / 2).toFixed(2) +
-      'px,' +
-      (bird.pos.y - bird.ch / 2 + bob).toFixed(2) +
-      'px) ' +
-      'rotate(' +
-      bird.angle.toFixed(2) +
-      'deg)';
+    placeElement(bird.el, bird.pos.x - bird.cw / 2, bird.pos.y - bird.ch / 2 + bob, bird.angle);
   }
 
   const birds = [];

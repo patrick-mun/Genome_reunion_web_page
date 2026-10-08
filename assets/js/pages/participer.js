@@ -12,5 +12,5 @@ import { initScrollReveal } from '../lib/scroll-reveal.js';
 
 initProgressBar();
 initNavScroll();
-initHeroReveal({ inlineTransition: false });
+initHeroReveal();
 initScrollReveal();
