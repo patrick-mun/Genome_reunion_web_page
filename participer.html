@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Participez à Génome Réunion : un simple prélèvement sanguin contribue à bâtir la première référence génétique de la population réunionnaise."
+    />
     <title>Participer — Génome Réunion</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -459,419 +463,428 @@
     <script type="module" src="assets/js/pages/participer.js"></script>
   </head>
   <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
     <div id="progress" class="js-progress"></div>
 
-    <!-- NAV (identique) -->
-    <nav id="nav" class="js-nav">
-      <a href="index.html" class="nav-logo">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 110 60"
-          fill="none"
-          role="img"
-          aria-label="Génome Réunion"
-        >
-          <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(10,8)">
-            <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="#0F3A56" />
-            <path
-              d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-              stroke="#1E6E8C"
-              transform="translate(0,16)"
-            />
-            <path
-              d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-              stroke="#E8654A"
-              transform="translate(0,32)"
-            />
-            <circle cx="84" cy="8" r="2.6" fill="#0F3A56" stroke="none" />
-            <circle cx="84" cy="24" r="2.6" fill="#1E6E8C" stroke="none" />
-            <circle cx="84" cy="40" r="2.6" fill="#E8654A" stroke="none" />
-          </g>
-        </svg>
-        <span class="nav-logo-text">Génome Réunion</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html#probleme">Pourquoi</a></li>
-        <li><a href="index.html#methode">Comment</a></li>
-        <li><a href="index.html#equipe">Équipe</a></li>
-      </ul>
-      <a href="#inscription" class="nav-cta">S'inscrire</a>
-    </nav>
+    <header>
+      <!-- NAV (identique) -->
+      <nav id="nav" class="js-nav">
+        <a href="index.html" class="nav-logo">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 110 60"
+            fill="none"
+            role="img"
+            aria-label="Génome Réunion"
+          >
+            <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(10,8)">
+              <path
+                d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
+                stroke="#0F3A56"
+              />
+              <path
+                d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
+                stroke="#1E6E8C"
+                transform="translate(0,16)"
+              />
+              <path
+                d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
+                stroke="#E8654A"
+                transform="translate(0,32)"
+              />
+              <circle cx="84" cy="8" r="2.6" fill="#0F3A56" stroke="none" />
+              <circle cx="84" cy="24" r="2.6" fill="#1E6E8C" stroke="none" />
+              <circle cx="84" cy="40" r="2.6" fill="#E8654A" stroke="none" />
+            </g>
+          </svg>
+          <span class="nav-logo-text">Génome Réunion</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html#probleme">Pourquoi</a></li>
+          <li><a href="index.html#methode">Comment</a></li>
+          <li><a href="index.html#equipe">Équipe</a></li>
+        </ul>
+        <a href="#inscription" class="nav-cta">S'inscrire</a>
+      </nav>
 
-    <!-- HERO PAGE -->
-    <section class="page-hero">
-      <div class="hero-waves">
-        <svg
-          class="wave-1"
-          viewBox="0 0 2880 220"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
+      <!-- HERO PAGE -->
+      <section class="page-hero">
+        <div class="hero-waves">
+          <svg
+            class="wave-1"
+            viewBox="0 0 2880 220"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
                C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
                L2880,220 L0,220 Z"
-            fill="#091F30"
-          />
-        </svg>
-        <svg
-          class="wave-2"
-          viewBox="0 0 2880 220"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130
+              fill="#091F30"
+            />
+          </svg>
+          <svg
+            class="wave-2"
+            viewBox="0 0 2880 220"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130
                C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
                C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
                L2880,220 L0,220 Z"
-            fill="#1E6E8C"
-          />
-        </svg>
-        <svg
-          class="wave-3"
-          viewBox="0 0 2880 220"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165
+              fill="#1E6E8C"
+            />
+          </svg>
+          <svg
+            class="wave-3"
+            viewBox="0 0 2880 220"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165
                C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
                C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
                L2880,220 L0,220 Z"
-            fill="#E8654A"
-          />
-        </svg>
-      </div>
+              fill="#E8654A"
+            />
+          </svg>
+        </div>
 
-      <div class="page-hero-inner">
-        <p class="page-hero-kicker" id="ph-kicker" data-hero-reveal="120">
-          Participation au projet
-        </p>
-        <h1 class="page-hero-title" id="ph-title" data-hero-reveal="240">
-          Donnez un peu.<br />Changez <em>tout</em>.
-        </h1>
-        <p class="page-hero-sub" id="ph-sub" data-hero-reveal="380">
-          Un simple prélèvement sanguin suffit. En participant à Génome Réunion, vous contribuez à
-          bâtir la première référence génétique de l'île — pour vous, vos enfants, et toute la
-          population réunionnaise.
-        </p>
-      </div>
-    </section>
+        <div class="page-hero-inner">
+          <p class="page-hero-kicker" id="ph-kicker" data-hero-reveal="120">
+            Participation au projet
+          </p>
+          <h1 class="page-hero-title" id="ph-title" data-hero-reveal="240">
+            Donnez un peu.<br />Changez <em>tout</em>.
+          </h1>
+          <p class="page-hero-sub" id="ph-sub" data-hero-reveal="380">
+            Un simple prélèvement sanguin suffit. En participant à Génome Réunion, vous contribuez à
+            bâtir la première référence génétique de l'île — pour vous, vos enfants, et toute la
+            population réunionnaise.
+          </p>
+        </div>
+      </section>
+    </header>
 
-    <!-- PARTENARIAT EFS -->
-    <section id="partenariat">
-      <div class="partenariat-inner">
-        <div class="partenariat-text reveal js-reveal">
-          <p class="eyebrow">Partenariat</p>
-          <h2>En partenariat avec<br />l'EFS Réunion.</h2>
-          <p>
-            L'<strong>Établissement Français du Sang (EFS) de La Réunion</strong>
-            organise les prélèvements dans ses centres fixes et lors de collectes mobiles à travers
-            l'île.
-          </p>
-          <p>
-            La participation au projet repose sur une information claire, un consentement libre et
-            une anonymisation des données. Chaque prélèvement contribue à construire une ressource
-            utile pour mieux documenter la diversité génétique réunionnaise.
-          </p>
-          <div class="efs-badge reveal reveal-delay-1 js-reveal">
+    <main id="contenu">
+      <!-- PARTENARIAT EFS -->
+      <section id="partenariat">
+        <div class="partenariat-inner">
+          <div class="partenariat-text reveal js-reveal">
+            <p class="eyebrow">Partenariat</p>
+            <h2>En partenariat avec<br />l'EFS Réunion.</h2>
+            <p>
+              L'<strong>Établissement Français du Sang (EFS) de La Réunion</strong>
+              organise les prélèvements dans ses centres fixes et lors de collectes mobiles à
+              travers l'île.
+            </p>
+            <p>
+              La participation au projet repose sur une information claire, un consentement libre et
+              une anonymisation des données. Chaque prélèvement contribue à construire une ressource
+              utile pour mieux documenter la diversité génétique réunionnaise.
+            </p>
+            <div class="efs-badge reveal reveal-delay-1 js-reveal">
+              <img
+                src="assets/images/efs-logo.svg"
+                alt="EFS — Établissement Français du Sang"
+                width="72"
+                height="72"
+                style="flex-shrink: 0"
+              />
+              <div class="efs-badge-text">
+                <strong>Collectes assurées par l'EFS</strong>
+                Établissement Français du Sang — La Réunion
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte logo EFS grande -->
+          <div class="efs-logo-card reveal reveal-delay-2 js-reveal">
+            <div class="efs-logo-title">Partenaire des collectes</div>
+
             <img
               src="assets/images/efs-logo.svg"
               alt="EFS — Établissement Français du Sang"
-              width="72"
-              height="72"
-              style="flex-shrink: 0"
+              width="200"
+              height="200"
+              style="display: block"
             />
-            <div class="efs-badge-text">
-              <strong>Collectes assurées par l'EFS</strong>
-              Établissement Français du Sang — La Réunion
+
+            <div
+              style="
+                border-top: 1px solid var(--sand);
+                padding-top: 20px;
+                width: 100%;
+                text-align: center;
+              "
+            >
+              <div style="font-size: 0.8rem; color: var(--stone); line-height: 1.6">
+                Collectes envisagées dans<br />
+                <strong style="color: var(--navy)">2 sites fixes</strong> &amp;
+                <strong style="color: var(--navy)">collectes mobiles</strong>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <!-- Carte logo EFS grande -->
-        <div class="efs-logo-card reveal reveal-delay-2 js-reveal">
-          <div class="efs-logo-title">Partenaire des collectes</div>
+      <!-- CALENDRIER DES COLLECTES -->
+      <section id="collectes">
+        <div class="collectes-inner">
+          <div class="collectes-header reveal js-reveal">
+            <p class="eyebrow">Calendrier</p>
+            <h2>Prochaines dates<br />de collecte.</h2>
+            <p>
+              Rendez-vous dans l'un des centres EFS ou lors d'une collecte mobile proche de chez
+              vous. Inscription préalable recommandée.
+            </p>
+          </div>
 
-          <img
-            src="assets/images/efs-logo.svg"
-            alt="EFS — Établissement Français du Sang"
-            width="200"
-            height="200"
-            style="display: block"
-          />
+          <div class="collectes-grid">
+            <!-- EFS NORD -->
+            <div class="collecte-block reveal js-reveal">
+              <div class="collecte-block-header">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
+                    <span class="collecte-zone-badge badge-nord">Nord</span>
+                  </div>
+                  <div class="collecte-block-title">EFS Saint-Denis</div>
+                  <div class="collecte-block-address">
+                    Centre fixe · 5 rue Lacaussade, 97400 Saint-Denis
+                  </div>
+                </div>
+              </div>
+              <table class="collecte-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Lieu</th>
+                    <th>Horaires</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td-date">Jeu. 3 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">Centre EFS Saint-Denis</div>
+                      <div class="td-adresse">5 rue Lacaussade, Saint-Denis</div>
+                    </td>
+                    <td class="td-horaire">8h – 13h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Mar. 8 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">Mairie de Sainte-Marie</div>
+                      <div class="td-adresse">Pl. du 20 Décembre, Sainte-Marie</div>
+                    </td>
+                    <td class="td-horaire">9h – 15h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Sam. 12 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">Centre commercial Carrefour Nord</div>
+                      <div class="td-adresse">Rte de la Digue, Sainte-Suzanne</div>
+                    </td>
+                    <td class="td-horaire">8h30 – 13h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Lun. 21 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">CHU Félix Guyon</div>
+                      <div class="td-adresse">Allée des Topazes, Saint-Denis</div>
+                    </td>
+                    <td class="td-horaire">8h – 12h30</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Mer. 30 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">Mairie de Sainte-Clotilde</div>
+                      <div class="td-adresse">Rue Louis Vaillant, Saint-Denis</div>
+                    </td>
+                    <td class="td-horaire">9h – 14h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Jeu. 7 août 2026</td>
+                    <td>
+                      <div class="td-lieu">Médiathèque de Saint-André</div>
+                      <div class="td-adresse">Rue du Stade, Saint-André</div>
+                    </td>
+                    <td class="td-horaire">8h30 – 13h30</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Sam. 23 août 2026</td>
+                    <td>
+                      <div class="td-lieu">Centre EFS Saint-Denis</div>
+                      <div class="td-adresse">5 rue Lacaussade, Saint-Denis</div>
+                    </td>
+                    <td class="td-horaire">8h – 12h</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-          <div
+            <!-- EFS SUD -->
+            <div class="collecte-block reveal reveal-delay-1 js-reveal">
+              <div class="collecte-block-header">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
+                    <span class="collecte-zone-badge badge-sud">Sud</span>
+                  </div>
+                  <div class="collecte-block-title">EFS Saint-Pierre</div>
+                  <div class="collecte-block-address">
+                    Centre fixe · ZAC Terre Sainte, 97410 Saint-Pierre
+                  </div>
+                </div>
+              </div>
+              <table class="collecte-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Lieu</th>
+                    <th>Horaires</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td-date">Ven. 4 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">Centre EFS Saint-Pierre</div>
+                      <div class="td-adresse">ZAC Terre Sainte, Saint-Pierre</div>
+                    </td>
+                    <td class="td-horaire">8h – 13h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Mer. 9 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">Mairie du Tampon</div>
+                      <div class="td-adresse">Rue Raphaël Babet, Le Tampon</div>
+                    </td>
+                    <td class="td-horaire">9h – 15h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Sam. 19 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">Centre commercial Leclerc Sud</div>
+                      <div class="td-adresse">Rte de Terre Sainte, Saint-Pierre</div>
+                    </td>
+                    <td class="td-horaire">8h30 – 13h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Mar. 22 juil. 2026</td>
+                    <td>
+                      <div class="td-lieu">CHU Groupe Hospitalier Sud</div>
+                      <div class="td-adresse">BP 350, 97448 Saint-Pierre Cedex</div>
+                    </td>
+                    <td class="td-horaire">8h – 12h30</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Sam. 2 août 2026</td>
+                    <td>
+                      <div class="td-lieu">Mairie de Saint-Louis</div>
+                      <div class="td-adresse">1 rue de l'Église, Saint-Louis</div>
+                    </td>
+                    <td class="td-horaire">9h – 14h</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Jeu. 14 août 2026</td>
+                    <td>
+                      <div class="td-lieu">Salle polyvalente de Cilaos</div>
+                      <div class="td-adresse">Rte de Bras-Sec, Cilaos</div>
+                    </td>
+                    <td class="td-horaire">8h30 – 13h30</td>
+                  </tr>
+                  <tr>
+                    <td class="td-date">Ven. 28 août 2026</td>
+                    <td>
+                      <div class="td-lieu">Centre EFS Saint-Pierre</div>
+                      <div class="td-adresse">ZAC Terre Sainte, Saint-Pierre</div>
+                    </td>
+                    <td class="td-horaire">8h – 12h</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Note -->
+          <p
+            class="reveal js-reveal"
             style="
-              border-top: 1px solid var(--sand);
-              padding-top: 20px;
-              width: 100%;
+              margin-top: 28px;
+              font-size: 0.78rem;
+              color: var(--stone);
+              font-style: italic;
               text-align: center;
             "
           >
-            <div style="font-size: 0.8rem; color: var(--stone); line-height: 1.6">
-              Collectes envisagées dans<br />
-              <strong style="color: var(--navy)">2 sites fixes</strong> &amp;
-              <strong style="color: var(--navy)">collectes mobiles</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CALENDRIER DES COLLECTES -->
-    <section id="collectes">
-      <div class="collectes-inner">
-        <div class="collectes-header reveal js-reveal">
-          <p class="eyebrow">Calendrier</p>
-          <h2>Prochaines dates<br />de collecte.</h2>
-          <p>
-            Rendez-vous dans l'un des centres EFS ou lors d'une collecte mobile proche de chez vous.
-            Inscription préalable recommandée.
+            Calendrier mis à jour régulièrement. Inscription préalable recommandée. Vous recevrez
+            une convocation par courrier avant chaque date.
           </p>
         </div>
+      </section>
 
-        <div class="collectes-grid">
-          <!-- EFS NORD -->
-          <div class="collecte-block reveal js-reveal">
-            <div class="collecte-block-header">
-              <div>
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
-                  <span class="collecte-zone-badge badge-nord">Nord</span>
-                </div>
-                <div class="collecte-block-title">EFS Saint-Denis</div>
-                <div class="collecte-block-address">
-                  Centre fixe · 5 rue Lacaussade, 97400 Saint-Denis
-                </div>
+      <!-- INSCRIPTION -->
+      <section id="inscription">
+        <div class="inscription-inner">
+          <p class="eyebrow light reveal js-reveal">Comment participer</p>
+          <h2 class="inscription-title reveal reveal-delay-1 js-reveal">
+            Simple,<br /><em>rapide</em>, utile.
+          </h2>
+          <p class="inscription-sub reveal reveal-delay-2 js-reveal">
+            La participation se déroule en trois étapes. Comptez environ 30 minutes sur place.
+          </p>
+
+          <div class="inscription-steps">
+            <div class="inscription-step reveal js-reveal">
+              <span class="inscription-step-num">01</span>
+              <div class="inscription-step-text">
+                <strong>Inscrivez-vous en ligne ou sur place</strong>
+                Choisissez une date de collecte proche de chez vous et réservez votre créneau.
+                L'inscription est gratuite et sans engagement.
               </div>
             </div>
-            <table class="collecte-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Lieu</th>
-                  <th>Horaires</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="td-date">Jeu. 3 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">Centre EFS Saint-Denis</div>
-                    <div class="td-adresse">5 rue Lacaussade, Saint-Denis</div>
-                  </td>
-                  <td class="td-horaire">8h – 13h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Mar. 8 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">Mairie de Sainte-Marie</div>
-                    <div class="td-adresse">Pl. du 20 Décembre, Sainte-Marie</div>
-                  </td>
-                  <td class="td-horaire">9h – 15h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Sam. 12 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">Centre commercial Carrefour Nord</div>
-                    <div class="td-adresse">Rte de la Digue, Sainte-Suzanne</div>
-                  </td>
-                  <td class="td-horaire">8h30 – 13h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Lun. 21 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">CHU Félix Guyon</div>
-                    <div class="td-adresse">Allée des Topazes, Saint-Denis</div>
-                  </td>
-                  <td class="td-horaire">8h – 12h30</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Mer. 30 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">Mairie de Sainte-Clotilde</div>
-                    <div class="td-adresse">Rue Louis Vaillant, Saint-Denis</div>
-                  </td>
-                  <td class="td-horaire">9h – 14h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Jeu. 7 août 2026</td>
-                  <td>
-                    <div class="td-lieu">Médiathèque de Saint-André</div>
-                    <div class="td-adresse">Rue du Stade, Saint-André</div>
-                  </td>
-                  <td class="td-horaire">8h30 – 13h30</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Sam. 23 août 2026</td>
-                  <td>
-                    <div class="td-lieu">Centre EFS Saint-Denis</div>
-                    <div class="td-adresse">5 rue Lacaussade, Saint-Denis</div>
-                  </td>
-                  <td class="td-horaire">8h – 12h</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- EFS SUD -->
-          <div class="collecte-block reveal reveal-delay-1 js-reveal">
-            <div class="collecte-block-header">
-              <div>
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
-                  <span class="collecte-zone-badge badge-sud">Sud</span>
-                </div>
-                <div class="collecte-block-title">EFS Saint-Pierre</div>
-                <div class="collecte-block-address">
-                  Centre fixe · ZAC Terre Sainte, 97410 Saint-Pierre
-                </div>
+            <div class="inscription-step reveal reveal-delay-1 js-reveal">
+              <span class="inscription-step-num">02</span>
+              <div class="inscription-step-text">
+                <strong>Rendez-vous à la collecte avec votre pièce d'identité</strong>
+                Une équipe médicale EFS réalise un petit prélèvement sanguin et vous explique
+                l'étude. Un formulaire de consentement est signé sur place.
               </div>
             </div>
-            <table class="collecte-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Lieu</th>
-                  <th>Horaires</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="td-date">Ven. 4 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">Centre EFS Saint-Pierre</div>
-                    <div class="td-adresse">ZAC Terre Sainte, Saint-Pierre</div>
-                  </td>
-                  <td class="td-horaire">8h – 13h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Mer. 9 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">Mairie du Tampon</div>
-                    <div class="td-adresse">Rue Raphaël Babet, Le Tampon</div>
-                  </td>
-                  <td class="td-horaire">9h – 15h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Sam. 19 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">Centre commercial Leclerc Sud</div>
-                    <div class="td-adresse">Rte de Terre Sainte, Saint-Pierre</div>
-                  </td>
-                  <td class="td-horaire">8h30 – 13h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Mar. 22 juil. 2026</td>
-                  <td>
-                    <div class="td-lieu">CHU Groupe Hospitalier Sud</div>
-                    <div class="td-adresse">BP 350, 97448 Saint-Pierre Cedex</div>
-                  </td>
-                  <td class="td-horaire">8h – 12h30</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Sam. 2 août 2026</td>
-                  <td>
-                    <div class="td-lieu">Mairie de Saint-Louis</div>
-                    <div class="td-adresse">1 rue de l'Église, Saint-Louis</div>
-                  </td>
-                  <td class="td-horaire">9h – 14h</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Jeu. 14 août 2026</td>
-                  <td>
-                    <div class="td-lieu">Salle polyvalente de Cilaos</div>
-                    <div class="td-adresse">Rte de Bras-Sec, Cilaos</div>
-                  </td>
-                  <td class="td-horaire">8h30 – 13h30</td>
-                </tr>
-                <tr>
-                  <td class="td-date">Ven. 28 août 2026</td>
-                  <td>
-                    <div class="td-lieu">Centre EFS Saint-Pierre</div>
-                    <div class="td-adresse">ZAC Terre Sainte, Saint-Pierre</div>
-                  </td>
-                  <td class="td-horaire">8h – 12h</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Note -->
-        <p
-          class="reveal js-reveal"
-          style="
-            margin-top: 28px;
-            font-size: 0.78rem;
-            color: var(--stone);
-            font-style: italic;
-            text-align: center;
-          "
-        >
-          Calendrier mis à jour régulièrement. Inscription préalable recommandée. Vous recevrez une
-          convocation par courrier avant chaque date.
-        </p>
-      </div>
-    </section>
-
-    <!-- INSCRIPTION -->
-    <section id="inscription">
-      <div class="inscription-inner">
-        <p class="eyebrow light reveal js-reveal">Comment participer</p>
-        <h2 class="inscription-title reveal reveal-delay-1 js-reveal">
-          Simple,<br /><em>rapide</em>, utile.
-        </h2>
-        <p class="inscription-sub reveal reveal-delay-2 js-reveal">
-          La participation se déroule en trois étapes. Comptez environ 30 minutes sur place.
-        </p>
-
-        <div class="inscription-steps">
-          <div class="inscription-step reveal js-reveal">
-            <span class="inscription-step-num">01</span>
-            <div class="inscription-step-text">
-              <strong>Inscrivez-vous en ligne ou sur place</strong>
-              Choisissez une date de collecte proche de chez vous et réservez votre créneau.
-              L'inscription est gratuite et sans engagement.
+            <div class="inscription-step reveal reveal-delay-2 js-reveal">
+              <span class="inscription-step-num">03</span>
+              <div class="inscription-step-text">
+                <strong>Contribuez au référentiel réunionnais</strong>Votre participation aide à
+                mieux documenter la diversité génétique de La Réunion, dans un cadre encadré par le
+                consentement et la confidentialité des données.
+              </div>
             </div>
           </div>
-          <div class="inscription-step reveal reveal-delay-1 js-reveal">
-            <span class="inscription-step-num">02</span>
-            <div class="inscription-step-text">
-              <strong>Rendez-vous à la collecte avec votre pièce d'identité</strong>
-              Une équipe médicale EFS réalise un petit prélèvement sanguin et vous explique l'étude.
-              Un formulaire de consentement est signé sur place.
-            </div>
-          </div>
-          <div class="inscription-step reveal reveal-delay-2 js-reveal">
-            <span class="inscription-step-num">03</span>
-            <div class="inscription-step-text">
-              <strong>Contribuez au référentiel réunionnais</strong>Votre participation aide à mieux
-              documenter la diversité génétique de La Réunion, dans un cadre encadré par le
-              consentement et la confidentialité des données.
-            </div>
-          </div>
-        </div>
 
-        <div class="cta-buttons reveal reveal-delay-3 js-reveal">
-          <a href="mailto:genome.reunion@chu-reunion.fr" class="btn-efs">Je m'inscris</a>
-          <a href="index.html" class="btn-outline">En savoir plus</a>
-        </div>
+          <div class="cta-buttons reveal reveal-delay-3 js-reveal">
+            <a href="mailto:genome.reunion@chu-reunion.fr" class="btn-efs">Je m'inscris</a>
+            <a href="index.html" class="btn-outline">En savoir plus</a>
+          </div>
 
-        <!-- Contact -->
-        <p
-          class="reveal js-reveal"
-          style="margin-top: 32px; font-size: 0.78rem; color: rgba(255, 255, 255, 0.3)"
-        >
-          Questions ? Contactez-nous :
-          <a
-            href="mailto:genome.reunion@chu-reunion.fr"
-            style="color: rgba(255, 255, 255, 0.5); text-decoration: none"
-            >genome.reunion@chu-reunion.fr</a
+          <!-- Contact -->
+          <p
+            class="reveal js-reveal"
+            style="margin-top: 32px; font-size: 0.78rem; color: rgba(255, 255, 255, 0.3)"
           >
-        </p>
-      </div>
-    </section>
+            Questions ? Contactez-nous :
+            <a
+              href="mailto:genome.reunion@chu-reunion.fr"
+              style="color: rgba(255, 255, 255, 0.5); text-decoration: none"
+              >genome.reunion@chu-reunion.fr</a
+            >
+          </p>
+        </div>
+      </section>
+    </main>
 
     <!-- FOOTER -->
     <footer>

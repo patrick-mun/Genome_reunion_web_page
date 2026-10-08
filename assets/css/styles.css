@@ -41,6 +41,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── LIEN D'ÉVITEMENT ── */
+/* Premier élément focalisable de la page : masqué hors écran, visible au focus clavier. */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  padding: 12px 20px;
+  background: var(--navy);
+  color: var(--white);
+  transform: translateY(-100%);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 /* ── PROGRESS BAR ── */
 #progress {
   position: fixed;
@@ -846,6 +862,16 @@ nav.scrolled .nav-logo-text {
   transition:
     border-color 0.2s,
     background 0.2s;
+}
+.partner-logo-link svg,
+.partner-logo-link img {
+  display: block;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+.partner-logo-link:hover svg,
+.partner-logo-link:hover img {
+  opacity: 1;
 }
 .partner-logo-link:hover {
   background: var(--teal-mid);
