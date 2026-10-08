@@ -30,7 +30,9 @@ Le site doit expliquer simplement :
 │
 ├── assets/                     # Ressources statiques
 │   ├── css/
-│   │   └── styles.css          # Styles principaux
+│   │   ├── styles.css          # Styles principaux
+│   │   └── pages/
+│   │       └── participer.css  # Styles propres à participer.html
 │   ├── js/
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)

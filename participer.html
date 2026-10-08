@@ -15,451 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/styles.css" />
-    <style>
-      /* ── PAGE PARTICIPER ── */
-      .page-hero {
-        min-height: 52vh;
-        background: var(--navy);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding: 120px 48px 72px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .page-hero-inner {
-        max-width: 900px;
-        margin: 0;
-        width: 100%;
-        position: relative;
-        z-index: 1;
-      }
-
-      .page-hero-kicker {
-        font-family: var(--f-ui);
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--teal-light);
-        margin-bottom: 16px;
-        opacity: 0;
-        transition:
-          opacity 0.7s var(--ease-out) 0.1s,
-          transform 0.7s var(--ease-out) 0.1s;
-        transform: translateY(16px);
-      }
-
-      .page-hero-title {
-        font-family: var(--f-display);
-        font-size: clamp(2.8rem, 6vw, 5.5rem);
-        font-weight: 300;
-        line-height: 0.95;
-        letter-spacing: -0.03em;
-        color: var(--white);
-        margin-bottom: 20px;
-        opacity: 0;
-        transition:
-          opacity 0.8s var(--ease-out) 0.2s,
-          transform 0.8s var(--ease-out) 0.2s;
-        transform: translateY(20px);
-      }
-      .page-hero-title em {
-        font-style: normal;
-        color: var(--coral);
-      }
-
-      .page-hero-sub {
-        font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-        font-weight: 300;
-        color: rgba(255, 255, 255, 0.6);
-        line-height: 1.7;
-        max-width: 540px;
-        opacity: 0;
-        transition:
-          opacity 0.8s var(--ease-out) 0.35s,
-          transform 0.8s var(--ease-out) 0.35s;
-        transform: translateY(16px);
-      }
-
-      /* ── PARTENARIAT EFS ── */
-      #partenariat {
-        background: var(--cream);
-        padding: 100px 48px;
-      }
-
-      .partenariat-inner {
-        max-width: 1080px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: center;
-      }
-
-      .partenariat-text h2 {
-        font-family: var(--f-display);
-        font-size: clamp(1.8rem, 3vw, 2.8rem);
-        font-weight: 300;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        color: var(--navy);
-        margin-bottom: 20px;
-      }
-
-      .partenariat-text p {
-        font-size: 0.95rem;
-        color: var(--stone);
-        line-height: 1.75;
-        margin-bottom: 16px;
-      }
-
-      .efs-badge {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 28px 32px;
-        background: var(--white);
-        border: 1px solid var(--sand);
-        border-radius: 16px;
-        margin-top: 8px;
-        box-shadow: 0 4px 20px rgba(15, 58, 86, 0.05);
-      }
-
-      .efs-badge-text {
-        font-family: var(--f-ui);
-        font-size: 0.78rem;
-        color: var(--stone);
-        line-height: 1.5;
-      }
-      .efs-badge-text strong {
-        display: block;
-        font-size: 0.88rem;
-        color: var(--slate);
-        margin-bottom: 2px;
-      }
-
-      /* EFS Logo SVG card */
-      .efs-logo-card {
-        background: var(--white);
-        border: 1px solid var(--sand);
-        border-radius: 20px;
-        padding: 48px 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 24px;
-        box-shadow: 0 8px 40px rgba(15, 58, 86, 0.07);
-        text-align: center;
-      }
-
-      .efs-logo-title {
-        font-family: var(--f-ui);
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--stone);
-      }
-
-      /* ── COLLECTES ── */
-      #collectes {
-        background: var(--sand);
-        padding: 100px 48px;
-      }
-
-      .collectes-inner {
-        max-width: 1080px;
-        margin: 0 auto;
-      }
-
-      .collectes-header {
-        margin-bottom: 64px;
-      }
-
-      .collectes-header h2 {
-        font-family: var(--f-display);
-        font-size: clamp(2rem, 3.5vw, 3rem);
-        font-weight: 300;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        color: var(--navy);
-        margin-bottom: 12px;
-      }
-
-      .collectes-header p {
-        font-size: 0.95rem;
-        color: var(--stone);
-        line-height: 1.7;
-        max-width: 560px;
-      }
-
-      .collectes-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 32px;
-      }
-
-      .collecte-block {
-        background: var(--white);
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 24px rgba(15, 58, 86, 0.06);
-      }
-
-      .collecte-block-header {
-        padding: 28px 32px 20px;
-        border-bottom: 1px solid var(--sand);
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-
-      .collecte-zone-badge {
-        font-family: var(--f-ui);
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--white);
-        padding: 4px 12px;
-        border-radius: 100px;
-      }
-      .badge-nord {
-        background: var(--navy);
-      }
-      .badge-sud {
-        background: var(--teal);
-      }
-
-      .collecte-block-title {
-        font-family: var(--f-display);
-        font-size: 1.3rem;
-        font-weight: 400;
-        color: var(--navy);
-        line-height: 1.2;
-      }
-
-      .collecte-block-address {
-        font-size: 0.78rem;
-        color: var(--stone);
-        margin-top: 4px;
-      }
-
-      /* Table */
-      .collecte-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .collecte-table thead tr {
-        background: var(--cream);
-      }
-
-      .collecte-table th {
-        font-family: var(--f-ui);
-        font-size: 0.62rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--stone);
-        padding: 12px 20px;
-        text-align: left;
-        border-bottom: 1px solid var(--sand);
-      }
-
-      .collecte-table td {
-        padding: 16px 20px;
-        font-size: 0.84rem;
-        color: var(--slate);
-        border-bottom: 1px solid var(--sand);
-        vertical-align: top;
-        line-height: 1.4;
-      }
-
-      .collecte-table tr:last-child td {
-        border-bottom: none;
-      }
-
-      .collecte-table tr:hover td {
-        background: rgba(159, 211, 224, 0.08);
-      }
-
-      .td-date {
-        font-family: var(--f-ui);
-        font-weight: 600;
-        font-size: 0.82rem;
-        color: var(--navy);
-        white-space: nowrap;
-      }
-
-      .td-lieu {
-        font-weight: 500;
-        color: var(--slate);
-      }
-
-      .td-adresse {
-        color: var(--stone);
-        font-size: 0.78rem;
-      }
-
-      .td-horaire {
-        font-family: var(--f-ui);
-        font-size: 0.75rem;
-        color: var(--teal);
-        font-weight: 500;
-        white-space: nowrap;
-      }
-
-      /* ── INSCRIPTION CTA ── */
-      #inscription {
-        background: var(--navy-deep);
-        padding: 100px 48px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .inscription-inner {
-        position: relative;
-        z-index: 1;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .inscription-title {
-        font-family: var(--f-display);
-        font-size: clamp(2rem, 4vw, 3.5rem);
-        font-weight: 300;
-        line-height: 1;
-        letter-spacing: -0.03em;
-        color: var(--white);
-        margin-bottom: 16px;
-      }
-      .inscription-title em {
-        font-style: normal;
-        color: var(--coral);
-      }
-
-      .inscription-sub {
-        font-size: 0.95rem;
-        color: rgba(255, 255, 255, 0.5);
-        line-height: 1.7;
-        margin-bottom: 40px;
-      }
-
-      .inscription-steps {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        margin-bottom: 48px;
-        text-align: left;
-      }
-
-      .inscription-step {
-        display: flex;
-        align-items: flex-start;
-        gap: 16px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 12px;
-        padding: 20px 24px;
-      }
-
-      .inscription-step-num {
-        font-family: var(--f-ui);
-        font-size: 0.65rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        color: var(--coral);
-        padding-top: 2px;
-        flex-shrink: 0;
-      }
-
-      .inscription-step-text {
-        font-size: 0.88rem;
-        color: rgba(255, 255, 255, 0.7);
-        line-height: 1.6;
-      }
-      .inscription-step-text strong {
-        color: var(--white);
-        font-weight: 500;
-        display: block;
-        margin-bottom: 4px;
-      }
-
-      .btn-efs {
-        font-family: var(--f-ui);
-        font-size: 0.82rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--white);
-        background: #e2001a;
-        padding: 18px 40px;
-        border-radius: 100px;
-        text-decoration: none;
-        display: inline-block;
-        transition:
-          transform 0.25s var(--ease-spring),
-          box-shadow 0.25s;
-      }
-      .btn-efs:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 16px 40px rgba(226, 0, 26, 0.35);
-      }
-
-      .btn-outline {
-        font-family: var(--f-ui);
-        font-size: 0.8rem;
-        font-weight: 500;
-        letter-spacing: 0.06em;
-        color: rgba(255, 255, 255, 0.5);
-        text-decoration: none;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 16px 32px;
-        border-radius: 100px;
-        display: inline-block;
-        transition:
-          border-color 0.2s,
-          color 0.2s;
-      }
-      .btn-outline:hover {
-        border-color: rgba(255, 255, 255, 0.4);
-        color: var(--white);
-      }
-
-      .cta-buttons {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      /* Responsive */
-      @media (max-width: 900px) {
-        .page-hero {
-          padding: 100px 24px 60px;
-        }
-        #partenariat {
-          padding: 72px 24px;
-        }
-        #collectes {
-          padding: 72px 24px;
-        }
-        #inscription {
-          padding: 72px 24px;
-        }
-        .partenariat-inner {
-          grid-template-columns: 1fr;
-          gap: 48px;
-        }
-        .collectes-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/pages/participer.css" />
     <script type="module" src="assets/js/pages/participer.js"></script>
   </head>
   <body>
@@ -593,7 +149,7 @@
                 alt="EFS — Établissement Français du Sang"
                 width="72"
                 height="72"
-                style="flex-shrink: 0"
+                class="efs-badge-logo"
               />
               <div class="efs-badge-text">
                 <strong>Collectes assurées par l'EFS</strong>
@@ -611,21 +167,14 @@
               alt="EFS — Établissement Français du Sang"
               width="200"
               height="200"
-              style="display: block"
+              class="efs-logo-card-img"
             />
 
-            <div
-              style="
-                border-top: 1px solid var(--sand);
-                padding-top: 20px;
-                width: 100%;
-                text-align: center;
-              "
-            >
-              <div style="font-size: 0.8rem; color: var(--stone); line-height: 1.6">
+            <div class="efs-logo-card-footer">
+              <div class="efs-logo-card-note">
                 Collectes envisagées dans<br />
-                <strong style="color: var(--navy)">2 sites fixes</strong> &amp;
-                <strong style="color: var(--navy)">collectes mobiles</strong>
+                <strong>2 sites fixes</strong> &amp;
+                <strong>collectes mobiles</strong>
               </div>
             </div>
           </div>
@@ -649,7 +198,7 @@
             <div class="collecte-block reveal js-reveal">
               <div class="collecte-block-header">
                 <div>
-                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
+                  <div class="collecte-zone">
                     <span class="collecte-zone-badge badge-nord">Nord</span>
                   </div>
                   <div class="collecte-block-title">EFS Saint-Denis</div>
@@ -731,7 +280,7 @@
             <div class="collecte-block reveal reveal-delay-1 js-reveal">
               <div class="collecte-block-header">
                 <div>
-                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px">
+                  <div class="collecte-zone">
                     <span class="collecte-zone-badge badge-sud">Sud</span>
                   </div>
                   <div class="collecte-block-title">EFS Saint-Pierre</div>
@@ -811,16 +360,7 @@
           </div>
 
           <!-- Note -->
-          <p
-            class="reveal js-reveal"
-            style="
-              margin-top: 28px;
-              font-size: 0.78rem;
-              color: var(--stone);
-              font-style: italic;
-              text-align: center;
-            "
-          >
+          <p class="collectes-note reveal js-reveal">
             Calendrier mis à jour régulièrement. Inscription préalable recommandée. Vous recevrez
             une convocation par courrier avant chaque date.
           </p>
@@ -871,14 +411,9 @@
           </div>
 
           <!-- Contact -->
-          <p
-            class="reveal js-reveal"
-            style="margin-top: 32px; font-size: 0.78rem; color: rgba(255, 255, 255, 0.3)"
-          >
+          <p class="inscription-contact reveal js-reveal">
             Questions ? Contactez-nous :
-            <a
-              href="mailto:genome.reunion@chu-reunion.fr"
-              style="color: rgba(255, 255, 255, 0.5); text-decoration: none"
+            <a href="mailto:genome.reunion@chu-reunion.fr" class="inscription-contact-link"
               >genome.reunion@chu-reunion.fr</a
             >
           </p>

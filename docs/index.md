@@ -47,6 +47,7 @@ Le site doit expliquer :
 │
 ├── assets/
 │   ├── css/styles.css          # Styles principaux
+│   ├── css/pages/participer.css # Styles propres à participer.html
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   └── images/efs-logo.svg     # Logo EFS
