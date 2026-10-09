@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* ── SECTION PROBLÈME ──
-   Constat de départ : un grand chiffre (.big-stat) puis trois cartes (.pb-item) en grille.
+   Constat de départ : un grand chiffre (.probleme-stat) puis trois cartes (.probleme-card) en grille.
    Les cartes se soulèvent au survol, sauf en mouvement réduit.
 */
 
@@ -18,30 +18,30 @@
   text-align: center;
 }
 
-.big-stat {
+.probleme-stat {
   margin-bottom: var(--space-5);
   font-family: var(--f-display);
   font-size: var(--text-fluid-9);
-  font-weight: 300;
+  font-weight: var(--weight-light);
   line-height: 0.85;
   letter-spacing: -0.04em;
   color: var(--navy);
 }
 
-.big-stat em {
+.probleme-stat em {
   font-style: normal;
   color: var(--coral);
 }
 
-.big-stat-label {
+.probleme-stat-label {
   max-width: 480px;
   margin: 0 auto var(--space-3);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: var(--leading-5);
   color: var(--stone);
 }
 
-.big-stat-note {
+.probleme-stat-note {
   font-size: var(--text-xs);
   font-style: italic;
   color: var(--teal);
@@ -53,7 +53,7 @@
   gap: var(--space-5);
 }
 
-.pb-item {
+.probleme-card {
   padding: var(--space-6) var(--space-6);
   background: var(--white);
   border: 1px solid var(--sand);
@@ -63,28 +63,28 @@
     box-shadow 0.25s;
 }
 
-.pb-item:hover {
+.probleme-card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pb-item:hover {
+  .probleme-card:hover {
     transform: none;
   }
 }
 
-.pb-item-num {
+.probleme-card-num {
   margin-bottom: var(--space-3);
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-4);
   text-transform: uppercase;
   color: var(--coral-deep);
 }
 
-.pb-item-text {
+.probleme-card-text {
   font-size: var(--text-md);
   line-height: 1.65;
   color: var(--slate);

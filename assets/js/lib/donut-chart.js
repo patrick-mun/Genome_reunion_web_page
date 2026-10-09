@@ -3,7 +3,7 @@
    Rôle : arcs du graphique en anneau, calculés à partir des pourcentages de la légende
    (source unique) puis tracés progressivement au défilement.
    Pages concernées : accueil.
-   Accroches : .js-donut (les cercles, dans l'ordre de la légende), .js-legend-pct (parts).
+   Accroches : .js-donut (les cercles, dans l'ordre de la légende), .js-ancestry-legend-pct (parts).
    Les arcs passent par --arc-length, --arc-gap et --arc-offset ; la transition est portée
    par la classe is-drawn.
    ============================================================ */
@@ -25,7 +25,7 @@ function setArcLength(circle, length) {
  */
 function applyArcLayout(donutSvg) {
   const circles = Array.from(donutSvg.children).filter((el) => el.tagName === 'circle');
-  const shares = Array.from(document.querySelectorAll('.js-legend-pct'), (el) =>
+  const shares = Array.from(document.querySelectorAll('.js-ancestry-legend-pct'), (el) =>
     parseShare(el.textContent),
   );
   if (!circles.length || circles.length !== shares.length || shares.some(Number.isNaN)) {

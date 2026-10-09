@@ -1,8 +1,9 @@
 /* ============================================================
    assets/css/tokens.css
    Rôle : valeurs de conception du projet (couleurs, polices, échelles
-   d'espacement, de texte, de rayons et d'ombres). Aucune règle de style ici.
-   Pages concernées : toutes (chargé avant styles.css).
+   d'espacement, de texte, de rayons et d'ombres), et leur redéfinition sous
+   900 px. Aucune règle de style ici.
+   Pages concernées : toutes (chargé après fonts.css, avant base.css).
    ============================================================ */
 
 :root {
@@ -76,6 +77,15 @@
   --space-8: 72px;
   --space-9: 120px;
 
+  /* Espacements par rôle, resserrés sous 900 px (bloc @media en fin de fichier, CSS-06). */
+  --space-gutter: var(--space-7); /* marge latérale des sections, de la nav et du pied de page */
+  --space-section-y: var(--space-9); /* padding vertical des sections de contenu */
+  --space-columns: var(--space-8); /* écart des mises en page à deux colonnes */
+  --space-steps: var(--space-7); /* écart des étapes de la méthode */
+  --space-nav-y: var(--space-5);
+  --space-footer-y: var(--space-7);
+  --space-stats-y: var(--space-7);
+
   /* ── TEXTE ──
      Tailles fixes par rôle (--text-2xs à --text-2xl) et tailles fluides par rang
      (--text-fluid-1 à 9, clamp()) pour les titres et les textes d'accroche (CSS-12).
@@ -97,6 +107,40 @@
   --text-fluid-7: clamp(2.8rem, 6vw, 5.5rem);
   --text-fluid-8: clamp(3.2rem, 8vw, 7.5rem);
   --text-fluid-9: clamp(6rem, 16vw, 13rem);
+
+  /* ── GRAISSES ──
+     Graisses employées par les règles. Chaque police hébergée ne couvre qu'une partie
+     de l'échelle (voir fonts.css) : le navigateur prend alors la graisse disponible la plus proche.
+  */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ── INTERLIGNES ──
+     Échelle de rang 1 à 6 (1 à 1,7), des titres serrés au texte courant (CSS-13).
+     Les valeurs employées moins de trois fois restent écrites dans leur règle.
+  */
+  --leading-1: 1;
+  --leading-2: 1.1;
+  --leading-3: 1.3;
+  --leading-4: 1.4;
+  --leading-5: 1.6;
+  --leading-6: 1.7;
+
+  /* ── APPROCHE ──
+     Espacement des lettres : rangs négatifs pour resserrer les grands titres,
+     rangs 1 à 5 pour espacer les libellés en capitales (CSS-13).
+     Les valeurs employées moins de trois fois restent écrites dans leur règle.
+  */
+  --tracking-neg-2: -0.03em;
+  --tracking-neg-1: -0.02em;
+  --tracking-1: 0.06em;
+  --tracking-2: 0.08em;
+  --tracking-3: 0.12em;
+  --tracking-4: 0.15em;
+  --tracking-5: 0.18em;
 
   /* ── RAYONS ──
      Rayons de bordure de xs à lg, plus --radius-pill pour les boutons et étiquettes en pilule.
@@ -124,4 +168,20 @@
   */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── ESPACEMENTS SOUS 900 PX ──
+   Seul endroit où les espacements changent avec la largeur (CSS-06) : les composants
+   lisent les jetons par rôle et n'ont pas de media query d'espacement.
+*/
+@media (max-width: 900px) {
+  :root {
+    --space-gutter: var(--space-5);
+    --space-section-y: var(--space-8);
+    --space-columns: var(--space-7);
+    --space-steps: var(--space-6);
+    --space-nav-y: var(--space-4);
+    --space-footer-y: var(--space-6);
+    --space-stats-y: var(--space-5);
+  }
 }

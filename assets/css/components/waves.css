@@ -8,7 +8,7 @@
    Trois vagues SVG de 200 % de large qui défilent à des vitesses différentes (wave-pan).
    Neutralisées en mouvement réduit, figées par la pause manuelle (.is-motion-paused).
 */
-.hero-waves {
+.waves {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -18,7 +18,7 @@
   pointer-events: none;
 }
 
-.hero-waves svg {
+.waves svg {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -26,34 +26,34 @@
   height: 100%;
 }
 
-.wave-1 {
+.waves-1 {
   opacity: 0.6;
   animation: wave-pan 20s linear infinite;
 }
 
-.wave-2 {
+.waves-2 {
   opacity: 0.45;
   animation: wave-pan 14s linear infinite reverse;
 }
 
-.wave-3 {
+.waves-3 {
   opacity: 0.2;
   animation: wave-pan 9s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wave-1,
-  .wave-2,
-  .wave-3 {
+  .waves-1,
+  .waves-2,
+  .waves-3 {
     animation: none;
   }
 }
 
 /* Pause manuelle (bouton du pied de page) : les vagues restent figées sur place. */
 
-.is-motion-paused .wave-1,
-.is-motion-paused .wave-2,
-.is-motion-paused .wave-3 {
+.is-motion-paused .waves-1,
+.is-motion-paused .waves-2,
+.is-motion-paused .waves-3 {
   animation-play-state: paused;
 }
 

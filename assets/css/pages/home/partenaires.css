@@ -1,36 +1,36 @@
 /* ============================================================
    assets/css/pages/home/partenaires.css
-   Rôle : rangée de logos et d'étiquettes des partenaires.
+   Rôle : liste des partenaires (logos et étiquettes), en rangée.
    Pages concernées : index.html.
    ============================================================ */
 
 /* ── PARTENAIRES ──
-   Rangée de logos et d'étiquettes. Les logos (.partner-logo) sont atténués au repos et
+   Liste en rangée (.partenaires-list) : une étiquette (.partenaires-pill) ou un logo par entrée. Les logos (.partenaires-logo) sont atténués au repos et
    reprennent leur pleine opacité au survol de leur lien.
 */
 
-.partners-title {
+.partenaires-title {
   margin-bottom: var(--space-5);
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-5);
   text-transform: uppercase;
   color: var(--stone);
 }
 
-.partners-row {
+.partenaires-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
 }
 
-.partner-pill {
+.partenaires-pill {
   padding: var(--space-2) var(--space-4);
   font-family: var(--f-ui);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
   color: var(--navy);
   background: var(--sand);
   border: 1px solid transparent;
@@ -40,7 +40,7 @@
     background 0.2s;
 }
 
-.partner-logo-link {
+.partenaires-logo-link {
   display: flex;
   align-items: center;
   padding: var(--space-2) var(--space-3);
@@ -52,22 +52,22 @@
     background 0.2s;
 }
 
-.partner-logo-link .partner-logo {
+.partenaires-logo-link .partenaires-logo {
   display: block;
   opacity: 0.75;
   transition: opacity 0.2s;
 }
 
-.partner-logo-link:hover .partner-logo {
+.partenaires-logo-link:hover .partenaires-logo {
   opacity: 1;
 }
 
-.partner-logo-link:hover {
+.partenaires-logo-link:hover {
   background: var(--teal-mid);
   border-color: var(--teal);
 }
 
-.partner-pill:hover {
+.partenaires-pill:hover {
   background: var(--teal-mid);
   border-color: var(--teal);
 }

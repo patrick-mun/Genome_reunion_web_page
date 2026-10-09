@@ -10,13 +10,7 @@
 */
 
 .section {
-  padding: var(--space-9) var(--space-7);
-}
-
-@media (max-width: 900px) {
-  .section {
-    padding: var(--space-8) var(--space-5);
-  }
+  padding: var(--space-section-y) var(--space-gutter);
 }
 
 /* z-index 2 : contenus passés devant le margouillat (z-index 1), cartes et textes inclus. */

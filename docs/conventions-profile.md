@@ -49,6 +49,10 @@ lors de l'éclatement des media queries).
 
 4, 8, 12, 16, 24, 32, 48, 72, 120 px (`--space-1` … `--space-9`), plus deux filets `--space-hairline` (1 px) et `--space-line` (2 px) pour les grilles à séparateurs.
 
+## Espacements responsives (CSS-06)
+
+Les espacements qui changent sous 900 px sont des jetons par rôle (`--space-gutter`, `--space-section-y`, `--space-columns`, `--space-steps`, `--space-nav-y`, `--space-footer-y`, `--space-stats-y`), redéfinis dans un seul bloc `@media` en fin de `tokens.css`. Les composants n'ont plus de media query d'espacement ; les leurs ne changent que la mise en page (colonnes, affichage).
+
 ## Échelle d'opacité (CSS-14)
 
 5, 10, 20, 40, 60, 80, 95 % (`--<couleur>-<pourcentage>`, ex. `--white-60`, `--navy-05`).
@@ -58,6 +62,12 @@ lors de l'éclatement des media queries).
 Texte : `--text-2xs` à `--text-2xl` (0,65 à 1,8 rem) et `--text-fluid-1` à `--text-fluid-9` (`clamp()` par rang).
 Rayons : `--radius-xs`, `-sm`, `-md`, `-lg`, `-pill`.
 Ombres : `--shadow-sm`, `-md`, `-lg`, `-accent-sm`, `-accent-md`, `-accent-lg`, `-efs`.
+
+## Typographie (CSS-13)
+
+Graisses : `--weight-light`, `-regular`, `-medium`, `-semibold`, `-bold` (300 à 700), imposées par Stylelint hors `fonts.css` (les descripteurs `@font-face` n'acceptent pas `var()`).
+Interlignes : `--leading-1` à `--leading-6` (1 à 1,7). Approche : `--tracking-neg-2`, `-neg-1` (−0,03 et −0,02 em) et `--tracking-1` à `--tracking-5` (0,06 à 0,18 em).
+Seules les valeurs employées au moins trois fois sont des jetons ; les autres restent écrites dans leur règle (contrôle par relecture).
 
 ## Dérogations
 

@@ -6,19 +6,19 @@
 
 /* ── EYEBROW ──
    Surtitre en capitales au-dessus d'un titre de section.
-   La variante .light s'emploie sur les fonds sombres.
+   La variante .eyebrow-inverse s'emploie sur les fonds sombres.
 */
 
 .eyebrow {
   margin-bottom: var(--space-5);
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-5);
   text-transform: uppercase;
   color: var(--teal);
 }
 
-.eyebrow.light {
+.eyebrow-inverse {
   color: var(--teal-light);
 }

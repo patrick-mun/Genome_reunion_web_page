@@ -26,9 +26,9 @@
   margin-bottom: var(--space-5);
   font-family: var(--f-display);
   font-size: var(--text-fluid-6);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-1);
+  letter-spacing: var(--tracking-neg-2);
   color: var(--white);
 }
 
@@ -41,7 +41,7 @@
   max-width: 460px;
   margin: 0 auto var(--space-7);
   font-size: var(--text-base);
-  line-height: 1.7;
+  line-height: var(--leading-6);
   color: var(--white-60);
 }
 
@@ -50,7 +50,7 @@
   padding: var(--space-5) var(--space-7);
   font-family: var(--f-ui);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
