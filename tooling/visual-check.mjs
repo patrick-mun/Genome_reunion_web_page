@@ -286,7 +286,7 @@ async function launchBrowser(browserPath) {
 
 const options = parseArgs(process.argv.slice(2));
 const repoRoot = resolve(execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim());
-const pages = readdirSync(repoRoot).filter((file) => file.endsWith('.html'));
+const workingPages = readdirSync(repoRoot).filter((file) => file.endsWith('.html'));
 const browser = await launchBrowser(options.browserPath);
 let reference;
 try {
@@ -296,11 +296,17 @@ try {
   await browser.close();
   process.exit(1);
 }
+// Une page absente de la référence (page nouvelle) n'a rien à comparer : elle est signalée, pas capturée.
+const referencePages = new Set(readdirSync(reference.dir));
+const pages = workingPages.filter((file) => referencePages.has(file));
+const newPages = workingPages.filter((file) => !referencePages.has(file));
 const servers = await Promise.all([serve(reference.dir), serve(repoRoot)]);
 let failures = 0;
 let aborted = false;
 try {
-  console.log(`Référence : ${options.ref} — copie de travail comparée sur ${pages.join(', ')}\n`);
+  console.log(`Référence : ${options.ref} — copie de travail comparée sur ${pages.join(', ')}`);
+  if (newPages.length) console.log(`Pages nouvelles, sans référence (non comparées) : ${newPages.join(', ')}`);
+  console.log();
   for (const file of pages) {
     const before = await capturePage(browser, `${servers[0].url}/${file}`);
     const after = await capturePage(browser, `${servers[1].url}/${file}`);

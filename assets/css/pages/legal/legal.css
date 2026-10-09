@@ -1,0 +1,79 @@
+/* ============================================================
+   assets/css/pages/legal/legal.css
+   Rôle : bandeau de titre et corps de texte des pages légales.
+   Pages concernées : mentions-legales.html, confidentialite.html.
+   ============================================================ */
+
+/* ── BANDEAU ──
+   Bandeau marine sous la navigation fixe, dans la même colonne de lecture que le corps : le haut est dégagé pour que la barre transparente
+   (liens blancs) se lise sur le marine. Sans animation d'apparition : le texte est toujours visible.
+*/
+.legal-hero {
+  padding: var(--space-9) var(--space-gutter) var(--space-8);
+  background: var(--navy);
+}
+
+.legal-hero-inner {
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.legal-kicker {
+  margin-bottom: var(--space-4);
+  font-family: var(--f-ui);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-5);
+  text-transform: uppercase;
+  color: var(--teal-light);
+}
+
+.legal-title {
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-6);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-1);
+  letter-spacing: var(--tracking-neg-2);
+  color: var(--white);
+}
+
+/* ── CORPS ──
+   Colonne de lecture sur fond crème : une section par rubrique (.legal-section).
+   .legal-todo signale un contenu à fournir : il reste visible tant que le texte n'est pas validé.
+*/
+.legal-body {
+  padding: var(--space-section-y) var(--space-gutter);
+  background: var(--cream);
+}
+
+.legal-body-inner {
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.legal-section + .legal-section {
+  margin-top: var(--space-7);
+}
+
+.legal-section h2 {
+  margin-bottom: var(--space-3);
+  font-family: var(--f-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-2);
+  color: var(--navy);
+}
+
+.legal-section p {
+  font-size: var(--text-base);
+  line-height: var(--leading-6);
+  color: var(--slate);
+}
+
+.legal-todo {
+  padding: var(--space-3) var(--space-4);
+  font-style: italic;
+  background: var(--coral-10);
+  border-radius: var(--radius-xs);
+  border-left: var(--space-1) solid var(--coral);
+}

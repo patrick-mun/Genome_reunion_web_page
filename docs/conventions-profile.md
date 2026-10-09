@@ -35,14 +35,14 @@ Valeurs de conception : `assets/css/tokens.css` (seul fichier où les valeurs br
 
 ## Organisation des fichiers (CSS-02)
 
-| Rôle                                                 | Chemin                                                   |
-| ---------------------------------------------------- | -------------------------------------------------------- |
-| Polices (@font-face)                                 | `assets/css/fonts.css`                                   |
-| Tokens (valeurs uniquement)                          | `assets/css/tokens.css`                                  |
-| Base (reset, base, layout, utilitaires)              | `assets/css/base.css`                                    |
-| Composants (un fichier par composant)                | `assets/css/components/`                                 |
-| Pages (un dossier par page, une section par fichier) | `assets/css/pages/home/`, `assets/css/pages/participer/` |
-| Utilitaires (chargés en dernier)                     | `assets/css/utilities.css`                               |
+| Rôle                                                 | Chemin                                                                              |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Polices (@font-face)                                 | `assets/css/fonts.css`                                                              |
+| Tokens (valeurs uniquement)                          | `assets/css/tokens.css`                                                             |
+| Base (reset, base, layout, utilitaires)              | `assets/css/base.css`                                                               |
+| Composants (un fichier par composant)                | `assets/css/components/`                                                            |
+| Pages (un dossier par page, une section par fichier) | `assets/css/pages/home/`, `assets/css/pages/participer/`, `assets/css/pages/legal/` |
+| Utilitaires (chargés en dernier)                     | `assets/css/utilities.css`                                                          |
 
 ## Sens des media queries (CSS-05)
 

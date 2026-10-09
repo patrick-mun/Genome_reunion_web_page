@@ -43,6 +43,8 @@ Le site doit expliquer :
 .
 ├── index.html                  # Page d'accueil
 ├── participer.html             # Page d'information participation
+├── mentions-legales.html       # Mentions légales (contenu à fournir)
+├── confidentialite.html        # Politique de confidentialité (contenu à fournir)
 ├── favicon.ico                 # Icône du site (les autres icônes sont dans assets/images/)
 ├── README.md                   # Présentation du dépôt
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
@@ -54,9 +56,9 @@ Le site doit expliquer :
 │   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
 │   ├── css/base.css            # Reset, html, body
 │   ├── css/components/         # nav, footer, boutons, vagues, lien d'évitement, barre de progression, eyebrow
-│   ├── css/pages/              # home/ et participer/ (une section par fichier)
+│   ├── css/pages/              # home/ et participer/ (une section par fichier ; legal/ pour les pages légales)
 │   ├── css/utilities.css       # .reveal, chargé en dernier
-│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
+│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js, legal.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
 │   └── images/                 # sprite.svg (logo, vagues), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png
@@ -96,6 +98,17 @@ Points sensibles :
 
 ---
 
+### `mentions-legales.html` et `confidentialite.html`
+
+Pages légales : même navigation et même pied de page que les autres pages (gardés synchronisés par
+`tooling/pages-sync.test.js`), un bandeau de titre puis une section par rubrique (`.legal-section`).
+Les rubriques sont des cadres `À compléter` (`.legal-todo`) : le texte doit venir du CHU (DPO). Ne pas
+fusionner tant qu'un bloc `.legal-todo` reste dans une page. Le site n'utilise ni cookie ni stockage local.
+Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuille de style :
+`assets/css/pages/legal/legal.css` ; entrée JS : `assets/js/pages/legal.js`.
+
+---
+
 ### `participer.html`
 
 Page d'information sur la participation.
@@ -132,7 +145,7 @@ Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ord
 ### `assets/js/pages/` et `assets/js/lib/`
 
 Le JS est découpé en modules ES chargés par `<script type="module">` dans le `<head>`.
-Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`) qui
+Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`, `pages/legal.js`) qui
 appelle les fonctions `init…` des modules de `lib/`.
 
 Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-…`
@@ -232,7 +245,8 @@ mais chaque étape reste à valider par l'équipe projet. Restent notamment :
 
 1. `participer.html` : dates de collecte et ouverture réelle des inscriptions à confirmer.
 2. `index.html` et `participer.html` : statut de chaque partenaire à confirmer ; lien du logo POPgen à ajouter.
-3. `assets/css/` : ajustements visuels uniquement après validation des contenus.
+3. `mentions-legales.html`, `confidentialite.html` : texte à fournir par le CHU (DPO), blocs `.legal-todo` à remplacer.
+4. `assets/css/` : ajustements visuels uniquement après validation des contenus.
 
 ---
 

@@ -1,7 +1,7 @@
 /* ============================================================
    assets/js/lib/nav-scroll.js
    Rôle : fond opaque de la barre de navigation une fois la page défilée.
-   Pages concernées : accueil, participer.
+   Pages concernées : accueil, participer, pages légales.
    Accroches : .js-nav.
    ============================================================ */
 

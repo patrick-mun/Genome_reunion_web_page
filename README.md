@@ -26,6 +26,8 @@ Le site doit expliquer simplement :
 .
 ├── index.html                  # Page d'accueil
 ├── participer.html             # Page d'information participation
+├── mentions-legales.html       # Mentions légales (contenu à fournir)
+├── confidentialite.html        # Politique de confidentialité (contenu à fournir)
 ├── favicon.ico                 # Icône du site
 ├── README.md                   # Présentation du dépôt
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
@@ -39,7 +41,7 @@ Le site doit expliquer simplement :
 │   │   ├── base.css            # Reset, html, body
 │   │   ├── utilities.css       # Apparition au défilement (.reveal), chargé en dernier
 │   │   ├── components/         # Un fichier par composant partagé (nav, footer, vagues…)
-│   │   └── pages/              # Un dossier par page, une section par fichier (home/, participer/)
+│   │   └── pages/              # Un dossier par page, une section par fichier (home/, participer/, legal/)
 │   ├── js/
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)
