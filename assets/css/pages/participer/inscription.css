@@ -1,0 +1,163 @@
+/* ============================================================
+   assets/css/pages/participer/inscription.css
+   Rôle : appel à s'inscrire : étapes, boutons et contact.
+   Pages concernées : participer.html.
+   ============================================================ */
+
+/* ── INSCRIPTION ──
+   Appel à s'inscrire sur fond marine profond : titre, trois étapes numérotées, boutons et contact.
+   Les textes blancs translucides passent par les jetons d'opacité.
+*/
+.inscription {
+  position: relative;
+  padding: var(--space-9) var(--space-7);
+  overflow: hidden;
+  text-align: center;
+  background: var(--navy-deep);
+}
+
+@media (max-width: 900px) {
+  .inscription {
+    padding: var(--space-8) var(--space-5);
+  }
+}
+
+.inscription-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inscription-title {
+  margin-bottom: var(--space-4);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-5);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+
+.inscription-title em {
+  font-style: normal;
+  color: var(--coral);
+}
+
+.inscription-sub {
+  margin-bottom: var(--space-7);
+  font-size: var(--text-md);
+  line-height: 1.7;
+  color: var(--white-60);
+}
+
+.inscription-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+  text-align: left;
+}
+
+.inscription-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5);
+  background: var(--white-05);
+  border-radius: var(--radius-md);
+}
+
+.inscription-step-num {
+  flex-shrink: 0;
+  padding-top: var(--space-line);
+  font-family: var(--f-ui);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--coral);
+}
+
+.inscription-step-text {
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--white-80);
+}
+
+.inscription-step-text strong {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-weight: 500;
+  color: var(--white);
+}
+
+.inscription-contact {
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--white-40);
+}
+
+.inscription-contact-link {
+  text-decoration: none;
+  color: var(--white-60);
+}
+
+/* ── BOUTONS D'INSCRIPTION ──
+   Bouton rouge EFS (--efs-red, réservé à cette page) et bouton à contour.
+   Le soulèvement au survol est neutralisé en mouvement réduit.
+*/
+.btn-efs {
+  display: inline-block;
+  padding: var(--space-4) var(--space-7);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--efs-red);
+  border-radius: var(--radius-pill);
+  transition:
+    transform 0.25s var(--ease-spring),
+    box-shadow 0.25s;
+}
+
+.btn-efs:hover {
+  box-shadow: var(--shadow-efs);
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-efs:hover {
+    transform: none;
+  }
+}
+
+.btn-outline {
+  display: inline-block;
+  padding: var(--space-4) var(--space-6);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--white-60);
+  border: 1px solid var(--white-20);
+  border-radius: var(--radius-pill);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.btn-outline:hover {
+  color: var(--white);
+  border-color: var(--white-40);
+}
+
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}

@@ -1,0 +1,131 @@
+/* ============================================================
+   assets/css/pages/participer/partenariat.css
+   Rôle : présentation du partenaire EFS : texte, badge et carte du logo.
+   Pages concernées : participer.html.
+   ============================================================ */
+
+/* ── PARTENARIAT EFS ──
+   Présentation du partenaire sur fond crème : texte à gauche, carte du logo à droite.
+   Une seule colonne sous 900 px.
+*/
+.partenariat {
+  padding: var(--space-9) var(--space-7);
+  background: var(--cream);
+}
+
+@media (max-width: 900px) {
+  .partenariat {
+    padding: var(--space-8) var(--space-5);
+  }
+}
+
+.partenariat-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-8);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .partenariat-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+}
+
+.partenariat-text h2 {
+  margin-bottom: var(--space-5);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-3);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+.partenariat-text p {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-md);
+  line-height: 1.75;
+  color: var(--stone);
+}
+
+.efs-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-2);
+  padding: var(--space-6) var(--space-6);
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.efs-badge-text {
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--stone);
+}
+
+.efs-badge-text strong {
+  display: block;
+  margin-bottom: var(--space-line);
+  font-size: var(--text-md);
+  color: var(--slate);
+}
+
+.efs-badge-logo {
+  flex-shrink: 0;
+}
+
+/* ── CARTE DU LOGO EFS ──
+   Titre, grand logo et note sur les sites de collecte (.efs-logo-card-footer,
+   .efs-logo-card-note).
+*/
+.efs-logo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-7) var(--space-7);
+  text-align: center;
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.efs-logo-title {
+  font-family: var(--f-ui);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.efs-logo-card-img {
+  display: block;
+}
+
+.efs-logo-card-footer {
+  width: 100%;
+  padding-top: var(--space-5);
+  text-align: center;
+  border-top: 1px solid var(--sand);
+}
+
+.efs-logo-card-note {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--stone);
+}
+
+.efs-logo-card-note strong {
+  color: var(--navy);
+}
