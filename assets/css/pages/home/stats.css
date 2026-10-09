@@ -1,0 +1,76 @@
+/* ============================================================
+   assets/css/pages/home/stats.css
+   Rôle : barre des quatre chiffres clés et ses compteurs.
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── CHIFFRES CLÉS ──
+   Barre de quatre chiffres sous le hero (deux colonnes sous 900 px). Chaque .stat-item apparaît au
+   défilement avec un délai --reveal-delay ; le compteur est animé par stats-counter.js.
+*/
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-hairline);
+  padding: var(--space-7) var(--space-7);
+  background: var(--navy-deep);
+  border-top: 1px solid var(--white-05);
+}
+
+@media (max-width: 900px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    padding: var(--space-5);
+  }
+}
+
+.stat-item {
+  position: relative;
+  z-index: 2; /* devant la couche margouillat, comme .section-inner */
+  padding: var(--space-5) var(--space-6);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+  border-right: 1px solid var(--white-05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-item.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.stat-num {
+  margin-bottom: var(--space-2);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-5);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--white);
+}
+
+.stat-num span {
+  color: var(--coral);
+}
+
+.stat-label {
+  font-size: var(--text-sm);
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--white-40);
+}

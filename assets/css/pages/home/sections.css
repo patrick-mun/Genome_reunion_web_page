@@ -1,0 +1,28 @@
+/* ============================================================
+   assets/css/pages/home/sections.css
+   Rôle : gabarit commun des sections de contenu (marges, colonne centrée).
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── SECTIONS COMMUNES ──
+   Gabarit des sections de contenu : marges verticales et colonne centrée de 1080 px.
+   .section-inner passe devant la couche du margouillat (z-index 2 contre 1).
+*/
+
+.section {
+  padding: var(--space-9) var(--space-7);
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: var(--space-8) var(--space-5);
+  }
+}
+
+/* z-index 2 : contenus passés devant le margouillat (z-index 1), cartes et textes inclus. */
+.section-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1080px;
+  margin: 0 auto;
+}

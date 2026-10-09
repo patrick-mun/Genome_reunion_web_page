@@ -1,0 +1,52 @@
+/* ============================================================
+   assets/css/pages/home/paille-en-queue.css
+   Rôle : couche et styles des paille-en-queue animés dans le hero.
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── PAILLE-EN-QUEUE ──
+   Couche créée par paille-en-queue.js dans le hero (aria-hidden, sans interaction).
+   Position et angle via --x, --y et --angle ; l'oiseau n'apparaît qu'avec is-born (opacité --opacity).
+*/
+
+.bird-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.paille {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--angle, 0deg));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.paille.is-born {
+  opacity: var(--opacity, 1);
+}
+
+.paille svg {
+  display: block;
+  overflow: visible;
+}
+
+.paille-body {
+  fill: var(--white);
+}
+
+.paille-wings path {
+  fill: var(--white-95);
+}
+
+.paille-tail {
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}

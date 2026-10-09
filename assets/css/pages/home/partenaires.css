@@ -1,0 +1,73 @@
+/* ============================================================
+   assets/css/pages/home/partenaires.css
+   Rôle : rangée de logos et d'étiquettes des partenaires.
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── PARTENAIRES ──
+   Rangée de logos et d'étiquettes. Les logos (.partner-logo) sont atténués au repos et
+   reprennent leur pleine opacité au survol de leur lien.
+*/
+
+.partners-title {
+  margin-bottom: var(--space-5);
+  font-family: var(--f-ui);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.partners-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.partner-pill {
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--sand);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.partner-logo-link {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  background: var(--sand);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.partner-logo-link .partner-logo {
+  display: block;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.partner-logo-link:hover .partner-logo {
+  opacity: 1;
+}
+
+.partner-logo-link:hover {
+  background: var(--teal-mid);
+  border-color: var(--teal);
+}
+
+.partner-pill:hover {
+  background: var(--teal-mid);
+  border-color: var(--teal);
+}
