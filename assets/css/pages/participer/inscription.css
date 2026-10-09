@@ -75,7 +75,7 @@
   font-size: var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--coral);
+  color: var(--coral-light);
 }
 
 .inscription-step-text {
@@ -94,12 +94,12 @@
 .inscription-contact {
   margin-top: var(--space-6);
   font-size: var(--text-sm);
-  color: var(--white-40);
+  color: var(--white-60);
 }
 
 .inscription-contact-link {
   text-decoration: none;
-  color: var(--white-60);
+  color: var(--white-80);
 }
 
 /* ── BOUTONS D'INSCRIPTION ──

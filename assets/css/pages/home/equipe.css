@@ -88,7 +88,7 @@
 }
 
 .team-avatar-2 {
-  background: var(--coral);
+  background: var(--coral-deep);
 }
 
 .team-avatar-3 {
@@ -96,7 +96,7 @@
 }
 
 .team-avatar-4 {
-  background: var(--amber);
+  background: var(--amber-deep);
 }
 
 .team-avatar-5 {

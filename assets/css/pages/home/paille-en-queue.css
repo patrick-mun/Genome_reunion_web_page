@@ -50,3 +50,13 @@
   stroke-width: 1.1;
   stroke-linecap: round;
 }
+
+.paille-beak {
+  opacity: 0.95;
+  fill: var(--coral);
+}
+
+.paille-eye {
+  opacity: 0.55;
+  fill: var(--navy);
+}

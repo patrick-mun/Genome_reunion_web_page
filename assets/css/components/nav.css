@@ -101,7 +101,7 @@
   text-transform: uppercase;
   text-decoration: none;
   color: var(--white);
-  background: var(--coral);
+  background: var(--coral-deep);
   border-radius: var(--radius-pill);
   transition:
     transform 0.2s var(--ease-spring),

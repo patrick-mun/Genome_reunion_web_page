@@ -51,3 +51,27 @@ test('geckoSVG dessine quatre pattes de trois doigts', () => {
   assert.equal(countOf(svg, /data-leg-/g), 4);
   assert.equal(countOf(svg, /r="2\.3"/g), 12);
 });
+
+test('birdSVG ne porte aucune couleur : elles viennent du CSS', () => {
+  assert.doesNotMatch(birdSVG(), /#[0-9a-f]{3,8}|fill=|stroke=/i);
+});
+
+test('geckoSVG ne porte aucune couleur ni trait : ils viennent du CSS', () => {
+  assert.doesNotMatch(geckoSVG(), /#[0-9a-f]{3,8}|fill=|stroke=|opacity=/i);
+});
+
+test('geckoSVG et birdSVG exposent les classes de peinture attendues', () => {
+  const gecko = geckoSVG();
+  for (const cls of [
+    'gecko-skin',
+    'gecko-limb',
+    'gecko-limb-edge',
+    'gecko-toe',
+    'gecko-eye',
+    'gecko-tail',
+  ]) {
+    assert.match(gecko, new RegExp(`class="${cls}"`), cls);
+  }
+  assert.match(birdSVG(), /class="paille-beak"/);
+  assert.match(birdSVG(), /class="paille-eye"/);
+});

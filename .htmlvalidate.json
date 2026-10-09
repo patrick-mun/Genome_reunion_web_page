@@ -35,7 +35,14 @@
     ],
     "unique-landmark": "error",
     "prefer-button": "error",
-    "prefer-native-element": "error",
+    "prefer-native-element": [
+      "error",
+      {
+        "exclude": [
+          "list"
+        ]
+      }
+    ],
     "input-missing-label": "error",
     "long-title": "error",
     "empty-title": "error",
@@ -43,6 +50,14 @@
       "error",
       {
         "style": "lowercase"
+      }
+    ],
+    "no-redundant-role": [
+      "error",
+      {
+        "exclude": [
+          "list"
+        ]
       }
     ]
   }

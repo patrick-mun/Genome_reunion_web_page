@@ -47,7 +47,7 @@
     <header>
       <!-- NAV -->
       <nav id="nav" class="nav js-nav">
-        <a href="#" class="nav-logo">
+        <a href="index.html" class="nav-logo">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 110 60"
@@ -58,21 +58,21 @@
             <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(10,8)">
               <path
                 d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="#0F3A56"
+                stroke="var(--navy)"
               />
               <path
                 d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="#1E6E8C"
+                stroke="var(--teal)"
                 transform="translate(0,16)"
               />
               <path
                 d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="#E8654A"
+                stroke="var(--coral)"
                 transform="translate(0,32)"
               />
-              <circle cx="84" cy="8" r="2.6" fill="#0F3A56" stroke="none" />
-              <circle cx="84" cy="24" r="2.6" fill="#1E6E8C" stroke="none" />
-              <circle cx="84" cy="40" r="2.6" fill="#E8654A" stroke="none" />
+              <circle cx="84" cy="8" r="2.6" fill="var(--navy)" stroke="none" />
+              <circle cx="84" cy="24" r="2.6" fill="var(--teal)" stroke="none" />
+              <circle cx="84" cy="40" r="2.6" fill="var(--coral)" stroke="none" />
             </g>
           </svg>
           <span class="nav-logo-text">Génome Réunion</span>
@@ -87,7 +87,7 @@
 
       <!-- HERO -->
       <section id="hero" class="hero js-hero">
-        <div class="hero-waves">
+        <div class="hero-waves" aria-hidden="true">
           <svg
             class="wave-1"
             viewBox="0 0 2880 220"
@@ -98,7 +98,7 @@
               d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
                C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
                L2880,220 L0,220 Z"
-              fill="#091F30"
+              fill="var(--navy-deep)"
             />
           </svg>
           <svg
@@ -112,7 +112,7 @@
                C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
                C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
                L2880,220 L0,220 Z"
-              fill="#1E6E8C"
+              fill="var(--teal)"
             />
           </svg>
           <svg
@@ -126,13 +126,19 @@
                C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
                C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
                L2880,220 L0,220 Z"
-              fill="#E8654A"
+              fill="var(--coral)"
             />
           </svg>
         </div>
 
         <div class="hero-inner">
-          <p class="hero-creole" id="hero-creole" data-hero-reveal="100" data-parallax-depth="0.4">
+          <p
+            class="hero-creole"
+            lang="rcf"
+            id="hero-creole"
+            data-hero-reveal="100"
+            data-parallax-depth="0.4"
+          >
             Nout' léritaz, nout' santé.
           </p>
           <h1 class="hero-title" id="hero-title" data-hero-reveal="200" data-parallax-depth="1">
@@ -164,6 +170,7 @@
     <main id="contenu">
       <!-- STATS -->
       <section id="stats" class="stats">
+        <h2 class="visually-hidden">Le projet en chiffres</h2>
         <div class="stat-item js-stat-item">
           <div class="stat-num">
             <span class="count js-count" data-target="2500">0</span>
@@ -192,7 +199,7 @@
       <section id="probleme" class="probleme section">
         <div class="section-inner">
           <div class="probleme-hero">
-            <p class="eyebrow reveal js-reveal">Pourquoi c'est urgent</p>
+            <h2 class="eyebrow reveal js-reveal">Pourquoi c'est urgent</h2>
             <div class="big-stat reveal reveal-delay-1 js-reveal"><em>≥ 80</em>%</div>
             <p class="big-stat-label reveal reveal-delay-2 js-reveal">
               des individus présents dans les grandes bases génomiques mondiales sont d'origine
@@ -202,31 +209,31 @@
               Bases de fréquences · panels de référence · outils d'interprétation
             </p>
           </div>
-          <div class="probleme-cards">
-            <div class="pb-item reveal js-reveal">
+          <ul role="list" class="probleme-cards">
+            <li class="pb-item reveal js-reveal">
               <div class="pb-item-num">Posologie</div>
               <p class="pb-item-text">
                 Les bases internationales documentent encore insuffisamment les profils
                 pharmacogénétiques des populations admixées de l'océan Indien. Ce manque limite la
                 lecture fine des variations locales.
               </p>
-            </div>
-            <div class="pb-item reveal reveal-delay-1 js-reveal">
+            </li>
+            <li class="pb-item reveal reveal-delay-1 js-reveal">
               <div class="pb-item-num">Diagnostic</div>
               <p class="pb-item-text">
                 Sans base locale de fréquences de variants, un variant peut être classé comme rare
                 ou incertain alors qu'il correspond simplement à la diversité propre de la
                 population réunionnaise.
               </p>
-            </div>
-            <div class="pb-item reveal reveal-delay-2 js-reveal">
+            </li>
+            <li class="pb-item reveal reveal-delay-2 js-reveal">
               <div class="pb-item-num">Prévention</div>
               <p class="pb-item-text">
                 Les modèles construits sur d'autres populations peuvent perdre en précision
                 lorsqu'ils sont appliqués à une population fortement admixée et fondatrice.
               </p>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -237,9 +244,9 @@
           <h2 class="change-title reveal reveal-delay-1 js-reveal">
             Une base locale pour mieux comparer.
           </h2>
-          <div class="change-grid">
-            <div class="change-card reveal js-reveal">
-              <div class="change-card-icon">
+          <ul role="list" class="change-grid">
+            <li class="change-card reveal js-reveal">
+              <div class="change-card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                 </svg>
@@ -249,9 +256,9 @@
                 Documenter les variants observés à La Réunion et leur fréquence, afin de disposer
                 d'un point de comparaison propre au territoire.
               </p>
-            </div>
-            <div class="change-card reveal reveal-delay-1 js-reveal">
-              <div class="change-card-icon">
+            </li>
+            <li class="change-card reveal reveal-delay-1 js-reveal">
+              <div class="change-card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <circle cx="11" cy="11" r="8" />
                   <path d="M21 21l-4.35-4.35" />
@@ -262,9 +269,9 @@
                 Apporter aux équipes un référentiel local pour relire les résultats génétiques dans
                 le contexte démographique et historique réunionnais.
               </p>
-            </div>
-            <div class="change-card reveal reveal-delay-2 js-reveal">
-              <div class="change-card-icon">
+            </li>
+            <li class="change-card reveal reveal-delay-2 js-reveal">
+              <div class="change-card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                   <polyline points="9 22 9 12 15 12 15 22" />
@@ -275,8 +282,8 @@
                 Fournir une base scientifique pour étudier l'admixture, les effets fondateurs et les
                 limites des outils génomiques actuels.
               </p>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -310,86 +317,34 @@
 
             <!-- Donut chart -->
             <div class="reveal reveal-delay-2 js-reveal">
-              <svg class="donut js-donut" viewBox="0 0 100 100">
-                <!-- Afrique/Malgache 45% → 162° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#0F3A56"
-                  stroke-width="14"
-                  stroke-dasharray="106.8 237.9"
-                  stroke-dashoffset="0"
-                />
-                <!-- Inde 25% → 90° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#1E6E8C"
-                  stroke-width="14"
-                  stroke-dasharray="59.7 285.0"
-                  stroke-dashoffset="-106.8"
-                />
-                <!-- Européen 15% → 54° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#E8654A"
-                  stroke-width="14"
-                  stroke-dasharray="35.8 308.9"
-                  stroke-dashoffset="-166.5"
-                />
-                <!-- Zarabe 8% → 28.8° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#C0852C"
-                  stroke-width="14"
-                  stroke-dasharray="19.1 325.6"
-                  stroke-dashoffset="-202.3"
-                />
-                <!-- Chine 7% → 25.2° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#9FD3E0"
-                  stroke-width="14"
-                  stroke-dasharray="16.7 328.0"
-                  stroke-dashoffset="-221.4"
-                />
+              <svg class="donut js-donut" aria-hidden="true" viewBox="0 0 100 100">
+                <circle class="origin-africa" cx="50" cy="50" r="38" />
+                <circle class="origin-india" cx="50" cy="50" r="38" />
+                <circle class="origin-europe" cx="50" cy="50" r="38" />
+                <circle class="origin-zarabe" cx="50" cy="50" r="38" />
+                <circle class="origin-asia" cx="50" cy="50" r="38" />
               </svg>
 
               <div class="ancestry-legend">
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-africa js-legend-dot"
-                    >Afrique &amp; Malgache</span
-                  >
-                  <span class="legend-pct">45 %</span>
+                  <span class="legend-dot origin-africa js-legend-dot">Afrique &amp; Malgache</span>
+                  <span class="legend-pct js-legend-pct">45 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-india js-legend-dot">Inde du Sud</span>
-                  <span class="legend-pct">25 %</span>
+                  <span class="legend-dot origin-india js-legend-dot">Inde du Sud</span>
+                  <span class="legend-pct js-legend-pct">25 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-europe js-legend-dot">Européen</span>
-                  <span class="legend-pct">15 %</span>
+                  <span class="legend-dot origin-europe js-legend-dot">Européen</span>
+                  <span class="legend-pct js-legend-pct">15 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-zarabe js-legend-dot">Zarabe / Gujarati</span>
-                  <span class="legend-pct">8 %</span>
+                  <span class="legend-dot origin-zarabe js-legend-dot">Zarabe / Gujarati</span>
+                  <span class="legend-pct js-legend-pct">8 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-asia js-legend-dot">Chine / Asie</span>
-                  <span class="legend-pct">7 %</span>
+                  <span class="legend-dot origin-asia js-legend-dot">Chine / Asie</span>
+                  <span class="legend-pct js-legend-pct">7 %</span>
                 </div>
                 <p class="ancestry-legend-note">Valeurs illustratives</p>
               </div>
@@ -406,32 +361,32 @@
             <span class="text-line">Trois étapes,</span>
             <span class="text-line">un référentiel local.</span>
           </h2>
-          <div class="methode-steps">
-            <div class="step reveal js-reveal">
+          <ol role="list" class="methode-steps">
+            <li class="step reveal js-reveal">
               <span class="step-count">Étape 01</span>
               <h3 class="step-title">Cartographier la diversité génétique</h3>
               <p class="step-body">
                 2 500 volontaires réunionnais sont génotypés par puce SNP afin de décrire la
                 structure génétique de la cohorte et ses principales composantes.
               </p>
-            </div>
-            <div class="step reveal reveal-delay-1 js-reveal">
+            </li>
+            <li class="step reveal reveal-delay-1 js-reveal">
               <span class="step-count">Étape 02</span>
               <h3 class="step-title">Documenter le phasage familial</h3>
               <p class="step-body">
                 100 familles nucléaires permettent de consolider le phasage haplotypique et de mieux
                 suivre la transmission des segments génétiques.
               </p>
-            </div>
-            <div class="step reveal reveal-delay-2 js-reveal">
+            </li>
+            <li class="step reveal reveal-delay-2 js-reveal">
               <span class="step-count">Étape 03</span>
               <h3 class="step-title">Sélectionner les génomes complets WGS</h3>
               <p class="step-body">
                 350 génomes complets WGS sont sélectionnés à partir des données SNP pour représenter
                 au mieux la diversité géographique et génétique de La Réunion.
               </p>
-            </div>
-          </div>
+            </li>
+          </ol>
         </div>
       </section>
 
@@ -443,40 +398,40 @@
             <span class="text-line">Quatre modules</span>
             <span class="text-line">d'aide à l'analyse.</span>
           </h2>
-          <div class="outils-grid">
-            <div class="outil-card reveal js-reveal">
+          <ul role="list" class="outils-grid">
+            <li class="outil-card reveal js-reveal">
               <div class="outil-num">01</div>
               <h3 class="outil-title">Interprétation des variants</h3>
               <p class="outil-body">
                 Aider à distinguer les variants potentiellement importants de ceux qui sont
                 simplement fréquents dans la population réunionnaise.
               </p>
-            </div>
-            <div class="outil-card reveal reveal-delay-1 js-reveal">
+            </li>
+            <li class="outil-card reveal reveal-delay-1 js-reveal">
               <div class="outil-num">02</div>
               <h3 class="outil-title">Pharmacogénétique populationnelle</h3>
               <p class="outil-body">
                 Mieux connaître les profils génétiques susceptibles d'influencer les analyses
                 pharmacogénétiques futures.
               </p>
-            </div>
-            <div class="outil-card reveal reveal-delay-2 js-reveal">
+            </li>
+            <li class="outil-card reveal reveal-delay-2 js-reveal">
               <div class="outil-num">03</div>
               <h3 class="outil-title">Structure d'admixture</h3>
               <p class="outil-body">
                 Décrire la mosaïque d'héritages qui structure la population réunionnaise : Afrique,
                 Madagascar, Inde du Sud, Europe et Asie.
               </p>
-            </div>
-            <div class="outil-card reveal reveal-delay-3 js-reveal">
+            </li>
+            <li class="outil-card reveal reveal-delay-3 js-reveal">
               <div class="outil-num">04</div>
               <h3 class="outil-title">Évaluation des scores génétiques</h3>
               <p class="outil-body">
                 Tester la pertinence des scores génétiques dans une population admixée avant toute
                 interprétation locale.
               </p>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -493,15 +448,15 @@
             partenaires locaux et nationaux.
           </p>
 
-          <div class="team-grid">
-            <div class="team-card reveal js-reveal">
+          <ul role="list" class="team-grid">
+            <li class="team-card reveal js-reveal">
               <div class="team-avatar team-avatar-1">BD</div>
               <div>
                 <div class="team-name">Pr Bérénice Doray</div>
                 <div class="team-role">Chef de service · Génétique médicale</div>
               </div>
-            </div>
-            <div class="team-card reveal reveal-delay-1 js-reveal">
+            </li>
+            <li class="team-card reveal reveal-delay-1 js-reveal">
               <div class="team-avatar team-avatar-2">PM</div>
               <div>
                 <div class="team-name">Patrick Munier</div>
@@ -509,34 +464,34 @@
                   Porteur · Initiateur et coordinateur · Génétique des populations
                 </div>
               </div>
-            </div>
-            <div class="team-card reveal reveal-delay-2 js-reveal">
+            </li>
+            <li class="team-card reveal reveal-delay-2 js-reveal">
               <div class="team-avatar team-avatar-3">TH</div>
               <div>
                 <div class="team-name">Dr Thomas Huby</div>
                 <div class="team-role">Co-porteur scientifique · Coordinateur</div>
               </div>
-            </div>
-            <div class="team-card reveal reveal-delay-3 js-reveal">
+            </li>
+            <li class="team-card reveal reveal-delay-3 js-reveal">
               <div class="team-avatar team-avatar-4">SG</div>
               <div>
                 <div class="team-name">Susie Guilly</div>
                 <div class="team-role">Ingénieure de recherche</div>
               </div>
-            </div>
-            <div class="team-card reveal reveal-delay-4 js-reveal">
+            </li>
+            <li class="team-card reveal reveal-delay-4 js-reveal">
               <div class="team-avatar team-avatar-5">FF</div>
               <div>
                 <div class="team-name">Dr Fanny Ferroul</div>
                 <div class="team-role">Génétique médicale</div>
               </div>
-            </div>
-          </div>
+            </li>
+          </ul>
 
           <p class="partners-title reveal js-reveal">Partenaires</p>
           <div class="partners-row reveal reveal-delay-1 js-reveal">
             <!-- Logo POPgen SVG inline -->
-            <a href="#" class="partner-logo-link" title="POPgen">
+            <span class="partner-logo-link" title="POPgen">
               <svg
                 class="partner-logo"
                 xmlns="http://www.w3.org/2000/svg"
@@ -577,7 +532,7 @@
                   d="M853.72,484.34l66.47-96.92C870.82,400.94,848.8,434.32,853.72,484.34Z"
                 />
               </svg>
-            </a>
+            </span>
             <span class="partner-pill">Université de La Réunion</span>
             <span class="partner-pill">Région Réunion</span>
             <a
@@ -608,7 +563,7 @@
             >Je veux participer</a
           >
         </div>
-        <div class="hero-waves">
+        <div class="hero-waves" aria-hidden="true">
           <svg
             class="wave-1"
             viewBox="0 0 2880 220"
@@ -619,7 +574,7 @@
               d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
                C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
                L2880,220 L0,220 Z"
-              fill="#091F30"
+              fill="var(--navy-deep)"
             />
           </svg>
           <svg
@@ -633,7 +588,7 @@
                C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
                C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
                L2880,220 L0,220 Z"
-              fill="#1E6E8C"
+              fill="var(--teal)"
             />
           </svg>
           <svg
@@ -647,7 +602,7 @@
                C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
                C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
                L2880,220 L0,220 Z"
-              fill="#E8654A"
+              fill="var(--coral)"
             />
           </svg>
         </div>
