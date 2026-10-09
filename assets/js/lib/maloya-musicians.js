@@ -46,6 +46,7 @@ export const ROULER = {
   seat: { x: -6, y: -41 },
   lean: 42,
   leanOnHit: 5,
+  swayPhase: 0,
   wristContact: { a: { x: 32, y: -37.5 }, b: { x: 33.5, y: -34.5 } },
   wristRaised: { a: { x: 33, y: -57 }, b: { x: 35, y: -55 } },
   handContactAngle: -12,
@@ -59,6 +60,7 @@ export const SATI = {
   seat: { x: -4, y: -28 },
   lean: 12,
   leanOnHit: 3,
+  swayPhase: 1.3,
   wristContact: { a: { x: 22, y: -45 }, b: { x: 18, y: -46 } },
   wristRaised: { a: { x: 20, y: -60 }, b: { x: 16, y: -61 } },
   handContactAngle: -35,
@@ -72,6 +74,7 @@ export const PIKER = {
   seat: { x: -6, y: -28 },
   lean: 30,
   leanOnHit: 4,
+  swayPhase: 2.4,
   wristContact: { a: { x: 30, y: -27 }, b: { x: 26, y: -28 } },
   wristRaised: { a: { x: 27, y: -45 }, b: { x: 23, y: -46 } },
   handContactAngle: -35,
@@ -80,6 +83,8 @@ export const PIKER = {
 };
 
 const NOD_ON_DOWNBEAT = 6;
+const BODY_SWAY = 1.5; // balancement du buste sur deux temps, en degrés
+const HEAD_LAG = 0.25; // en temps : la tête suit le buste
 
 /**
  * Bras de profil vers un poignet donné, coude vers le bas et l'arrière.
@@ -142,14 +147,21 @@ function computeStrikingArm(config, shoulder, lift, side) {
 export function computeSeatedPose(beats, config) {
   const liftA = computeHandLift(beats, config.hits.a);
   const liftB = computeHandLift(beats, config.hits.b);
-  const lean = config.lean + config.leanOnHit * (1 - (liftA + liftB) / 2);
+  const sway = BODY_SWAY * Math.sin(Math.PI * beats + config.swayPhase);
+  const lean = config.lean + sway + config.leanOnHit * (1 - (liftA + liftB) / 2);
   const { seat } = config;
   const neck = addPoints(seat, rotatePoint({ x: 0, y: -BODY.torso }, lean));
   const shoulder = addPoints(seat, rotatePoint({ x: 1.5, y: -BODY.shoulder }, lean));
 
   return {
     torso: { ...seat, angle: lean },
-    head: { ...neck, angle: lean * 0.25 + NOD_ON_DOWNBEAT * computeDownbeatAccent(beats) },
+    head: {
+      ...neck,
+      angle:
+        config.lean * 0.25 +
+        BODY_SWAY * Math.sin(Math.PI * (beats - HEAD_LAG) + config.swayPhase) +
+        NOD_ON_DOWNBEAT * computeDownbeatAccent(beats - 0.1),
+    },
     arms: {
       near: computeStrikingArm(config, shoulder, liftA, 'a'),
       far: computeStrikingArm(config, addPoints(shoulder, { x: -2, y: -1 }), liftB, 'b'),
@@ -184,14 +196,14 @@ export const KAYAMB_SHAPE = {
   shakeAngle: 7,
 };
 
-function computeStandingBody(beats, lean) {
+function computeStandingBody(beats, lean, headLean) {
   const bob = STANDING_BOB * (0.5 + 0.5 * Math.cos(2 * Math.PI * (beats - 0.1)));
   const hip = { x: 0, y: STANDING_HIP_Y + bob };
   const toWorld = (local) => addPoints(hip, rotatePoint(local, lean));
   return {
     toWorld,
     torso: { ...hip, angle: lean },
-    head: { ...toWorld({ x: 0, y: -BODY.torso }), angle: lean * 0.3 },
+    head: { ...toWorld({ x: 0, y: -BODY.torso }), angle: headLean * 0.3 },
     shoulder: toWorld({ x: 1.5, y: -BODY.shoulder }),
     legs: {
       near: computeProfileLeg(addPoints(hip, { x: 2, y: 1 }), STANDING_ANKLES.near),
@@ -207,8 +219,12 @@ function computeStandingBody(beats, lean) {
  */
 export function computeBobrePose(beats) {
   const lift = computeHandLift(beats, BOBRE_HITS) * 0.6;
-  const lean = 6 + 2 * Math.sin(Math.PI * beats);
-  const body = computeStandingBody(beats, lean);
+  const lean = 6 + 2 * Math.sin(Math.PI * beats + 0.7);
+  const body = computeStandingBody(
+    beats,
+    lean,
+    6 + 2 * Math.sin(Math.PI * (beats - HEAD_LAG) + 0.7),
+  );
   const strike = body.toWorld(lerpPoint(BOBRE_SHAPE.strike, BOBRE_SHAPE.strikeRaised, lift));
   return {
     torso: body.torso,
@@ -233,8 +249,12 @@ export function computeBobrePose(beats) {
  */
 export function computeKayambPose(beats) {
   const shake = computeKayambShake(beats);
-  const lean = 4 + 1.5 * shake + 1.5 * Math.sin(Math.PI * beats);
-  const body = computeStandingBody(beats, lean);
+  const lean = 4 + 1.5 * shake + 1.5 * Math.sin(Math.PI * beats + 1.9);
+  const body = computeStandingBody(
+    beats,
+    lean,
+    4 + 1.5 * Math.sin(Math.PI * (beats - HEAD_LAG) + 1.9),
+  );
   const { center, halfWidth, shakeDistance, shakeAngle } = KAYAMB_SHAPE;
   const angle = lean + shakeAngle * shake;
   const middle = body.toWorld({ x: center.x + shakeDistance * shake, y: center.y });

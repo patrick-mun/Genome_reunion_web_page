@@ -7,6 +7,8 @@
    Accroches : aucune (module de calcul pur).
    ============================================================ */
 
+import { clamp, computeSmoothstep } from './geometry.js';
+
 export const PULSES_PER_BEAT = 3;
 export const BEATS_PER_MEASURE = 4;
 export const PULSES_PER_MEASURE = PULSES_PER_BEAT * BEATS_PER_MEASURE;
@@ -26,6 +28,8 @@ const LIFT_PEAK_AT = 0.6;
 const LIFT_EXPONENT = Math.log(0.5) / Math.log(LIFT_PEAK_AT);
 // Un intervalle d'un temps (3 pulsations) donne la levée complète ; plus court, la main monte moins.
 const FULL_LIFT_PULSES = 3;
+// Montée de l'accent du premier temps, en temps.
+const ACCENT_RISE = 0.15;
 // Près de 1 : onde presque triangulaire, retournements secs du kayamb.
 const SHAKE_ROUNDING = 0.97;
 
@@ -72,13 +76,16 @@ export function computeHandLift(beats, hits) {
 }
 
 /**
- * Accent du premier temps de chaque mesure, qui retombe en un temps.
+ * Accent du premier temps de chaque mesure : montée douce en 0,15 temps, puis retombée
+ * jusqu'à la fin du temps. Sans saut, pour que le hochement de tête reste souple.
  * @param {number} beats Temps musical, en temps.
- * @returns {number} 1 sur le premier temps, puis décroissance jusqu'à 0.
+ * @returns {number} De 0 à 1 : 1 juste après le premier temps, 0 sur les trois autres.
  */
 export function computeDownbeatAccent(beats) {
   const inMeasure = ((beats % BEATS_PER_MEASURE) + BEATS_PER_MEASURE) % BEATS_PER_MEASURE;
-  return inMeasure < 1 ? Math.pow(1 - inMeasure, 2) : 0;
+  const rise = computeSmoothstep(clamp(inMeasure / ACCENT_RISE, 0, 1));
+  const fall = computeSmoothstep(clamp((inMeasure - ACCENT_RISE) / (1 - ACCENT_RISE), 0, 1));
+  return rise * (1 - fall);
 }
 
 /**
