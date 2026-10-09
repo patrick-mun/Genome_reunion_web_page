@@ -8,8 +8,8 @@
 import { startFrameLoop } from './animation-loop.js';
 import { clamp } from './geometry.js';
 import { createGecko, GECKO_VIEWBOX, stepGecko } from './gecko-motion.js';
-import { geckoPose } from './gecko-pose.js';
-import { geckoSVG } from './gecko-svg.js';
+import { computeGeckoPose } from './gecko-pose.js';
+import { buildGeckoSvg } from './gecko-svg.js';
 import { isMotionPaused, prefersReducedMotion } from './motion.js';
 import { placeElement } from './placement.js';
 
@@ -46,11 +46,19 @@ function createLayer() {
   return layer;
 }
 
+/**
+ * Crée l'élément du margouillat dans la couche et retrouve ses parties animées.
+ * @param {HTMLElement} layer Couche pleine page qui reçoit le margouillat.
+ * @param {number} width Largeur du SVG, en pixels.
+ * @param {number} height Hauteur du SVG, en pixels.
+ * @returns {{el: HTMLElement, sway: Element, tailDark: Element, tailGreen: Element, head: Element,
+ *   legFL: Element, legFR: Element, legBL: Element, legBR: Element}} Élément et parties animées.
+ */
 function createGeckoElement(layer, width, height) {
   const el = document.createElement('div');
   el.className = 'gecko';
   // eslint-disable-next-line no-restricted-properties -- SVG construit uniquement à partir de constantes du module
-  el.innerHTML = geckoSVG();
+  el.innerHTML = buildGeckoSvg();
   layer.appendChild(el);
 
   const svg = el.firstElementChild;
@@ -70,29 +78,29 @@ function createGeckoElement(layer, width, height) {
   };
 }
 
-function rotation(degrees, cx, cy) {
+function formatRotation(degrees, cx, cy) {
   return `rotate(${degrees.toFixed(2)} ${cx} ${cy})`;
 }
 
 function applyPose(parts, pose) {
-  parts.legFL.setAttribute('transform', rotation(pose.legSwing, 34, 42));
-  parts.legFR.setAttribute('transform', rotation(-pose.legSwing, 56, 42));
-  parts.legBL.setAttribute('transform', rotation(-pose.legSwing, 36, 72));
-  parts.legBR.setAttribute('transform', rotation(pose.legSwing, 54, 72));
-  parts.sway.setAttribute('transform', rotation(pose.bodySway, 45, 56));
+  parts.legFL.setAttribute('transform', formatRotation(pose.legSwing, 34, 42));
+  parts.legFR.setAttribute('transform', formatRotation(-pose.legSwing, 56, 42));
+  parts.legBL.setAttribute('transform', formatRotation(-pose.legSwing, 36, 72));
+  parts.legBR.setAttribute('transform', formatRotation(pose.legSwing, 54, 72));
+  parts.sway.setAttribute('transform', formatRotation(pose.bodySway, 45, 56));
   parts.tailDark.setAttribute('d', pose.tailOuter);
   parts.tailGreen.setAttribute('d', pose.tailInner);
-  parts.head.setAttribute('transform', rotation(pose.headIdle, 45, 30));
+  parts.head.setAttribute('transform', formatRotation(pose.headIdle, 45, 30));
 }
 
 function trackPointer() {
-  const pointer = { x: -1e5, y: -1e5, has: false };
+  const pointer = { x: -1e5, y: -1e5, hasPosition: false };
   document.addEventListener(
     'mousemove',
     (event) => {
       pointer.x = event.clientX + window.scrollX;
       pointer.y = event.clientY + window.scrollY;
-      pointer.has = true;
+      pointer.hasPosition = true;
     },
     { passive: true },
   );
@@ -125,7 +133,7 @@ export function initMargouillat() {
 
   startFrameLoop((now, dt) => {
     stepGecko(gecko, { now, dt, getBounds, pointer });
-    applyPose(parts, geckoPose(gecko, now));
+    applyPose(parts, computeGeckoPose(gecko, now));
     placeElement(parts.el, gecko.pos.x - width / 2, gecko.pos.y - height / 2, gecko.angle);
   }, isMotionPaused);
 }

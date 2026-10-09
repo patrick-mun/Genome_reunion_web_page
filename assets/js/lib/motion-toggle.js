@@ -18,9 +18,9 @@ export function initMotionToggle() {
   if (!button) return;
 
   button.addEventListener('click', () => {
-    const paused = button.getAttribute('aria-pressed') !== 'true';
-    button.setAttribute('aria-pressed', String(paused));
-    button.textContent = paused ? LABEL_RESUME : LABEL_PAUSE;
-    setMotionPaused(paused);
+    const isPaused = button.getAttribute('aria-pressed') !== 'true';
+    button.setAttribute('aria-pressed', String(isPaused));
+    button.textContent = isPaused ? LABEL_RESUME : LABEL_PAUSE;
+    setMotionPaused(isPaused);
   });
 }

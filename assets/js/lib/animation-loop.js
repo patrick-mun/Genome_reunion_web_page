@@ -16,7 +16,7 @@ const FIRST_FRAME_DELTA_S = 0.016;
  * @param {number} lastTime Horodatage de l'image précédente (0 si aucune).
  * @returns {number} Écart en secondes, au plus 0,05.
  */
-export function frameDelta(now, lastTime) {
+export function computeFrameDelta(now, lastTime) {
   const delta = lastTime ? (now - lastTime) / 1000 : FIRST_FRAME_DELTA_S;
   return Math.min(delta, MAX_FRAME_DELTA_S);
 }
@@ -34,7 +34,7 @@ export function startFrameLoop(onFrame, shouldSkip = () => false) {
     if (shouldSkip()) {
       lastTime = now;
     } else {
-      onFrame(now, frameDelta(now, lastTime));
+      onFrame(now, computeFrameDelta(now, lastTime));
       lastTime = now;
     }
     requestAnimationFrame(frame);

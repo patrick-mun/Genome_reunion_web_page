@@ -1,21 +1,28 @@
+/* ============================================================
+   assets/js/lib/gecko-motion.test.js
+   Rôle : tests de gecko-motion.js (machine à états et déplacements du margouillat).
+   Pages concernées : aucune (tests unitaires, lancés par node --test).
+   Accroches : aucune.
+   ============================================================ */
+
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { seeded } from './fake-random.js';
+import { createSeededRandom } from './fake-random.js';
 import { createGecko, fleeTarget, pickTarget, startTurn, stepGecko } from './gecko-motion.js';
 
 const bounds = { minX: 36, maxX: 964, minY: 700, maxY: 3000 };
-const noPointer = { x: -1e5, y: -1e5, has: false };
+const noPointer = { x: -1e5, y: -1e5, hasPosition: false };
 const context = (overrides) => ({
   now: 0,
   dt: 0.016,
   getBounds: () => bounds,
   pointer: noPointer,
-  random: seeded(1),
+  random: createSeededRandom(1),
   ...overrides,
 });
 
 test('createGecko apparaît dans la zone haute, au repos', () => {
-  const gecko = createGecko(bounds, 800, 1000, seeded(2));
+  const gecko = createGecko(bounds, 800, 1000, createSeededRandom(2));
   assert.ok(gecko.pos.x >= bounds.minX && gecko.pos.x <= bounds.maxX);
   assert.ok(gecko.pos.y >= bounds.minY && gecko.pos.y <= bounds.minY + 800 * 1.5);
   assert.equal(gecko.state, 'pause');
@@ -25,7 +32,7 @@ test('createGecko apparaît dans la zone haute, au repos', () => {
 });
 
 test('pickTarget reste dans la zone autorisée', () => {
-  const random = seeded(3);
+  const random = createSeededRandom(3);
   const gecko = createGecko(bounds, 800, 0, random);
   for (let i = 0; i < 300; i++) {
     const t = pickTarget(gecko, bounds, random);
@@ -35,24 +42,29 @@ test('pickTarget reste dans la zone autorisée', () => {
 });
 
 test("fleeTarget s'éloigne du pointeur et reste dans la zone", () => {
-  const random = seeded(4);
+  const random = createSeededRandom(4);
   const gecko = createGecko(bounds, 800, 0, random);
   gecko.pos = { x: 500, y: 1500 };
-  const pointer = { x: 450, y: 1500, has: true };
+  const pointer = { x: 450, y: 1500, hasPosition: true };
   const t = fleeTarget(gecko, pointer, bounds, random);
   assert.ok(t.x > gecko.pos.x, "fuit vers la droite, à l'opposé du pointeur");
   assert.ok(t.x <= bounds.maxX && t.y >= bounds.minY && t.y <= bounds.maxY);
 });
 
 test('fleeTarget supporte un pointeur exactement sur le margouillat', () => {
-  const random = seeded(5);
+  const random = createSeededRandom(5);
   const gecko = createGecko(bounds, 800, 0, random);
-  const t = fleeTarget(gecko, { x: gecko.pos.x, y: gecko.pos.y, has: true }, bounds, random);
+  const t = fleeTarget(
+    gecko,
+    { x: gecko.pos.x, y: gecko.pos.y, hasPosition: true },
+    bounds,
+    random,
+  );
   assert.ok(Number.isFinite(t.x) && Number.isFinite(t.y));
 });
 
 test('startTurn oriente le margouillat vers la destination', () => {
-  const gecko = createGecko(bounds, 800, 0, seeded(6));
+  const gecko = createGecko(bounds, 800, 0, createSeededRandom(6));
   gecko.pos = { x: 100, y: 1000 };
   startTurn(gecko, { x: 100, y: 800 }, 300);
   assert.equal(gecko.state, 'turn');
@@ -61,37 +73,37 @@ test('startTurn oriente le margouillat vers la destination', () => {
 });
 
 test("stepGecko reste au repos tant que la pause n'est pas écoulée", () => {
-  const gecko = createGecko(bounds, 800, 0, seeded(7));
+  const gecko = createGecko(bounds, 800, 0, createSeededRandom(7));
   stepGecko(gecko, context({ now: 100 }));
   assert.equal(gecko.state, 'pause');
 });
 
 test('stepGecko démarre un pivot à la fin de la pause', () => {
-  const gecko = createGecko(bounds, 800, 0, seeded(8));
+  const gecko = createGecko(bounds, 800, 0, createSeededRandom(8));
   stepGecko(gecko, context({ now: gecko.until + 1 }));
   assert.equal(gecko.state, 'turn');
   assert.ok(gecko.seg);
 });
 
 test("stepGecko fuit quand le pointeur s'approche à moins de 110 px", () => {
-  const gecko = createGecko(bounds, 800, 0, seeded(9));
+  const gecko = createGecko(bounds, 800, 0, createSeededRandom(9));
   gecko.pos = { x: 500, y: 1500 };
   gecko.prev = { x: 500, y: 1500 };
-  const pointer = { x: 520, y: 1500, has: true };
+  const pointer = { x: 520, y: 1500, hasPosition: true };
   stepGecko(gecko, context({ now: 10, pointer }));
   assert.equal(gecko.state, 'turn');
   assert.ok(gecko.seg.speed >= 430 && gecko.seg.speed <= 560);
 });
 
 test('stepGecko ignore un pointeur lointain', () => {
-  const gecko = createGecko(bounds, 800, 0, seeded(10));
+  const gecko = createGecko(bounds, 800, 0, createSeededRandom(10));
   gecko.pos = { x: 500, y: 1500 };
-  stepGecko(gecko, context({ now: 10, pointer: { x: 900, y: 1500, has: true } }));
+  stepGecko(gecko, context({ now: 10, pointer: { x: 900, y: 1500, hasPosition: true } }));
   assert.equal(gecko.state, 'pause');
 });
 
 test('stepGecko enchaîne pivot, détalage puis retour au repos', () => {
-  const random = seeded(11);
+  const random = createSeededRandom(11);
   const gecko = createGecko(bounds, 800, 0, random);
   gecko.pos = { x: 500, y: 1000 };
   gecko.prev = { x: 500, y: 1000 };
@@ -110,7 +122,7 @@ test('stepGecko enchaîne pivot, détalage puis retour au repos', () => {
 });
 
 test('stepGecko tourne dans le sens le plus court, par pas bornés', () => {
-  const random = seeded(15);
+  const random = createSeededRandom(15);
   const gecko = createGecko(bounds, 800, 0, random);
   gecko.pos = { x: 500, y: 1000 };
   gecko.angle = 350;
@@ -121,7 +133,7 @@ test('stepGecko tourne dans le sens le plus court, par pas bornés', () => {
 });
 
 test('stepGecko arrive exactement à destination en fin de détalage', () => {
-  const random = seeded(12);
+  const random = createSeededRandom(12);
   const gecko = createGecko(bounds, 800, 0, random);
   gecko.pos = { x: 200, y: 1000 };
   gecko.prev = { x: 200, y: 1000 };
@@ -137,7 +149,7 @@ test('stepGecko arrive exactement à destination en fin de détalage', () => {
 });
 
 test('stepGecko accélère la marche (run) quand le margouillat court', () => {
-  const random = seeded(13);
+  const random = createSeededRandom(13);
   const gecko = createGecko(bounds, 800, 0, random);
   startTurn(gecko, { x: gecko.pos.x + 300, y: gecko.pos.y }, 400);
   let now = 0;
@@ -150,9 +162,9 @@ test('stepGecko accélère la marche (run) quand le margouillat court', () => {
 });
 
 test('stepGecko garde des valeurs finies sur une longue simulation', () => {
-  const random = seeded(14);
+  const random = createSeededRandom(14);
   const gecko = createGecko(bounds, 800, 0, random);
-  const pointer = { x: 500, y: 1500, has: true };
+  const pointer = { x: 500, y: 1500, hasPosition: true };
   for (let now = 0; now < 120000; now += 16) stepGecko(gecko, context({ now, random, pointer }));
   for (const v of [gecko.pos.x, gecko.pos.y, gecko.angle, gecko.phase, gecko.run]) {
     assert.ok(Number.isFinite(v));

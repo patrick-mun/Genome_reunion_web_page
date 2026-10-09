@@ -11,7 +11,7 @@ const MAX_OFFSET_X_PX = 12;
 const MAX_OFFSET_Y_PX = 8;
 const EASING = 0.06;
 
-const lerp = (a, b, t) => a + (b - a) * t;
+const interpolate = (a, b, t) => a + (b - a) * t;
 
 /**
  * Déplace chaque `[data-parallax-depth]` du hero vers la position de la souris.
@@ -29,12 +29,12 @@ export function initHeroParallax() {
   let targetY = 0;
   let currentX = 0;
   let currentY = 0;
-  let heroActive = false;
+  let isHeroActive = false;
 
   const heroObs = new IntersectionObserver(
     ([e]) => {
-      heroActive = e.isIntersecting;
-      if (!heroActive) {
+      isHeroActive = e.isIntersecting;
+      if (!isHeroActive) {
         targetX = 0;
         targetY = 0;
       }
@@ -44,7 +44,7 @@ export function initHeroParallax() {
   heroObs.observe(hero);
 
   hero.addEventListener('mousemove', (e) => {
-    if (!heroActive) return;
+    if (!isHeroActive) return;
     const rect = hero.getBoundingClientRect();
     const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
@@ -62,8 +62,8 @@ export function initHeroParallax() {
       requestAnimationFrame(tick);
       return;
     }
-    currentX = lerp(currentX, targetX, EASING);
-    currentY = lerp(currentY, targetY, EASING);
+    currentX = interpolate(currentX, targetX, EASING);
+    currentY = interpolate(currentY, targetY, EASING);
 
     layers.forEach(({ el, depth }) => {
       el.style.setProperty('--parallax-x', `${currentX * depth}px`);

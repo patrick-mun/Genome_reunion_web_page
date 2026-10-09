@@ -1,41 +1,48 @@
+/* ============================================================
+   assets/js/lib/bird-flight.test.js
+   Rôle : tests de bird-flight.js (trajectoires, entrée en scène et pose des paille-en-queue).
+   Pages concernées : aucune (tests unitaires, lancés par node --test).
+   Accroches : aucune.
+   ============================================================ */
+
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   advanceBird,
-  birdPose,
+  computeBirdPose,
   BIRD_VIEWBOX,
   createBird,
   createFlight,
-  flapFrequency,
-  offscreenPoint,
-  randomOffscreenPoint,
-  skyPoint,
+  computeFlapFrequency,
+  getOffscreenPoint,
+  pickRandomOffscreenPoint,
+  pickSkyPoint,
 } from './bird-flight.js';
-import { seeded, sequence } from './fake-random.js';
+import { createSeededRandom, createSequence } from './fake-random.js';
 
 const world = { width: 1000, height: 600 };
 
-test('skyPoint reste dans la partie haute et centrale du hero', () => {
-  const random = seeded(1);
+test('pickSkyPoint reste dans la partie haute et centrale du hero', () => {
+  const random = createSeededRandom(1);
   for (let i = 0; i < 200; i++) {
-    const p = skyPoint(world, random);
+    const p = pickSkyPoint(world, random);
     assert.ok(p.x >= 60 && p.x <= 940, `x=${p.x}`);
     assert.ok(p.y >= 48 && p.y <= 432, `y=${p.y}`);
   }
 });
 
-test('offscreenPoint place le point hors du hero, du côté demandé', () => {
-  const random = seeded(2);
-  assert.equal(offscreenPoint(world, 'left', random).x, -120);
-  assert.equal(offscreenPoint(world, 'right', random).x, 1120);
-  assert.equal(offscreenPoint(world, 'top', random).y, -120);
-  assert.equal(offscreenPoint(world, 'bottom', random).y, 720);
+test('getOffscreenPoint place le point hors du hero, du côté demandé', () => {
+  const random = createSeededRandom(2);
+  assert.equal(getOffscreenPoint(world, 'left', random).x, -120);
+  assert.equal(getOffscreenPoint(world, 'right', random).x, 1120);
+  assert.equal(getOffscreenPoint(world, 'top', random).y, -120);
+  assert.equal(getOffscreenPoint(world, 'bottom', random).y, 720);
 });
 
-test('randomOffscreenPoint sort toujours à gauche, à droite ou en haut', () => {
-  const random = seeded(3);
+test('pickRandomOffscreenPoint sort toujours à gauche, à droite ou en haut', () => {
+  const random = createSeededRandom(3);
   for (let i = 0; i < 100; i++) {
-    const p = randomOffscreenPoint(world, random);
+    const p = pickRandomOffscreenPoint(world, random);
     assert.ok(p.x < 0 || p.x > world.width || p.y < 0, JSON.stringify(p));
   }
 });
@@ -43,7 +50,7 @@ test('randomOffscreenPoint sort toujours à gauche, à droite ou en haut', () =>
 test("createFlight relie la position de l'oiseau à la destination", () => {
   const bird = { pos: { x: 100, y: 100 }, angle: 90, speed: 100 };
   const end = { x: 700, y: 300 };
-  const flight = createFlight(bird, end, { lift: 20 }, 5000, seeded(4));
+  const flight = createFlight(bird, end, { lift: 20 }, 5000, createSeededRandom(4));
   assert.deepEqual(flight.pts[0], { x: 100, y: 100 });
   assert.deepEqual(flight.pts.at(-1), end);
   assert.equal(flight.t0, 5000);
@@ -56,7 +63,7 @@ test('createFlight borne la durée entre 2,1 s et 18 s (avant facteur)', () => {
     { x: 10, y: 0 },
     { lift: 1 },
     0,
-    seeded(5),
+    createSeededRandom(5),
   );
   assert.equal(near.dur, 2100);
   const far = createFlight(
@@ -64,27 +71,33 @@ test('createFlight borne la durée entre 2,1 s et 18 s (avant facteur)', () => {
     { x: 5000, y: 0 },
     { lift: 1 },
     0,
-    seeded(5),
+    createSeededRandom(5),
   );
   assert.equal(far.dur, 18000);
 });
 
 test('createFlight applique le facteur de durée', () => {
   const bird = { pos: { x: 0, y: 0 }, angle: 0, speed: 1000 };
-  const flight = createFlight(bird, { x: 10, y: 0 }, { lift: 1, durScale: 2 }, 0, seeded(6));
+  const flight = createFlight(
+    bird,
+    { x: 10, y: 0 },
+    { lift: 1, durScale: 2 },
+    0,
+    createSeededRandom(6),
+  );
   assert.equal(flight.dur, 4200);
 });
 
 test('createFlight supporte une destination confondue avec la position', () => {
   const bird = { pos: { x: 50, y: 50 }, angle: 0, speed: 100 };
-  const flight = createFlight(bird, { x: 50, y: 50 }, { lift: 1 }, 0, seeded(7));
+  const flight = createFlight(bird, { x: 50, y: 50 }, { lift: 1 }, 0, createSeededRandom(7));
   assert.ok(Number.isFinite(flight.arc));
   assert.ok(flight.pts.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y)));
 });
 
 test('createBird crée un oiseau hors du hero, non encore apparu', () => {
-  const bird = createBird(0, world, seeded(8));
-  assert.equal(bird.born, false);
+  const bird = createBird(0, world, createSeededRandom(8));
+  assert.equal(bird.isBorn, false);
   assert.equal(bird.seg, null);
   assert.ok(bird.pos.x < 0);
   assert.equal(bird.angle, 90);
@@ -93,8 +106,8 @@ test('createBird crée un oiseau hors du hero, non encore apparu', () => {
 });
 
 test("createBird alterne le côté d'entrée et décale l'apparition", () => {
-  const left = createBird(0, world, seeded(9));
-  const right = createBird(1, world, seeded(9));
+  const left = createBird(0, world, createSeededRandom(9));
+  const right = createBird(1, world, createSeededRandom(9));
   assert.ok(left.pos.x < 0);
   assert.ok(right.pos.x > world.width);
   assert.equal(right.angle, -90);
@@ -103,27 +116,27 @@ test("createBird alterne le côté d'entrée et décale l'apparition", () => {
 });
 
 test("advanceBird attend son délai avant d'entrer en scène", () => {
-  const bird = createBird(0, world, seeded(10));
+  const bird = createBird(0, world, createSeededRandom(10));
   bird.t0base = 1000;
   bird.delay = 500;
-  assert.equal(advanceBird(bird, 1400, 0.016, world, seeded(10)), false);
-  assert.equal(bird.born, false);
+  assert.equal(advanceBird(bird, 1400, 0.016, world, createSeededRandom(10)), false);
+  assert.equal(bird.isBorn, false);
   assert.equal(bird.seg, null);
 });
 
 test("advanceBird signale l'entrée en scène une seule fois", () => {
-  const random = seeded(11);
+  const random = createSeededRandom(11);
   const bird = createBird(0, world, random);
   bird.t0base = 0;
   bird.delay = 0;
   assert.equal(advanceBird(bird, 10, 0.016, world, random), true);
-  assert.equal(bird.born, true);
+  assert.equal(bird.isBorn, true);
   assert.ok(bird.seg);
   assert.equal(advanceBird(bird, 26, 0.016, world, random), false);
 });
 
 test('advanceBird enchaîne un nouveau vol à la fin du segment', () => {
-  const random = seeded(12);
+  const random = createSeededRandom(12);
   const bird = createBird(0, world, random);
   bird.t0base = 0;
   bird.delay = 0;
@@ -135,7 +148,7 @@ test('advanceBird enchaîne un nouveau vol à la fin du segment', () => {
 });
 
 test('advanceBird garde des valeurs finies sur une longue simulation', () => {
-  const random = seeded(13);
+  const random = createSeededRandom(13);
   const bird = createBird(0, world, random);
   bird.t0base = 0;
   bird.delay = 0;
@@ -144,17 +157,17 @@ test('advanceBird garde des valeurs finies sur une longue simulation', () => {
   assert.ok(Number.isFinite(bird.angle) && Number.isFinite(bird.phase));
 });
 
-test('flapFrequency croît avec la vitesse et reste bornée', () => {
-  assert.equal(flapFrequency(0), 2.0);
-  assert.ok(flapFrequency(100) > flapFrequency(0));
-  assert.equal(flapFrequency(10000), 2.0 + 180 * 0.004);
-  assert.ok(flapFrequency(0) >= 1.6 && flapFrequency(10000) <= 3.6);
+test('computeFlapFrequency croît avec la vitesse et reste bornée', () => {
+  assert.equal(computeFlapFrequency(0), 2.0);
+  assert.ok(computeFlapFrequency(100) > computeFlapFrequency(0));
+  assert.equal(computeFlapFrequency(10000), 2.0 + 180 * 0.004);
+  assert.ok(computeFlapFrequency(0) >= 1.6 && computeFlapFrequency(10000) <= 3.6);
 });
 
-test('birdPose reste dans les plages attendues', () => {
-  const draw = sequence([0, 0.25, 0.5, 0.75]);
+test('computeBirdPose reste dans les plages attendues', () => {
+  const draw = createSequence([0, 0.25, 0.5, 0.75]);
   for (let i = 0; i < 50; i++) {
-    const pose = birdPose({ phase: draw() * 20, phaseOff: draw() * 6 });
+    const pose = computeBirdPose({ phase: draw() * 20, phaseOff: draw() * 6 });
     assert.ok(pose.wingSpan >= 0.5 && pose.wingSpan <= 1);
     assert.ok(Math.abs(pose.tailSway) <= 4.8);
     assert.ok(Math.abs(pose.bob) <= 0.8);

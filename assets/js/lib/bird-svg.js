@@ -11,7 +11,7 @@
  * attributs `data-*` pour être animées séparément.
  * @returns {string} Élément `<svg>` sérialisé.
  */
-export function birdSVG() {
+export function buildBirdSvg() {
   return [
     '<svg viewBox="0 0 72 82">',
     '<g class="paille-tail" data-tail>',

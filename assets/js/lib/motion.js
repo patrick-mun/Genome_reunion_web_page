@@ -6,7 +6,7 @@
    ============================================================ */
 
 const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-let paused = false;
+let isPaused = false;
 
 /**
  * Indique si la personne a demandé de réduire les animations dans son système.
@@ -21,7 +21,7 @@ export function prefersReducedMotion() {
  * @returns {boolean} Vrai si la pause est active.
  */
 export function isMotionPaused() {
-  return paused;
+  return isPaused;
 }
 
 /**
@@ -30,6 +30,6 @@ export function isMotionPaused() {
  * @param {boolean} value Vrai pour mettre en pause.
  */
 export function setMotionPaused(value) {
-  paused = value;
-  document.documentElement.classList.toggle('is-motion-paused', paused);
+  isPaused = value;
+  document.documentElement.classList.toggle('is-motion-paused', isPaused);
 }

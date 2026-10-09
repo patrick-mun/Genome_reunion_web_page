@@ -22,7 +22,7 @@ const TAIL_INNER_HALF_WIDTH = 4.6;
  * @param {number} taperPow Exposant de l'effilement (plus grand = pointe plus fine).
  * @returns {string} Attribut `d` d'un chemin SVG fermé.
  */
-export function tailOutline(angles, halfWidth, taperPow) {
+export function computeTailOutline(angles, halfWidth, taperPow) {
   let x = TAIL_BASE.x;
   let y = TAIL_BASE.y;
   let heading = Math.PI / 2; /* vers le bas = arrière du margouillat */
@@ -65,7 +65,7 @@ export function tailOutline(angles, halfWidth, taperPow) {
  * @param {number} now Horodatage courant, en millisecondes.
  * @returns {number[]} Angles en radians, un par bone.
  */
-export function tailAngles(gecko, now) {
+export function computeTailAngles(gecko, now) {
   const angles = new Array(TAIL_BONES);
   for (let i = 0; i < TAIL_BONES; i++) {
     const towardTip = 0.35 + 0.65 * (i / (TAIL_BONES - 1));
@@ -85,13 +85,13 @@ export function tailAngles(gecko, now) {
  *   tailInner: string}} Balancement des pattes, du corps et de la tête (degrés) et
  *   contours de queue (attributs `d`).
  */
-export function geckoPose(gecko, now) {
-  const angles = tailAngles(gecko, now);
+export function computeGeckoPose(gecko, now) {
+  const angles = computeTailAngles(gecko, now);
   return {
     legSwing: Math.sin(gecko.phase) * 24 * (0.25 + 0.75 * gecko.run),
     bodySway: Math.sin(gecko.phase) * 3 * gecko.run,
     headIdle: Math.sin(now * 0.0007 + gecko.idleOff * 2) * 9 * (1 - gecko.run),
-    tailOuter: tailOutline(angles, TAIL_OUTER_HALF_WIDTH, TAIL_TAPER_POWER),
-    tailInner: tailOutline(angles, TAIL_INNER_HALF_WIDTH, TAIL_TAPER_POWER),
+    tailOuter: computeTailOutline(angles, TAIL_OUTER_HALF_WIDTH, TAIL_TAPER_POWER),
+    tailInner: computeTailOutline(angles, TAIL_INNER_HALF_WIDTH, TAIL_TAPER_POWER),
   };
 }

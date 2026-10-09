@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* ── REVEAL AU SCROLL ──
-   .reveal masque un bloc, .visible (posé par scroll-reveal.js) l'affiche ; .reveal-delay-N
+   .reveal masque un bloc, .is-visible (posé par scroll-reveal.js) l'affiche ; .reveal-delay-N
    échelonne les apparitions. Chargé en dernier pour l'emporter sur les transitions des
    composants (cartes, boutons).
 */
@@ -26,7 +26,7 @@
   }
 }
 
-.reveal.visible {
+.reveal.is-visible {
   opacity: 1;
   transform: none;
 }

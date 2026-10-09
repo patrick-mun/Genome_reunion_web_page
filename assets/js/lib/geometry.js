@@ -22,7 +22,7 @@ export function clamp(value, min, max) {
  * @param {number} t Progression entre 0 et 1.
  * @returns {number} Progression adoucie entre 0 et 1.
  */
-export function smoothstep(t) {
+export function computeSmoothstep(t) {
   return t * t * (3 - 2 * t);
 }
 
@@ -35,7 +35,7 @@ export function smoothstep(t) {
  * @param {number} t Position sur la courbe, entre 0 et 1.
  * @returns {{x: number, y: number}} Point de la courbe.
  */
-export function bezier(p0, p1, p2, p3, t) {
+export function computeBezierPoint(p0, p1, p2, p3, t) {
   const mt = 1 - t;
   const a = mt * mt * mt;
   const b = 3 * mt * mt * t;
@@ -63,7 +63,7 @@ export function buildBezierPath(p0, p1, p2, p3, steps) {
   const cum = [0];
   let previous = p0;
   for (let k = 1; k <= steps; k++) {
-    const point = bezier(p0, p1, p2, p3, k / steps);
+    const point = computeBezierPoint(p0, p1, p2, p3, k / steps);
     pts.push(point);
     cum.push(cum[k - 1] + Math.hypot(point.x - previous.x, point.y - previous.y));
     previous = point;
@@ -105,7 +105,7 @@ export function sampleAlong(segment, t) {
  * @param {number} current Angle actuel, en degrés.
  * @returns {number} Écart entre -180 et 180 degrés (positif = sens horaire).
  */
-export function angleDifference(target, current) {
+export function computeAngleDifference(target, current) {
   return ((target - current + 540) % 360) - 180;
 }
 
@@ -116,6 +116,6 @@ export function angleDifference(target, current) {
  * @param {number} dy Déplacement vertical (vers le bas positif).
  * @returns {number} Angle en degrés : 0 vers le haut, 90 vers la droite.
  */
-export function headingToAngle(dx, dy) {
+export function computeHeadingAngle(dx, dy) {
   return (Math.atan2(dy, dx) * 180) / Math.PI + 90;
 }

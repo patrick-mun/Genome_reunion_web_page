@@ -6,8 +6,13 @@
    Accroches : aucune (module de calcul pur ; le DOM est dans margouillat.js).
    ============================================================ */
 
-import { clamp, headingToAngle, angleDifference, smoothstep } from './geometry.js';
-import { rand } from './random.js';
+import {
+  clamp,
+  computeHeadingAngle,
+  computeAngleDifference,
+  computeSmoothstep,
+} from './geometry.js';
+import { getRandomBetween } from './random.js';
 
 export const GECKO_VIEWBOX = { width: 90, height: 150 };
 
@@ -26,20 +31,24 @@ const STEP_CYCLE_PX = 46;
  */
 export function createGecko(bounds, viewportHeight, now, random = Math.random) {
   const pos = {
-    x: rand(bounds.minX, bounds.maxX, random),
+    x: getRandomBetween(bounds.minX, bounds.maxX, random),
     /* apparition dans la zone haute pour être visible dès les premières sections */
-    y: rand(bounds.minY, Math.min(bounds.maxY, bounds.minY + viewportHeight * 1.5), random),
+    y: getRandomBetween(
+      bounds.minY,
+      Math.min(bounds.maxY, bounds.minY + viewportHeight * 1.5),
+      random,
+    ),
   };
   return {
     pos,
     prev: { x: pos.x, y: pos.y },
-    angle: rand(0, 360, random),
+    angle: getRandomBetween(0, 360, random),
     state: 'pause',
-    until: now + rand(700, 2200, random),
+    until: now + getRandomBetween(700, 2200, random),
     targetAngle: 0,
     seg: null,
-    phase: rand(0, Math.PI * 2, random),
-    idleOff: rand(0, Math.PI * 2, random),
+    phase: getRandomBetween(0, Math.PI * 2, random),
+    idleOff: getRandomBetween(0, Math.PI * 2, random),
     run: 0,
   };
 }
@@ -51,12 +60,15 @@ function clampToBounds(point, bounds) {
   };
 }
 
-function farEnough(gecko, target) {
+function isFarEnough(gecko, target) {
   return Math.hypot(target.x - gecko.pos.x, target.y - gecko.pos.y) >= 50;
 }
 
 function randomPointIn(bounds, random) {
-  return { x: rand(bounds.minX, bounds.maxX, random), y: rand(bounds.minY, bounds.maxY, random) };
+  return {
+    x: getRandomBetween(bounds.minX, bounds.maxX, random),
+    y: getRandomBetween(bounds.minY, bounds.maxY, random),
+  };
 }
 
 /**
@@ -68,9 +80,9 @@ function randomPointIn(bounds, random) {
  * @returns {{x: number, y: number}} Destination.
  */
 export function pickTarget(gecko, bounds, random = Math.random) {
-  const far = random() < 0.18;
-  const distance = far ? rand(420, 900, random) : rand(100, 340, random);
-  const heading = rand(0, Math.PI * 2, random);
+  const isFar = random() < 0.18;
+  const distance = isFar ? getRandomBetween(420, 900, random) : getRandomBetween(100, 340, random);
+  const heading = getRandomBetween(0, Math.PI * 2, random);
   const target = clampToBounds(
     {
       x: gecko.pos.x + Math.cos(heading) * distance,
@@ -78,7 +90,7 @@ export function pickTarget(gecko, bounds, random = Math.random) {
     },
     bounds,
   );
-  return farEnough(gecko, target) ? target : randomPointIn(bounds, random);
+  return isFarEnough(gecko, target) ? target : randomPointIn(bounds, random);
 }
 
 /**
@@ -95,12 +107,12 @@ export function fleeTarget(gecko, pointer, bounds, random = Math.random) {
   const dist = Math.hypot(dx, dy) || 1;
   const target = clampToBounds(
     {
-      x: gecko.pos.x + (dx / dist) * rand(220, 360, random),
-      y: gecko.pos.y + (dy / dist) * rand(220, 360, random),
+      x: gecko.pos.x + (dx / dist) * getRandomBetween(220, 360, random),
+      y: gecko.pos.y + (dy / dist) * getRandomBetween(220, 360, random),
     },
     bounds,
   );
-  return farEnough(gecko, target) ? target : randomPointIn(bounds, random);
+  return isFarEnough(gecko, target) ? target : randomPointIn(bounds, random);
 }
 
 /**
@@ -111,7 +123,7 @@ export function fleeTarget(gecko, pointer, bounds, random = Math.random) {
  */
 export function startTurn(gecko, target, speed) {
   gecko.state = 'turn';
-  gecko.targetAngle = headingToAngle(target.x - gecko.pos.x, target.y - gecko.pos.y);
+  gecko.targetAngle = computeHeadingAngle(target.x - gecko.pos.x, target.y - gecko.pos.y);
   gecko.seg = { from: { x: gecko.pos.x, y: gecko.pos.y }, to: target, speed };
 }
 
@@ -123,22 +135,32 @@ function startDash(gecko, now) {
   gecko.state = 'dash';
 }
 
+/**
+ * Au repos : fuit si le pointeur s'approche, sinon part vers une nouvelle destination
+ * quand la pause est écoulée.
+ * @param {object} gecko État du margouillat, modifié sur place.
+ * @param {object} ctx Contexte de l'image (voir `stepGecko`).
+ */
 function updatePause(gecko, ctx) {
   const { now, getBounds, pointer, random } = ctx;
-  if (pointer.has) {
+  if (pointer.hasPosition) {
     const dx = gecko.pos.x - pointer.x;
     const dy = gecko.pos.y - pointer.y;
     if (dx * dx + dy * dy < FLEE_DISTANCE_PX * FLEE_DISTANCE_PX) {
-      startTurn(gecko, fleeTarget(gecko, pointer, getBounds(), random), rand(430, 560, random));
+      startTurn(
+        gecko,
+        fleeTarget(gecko, pointer, getBounds(), random),
+        getRandomBetween(430, 560, random),
+      );
     }
   }
   if (gecko.state === 'pause' && now >= gecko.until) {
-    startTurn(gecko, pickTarget(gecko, getBounds(), random), rand(230, 400, random));
+    startTurn(gecko, pickTarget(gecko, getBounds(), random), getRandomBetween(230, 400, random));
   }
 }
 
 function updateTurn(gecko, ctx) {
-  const diff = angleDifference(gecko.targetAngle, gecko.angle);
+  const diff = computeAngleDifference(gecko.targetAngle, gecko.angle);
   const step = TURN_SPEED_DEG_PER_S * ctx.dt;
   if (Math.abs(diff) <= step || Math.abs(diff) < 4) {
     gecko.angle = gecko.targetAngle;
@@ -148,16 +170,26 @@ function updateTurn(gecko, ctx) {
   }
 }
 
+/**
+ * En détalage : avance le long du segment avec un départ et une arrivée progressifs, puis
+ * reprend une pause (courte le plus souvent, longue de temps en temps).
+ * @param {object} gecko État du margouillat, modifié sur place.
+ * @param {object} ctx Contexte de l'image (voir `stepGecko`).
+ */
 function updateDash(gecko, ctx) {
   const { now, random } = ctx;
   const t = clamp((now - gecko.seg.t0) / gecko.seg.dur, 0, 1);
-  const eased = smoothstep(t);
+  const eased = computeSmoothstep(t);
   gecko.pos.x = gecko.seg.from.x + (gecko.seg.to.x - gecko.seg.from.x) * eased;
   gecko.pos.y = gecko.seg.from.y + (gecko.seg.to.y - gecko.seg.from.y) * eased;
   if (t >= 1) {
     gecko.state = 'pause';
     /* pause courte le plus souvent, longue « pose lézard » parfois */
-    gecko.until = now + (random() < 0.22 ? rand(4500, 9000, random) : rand(900, 3800, random));
+    gecko.until =
+      now +
+      (random() < 0.22
+        ? getRandomBetween(4500, 9000, random)
+        : getRandomBetween(900, 3800, random));
     gecko.seg = null;
   }
 }
@@ -167,7 +199,7 @@ function updateDash(gecko, ctx) {
  * détalage), vitesse mesurée et phase de marche.
  * @param {object} gecko État du margouillat, modifié sur place.
  * @param {{now: number, dt: number, getBounds: () => {minX: number, maxX: number, minY: number,
- *   maxY: number}, pointer: {x: number, y: number, has: boolean}, random?: () => number}} ctx
+ *   maxY: number}, pointer: {x: number, y: number, hasPosition: boolean}, random?: () => number}} ctx
  *   Contexte de l'image (`dt` en secondes, strictement positif).
  */
 export function stepGecko(gecko, ctx) {

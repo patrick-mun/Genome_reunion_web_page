@@ -8,7 +8,7 @@
    ============================================================ */
 
 /* Le contour sombre des pattes est simulé par un trait large sombre sous le trait vert. */
-function leg(name, d, toes) {
+function buildLeg(name, d, toes) {
   const toeMarkup = toes
     .map(([cx, cy]) => `<circle class="gecko-toe" cx="${cx}" cy="${cy}" r="2.3"/>`)
     .join('');
@@ -24,24 +24,24 @@ function leg(name, d, toes) {
  * Les quatre pattes, chacune de trois doigts.
  * @returns {string} Quatre groupes SVG sérialisés.
  */
-function legs() {
+function buildLegs() {
   return (
-    leg('leg-fl', 'M34,42 C25,39 19,33 15,26', [
+    buildLeg('leg-fl', 'M34,42 C25,39 19,33 15,26', [
       [11.5, 23],
       [14, 20.2],
       [17.6, 19.8],
     ]) +
-    leg('leg-fr', 'M56,42 C65,39 71,33 75,26', [
+    buildLeg('leg-fr', 'M56,42 C65,39 71,33 75,26', [
       [78.5, 23],
       [76, 20.2],
       [72.4, 19.8],
     ]) +
-    leg('leg-bl', 'M36,72 C25,72 18,77 13,85', [
+    buildLeg('leg-bl', 'M36,72 C25,72 18,77 13,85', [
       [9.4, 87.6],
       [12.3, 90.6],
       [16, 90.2],
     ]) +
-    leg('leg-br', 'M54,72 C65,72 72,77 77,85', [
+    buildLeg('leg-br', 'M54,72 C65,72 72,77 77,85', [
       [80.6, 87.6],
       [77.7, 90.6],
       [74, 90.2],
@@ -49,7 +49,7 @@ function legs() {
   );
 }
 
-function body() {
+function buildBody() {
   const spot = (cx, cy, rx, ry) =>
     `<ellipse class="gecko-spot" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>`;
   return (
@@ -64,7 +64,7 @@ function body() {
  * La tête : crâne, yeux, narines et bouche.
  * @returns {string} Groupe SVG sérialisé, animé par `[data-head]`.
  */
-function head() {
+function buildHead() {
   const eye = (cx) => `<circle class="gecko-eye" cx="${cx}" cy="12" r="5"/>`;
   const pupil = (cx) => `<circle class="gecko-pupil" cx="${cx}" cy="12.8" r="2.2"/>`;
   const nostril = (cx) => `<circle class="gecko-nostril" cx="${cx}" cy="6.8" r=".8"/>`;
@@ -88,7 +88,7 @@ function head() {
  * diagonale), queue (dont la géométrie est injectée par le JS) et tête.
  * @returns {string} Élément `<svg>` sérialisé.
  */
-export function geckoSVG() {
+export function buildGeckoSvg() {
   return (
     '<svg viewBox="0 0 90 150">' +
     '<g data-sway>' +
@@ -96,9 +96,9 @@ export function geckoSVG() {
     '<path class="gecko-tail-edge" data-tail-dark/>' +
     '<path class="gecko-tail" data-tail-green/>' +
     '</g>' +
-    legs() +
-    body() +
-    head() +
+    buildLegs() +
+    buildBody() +
+    buildHead() +
     '</g>' +
     '</svg>'
   );

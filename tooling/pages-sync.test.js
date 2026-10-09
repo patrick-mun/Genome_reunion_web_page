@@ -98,3 +98,11 @@ test('chaque lien interne mène à une ancre qui existe', () => {
     }
   }
 });
+
+test('les commentaires de section suivent le format « ── NOM ── » (HTML-60)', () => {
+  for (const [name, html] of [['index.html', home], ['participer.html', participer]]) {
+    for (const [, text] of html.matchAll(/<!--([\s\S]*?)-->/g)) {
+      assert.match(text.trim(), /^── .+ ──$/, `${name} : commentaire hors format « <!-- ── NOM ── --> » : ${text.trim()}`);
+    }
+  }
+});
