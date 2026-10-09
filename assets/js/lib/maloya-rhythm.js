@@ -1,7 +1,8 @@
 /* ============================================================
    assets/js/lib/maloya-rhythm.js
    Rôle : rythme du maloya de la frise (calcul pur) : frappes de chaque instrument, levée des
-   mains entre deux frappes, accent du premier temps, secousse du kayamb. Le temps musical
+   mains entre deux frappes (plus haute avant une frappe forte), accent du premier temps,
+   secousse du kayamb. Le temps musical
    est compté en temps (beats) : une mesure de 4 temps ternaires, soit 12 pulsations.
    Pages concernées : accueil.
    Accroches : aucune (module de calcul pur).
@@ -28,6 +29,8 @@ const LIFT_PEAK_AT = 0.6;
 const LIFT_EXPONENT = Math.log(0.5) / Math.log(LIFT_PEAK_AT);
 // Un intervalle d'un temps (3 pulsations) donne la levée complète ; plus court, la main monte moins.
 const FULL_LIFT_PULSES = 3;
+// Force des frappes : premier temps, autres temps, contretemps.
+const STRIKE_STRENGTH = { downbeat: 1, beat: 0.85, offbeat: 0.7 };
 // Montée de l'accent du premier temps, en temps.
 const ACCENT_RISE = 0.15;
 // Près de 1 : onde presque triangulaire, retournements secs du kayamb.
@@ -62,17 +65,40 @@ export function findSurroundingHits(pulse, hits) {
 }
 
 /**
- * Hauteur d'une main qui frappe un instrument.
+ * Force d'une frappe selon sa place dans la mesure : la main monte plus haut avant une frappe
+ * forte.
+ * @param {number} pulse Pulsation de la frappe (prise modulo la mesure).
+ * @returns {number} 1 sur le premier temps, 0,85 sur les autres temps, 0,7 en contretemps.
+ */
+export function computeStrikeStrength(pulse) {
+  const inMeasure = ((pulse % PULSES_PER_MEASURE) + PULSES_PER_MEASURE) % PULSES_PER_MEASURE;
+  if (inMeasure === 0) return STRIKE_STRENGTH.downbeat;
+  return inMeasure % PULSES_PER_BEAT === 0 ? STRIKE_STRENGTH.beat : STRIKE_STRENGTH.offbeat;
+}
+
+/**
+ * Coup d'une main qui frappe un instrument : hauteur de la main, réglée sur la force de la
+ * frappe qui vient, sens du geste et écart de la boucle qu'elle décrit (nul sur l'instrument et
+ * au sommet, le plus grand à mi-montée et à mi-descente).
  * @param {number} beats Temps musical, en temps.
  * @param {number[]} hits Frappes de la main dans la mesure.
- * @returns {number} 0 : main sur l'instrument ; 1 : levée complète.
+ * @returns {{lift: number, loop: number, isRising: boolean}} Hauteur (0 : main sur
+ *   l'instrument, 1 : levée complète avant le premier temps), écart de la boucle (même
+ *   échelle), et vrai tant que la main monte.
  */
-export function computeHandLift(beats, hits) {
+export function computeHandStroke(beats, hits) {
   const total = beats * PULSES_PER_BEAT;
   const pulse = ((total % PULSES_PER_MEASURE) + PULSES_PER_MEASURE) % PULSES_PER_MEASURE;
   const { prev, next } = findSurroundingHits(pulse, hits);
   const gap = next - prev;
-  return Math.min(1, gap / FULL_LIFT_PULSES) * computeLiftShape((pulse - prev) / gap);
+  const u = (pulse - prev) / gap;
+  const height = Math.min(1, gap / FULL_LIFT_PULSES) * computeStrikeStrength(next);
+  const shape = computeLiftShape(u);
+  return {
+    lift: height * shape,
+    loop: height * Math.sin(Math.PI * shape),
+    isRising: u < LIFT_PEAK_AT,
+  };
 }
 
 /**

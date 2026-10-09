@@ -1,34 +1,45 @@
 /* ============================================================
    assets/js/lib/maloya-dancers.js
-   Rôle : poses des danseurs de la frise du maloya (calcul pur), vus de face. Pieds ancrés à la
-   largeur des épaules, qui glissent à tour de rôle d'un petit pas à chaque temps ; genoux
-   fléchis ; bassin ample qui passe sur le pied d'appui ; buste puis tête qui suivent le bassin
-   avec retard (mouvement en vague) ; petite dérive latérale ; un tour sur soi de temps en temps.
+   Rôle : poses des danseuses de la frise du maloya (calcul pur), vues de face, et ce qu'elles
+   partagent avec le danseur (maloya-man.js) : pas et haut du corps. Pieds ancrés à la largeur
+   des épaules ; le pied libre glisse d'un petit pas pendant que l'autre porte le poids, puis
+   reçoit le poids au temps suivant. Le bassin passe d'un appui à l'autre, tient l'appui et
+   s'enfonce (maloya-groove.js) ; la hanche d'appui monte, les épaules s'inclinent en sens
+   inverse ; le buste suit le bassin à moitié et la tête reste presque droite.
    Sol en y = 0, axe du corps en x = 0 (70 unités ≈ 1 m).
    Pages concernées : accueil.
    Accroches : aucune (module de calcul pur).
    ============================================================ */
 
-import { clamp, computeSmoothstep } from './geometry.js';
+import { clamp } from './geometry.js';
+import {
+  computeFlourish,
+  computeGroovePulse,
+  computeLoopNoise,
+  computeWeightShift,
+  DEFAULT_STYLE,
+  MAX_SHIFT,
+} from './maloya-groove.js';
 import {
   addPoints,
-  buildSmoothPath,
   computeBoneAngle,
   computeEdgeSmoothstep,
   lerp,
   rotatePoint,
   solveTwoBone,
 } from './maloya-limbs.js';
-import { BODY } from './maloya-musicians.js';
+import { buildFoldPaths, buildSkirtPath, computeSkirtGrip } from './maloya-skirt.js';
 
 /* ── PAS COMMUN ──
-   Chaque pied glisse pendant le début de son temps puis reste posé ; le gauche part sur les
-   temps pairs, le droit sur les impairs. Le bassin passe au-dessus du pied d'appui.
+   Le pied gauche glisse pendant la tenue des temps pairs (le poids est sur le pied droit) et
+   reçoit le poids au temps impair suivant ; le droit, l'inverse. Une petite dérive latérale
+   déplace les pas d'un côté puis de l'autre.
 */
 
 const DRIFT = 5; // amplitude de la dérive latérale, en unités
 const DRIFT_BEATS = 8; // une dérive aller-retour toutes les deux mesures
-const STEP_SHARE = 0.3; // part du cycle de deux temps pendant laquelle le pied glisse
+const STEP_START = 0.5; // le pied libre part une fois le poids passé sur l'autre pied…
+const STEP_END = 0.95; // … et se pose juste avant de reprendre le poids
 const SLIDE_LIFT = 1.2; // le pied rase le sol
 
 /**
@@ -41,53 +52,35 @@ export function computeDrift(beats) {
 }
 
 /**
- * Position d'un pied ancré : il ne bouge que pendant son pas, puis reste posé.
+ * Position d'un pied ancré : il ne glisse que pendant la tenue de l'autre pied, puis reste posé.
  * @param {number} beats Temps musical, en temps.
- * @param {0|1} phase 0 : le pied part sur les temps pairs ; 1 : sur les temps impairs.
+ * @param {0|1} phase 0 : le pied glisse pendant les temps pairs ; 1 : pendant les impairs.
  * @param {number} offset Écart du pied par rapport à l'axe, en unités.
  * @returns {{x: number, lift: number}} Abscisse et hauteur au-dessus du sol.
  */
 export function computeAnchoredFoot(beats, phase, offset) {
   const cycle = (beats - phase) / 2;
   const step = Math.floor(cycle);
-  const progress = cycle - step;
-  const stepped = step + computeEdgeSmoothstep(0, STEP_SHARE, progress);
-  const lift = SLIDE_LIFT * Math.sin(Math.PI * clamp(progress / STEP_SHARE, 0, 1));
-  return { x: offset + computeDrift(2 * stepped + phase), lift };
+  const inCycle = 2 * (cycle - step); // en temps, de 0 à 2
+  const progress = computeEdgeSmoothstep(STEP_START, STEP_END, inCycle);
+  const slide = clamp((inCycle - STEP_START) / (STEP_END - STEP_START), 0, 1);
+  return {
+    x: offset + computeDrift(2 * (step + progress) + phase - 1),
+    lift: SLIDE_LIFT * Math.sin(Math.PI * slide),
+  };
 }
-
-function computeFootwork(beats, spread, sway) {
-  const left = computeAnchoredFoot(beats, 0, -spread);
-  const right = computeAnchoredFoot(beats, 1, spread);
-  return { left, right, hipX: (left.x + right.x) / 2 + sway };
-}
-
-/* ── TOUR SUR SOI ──
-   Toutes les quatre mesures, le danseur fait un tour complet en deux temps. Vu de face, le tour
-   se lit comme un rétrécissement horizontal jusqu'au profil, puis l'image du dos (symétrique),
-   puis de nouveau la face. Le corps ne descend pas sous sa largeur de profil : le passage de
-   face à dos se fait à cette largeur, où les deux images se confondent presque.
-*/
-
-const TURN_PERIOD = 16;
-const TURN_START = 12; // en temps dans le cycle
-const TURN_BEATS = 2;
 
 /**
- * Tour sur soi.
+ * Pas des deux pieds, écartés de part et d'autre de l'axe.
  * @param {number} beats Temps musical, en temps.
- * @param {number} minWidth Largeur de profil, en part de la largeur de face.
- * @returns {{scaleX: number, spin: number}} Échelle horizontale (négative : vu de dos) et
- *   intensité du tour (0 hors tour, 1 à mi-tour) pour évaser la jupe.
+ * @param {number} spread Écart de chaque pied par rapport à l'axe, en unités.
+ * @returns {{left: object, right: object, centerX: number}} Pieds (voir computeAnchoredFoot)
+ *   et milieu des deux pieds.
  */
-export function computeTurn(beats, minWidth) {
-  const inCycle = ((beats % TURN_PERIOD) + TURN_PERIOD) % TURN_PERIOD;
-  const progress = clamp((inCycle - TURN_START) / TURN_BEATS, 0, 1);
-  const c = Math.cos(2 * Math.PI * computeSmoothstep(progress));
-  return {
-    scaleX: (c < 0 ? -1 : 1) * Math.max(Math.abs(c), minWidth),
-    spin: Math.sin(Math.PI * progress),
-  };
+export function computeFootwork(beats, spread) {
+  const left = computeAnchoredFoot(beats, 0, -spread);
+  const right = computeAnchoredFoot(beats, 1, spread);
+  return { left, right, centerX: (left.x + right.x) / 2 };
 }
 
 /**
@@ -97,7 +90,9 @@ export function computeTurn(beats, minWidth) {
  * @param {number[]} lengths Longueurs des deux segments.
  * @param {1|-1} sign +1 pour le côté droit (x positif), -1 pour le gauche.
  * @param {number} bendSign Côté du pli dans le repère du côté droit (voir solveTwoBone).
- * @returns {object} Parties (pivots et angles) du membre, ouverture et manque d'allonge.
+ * @returns {{chain: Array<{x: number, y: number}>, tipAngle: number, bend: number,
+ *   shortfall: number}} Chaîne du membre, angle du dernier segment, ouverture et manque
+ *   d'allonge.
  */
 export function computeFrontalLimb(root, end, lengths, sign, bendSign) {
   const local = (p) => ({ x: sign * (p.x - root.x), y: p.y - root.y });
@@ -106,98 +101,96 @@ export function computeFrontalLimb(root, end, lengths, sign, bendSign) {
   const joint = world(solved.joint);
   const tip = world(solved.end);
   return {
-    first: { ...root, angle: computeBoneAngle(root, joint) },
-    second: { ...joint, angle: computeBoneAngle(joint, tip) },
-    tip: { ...tip, angle: computeBoneAngle(joint, tip) },
+    chain: [root, joint, tip],
+    tipAngle: computeBoneAngle(joint, tip),
     bend: solved.bend,
     shortfall: solved.shortfall,
   };
 }
 
+/* ── HAUT DU CORPS DE FACE ──
+   Trois niveaux (taille, poitrine, épaules) dont maloya-bodies.js fait le contour du buste :
+   la ligne de taille suit la bascule du bassin, celle des épaules s'y oppose.
+*/
+
+const PELVIS_TILT = 5; // degrés par unité d'appui : la hanche d'appui monte
+const SHOULDER_TILT = 3.5; // les épaules s'inclinent en sens inverse…
+const SHOULDER_LAG = 0.12; // … avec retard, en temps
+const UPPER_FOLLOW = 0.45; // le haut du buste ne suit le bassin qu'à moitié
+const HEAD_COUNTER = 0.8; // la tête penche à peine à l'opposé du bassin, en degrés
+const HEAD_LAG = 0.25; // en temps
+
+/**
+ * Haut du corps de face : niveaux du buste, épaules, cou et tête.
+ * @param {object} body Taille (waist), milieu des pieds (centerX), temps propre (beats) et
+ *   style du personnage.
+ * @param {{chest: number, top: number, waistHalf: number, chestHalf: number,
+ *   topHalf: number, shoulder: number}} size Hauteurs (depuis la taille) et demi-largeurs.
+ * @returns {{levels: object[], hipTilt: number, shoulders: {left: object, right: object},
+ *   head: {x: number, y: number, angle: number}}} Buste, bascule du bassin, épaules, tête.
+ */
+export function computeFrontTrunk({ waist, centerX, beats, style }, size) {
+  const shift = (lag) => style.amp * computeWeightShift(beats - lag, style.seed);
+  const hipTilt = -PELVIS_TILT * shift(0);
+  const shoulderTilt = SHOULDER_TILT * shift(SHOULDER_LAG);
+  const top = { x: centerX + UPPER_FOLLOW * (waist.x - centerX), y: waist.y - size.top };
+  const chest = { x: lerp(waist.x, top.x, 0.6), y: waist.y - size.chest };
+  const onShoulders = (local) => addPoints(top, rotatePoint(local, shoulderTilt));
+  // Niveau de contour (maloya-outlines.js), avec son inclinaison en degrés.
+  const level = (center, half, angle) => ({
+    center,
+    half: [half, half],
+    normal: rotatePoint({ x: 1, y: 0 }, angle),
+    angle,
+  });
+  return {
+    levels: [
+      level(waist, size.waistHalf, hipTilt),
+      level(chest, size.chestHalf, (hipTilt + shoulderTilt) / 2),
+      level(top, size.topHalf, shoulderTilt),
+    ],
+    hipTilt,
+    shoulders: {
+      left: onShoulders({ x: -size.shoulder, y: 1.2 }),
+      right: onShoulders({ x: size.shoulder, y: 1.2 }),
+    },
+    head: {
+      ...onShoulders({ x: 0, y: -2 }),
+      angle: -HEAD_COUNTER * shift(HEAD_LAG) + 0.8 * computeLoopNoise(beats, style.seed + 1),
+    },
+  };
+}
+
 /* ── DANSEUSE ──
    Les deux mains tiennent la jupe de chaque côté et la font jouer : le côté vers lequel passe le
-   bassin s'ouvre et se soulève davantage. La jupe suit les hanches avec retard et s'évase
-   pendant les tours.
+   bassin s'ouvre et se soulève davantage, avec retard. En fin de phrase, tourbillon de jupe.
 */
 
 export const DANCER_ARM = { upper: 20, fore: 18 };
+const DANCER_TRUNK = {
+  chest: 12,
+  top: 22.5,
+  waistHalf: 8.5,
+  chestHalf: 11.2,
+  topHalf: 13.4,
+  shoulder: 12.6,
+};
 
 const WAIST_Y = -66;
+const FOOT_SPREAD = 6.5;
 const HIP_SWAY = 6.5;
-const HIP_TILT = 1.2; // degrés de bascule du bassin par unité de déplacement
-const TORSO_COUNTER = 0.8; // le buste penche un peu à l'opposé des hanches
-const TORSO_LAG = 0.12; // en temps : le buste suit le bassin
-const HEAD_LAG = 0.25; // en temps : la tête suit le buste
+const BOB = 2.2; // flexion des genoux sur le temps
 const ARM_LAG = 0.1; // en temps : les mains suivent le bassin
-const BOB = 2; // flexion des genoux sur le temps
-const SKIRT_LAG = 0.35; // en temps
+const SKIRT_LAG = 0.3; // en temps : l'ourlet suit le bassin
 const SKIRT_SWING = 5.5;
-const HEM_Y = -4;
-const HEM_HALF_WIDTH = 29;
-const WAIST_HALF_WIDTH = 8.5;
-const DANCER_PROFILE_WIDTH = 0.45; // buste de profil : environ la moitié de sa largeur de face
-
-/**
- * Cible d'une main sur la jupe : plus ouverte et plus haute quand le côté s'ouvre.
- * @param {{x: number, y: number}} waist Taille.
- * @param {1|-1} side +1 côté droit, -1 côté gauche.
- * @param {number} open Ouverture du côté, de 0 à 1.
- * @returns {{x: number, y: number}} Poignet visé.
- */
-export function computeSkirtGrip(waist, side, open) {
-  return { x: waist.x + side * (17 + 8 * open), y: -55 - 6 * open };
-}
-
-/**
- * Contour de la jupe : taille, bords latéraux passant par les mains, ourlet ondulé.
- * @param {object} shape Taille, bascule du bassin, centre de l'ourlet, mains, ouverture de
- *   chaque côté (lifts) et évasement du tour (flare).
- * @param {number} beats Temps musical, en temps.
- * @returns {string} Attribut `d`.
- */
-export function buildSkirtPath({ waist, hipTilt, hemX, grips, lifts, flare }, beats) {
-  const w = rotatePoint({ x: WAIST_HALF_WIDTH, y: 0 }, hipTilt);
-  const side = (sign, lift) => ({
-    x: hemX + sign * HEM_HALF_WIDTH * (1 + 0.06 * lift + 0.22 * flare),
-    y: HEM_Y - 5 * lift - 4 * flare,
-  });
-  const leftHem = side(-1, lifts.left);
-  const rightHem = side(1, lifts.right);
-  const hem = [4, 3, 2, 1].map((i) => ({
-    x: lerp(rightHem.x, leftHem.x, i / 5),
-    y: HEM_Y + 1.6 + 1.4 * Math.sin(Math.PI * beats + i * 1.7),
-  }));
-  return buildSmoothPath(
-    [
-      { x: waist.x - w.x, y: waist.y - w.y },
-      grips.left,
-      leftHem,
-      ...hem,
-      rightHem,
-      grips.right,
-      { x: waist.x + w.x, y: waist.y + w.y },
-    ],
-    true,
-  );
-}
-
-function buildFoldPaths(waist, hemX, beats) {
-  return [-0.45, 0, 0.45].map((f, i) => {
-    const top = { x: waist.x + f * WAIST_HALF_WIDTH * 1.6, y: waist.y + 3 };
-    const sway = Math.sin(Math.PI * (beats - SKIRT_LAG) + i) * 2;
-    const bottom = { x: hemX + f * HEM_HALF_WIDTH * 1.5 + sway, y: HEM_Y - 2 };
-    const middle = { x: lerp(top.x, bottom.x, 0.55) + sway * 0.6, y: lerp(top.y, bottom.y, 0.55) };
-    return buildSmoothPath([top, middle, bottom]);
-  });
-}
+const SWIRL_SWING = 4; // balancement de l'ourlet pendant le tourbillon
 
 function computeSkirtArm(shoulder, grip, side) {
   // Coude vers l'extérieur, main basse : pli du côté « sous la droite épaule-main ».
   const limb = computeFrontalLimb(shoulder, grip, [DANCER_ARM.upper, DANCER_ARM.fore], side, -1);
   return {
-    upper: limb.first,
-    fore: limb.second,
-    hand: limb.tip,
+    chain: limb.chain,
+    hand: { ...limb.chain[2], angle: limb.tipAngle },
     elbowBend: limb.bend,
     shortfall: limb.shortfall,
   };
@@ -206,116 +199,51 @@ function computeSkirtArm(shoulder, grip, side) {
 /**
  * Pose de la danseuse.
  * @param {number} beats Temps musical, en temps.
- * @returns {object} Parties (torso, head, arms.left/right, feet), tour, tracés de la jupe.
+ * @param {typeof DEFAULT_STYLE} [style] Style propre au personnage.
+ * @returns {object} Buste (trunk), tête, bras (left, right), pieds, tracés de la jupe.
  */
-export function computeDancerPose(beats) {
-  const sway = Math.cos(Math.PI * beats); // +1 : hanches à droite, sur le pied droit
-  const steps = computeFootwork(beats, 6.5, HIP_SWAY * sway);
-  const bob = BOB * (0.5 + 0.5 * Math.cos(2 * Math.PI * (beats - 0.08)));
-  const waist = { x: steps.hipX, y: WAIST_Y + bob };
-  const tilt = -TORSO_COUNTER * HIP_SWAY * Math.cos(Math.PI * (beats - TORSO_LAG));
-  const headTilt = -0.5 * TORSO_COUNTER * HIP_SWAY * Math.cos(Math.PI * (beats - HEAD_LAG));
-  const drift = computeDrift(beats);
-  const hemX = drift + SKIRT_SWING * Math.cos(Math.PI * (beats - SKIRT_LAG));
-  const turn = computeTurn(beats, DANCER_PROFILE_WIDTH);
-  const neck = addPoints(waist, rotatePoint({ x: 0, y: -24.5 }, tilt));
-  const shoulder = (sign) => addPoints(waist, rotatePoint({ x: sign * 13, y: -22.5 }, tilt));
-
-  // Ouverture de chaque côté : suit le bassin avec retard ; les deux s'ouvrent pendant le tour.
-  const armSway = Math.cos(Math.PI * (beats - ARM_LAG));
-  const open = (sign) => clamp(0.5 + 0.5 * sign * armSway + 0.6 * turn.spin, 0, 1);
-  const arms = {
-    left: computeSkirtArm(shoulder(-1), computeSkirtGrip(waist, -1, open(-1)), -1),
-    right: computeSkirtArm(shoulder(1), computeSkirtGrip(waist, 1, open(1)), 1),
+export function computeDancerPose(beats, style = DEFAULT_STYLE) {
+  const t = beats + style.timing;
+  const shift = (lag) => style.amp * computeWeightShift(t - lag, style.seed);
+  const steps = computeFootwork(t, FOOT_SPREAD);
+  const flourish = computeFlourish(t);
+  const waist = {
+    x: steps.centerX + HIP_SWAY * shift(0),
+    y: WAIST_Y + style.amp * BOB * computeGroovePulse(t, style.seed),
   };
-  // La jupe en cloche ne tourne pas : seuls ses bords suivent les mains, qui tournent avec le
-  // buste. De dos, la main de droite passe à gauche : les côtés sont échangés.
-  const turned = (hand) => ({ x: drift + (hand.x - drift) * turn.scaleX, y: hand.y });
-  const isBack = turn.scaleX < 0;
-  const hands = [turned(arms.left.hand), turned(arms.right.hand)];
-  const lifts = [open(-1), open(1)];
+  const trunk = computeFrontTrunk({ waist, centerX: steps.centerX, beats: t, style }, DANCER_TRUNK);
+  // Ouverture de chaque côté, de 0 à 1 sans écrêtage (pas d'arrêt sec) ; tout ouvert au milieu
+  // du tourbillon.
+  const armShift = shift(ARM_LAG) / (style.amp * MAX_SHIFT);
+  const swirl = flourish.strength;
+  const open = (sign) => 0.5 + 0.5 * sign * armShift * (1 - swirl) + 0.5 * swirl;
+  const arms = {
+    left: computeSkirtArm(trunk.shoulders.left, computeSkirtGrip(waist, -1, open(-1)), -1),
+    right: computeSkirtArm(trunk.shoulders.right, computeSkirtGrip(waist, 1, open(1)), 1),
+  };
+  const hemX =
+    computeDrift(t) +
+    SKIRT_SWING * shift(SKIRT_LAG) +
+    SWIRL_SWING * flourish.strength * Math.sin(2 * Math.PI * flourish.progress);
   const skirt = {
     waist,
-    hipTilt: HIP_TILT * (waist.x - drift),
+    hipTilt: trunk.hipTilt,
     hemX,
-    grips: { left: hands[isBack ? 1 : 0], right: hands[isBack ? 0 : 1] },
-    lifts: { left: lifts[isBack ? 1 : 0], right: lifts[isBack ? 0 : 1] },
-    flare: turn.spin,
+    grips: { left: arms.left.hand, right: arms.right.hand },
+    lifts: { left: open(-1), right: open(1) },
+    flare: flourish.strength,
+    spin: flourish.progress,
   };
 
   return {
-    torso: { ...waist, angle: tilt },
-    head: { ...neck, angle: headTilt + 2 * Math.sin(Math.PI * (beats - HEAD_LAG) + 0.6) },
+    trunk: trunk.levels,
+    head: trunk.head,
     arms,
     feet: {
       left: { x: steps.left.x, y: -steps.left.lift, angle: 0 },
       right: { x: steps.right.x, y: -steps.right.lift, angle: 0 },
     },
-    turn: { x: drift, scaleX: turn.scaleX },
-    skirt: buildSkirtPath(skirt, beats),
-    folds: buildFoldPaths(waist, hemX, beats),
-  };
-}
-
-/* ── DANSEUR ──
-   Pieds à la largeur des épaules, genoux fléchis et ouverts ; les bras, coudes près du corps,
-   se balancent avec retard sur le bassin.
-*/
-
-const MAN_HIP_Y = -62;
-const MAN_HIP_SWAY = 5;
-const MAN_BOB = 2.6;
-const MAN_FOOT_SPREAD = 10.5;
-const MAN_PROFILE_WIDTH = 0.4;
-
-function computeManArm(waist, tilt, sign, swing) {
-  const shoulder = addPoints(waist, rotatePoint({ x: sign * 12.5, y: -23 }, tilt));
-  const hand = { x: shoulder.x + sign * 17, y: shoulder.y + 22 + sign * 5 * swing };
-  const limb = computeFrontalLimb(shoulder, hand, [BODY.upperArm, BODY.forearm], sign, 1);
-  return {
-    upper: limb.first,
-    fore: limb.second,
-    hand: limb.tip,
-    elbowBend: limb.bend,
-    shortfall: limb.shortfall,
-  };
-}
-
-function computeManLeg(waist, sign, foot) {
-  const hip = addPoints(waist, { x: sign * 5, y: 2 });
-  const ankle = { x: foot.x, y: -4 - foot.lift };
-  const limb = computeFrontalLimb(hip, ankle, [BODY.thigh, BODY.shin], sign, -1);
-  return { thigh: limb.first, shin: limb.second, foot: { ...limb.tip, angle: 0 } };
-}
-
-/**
- * Pose du danseur.
- * @param {number} beats Temps musical, en temps.
- * @returns {object} Parties (torso, head, arms.left/right, legs.left/right) et tour.
- */
-export function computeManPose(beats) {
-  const sway = Math.cos(Math.PI * beats);
-  const steps = computeFootwork(beats, MAN_FOOT_SPREAD, MAN_HIP_SWAY * sway);
-  const bob = MAN_BOB * (0.5 + 0.5 * Math.cos(2 * Math.PI * (beats - 0.08)));
-  const waist = { x: steps.hipX, y: MAN_HIP_Y + bob };
-  const tilt = -0.8 * MAN_HIP_SWAY * Math.cos(Math.PI * (beats - TORSO_LAG));
-  const swing = Math.sin(Math.PI * (beats - 0.2) + 0.8);
-  const headTilt = -0.4 * MAN_HIP_SWAY * Math.cos(Math.PI * (beats - HEAD_LAG));
-
-  return {
-    torso: { ...waist, angle: tilt },
-    head: {
-      ...addPoints(waist, rotatePoint({ x: 0, y: -25 }, tilt)),
-      angle: headTilt + 2 * Math.sin(Math.PI * (beats - HEAD_LAG) + 0.8),
-    },
-    arms: {
-      left: computeManArm(waist, tilt, -1, swing),
-      right: computeManArm(waist, tilt, 1, swing),
-    },
-    legs: {
-      left: computeManLeg(waist, -1, steps.left),
-      right: computeManLeg(waist, 1, steps.right),
-    },
-    turn: { x: computeDrift(beats), scaleX: computeTurn(beats, MAN_PROFILE_WIDTH).scaleX },
+    skirt: buildSkirtPath(skirt, t),
+    folds: buildFoldPaths(waist, hemX, t, flourish.progress),
   };
 }

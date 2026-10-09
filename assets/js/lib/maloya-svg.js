@@ -10,6 +10,7 @@
 
 import { buildDancerFigure, buildManFigure, buildProfileFigure } from './maloya-figures.js';
 import { SPARK_COUNT } from './maloya-fire.js';
+import { formatNumber } from './maloya-limbs.js';
 
 export const SCENE = { width: 1080, height: 150, ground: 142 };
 export const FIRE_X = 540;
@@ -20,10 +21,13 @@ const CAST_CLASS_PREFIX = 'maloya-cast-';
 /* ── DISTRIBUTION ──
    Dans l'ordre du dessin : le rang du fond, puis le feu, puis le rang de devant.
    facing : 1 tourné vers la droite, -1 vers la gauche ; offset : décalage du pas, en temps.
+   style : façon de jouer ou de danser (maloya-groove.js) : timing, avance (négative) ou retard
+   sur le temps, en temps ; amp, ampleur des mouvements ; seed, phase de ses variations.
 */
 export const CAST = [
   {
     id: 'piker',
+    style: { timing: 0.03, amp: 0.9, seed: 2.1 },
     kind: 'seated',
     instrument: 'piker',
     x: 316,
@@ -33,6 +37,7 @@ export const CAST = [
   },
   {
     id: 'sati',
+    style: { timing: -0.02, amp: 1, seed: 4.4 },
     kind: 'seated',
     instrument: 'sati',
     x: 490,
@@ -42,6 +47,7 @@ export const CAST = [
   },
   {
     id: 'bobre',
+    style: { timing: 0.05, amp: 1.1, seed: 0.9 },
     kind: 'standing',
     instrument: 'bobre',
     x: 602,
@@ -51,6 +57,7 @@ export const CAST = [
   },
   {
     id: 'rouler',
+    style: { timing: 0, amp: 1.1, seed: 0 },
     kind: 'seated',
     instrument: 'rouler',
     x: 428,
@@ -60,6 +67,7 @@ export const CAST = [
   },
   {
     id: 'kayamb',
+    style: { timing: -0.04, amp: 1, seed: 3.3 },
     kind: 'standing',
     instrument: 'kayamb',
     x: 664,
@@ -67,12 +75,32 @@ export const CAST = [
     facing: -1,
     head: 'hair',
   },
-  { id: 'dancer2', kind: 'dancer', x: 248, row: 'front', offset: 5 },
-  { id: 'man', kind: 'man', x: 754, row: 'front', offset: 1 },
-  { id: 'dancer1', kind: 'dancer', x: 834, row: 'front', offset: 0 },
+  {
+    id: 'dancer2',
+    style: { timing: 0.06, amp: 0.9, seed: 5.2 },
+    kind: 'dancer',
+    x: 248,
+    row: 'front',
+    offset: 5,
+  },
+  {
+    id: 'man',
+    style: { timing: -0.03, amp: 1.15, seed: 1.7 },
+    kind: 'man',
+    x: 754,
+    row: 'front',
+    offset: 1,
+  },
+  {
+    id: 'dancer1',
+    style: { timing: 0.02, amp: 1.05, seed: 2.8 },
+    kind: 'dancer',
+    x: 834,
+    row: 'front',
+    offset: 0,
+  },
 ];
 
-const formatNumber = (n) => Number(n.toFixed(2));
 const path = (cls, d) => `<path class="${cls}" d="${d}" />`;
 
 /**
@@ -82,16 +110,6 @@ const path = (cls, d) => `<path class="${cls}" d="${d}" />`;
  */
 export function formatPartTransform(part) {
   return `translate(${formatNumber(part.x)},${formatNumber(part.y)}) rotate(${formatNumber(part.angle)})`;
-}
-
-/**
- * Transformation du tour sur soi : rétrécissement horizontal autour de l'axe du danseur.
- * @param {{x: number, scaleX: number}} turn Axe du danseur et échelle horizontale.
- * @returns {string} Valeur de l'attribut `transform`.
- */
-export function formatTurnTransform(turn) {
-  const x = formatNumber(turn.x);
-  return `translate(${x},0) scale(${formatNumber(turn.scaleX)},1) translate(${-x},0)`;
 }
 
 /* ── FEU ──
