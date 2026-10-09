@@ -8,6 +8,18 @@
 import js from '@eslint/js';
 import globals from 'globals';
 
+// JS-01 : exports nommés et extension .js dans les imports relatifs (site et outils).
+const MODULE_SYNTAX_RULES = [
+  {
+    selector: "ExportDefaultDeclaration, ExportSpecifier[exported.name='default']",
+    message: 'JS-01 : export nommé, pas d\'export par défaut',
+  },
+  {
+    selector: 'ImportDeclaration[source.value=/^\\.{1,2}\\//]:not([source.value=/\\.js$/])',
+    message: 'JS-01 : ajouter l\'extension .js au chemin d\'import',
+  },
+];
+
 export default [
   { ignores: ['**/*.avant.js'] },
   js.configs.recommended,
@@ -30,16 +42,7 @@ export default [
           selector: "CallExpression[callee.property.name=/^querySelector(All)?$/] > Literal.arguments:first-child:not([value=/^\\.js-|^\\[data-/])",
           message: 'JS-10 : sélecteur par classe js- ou attribut data-*',
         },
-        {
-          // JS-01 : exports nommés uniquement
-          selector: "ExportDefaultDeclaration, ExportSpecifier[exported.name='default']",
-          message: 'JS-01 : export nommé, pas d\'export par défaut',
-        },
-        {
-          // JS-01 : extension .js obligatoire dans les chemins relatifs
-          selector: 'ImportDeclaration[source.value=/^\\.{1,2}\\//]:not([source.value=/\\.js$/])',
-          message: 'JS-01 : ajouter l\'extension .js au chemin d\'import',
-        },
+        ...MODULE_SYNTAX_RULES,
         {
           // JS-11 : pas de style direct (classList ou style.setProperty('--variable', …))
           selector: "AssignmentExpression[left.object.property.name='style']",
@@ -81,5 +84,22 @@ export default [
       // JS-33 : pas de console laissé (no-empty, dans recommended, interdit le catch vide)
       'no-console': 'error',
     },
+  },
+  {
+    // Outils du projet (scripts Node lancés en ligne de commande) : globales Node, sortie console
+    // permise. Les sélecteurs DOM qu'ils emploient (pages inspectées par Playwright) ne sont
+    // pas des accroches du site : JS-10 ne s'applique pas, les règles de module restent.
+    files: ['tooling/**/*.{js,mjs}'],
+    languageOptions: { globals: globals.node },
+    rules: {
+      'no-console': 'off',
+      'no-restricted-syntax': ['error', ...MODULE_SYNTAX_RULES],
+    },
+  },
+  {
+    // Copies conformes des outils du skill web-code-conventions : elles se mettent à jour depuis le
+    // skill, pas ici. Leur imbrication (4 niveaux, JS-32) est un avertissement à remonter au skill.
+    files: ['tooling/check-html.mjs', 'tooling/check-dead-code.mjs'],
+    rules: { 'max-depth': 'off' },
   },
 ];
