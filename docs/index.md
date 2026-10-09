@@ -53,7 +53,7 @@ Le site doit expliquer :
 │   ├── css/fonts.css           # @font-face des polices hébergées (assets/fonts/)
 │   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
 │   ├── css/base.css            # Reset, html, body
-│   ├── css/components/         # nav, footer, vagues, lien d'évitement, barre de progression, eyebrow
+│   ├── css/components/         # nav, footer, boutons, vagues, lien d'évitement, barre de progression, eyebrow
 │   ├── css/pages/              # home/ et participer/ (une section par fichier)
 │   ├── css/utilities.css       # .reveal, chargé en dernier
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)

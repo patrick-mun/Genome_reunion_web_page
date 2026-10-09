@@ -1,6 +1,6 @@
 /* ============================================================
    assets/css/pages/participer/inscription.css
-   Rôle : appel à s'inscrire : étapes, boutons et contact.
+   Rôle : appel à s'inscrire : étapes, rangée de boutons et contact.
    Pages concernées : participer.html.
    ============================================================ */
 
@@ -96,59 +96,9 @@
   color: var(--white-80);
 }
 
-/* ── BOUTONS D'INSCRIPTION ──
-   Bouton rouge EFS (--efs-red, réservé à cette page) et bouton à contour.
-   Le soulèvement au survol est neutralisé en mouvement réduit.
+/* ── ACTIONS ──
+   Rangée centrée des boutons d'inscription (.btn-efs, .btn-secondary : components/button.css).
 */
-.btn-efs {
-  display: inline-block;
-  padding: var(--space-4) var(--space-7);
-  font-family: var(--f-ui);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-2);
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--white);
-  background: var(--efs-red);
-  border-radius: var(--radius-pill);
-  transition:
-    transform 0.25s var(--ease-spring),
-    box-shadow 0.25s;
-}
-
-.btn-efs:hover {
-  box-shadow: var(--shadow-efs);
-  transform: translateY(-3px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .btn-efs:hover {
-    transform: none;
-  }
-}
-
-.btn-outline {
-  display: inline-block;
-  padding: var(--space-4) var(--space-6);
-  font-family: var(--f-ui);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-1);
-  text-decoration: none;
-  color: var(--white-60);
-  border: 1px solid var(--white-20);
-  border-radius: var(--radius-pill);
-  transition:
-    border-color 0.2s,
-    color 0.2s;
-}
-
-.btn-outline:hover {
-  color: var(--white);
-  border-color: var(--white-40);
-}
-
 .inscription-actions {
   display: flex;
   flex-wrap: wrap;

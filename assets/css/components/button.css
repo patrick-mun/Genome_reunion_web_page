@@ -1,0 +1,127 @@
+/* ============================================================
+   assets/css/components/button.css
+   Rôle : boutons et liens d'action, communs aux deux pages.
+   Pages concernées : toutes.
+   ============================================================ */
+
+/* ── BASE ──
+   .btn porte ce que partagent tous les boutons ; une variante de rôle s'y ajoute toujours
+   (class="btn btn-solid btn-primary", class="btn btn-secondary"…).
+*/
+.btn {
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+/* ── BOUTONS PLEINS ──
+   Pilule en capitales qui se soulève au survol et s'enfonce au clic.
+   Chaque variante donne son fond, son padding, son ombre (--btn-shadow) et sa hauteur de
+   soulèvement (--btn-lift). Le mouvement est neutralisé en mouvement réduit.
+*/
+.btn-solid {
+  display: inline-block;
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  color: var(--white);
+  border-radius: var(--radius-pill);
+  transition:
+    transform 0.25s var(--ease-spring),
+    box-shadow 0.25s;
+}
+
+.btn-solid:hover {
+  box-shadow: var(--btn-shadow);
+  transform: translateY(var(--btn-lift));
+}
+
+.btn-solid:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-solid:hover,
+  .btn-solid:active {
+    transform: none;
+  }
+}
+
+/* Appel principal (hero de l'accueil). */
+.btn-primary {
+  --btn-shadow: var(--shadow-accent-md);
+  --btn-lift: -3px;
+  padding: var(--space-4) var(--space-6);
+  letter-spacing: var(--tracking-2);
+  background: var(--coral-deep);
+}
+
+/* Appel principal en grand format (fin de l'accueil). */
+.btn-primary-lg {
+  --btn-shadow: var(--shadow-accent-lg);
+  --btn-lift: -4px;
+  padding: var(--space-5) var(--space-7);
+  letter-spacing: 0.1em;
+  background: var(--coral-deep);
+}
+
+/* Inscription aux couleurs du partenaire EFS (page Participer). */
+.btn-efs {
+  --btn-shadow: var(--shadow-efs);
+  --btn-lift: -3px;
+  padding: var(--space-4) var(--space-7);
+  letter-spacing: var(--tracking-2);
+  background: var(--efs-red);
+}
+
+/* ── LIENS D'ACTION SECONDAIRES ──
+   Texte blanc translucide sur fond sombre, qui s'éclaircit au survol.
+*/
+
+/* Action secondaire à contour (page Participer). */
+.btn-secondary {
+  display: inline-block;
+  padding: var(--space-4) var(--space-6);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-1);
+  color: var(--white-60);
+  border: 1px solid var(--white-20);
+  border-radius: var(--radius-pill);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.btn-secondary:hover {
+  color: var(--white);
+  border-color: var(--white-40);
+}
+
+/* Lien vers la section suivante, avec une flèche qui descend au survol (hero de l'accueil). */
+.btn-scroll {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-1);
+  color: var(--white-60);
+  transition: color 0.2s;
+}
+
+.btn-scroll:hover {
+  color: var(--white);
+}
+
+.btn-scroll::after {
+  transition: transform 0.2s;
+  content: '↓';
+}
+
+.btn-scroll:hover::after {
+  transform: translateY(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-scroll:hover::after {
+    transform: none;
+  }
+}
