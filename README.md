@@ -152,3 +152,19 @@ Avant diffusion externe, vérifier :
 ## État actuel
 
 Le dépôt a été restauré sur `main` après une correction globale trop rapide. Les prochaines corrections doivent donc être menées étape par étape, avec validation visuelle après chaque PR.
+
+## Contrôles qualité
+
+Les conventions de code (CSS, HTML, JS) sont vérifiées automatiquement.
+
+```bash
+npm ci               # installe les outils et active le hook pré-commit
+npm run verify       # lint + formatage + tests (ce que lance le hook)
+npm run lint         # Stylelint, html-validate, ESLint, contrôles HTML et classes CSS inutilisées
+npm run format       # reformate avec Prettier
+npm test             # tests unitaires (node --test)
+```
+
+- **Avant chaque commit** : `.githooks/pre-commit` lance `npm run verify`. Contournement ponctuel : `git commit --no-verify`.
+- **Sur GitHub** : l'action `.github/workflows/verify.yml` lance les mêmes contrôles à chaque pull request et à chaque push sur `main`.
+- Pour rendre la vérification obligatoire avant fusion, activer la règle de protection de branche « Require status checks » sur `main` (réglage GitHub, pas dans le dépôt).

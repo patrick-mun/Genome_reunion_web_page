@@ -141,11 +141,16 @@ Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-�
 - `donut-chart.js` : animation du donut au scroll (`.js-donut`) ;
 - `motion.js` : préférence `prefers-reduced-motion` et état de pause manuelle (classe `is-motion-paused` sur `<html>`) ;
 - `motion-toggle.js` : bouton « Mettre en pause les animations » du pied de page (`.js-motion-toggle`), qui suspend les vagues, la parallaxe, les oiseaux et le margouillat (WCAG 2.2.2) ;
+- `geometry.js`, `random.js`, `animation-loop.js` : calculs purs partagés (Bézier, angles, tirages injectables) et boucle `requestAnimationFrame` ;
+- `bird-flight.js`, `bird-svg.js` et `paille-en-queue.js` : trajectoires et pose des oiseaux (purs), balisage SVG, puis branchement au DOM ;
+- `gecko-motion.js`, `gecko-pose.js`, `gecko-svg.js` et `margouillat.js` : même découpage pour le margouillat ;
 - `placement.js` : pose `--x`, `--y` et `--angle` sur un élément animé (utilisé par les animations du hero et des sections).
 
 Le JS ne pose aucun style direct (JS-11) : il bascule des classes d'état (`is-revealed`, `is-drawn`, `is-born`, `is-scrolled`) ou pose des variables CSS (`--progress`, `--reveal-delay`, `--parallax-x`, `--x`…) que le CSS consomme.
 
 Chaque module vérifie que ses éléments existent avant de s'en servir.
+
+Tests : la logique pure (modules sans `document` ni `window`) est testée par des fichiers `*.test.js` voisins, lancés par `npm test` (`node --test`, aucune dépendance). `fake-random.js` fournit des générateurs déterministes.
 
 Mouvement réduit : en `prefers-reduced-motion: reduce`, les animations JS (parallaxe, oiseaux, margouillat, compteurs, donut) ne démarrent pas, et le CSS neutralise chaque mouvement par un bloc `@media` placé juste après sa règle.
 

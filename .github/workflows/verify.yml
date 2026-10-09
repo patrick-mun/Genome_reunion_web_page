@@ -1,0 +1,39 @@
+# Vérifie les conventions web (CSS, HTML, JS), le formatage et les tests à chaque
+# pull request et à chaque push sur main. Les mêmes contrôles tournent en local
+# avant chaque commit (.githooks/pre-commit) : voir « npm run verify ».
+name: Vérification des conventions
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # CSS (Stylelint), HTML (html-validate + check-html), JS (ESLint), classes CSS inutilisées
+      - name: Lint
+        run: npm run lint
+
+      - name: Formatage (Prettier)
+        run: npm run format:check
+
+      # Tests unitaires (JS-60)
+      - name: Tests
+        run: npm test

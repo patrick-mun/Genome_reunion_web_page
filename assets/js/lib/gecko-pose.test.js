@@ -1,0 +1,73 @@
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import { geckoPose, tailAngles, tailOutline } from './gecko-pose.js';
+
+const gecko = { phase: 1.3, run: 0.6, idleOff: 2.1 };
+
+test('tailOutline produit un chemin SVG fermé', () => {
+  const d = tailOutline([0, 0, 0], 5, 0.7);
+  assert.match(d, /^M[-\d.,]+(L[-\d.,]+)+Z$/);
+});
+
+test('tailOutline compte deux points par os de colonne, plus la base', () => {
+  const angles = new Array(11).fill(0);
+  const d = tailOutline(angles, 5, 0.7);
+  assert.equal(d.split('L').length, 2 * 12);
+});
+
+test("tailOutline s'effile jusqu'à une pointe de largeur nulle", () => {
+  const d = tailOutline([0, 0, 0, 0], 5, 0.7);
+  const points = d
+    .slice(1, -1)
+    .split('L')
+    .map((p) => p.split(',').map(Number));
+  const n = points.length / 2;
+  assert.deepEqual(points[n - 1], points[n], 'gauche et droite se rejoignent à la pointe');
+  assert.ok(Math.abs(points[0][0] - points.at(-1)[0]) > 1, 'la base est large');
+});
+
+test("tailOutline sans flexion est symétrique autour de l'axe de la queue", () => {
+  const d = tailOutline([0, 0, 0], 4, 1);
+  const points = d
+    .slice(1, -1)
+    .split('L')
+    .map((p) => p.split(',').map(Number));
+  assert.equal(Math.round((points[0][0] + points.at(-1)[0]) * 100) / 100, 90);
+});
+
+test('tailOutline accepte une queue sans os', () => {
+  assert.match(tailOutline([], 5, 0.7), /^M.*Z$/);
+});
+
+test('tailAngles renvoie une flexion finie par os, de faible amplitude', () => {
+  const angles = tailAngles(gecko, 1234);
+  assert.equal(angles.length, 11);
+  assert.ok(angles.every((a) => Number.isFinite(a) && Math.abs(a) < 0.25));
+});
+
+test("tailAngles est plus ample à la course qu'au repos", () => {
+  const amplitude = (run) =>
+    Math.max(...tailAngles({ phase: 0.9, run, idleOff: 0 }, 0).map(Math.abs));
+  assert.ok(amplitude(1) > amplitude(0));
+});
+
+test('geckoPose reste dans les plages attendues', () => {
+  const pose = geckoPose(gecko, 5000);
+  assert.ok(Math.abs(pose.legSwing) <= 24);
+  assert.ok(Math.abs(pose.bodySway) <= 3);
+  assert.ok(Math.abs(pose.headIdle) <= 9);
+  assert.match(pose.tailOuter, /^M.*Z$/);
+  assert.match(pose.tailInner, /^M.*Z$/);
+});
+
+test('geckoPose immobile : pattes et corps au repos', () => {
+  const pose = geckoPose({ phase: 1, run: 0, idleOff: 0 }, 0);
+  assert.equal(pose.bodySway, 0);
+  assert.ok(Math.abs(pose.legSwing) <= 24 * 0.25);
+});
+
+test('la queue extérieure est plus large que la queue intérieure', () => {
+  const pose = geckoPose({ phase: 0, run: 0, idleOff: 0 }, 0);
+  const firstX = (d) => Number(d.slice(1).split('L')[0].split(',')[0]);
+  assert.ok(firstX(pose.tailOuter) < firstX(pose.tailInner));
+});

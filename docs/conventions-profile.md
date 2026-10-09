@@ -9,9 +9,8 @@ projet ; les règles du skill s'appliquent pour tout ce qui n'est pas dérogé i
 
 ## Outils
 
-Commande de contrôle lancée avant chaque commit : `npm run lint`
-(Stylelint, html-validate, ESLint, `check-html.mjs`, `check-dead-code.mjs`).
-Formatage : `npm run format` ; tests : `npm test`.
+Commande de contrôle lancée avant chaque commit : `npm run verify` (lint, formatage, tests), par le hook `.githooks/pre-commit` installé par `npm ci`, et par la GitHub Action `.github/workflows/verify.yml` à chaque pull request et push sur `main`.
+`npm run lint` regroupe Stylelint, html-validate, ESLint, `check-html.mjs` et `check-dead-code.mjs`. Formatage : `npm run format` ; tests : `npm test`.
 
 Les versions installées sont figées dans `package-lock.json`.
 

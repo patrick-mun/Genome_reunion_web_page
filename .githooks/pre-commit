@@ -1,0 +1,8 @@
+#!/bin/sh
+# Pré-commit : lance les mêmes contrôles que la CI (lint, formatage, tests).
+# Contournement ponctuel : git commit --no-verify
+if [ ! -d node_modules ]; then
+  echo "node_modules absent : lancer « npm ci » avant de commiter." >&2
+  exit 1
+fi
+npm run --silent verify
