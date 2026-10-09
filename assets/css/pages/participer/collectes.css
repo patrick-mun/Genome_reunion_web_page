@@ -14,7 +14,7 @@
 }
 
 .collectes-inner {
-  max-width: 1080px;
+  max-width: var(--content-width);
   margin: 0 auto;
 }
 

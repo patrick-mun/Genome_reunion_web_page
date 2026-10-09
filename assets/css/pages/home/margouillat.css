@@ -5,15 +5,15 @@
    ============================================================ */
 
 /* ── MARGOUILLAT ──
-   Couche pleine page insérée par margouillat.js. z-index 1 : au-dessus des fonds de section
-   (statiques) mais sous les contenus remontés à z-index 2, donc sous les cartes et les textes.
+   Couche pleine page insérée par margouillat.js. --layer-1 : au-dessus des fonds de section
+   (statiques) mais sous les contenus remontés à --layer-2, donc sous les cartes et les textes.
    Position et angle via --x, --y et --angle.
 */
 .gecko-layer {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: var(--layer-1);
   width: 100%;
   height: 0;
   overflow: visible;

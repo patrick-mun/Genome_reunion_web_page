@@ -198,16 +198,20 @@ Travaux récents effectués :
 - ✅ Conformité aux conventions de code web (CSS, HTML, JS) : outillage, tokens, CSS découpé par section, contrastes AA, accessibilité, contrôles automatiques (`npm run verify`, hook pré-commit, GitHub Action).
 - ✅ Hygiène du dépôt : favicon, `.nvmrc` et `engines`, Dependabot.
 - ✅ Polices Google hébergées dans `assets/fonts/` : plus aucune requête vers un service tiers (performance, RGPD).
+- ✅ Sources uniques (sprite SVG, couleurs, anneau calculé depuis la légende) et test de synchronisation des deux pages.
+- ✅ Jetons de typographie et d'espacements responsives, préfixes de classes par composant, boutons regroupés dans `components/button.css`.
 
 ---
 
 ## Corrections à venir
 
-1. `index.html` : remplacer `4 IA` par une formulation plus institutionnelle.
-2. `index.html` : adoucir les promesses médicales trop fortes.
-3. `index.html` : stabiliser le vocabulaire autour de `référentiel génomique réunionnais`.
-4. `participer.html` : sécuriser les dates de collecte et les promesses de bilan sanguin.
-5. `assets/css/` : ajustements visuels uniquement après validation des contenus.
+Les corrections éditoriales sont suivies dans `PLAN_CORRECTION.md` (tableau d'avancement, étapes 2 à 6) :
+le texte actuel a déjà été repris (plus de « 4 IA », « référentiel génomique réunionnais » employé),
+mais chaque étape reste à valider par l'équipe projet. Restent notamment :
+
+1. `participer.html` : dates de collecte et ouverture réelle des inscriptions à confirmer.
+2. `index.html` et `participer.html` : statut de chaque partenaire à confirmer ; lien du logo POPgen à ajouter.
+3. `assets/css/` : ajustements visuels uniquement après validation des contenus.
 
 ---
 

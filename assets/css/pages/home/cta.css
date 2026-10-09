@@ -19,7 +19,7 @@
 
 .cta-inner {
   position: relative;
-  z-index: 2; /* au-dessus de la couche margouillat (z-index 1) */
+  z-index: var(--layer-2); /* au-dessus de la couche margouillat (--layer-1) */
 }
 
 .cta-title {

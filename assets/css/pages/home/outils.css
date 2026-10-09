@@ -45,7 +45,7 @@
   padding: var(--space-7) var(--space-7);
   background: var(--white-05);
   cursor: default;
-  transition: background 0.25s;
+  transition: background var(--duration-2);
 }
 
 .outil-card:hover {

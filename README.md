@@ -72,21 +72,21 @@ Règle principale :
 
 > Une correction = une branche = une PR = un rendu vérifiable.
 
-Ordre recommandé :
+Le JavaScript et la qualité du code sont traités. Restent, dans cet ordre, les étapes éditoriales
+à valider par l'équipe projet (détail dans [`docs/PLAN_CORRECTION.md`](docs/PLAN_CORRECTION.md)) :
 
-1. Corriger le JavaScript sans changer le rendu.
-2. Corriger le bloc des chiffres clés.
-3. Adoucir les formulations médicales trop fortes.
-4. Stabiliser le vocabulaire scientifique.
-5. Sécuriser la page participation.
-6. Corriger les partenaires et statuts institutionnels.
-7. Ajuster le rendu visuel si nécessaire.
+1. Valider le bloc des chiffres clés.
+2. Valider les formulations médicales.
+3. Valider le vocabulaire scientifique.
+4. Sécuriser la page participation (dates de collecte, ouverture des inscriptions).
+5. Confirmer les partenaires et statuts institutionnels.
 
 ---
 
 ## Installation locale
 
-Le site est statique. Il peut être ouvert directement dans un navigateur.
+Le site est statique, sans étape de génération. Ses scripts sont des modules ES : il doit être servi
+par HTTP (voir ci-dessous), l'ouverture directe du fichier (`file://`) ne charge pas le JavaScript.
 
 Pour récupérer le dépôt :
 
@@ -106,9 +106,7 @@ git pull origin main
 
 ## Visualisation locale simple
 
-Option directe : ouvrir `index.html` dans le navigateur.
-
-Option avec serveur local Python :
+Lancer un serveur local depuis la racine du dépôt (les modules ES ne se chargent pas en `file://`) :
 
 ```bash
 python -m http.server 8000
@@ -157,7 +155,7 @@ Avant diffusion externe, vérifier :
 
 ## État actuel
 
-Le dépôt a été restauré sur `main` après une correction globale trop rapide. Les prochaines corrections doivent donc être menées étape par étape, avec validation visuelle après chaque PR.
+Le code est conforme aux conventions du skill `web-code-conventions` (profil : [`docs/conventions-profile.md`](docs/conventions-profile.md)) et vérifié automatiquement (voir ci-dessous). Les étapes éditoriales restent à valider par l'équipe projet ; chaque correction est menée dans sa propre PR, avec vérification du rendu.
 
 ## Contrôles qualité
 

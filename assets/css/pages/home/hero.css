@@ -23,7 +23,7 @@
 
 .hero-inner {
   position: relative;
-  z-index: 1;
+  z-index: var(--layer-1);
   max-width: 900px;
 }
 
@@ -38,8 +38,8 @@
   opacity: 0;
   transform: translateY(20px);
   transition:
-    opacity 0.8s var(--ease-out),
-    transform 0.8s var(--ease-out);
+    opacity var(--duration-5) var(--ease-out),
+    transform var(--duration-5) var(--ease-out);
 }
 
 .hero-title {
@@ -74,8 +74,8 @@
   opacity: 0;
   transform: translateY(16px);
   transition:
-    opacity 0.8s var(--ease-out) 0.25s,
-    transform 0.8s var(--ease-out) 0.25s;
+    opacity var(--duration-5) var(--ease-out) 0.25s,
+    transform var(--duration-5) var(--ease-out) 0.25s;
 }
 
 .hero-body {
@@ -88,8 +88,8 @@
   opacity: 0;
   transform: translateY(20px);
   transition:
-    opacity 0.8s var(--ease-out) 0.2s,
-    transform 0.8s var(--ease-out) 0.2s;
+    opacity var(--duration-5) var(--ease-out) 0.2s,
+    transform var(--duration-5) var(--ease-out) 0.2s;
 }
 
 .hero-actions {
@@ -100,8 +100,8 @@
   opacity: 0;
   transform: translateY(20px);
   transition:
-    opacity 0.8s var(--ease-out) 0.3s,
-    transform 0.8s var(--ease-out) 0.3s;
+    opacity var(--duration-5) var(--ease-out) 0.3s,
+    transform var(--duration-5) var(--ease-out) 0.3s;
 }
 
 /* État d'apparition posé par hero-reveal.js après le délai de data-hero-reveal. */

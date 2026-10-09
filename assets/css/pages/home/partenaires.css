@@ -36,8 +36,8 @@
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
   transition:
-    border-color 0.2s,
-    background 0.2s;
+    border-color var(--duration-1),
+    background var(--duration-1);
 }
 
 .partenaires-logo-link {
@@ -48,14 +48,14 @@
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
   transition:
-    border-color 0.2s,
-    background 0.2s;
+    border-color var(--duration-1),
+    background var(--duration-1);
 }
 
 .partenaires-logo-link .partenaires-logo {
   display: block;
   opacity: 0.75;
-  transition: opacity 0.2s;
+  transition: opacity var(--duration-1);
 }
 
 .partenaires-logo-link:hover .partenaires-logo {
