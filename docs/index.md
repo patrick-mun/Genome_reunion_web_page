@@ -174,6 +174,7 @@ Techniques utilisées :
 - vitesse continue : l'oiseau accélère en battant des ailes et ralentit en glissade ; sorti du hero, il patiente puis revient par un autre côté ;
 - ailes (`bird-wings.js`) : séries de battements (abaissement plus long que la remontée, poignet replié en remontée) et glissades ailes tendues, enchaînées sans saut ; chaque aile pivote à son épaule, et l'inclinaison en virage les déséquilibre (surtout en glissade) ;
 - queue : les brins suivent la courbe des virages avec retard et frémissent légèrement ;
+- dessin (`bird-svg.js`) : paille-en-queue à brins blancs vu du dessous, ailes longues et pointues coudées au poignet, signes de l'espèce (barre noire en chevron et bout noir des ailes, masque noir, bec jaune orangé, longs brins) ; chaque forme n'est écrite que pour le côté gauche, le côté droit en est le reflet (`mirrorPath`) ; couleurs dans `pages/home/paille-en-queue.css` (`--white`, `--navy-deep`, `--amber`) ;
 - désactivé si `prefers-reduced-motion` ou écran < 760 px ; figé par le bouton de pause.
 
 ---
