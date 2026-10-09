@@ -4,7 +4,10 @@
    Pages concernées : toutes.
    ============================================================ */
 
-/* ── PROGRESS BAR ── */
+/* ── BARRE DE PROGRESSION ──
+   Filet fixe de 2 px en haut de page. Sa largeur lit --progress, posée par progress-bar.js :
+   sans JavaScript, elle reste à 0 %.
+*/
 
 .progress-bar {
   position: fixed;

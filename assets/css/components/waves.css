@@ -4,10 +4,10 @@
    Pages concernées : accueil, participer.
    ============================================================ */
 
-/* ── VAGUES DU HERO ── */
-
-/* Vagues animées hero */
-
+/* ── VAGUES DU HERO ──
+   Trois vagues SVG de 200 % de large qui défilent à des vitesses différentes (wave-pan).
+   Neutralisées en mouvement réduit, figées par la pause manuelle (.is-motion-paused).
+*/
 .hero-waves {
   position: absolute;
   right: 0;

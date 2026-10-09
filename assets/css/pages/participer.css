@@ -5,7 +5,10 @@
    Pages concernées : participer.html.
    ============================================================ */
 
-/* ── PAGE PARTICIPER ── */
+/* ── HERO DE LA PAGE ──
+   Bandeau d'en-tête de la page : surtitre, titre et texte révélés par hero-reveal.js (is-revealed).
+   Plus court que le hero de l'accueil (52 vh) ; les vagues viennent de components/waves.css.
+*/
 .page-hero {
   position: relative;
   display: flex;
@@ -97,7 +100,10 @@
   }
 }
 
-/* ── PARTENARIAT EFS ── */
+/* ── PARTENARIAT EFS ──
+   Présentation du partenaire sur fond crème : texte à gauche, carte du logo à droite.
+   Une seule colonne sous 900 px.
+*/
 .partenariat {
   padding: var(--space-9) var(--space-7);
   background: var(--cream);
@@ -168,7 +174,10 @@
   color: var(--slate);
 }
 
-/* EFS Logo SVG card */
+/* ── CARTE DU LOGO EFS ──
+   Titre, grand logo et note sur les sites de collecte (.efs-logo-card-footer,
+   .efs-logo-card-note).
+*/
 .efs-logo-card {
   display: flex;
   flex-direction: column;
@@ -192,7 +201,10 @@
   color: var(--stone);
 }
 
-/* ── COLLECTES ── */
+/* ── COLLECTES ──
+   Calendrier sur fond sable : un bloc par site (.collecte-block), en grille d'une colonne sous 900 px.
+   Les badges se distinguent par leur couleur : .badge-nord en marine, .badge-sud en teal.
+*/
 .collectes {
   padding: var(--space-9) var(--space-7);
   background: var(--sand);
@@ -290,7 +302,10 @@
   color: var(--stone);
 }
 
-/* Table */
+/* ── TABLEAU DES COLLECTES ──
+   Une ligne par date (.collecte-row) : la dernière n'a pas de filet, le survol teinte la ligne.
+   Les colonnes sont .td-date, .td-lieu, .td-adresse et .td-horaire.
+*/
 .collecte-table {
   width: 100%;
   border-collapse: collapse;
@@ -355,7 +370,10 @@
   color: var(--teal);
 }
 
-/* ── INSCRIPTION CTA ── */
+/* ── INSCRIPTION ──
+   Appel à s'inscrire sur fond marine profond : titre, trois étapes numérotées, boutons et contact.
+   Les textes blancs translucides passent par les jetons d'opacité.
+*/
 .inscription {
   position: relative;
   padding: var(--space-9) var(--space-7);
@@ -439,6 +457,10 @@
   color: var(--white);
 }
 
+/* ── BOUTONS D'INSCRIPTION ──
+   Bouton rouge EFS (--efs-red, réservé à cette page) et bouton à contour.
+   Le soulèvement au survol est neutralisé en mouvement réduit.
+*/
 .btn-efs {
   display: inline-block;
   padding: var(--space-4) var(--space-7);
@@ -495,9 +517,10 @@
   gap: var(--space-4);
 }
 
-/* ── COMPLÉMENTS DE PAGE ── */
-
-/* Styles auparavant posés en attributs style="" dans participer.html. */
+/* ── COMPLÉMENTS DE PAGE ──
+   Classes à usage unique issues des anciens styles en ligne : logo du badge EFS, pied de la carte
+   logo, note du calendrier et contact. Chacune complète un composant défini plus haut.
+*/
 .efs-badge-logo {
   flex-shrink: 0;
 }

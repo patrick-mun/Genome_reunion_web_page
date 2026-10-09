@@ -4,7 +4,11 @@
    Pages concernées : index.html.
    ============================================================ */
 
-/* ── HERO ── */
+/* ── HERO ──
+   Bandeau d'accueil plein écran sur fond marine : surtitre créole, titre, sous-titre, texte et boutons.
+   Les textes sont révélés par hero-reveal.js (classe is-revealed) ; la parallaxe souris passe par `translate`.
+   Les vagues sont dans components/waves.css, les oiseaux plus bas dans ce fichier.
+*/
 
 .hero {
   position: relative;
@@ -148,6 +152,10 @@
   }
 }
 
+/* ── BOUTONS DU HERO ──
+   Bouton principal corail (ombre au survol) et lien secondaire à flèche.
+   Le soulèvement au survol est neutralisé en mouvement réduit.
+*/
 .btn-primary {
   padding: var(--space-4) var(--space-6);
   font-family: var(--f-ui);
@@ -212,7 +220,10 @@
   }
 }
 
-/* ── STATS BAR ── */
+/* ── CHIFFRES CLÉS ──
+   Barre de quatre chiffres sous le hero (deux colonnes sous 900 px). Chaque .stat-item apparaît au
+   défilement avec un délai --reveal-delay ; le compteur est animé par stats-counter.js.
+*/
 
 .stats {
   display: grid;
@@ -280,7 +291,10 @@
   color: var(--white-40);
 }
 
-/* ── SECTIONS COMMUNES ── */
+/* ── SECTIONS COMMUNES ──
+   Gabarit des sections de contenu : marges verticales et colonne centrée de 1080 px.
+   .section-inner passe devant la couche du margouillat (z-index 2 contre 1).
+*/
 
 .section {
   padding: var(--space-9) var(--space-7);
@@ -300,7 +314,10 @@
   margin: 0 auto;
 }
 
-/* ── SECTION PROBLÈME ── */
+/* ── SECTION PROBLÈME ──
+   Constat de départ : un grand chiffre (.big-stat) puis trois cartes (.pb-item) en grille.
+   Les cartes se soulèvent au survol, sauf en mouvement réduit.
+*/
 
 .probleme {
   background: var(--cream);
@@ -383,7 +400,10 @@
   color: var(--slate);
 }
 
-/* ── SECTION CE QUE ÇA CHANGE ── */
+/* ── SECTION CE QUE ÇA CHANGE ──
+   Trois cartes en grille, séparées par un filet de 2 px (--space-line) qui laisse voir
+   le fond translucide de .change-grid. Une seule colonne sous 900 px.
+*/
 
 .change {
   color: var(--white);
@@ -461,7 +481,10 @@
   color: var(--white-60);
 }
 
-/* ── SECTION CARREFOUR ── */
+/* ── SECTION CARREFOUR ──
+   Texte et chiffres à gauche, anneau des ascendances et légende à droite.
+   Les deux colonnes se superposent sous 900 px.
+*/
 
 .carrefour {
   background: var(--sand);
@@ -515,7 +538,10 @@
   color: var(--stone);
 }
 
-/* Donut chart CSS */
+/* ── ANNEAU DES ASCENDANCES ──
+   SVG en anneau pivoté de -90° pour partir du haut. Ses arcs sont tracés par donut-chart.js,
+   qui ajoute la classe is-drawn au svg quand il entre dans l'écran.
+*/
 
 .donut {
   width: 100%;
@@ -535,6 +561,10 @@
   }
 }
 
+/* ── LÉGENDE DE L'ANNEAU ──
+   Une ligne par origine (.legend-item). La couleur de chaque pastille vient de --c, définie par
+   .legend-dot-<origine> ; legend-dots.js ajoute le repère .legend-dot-marker qui la porte.
+*/
 .ancestry-legend {
   display: flex;
   flex-direction: column;
@@ -608,7 +638,9 @@
   color: var(--stone);
 }
 
-/* ── SECTION MÉTHODE ── */
+/* ── SECTION MÉTHODE ──
+   Trois étapes numérotées (.step) en trois colonnes, une seule sous 900 px.
+*/
 
 .methode {
   background: var(--cream);
@@ -680,7 +712,10 @@
   color: var(--stone);
 }
 
-/* ── SECTION OUTILS ── */
+/* ── SECTION OUTILS ──
+   Quatre modules (.outil-card) en deux colonnes, séparés par un filet de 2 px sur fond translucide.
+   Une seule colonne sous 900 px.
+*/
 
 .outils {
   background: var(--navy-deep);
@@ -748,7 +783,10 @@
   color: var(--white-40);
 }
 
-/* ── SECTION ÉQUIPE ── */
+/* ── SECTION ÉQUIPE ──
+   Cinq cartes (.team-card) en grille, deux colonnes sous 900 px. Chaque avatar prend sa teinte
+   de .team-avatar-1 à -5. Les partenaires suivent, en bas de la section.
+*/
 
 .equipe {
   background: var(--cream);
@@ -858,7 +896,10 @@
   color: var(--stone);
 }
 
-/* Partenaires */
+/* ── PARTENAIRES ──
+   Rangée de logos et d'étiquettes. Les logos (.partner-logo) sont atténués au repos et
+   reprennent leur pleine opacité au survol de leur lien.
+*/
 
 .partners-title {
   margin-bottom: var(--space-5);
@@ -923,7 +964,10 @@
   border-color: var(--teal);
 }
 
-/* ── CTA ── */
+/* ── APPEL À PARTICIPER ──
+   Appel final sur fond marine avec le grand bouton .btn-large (ombre corail au survol).
+   overflow: hidden contient les couches décoratives ; le contenu reste devant le margouillat.
+*/
 
 .cta {
   position: relative;
@@ -994,7 +1038,10 @@
   }
 }
 
-/* ── PAILLE-EN-QUEUE (confiné au hero) ── */
+/* ── PAILLE-EN-QUEUE ──
+   Couche créée par paille-en-queue.js dans le hero (aria-hidden, sans interaction).
+   Position et angle via --x, --y et --angle ; l'oiseau n'apparaît qu'avec is-born (opacité --opacity).
+*/
 
 .bird-layer {
   position: absolute;
@@ -1038,13 +1085,11 @@
   stroke-linecap: round;
 }
 
-/* ── MARGOUILLAT (gecko des sections) ── */
-
-/* Couche pleine page insérée par margouillat.js. z-index 1 : au-dessus des
-   fonds de section (statiques, peints sous les éléments positionnés) mais
-   sous les contenus remontés à z-index 2 juste après. Le margouillat passe
-   ainsi sous les cartes et les textes tout en restant visible sur les fonds. */
-
+/* ── MARGOUILLAT ──
+   Couche pleine page insérée par margouillat.js. z-index 1 : au-dessus des fonds de section
+   (statiques) mais sous les contenus remontés à z-index 2, donc sous les cartes et les textes.
+   Position et angle via --x, --y et --angle.
+*/
 .gecko-layer {
   position: absolute;
   top: 0;

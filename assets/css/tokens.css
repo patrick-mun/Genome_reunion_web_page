@@ -6,7 +6,9 @@
    ============================================================ */
 
 :root {
-  /* ── COULEURS ── */
+  /* ── COULEURS ──
+     Palette du projet. Aucune couleur en dur ailleurs : les règles passent par var(--…).
+  */
   --navy: #0f3a56;
   --navy-deep: #091f30;
   --teal: #1e6e8c;
@@ -22,7 +24,10 @@
   --white: #fff;
   --efs-red: #e2001a; /* rouge de la marque EFS, réservé à la page Participer */
 
-  /* ── OPACITÉS (CSS-14) : --<couleur>-<pourcentage> ── */
+  /* ── OPACITÉS ──
+     Variantes translucides des couleurs, en --<couleur>-<pourcentage> (CSS-14) : 5, 10, 20, 40, 60, 80, 95.
+     Une nouvelle opacité demande un nouveau jeton, pas un rgba() dans une règle.
+  */
   --navy-05: rgb(15 58 86 / 5%);
   --navy-10: rgb(15 58 86 / 10%);
   --navy-20: rgb(15 58 86 / 20%);
@@ -41,12 +46,17 @@
   --cream-95: rgb(251 250 247 / 95%);
   --efs-red-40: rgb(226 0 26 / 40%);
 
-  /* ── POLICES ── */
+  /* ── POLICES ──
+     Spectral pour les titres, DM Sans pour le texte, Space Grotesk pour l'interface.
+  */
   --f-display: 'Spectral', georgia, serif;
   --f-body: 'DM Sans', system-ui, sans-serif;
   --f-ui: 'Space Grotesk', system-ui, sans-serif;
 
-  /* ── ESPACEMENT (CSS-11) : rang 1 à 9, plus deux filets ── */
+  /* ── ESPACEMENT ──
+     Échelle de rang 1 à 9 (4 à 120 px) pour margin, padding et gap (CSS-11).
+     --space-hairline et --space-line servent aux filets des grilles à séparateurs.
+  */
   --space-hairline: 1px;
   --space-line: 2px;
   --space-1: 4px;
@@ -59,7 +69,10 @@
   --space-8: 72px;
   --space-9: 120px;
 
-  /* ── TEXTE (CSS-12) : tailles fixes par rôle, tailles fluides par rang ── */
+  /* ── TEXTE ──
+     Tailles fixes par rôle (--text-2xs à --text-2xl) et tailles fluides par rang
+     (--text-fluid-1 à 9, clamp()) pour les titres et les textes d'accroche (CSS-12).
+  */
   --text-2xs: 0.65rem;
   --text-xs: 0.75rem;
   --text-sm: 0.8rem;
@@ -78,14 +91,19 @@
   --text-fluid-8: clamp(3.2rem, 8vw, 7.5rem);
   --text-fluid-9: clamp(6rem, 16vw, 13rem);
 
-  /* ── RAYONS ── */
+  /* ── RAYONS ──
+     Rayons de bordure de xs à lg, plus --radius-pill pour les boutons et étiquettes en pilule.
+  */
   --radius-xs: 2px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-pill: 100px;
 
-  /* ── OMBRES ── */
+  /* ── OMBRES ──
+     Ombres des cartes (sm, md, lg) et des boutons (accent-*, efs).
+     Leurs couleurs viennent des jetons d'opacité ci-dessus.
+  */
   --shadow-sm: 0 4px 24px var(--navy-05);
   --shadow-md: 0 12px 32px var(--navy-10);
   --shadow-lg: 0 16px 40px var(--navy-10);
@@ -94,7 +112,9 @@
   --shadow-accent-lg: 0 20px 48px var(--coral-40);
   --shadow-efs: 0 16px 40px var(--efs-red-40);
 
-  /* ── MOUVEMENT ── */
+  /* ── MOUVEMENT ──
+     Courbes d'animation partagées : --ease-out pour les apparitions, --ease-spring pour le rebond des boutons.
+  */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
