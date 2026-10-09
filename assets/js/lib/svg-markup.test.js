@@ -1,13 +1,14 @@
 /* ============================================================
    assets/js/lib/svg-markup.test.js
-   Rôle : tests de bird-svg.js et gecko-svg.js (balisage SVG de l'oiseau et du margouillat (accroches, absence de couleur)).
+   Rôle : tests de bird-svg.js et gecko-svg.js (balisage SVG de l'oiseau et du margouillat : accroches,
+   absence de couleur, transformations des ailes et de la queue).
    Pages concernées : aucune (tests unitaires, lancés par node --test).
    Accroches : aucune.
    ============================================================ */
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { buildBirdSvg } from './bird-svg.js';
+import { BIRD_PIVOTS, buildBirdSvg, formatTailTransform, formatWingTransform } from './bird-svg.js';
 import { buildGeckoSvg } from './gecko-svg.js';
 
 const countOf = (text, pattern) => (text.match(pattern) || []).length;
@@ -22,8 +23,25 @@ test('buildBirdSvg est un svg unique et fermé', () => {
 
 test('buildBirdSvg expose les accroches animées par paille-en-queue.js', () => {
   const svg = buildBirdSvg();
-  assert.match(svg, /data-wings/);
-  assert.match(svg, /data-tail/);
+  for (const hook of ['data-wing-left', 'data-wing-right', 'data-tail']) {
+    assert.equal(countOf(svg, new RegExp(`${hook}[ =>]`, 'g')), 1, hook);
+  }
+});
+
+test('formatWingTransform fait pivoter et raccourcit chaque aile autour de son épaule', () => {
+  const pose = { span: 0.75, sweep: 4 };
+  const { x, y } = BIRD_PIVOTS.leftShoulder;
+  assert.equal(
+    formatWingTransform('left', pose),
+    `translate(${x},${y}) rotate(4.00) scale(0.750,1) translate(${-x},${-y})`,
+  );
+  // Balayage vers l'avant : l'aile droite tourne dans l'autre sens.
+  assert.match(formatWingTransform('right', pose), /^translate\(38,22\) rotate\(-4\.00\)/);
+});
+
+test('formatTailTransform fait pivoter les brins à leur base', () => {
+  const { x, y } = BIRD_PIVOTS.tail;
+  assert.equal(formatTailTransform(-3.456), `rotate(-3.46 ${x} ${y})`);
 });
 
 test('buildBirdSvg ne porte aucun style en ligne', () => {

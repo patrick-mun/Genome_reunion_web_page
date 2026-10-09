@@ -2,12 +2,13 @@
    assets/js/lib/paille-en-queue.js
    Rôle : paille-en-queue du hero, vol décoratif continu sans pose sur les lettres.
    Pages concernées : accueil.
-   Accroches : .js-hero, .js-bird-layer (couche créée par ce module). Position via --x, --y, --angle.
+   Accroches : .js-hero, .js-bird-layer (couche créée par ce module), [data-wing-left],
+   [data-wing-right] et [data-tail] dans chaque oiseau. Position via --x, --y, --angle.
    ============================================================ */
 
 import { startFrameLoop } from './animation-loop.js';
 import { advanceBird, computeBirdPose, createBird } from './bird-flight.js';
-import { buildBirdSvg } from './bird-svg.js';
+import { buildBirdSvg, formatTailTransform, formatWingTransform } from './bird-svg.js';
 import { isMotionPaused, prefersReducedMotion } from './motion.js';
 import { placeElement } from './placement.js';
 
@@ -33,7 +34,8 @@ function createLayer(hero) {
  * Crée l'élément d'un oiseau dans la couche, à la taille de son état, et retrouve ses parties animées.
  * @param {HTMLElement} layer Couche qui reçoit l'oiseau.
  * @param {{cw: number, ch: number}} bird État de l'oiseau (largeur et hauteur du SVG).
- * @returns {{el: HTMLElement, wings: Element, tail: Element}} Élément, ailes et queue.
+ * @returns {{el: HTMLElement, leftWing: Element, rightWing: Element, tail: Element}} Élément,
+ *   ailes et queue.
  */
 function createBirdElement(layer, bird) {
   const el = document.createElement('div');
@@ -47,19 +49,18 @@ function createBirdElement(layer, bird) {
   svg.setAttribute('height', bird.ch);
   return {
     el,
-    wings: el.querySelector('[data-wings]'),
+    leftWing: el.querySelector('[data-wing-left]'),
+    rightWing: el.querySelector('[data-wing-right]'),
     tail: el.querySelector('[data-tail]'),
   };
 }
 
 function applyPose(bird, parts) {
   const pose = computeBirdPose(bird);
-  parts.wings.setAttribute(
-    'transform',
-    `translate(36,0) scale(${pose.wingSpan.toFixed(3)},1) translate(-36,0)`,
-  );
-  parts.tail.setAttribute('transform', `rotate(${pose.tailSway.toFixed(2)} 36 43)`);
-  placeElement(parts.el, bird.pos.x - bird.cw / 2, bird.pos.y - bird.ch / 2 + pose.bob, bird.angle);
+  parts.leftWing.setAttribute('transform', formatWingTransform('left', pose.wings.left));
+  parts.rightWing.setAttribute('transform', formatWingTransform('right', pose.wings.right));
+  parts.tail.setAttribute('transform', formatTailTransform(pose.tail));
+  placeElement(parts.el, bird.pos.x - bird.cw / 2, bird.pos.y - bird.ch / 2, bird.angle);
 }
 
 function trackHeroVisibility(hero) {
