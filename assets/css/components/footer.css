@@ -44,7 +44,7 @@ footer {
 .footer-link {
   font-family: var(--f-ui);
   font-size: var(--text-xs);
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-2);
   text-transform: uppercase;
   text-decoration: none;
   color: var(--white-60);

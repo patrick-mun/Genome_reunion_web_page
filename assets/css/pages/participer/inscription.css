@@ -33,9 +33,9 @@
   margin-bottom: var(--space-4);
   font-family: var(--f-display);
   font-size: var(--text-fluid-5);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-1);
+  letter-spacing: var(--tracking-neg-2);
   color: var(--white);
 }
 
@@ -47,7 +47,7 @@
 .inscription-sub {
   margin-bottom: var(--space-7);
   font-size: var(--text-md);
-  line-height: 1.7;
+  line-height: var(--leading-6);
   color: var(--white-60);
 }
 
@@ -73,21 +73,21 @@
   padding-top: var(--space-line);
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-3);
   color: var(--coral-light);
 }
 
 .inscription-step-text {
   font-size: var(--text-md);
-  line-height: 1.6;
+  line-height: var(--leading-5);
   color: var(--white-80);
 }
 
 .inscription-step-text strong {
   display: block;
   margin-bottom: var(--space-1);
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   color: var(--white);
 }
 
@@ -111,8 +111,8 @@
   padding: var(--space-4) var(--space-7);
   font-family: var(--f-ui);
   font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-2);
   text-transform: uppercase;
   text-decoration: none;
   color: var(--white);
@@ -139,8 +139,8 @@
   padding: var(--space-4) var(--space-6);
   font-family: var(--f-ui);
   font-size: var(--text-sm);
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-1);
   text-decoration: none;
   color: var(--white-60);
   border: 1px solid var(--white-20);

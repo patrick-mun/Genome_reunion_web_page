@@ -9,7 +9,7 @@ export default {
   ignoreFiles: ['**/*.avant.css'],
   reportDescriptionlessDisables: true, // CSS-25 et CSS-40 : dérogation = raison obligatoire
   rules: {
-    // CSS-10, 11, 12 : valeurs de conception uniquement via var(--…)
+    // CSS-10, 11, 12, 13 : valeurs de conception uniquement via var(--…)
     'scale-unlimited/declaration-strict-value': [
       [
         '/color$/',
@@ -19,6 +19,7 @@ export default {
         'padding',
         'gap',
         'font-size',
+        'font-weight',
         'border-radius',
         'box-shadow',
       ],
@@ -41,7 +42,7 @@ export default {
     'property-no-vendor-prefix': [true, { ignoreProperties: ['-webkit-backdrop-filter'] }],
     // CSS-15 : jetons nommés par rang ou par rôle, jamais par valeur (--space-24, --text-85…)
     'custom-property-pattern': [
-      '^(?!(?:space|text|radius|shadow)-(?:neg-)?\\d{2,}(?:px|rem|em)?$)[a-z][a-z0-9]*(-[a-z0-9]+)*$',
+      '^(?!(?:space|text|radius|shadow|weight|leading|tracking)-(?:neg-)?\\d{2,}(?:px|rem|em)?$)[a-z][a-z0-9]*(-[a-z0-9]+)*$',
       { message: 'CSS-15 : nommer le jeton par rang ou rôle (--space-3, --text-lg), pas par valeur (--space-24)' },
     ],
     // CSS-24 : pas de classe qualifiée par un élément (ul.menu)
@@ -107,6 +108,13 @@ export default {
       rules: {
         'scale-unlimited/declaration-strict-value': null,
         'declaration-property-value-disallowed-list': null,
+      },
+    },
+    {
+      // Les descripteurs @font-face décrivent les graisses des fichiers de police : var() n'y est pas permis.
+      files: ['**/fonts.css'],
+      rules: {
+        'scale-unlimited/declaration-strict-value': null,
       },
     },
   ],

@@ -59,8 +59,8 @@
   margin-bottom: var(--space-2);
   font-family: var(--f-display);
   font-size: var(--text-fluid-5);
-  font-weight: 300;
-  line-height: 1;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-1);
   color: var(--white);
 }
 
@@ -70,7 +70,7 @@
 
 .stat-label {
   font-size: var(--text-sm);
-  font-weight: 300;
-  line-height: 1.4;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-4);
   color: var(--white-60);
 }

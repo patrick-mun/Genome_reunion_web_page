@@ -22,7 +22,7 @@
   margin-bottom: var(--space-5);
   font-family: var(--f-display);
   font-size: var(--text-fluid-9);
-  font-weight: 300;
+  font-weight: var(--weight-light);
   line-height: 0.85;
   letter-spacing: -0.04em;
   color: var(--navy);
@@ -37,7 +37,7 @@
   max-width: 480px;
   margin: 0 auto var(--space-3);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: var(--leading-5);
   color: var(--stone);
 }
 
@@ -78,8 +78,8 @@
   margin-bottom: var(--space-3);
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-4);
   text-transform: uppercase;
   color: var(--coral-deep);
 }

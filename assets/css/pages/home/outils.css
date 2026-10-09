@@ -17,9 +17,9 @@
   margin-bottom: var(--space-8);
   font-family: var(--f-display);
   font-size: var(--text-fluid-4);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-2);
+  letter-spacing: var(--tracking-neg-1);
   color: var(--white);
 }
 
@@ -55,22 +55,22 @@
 .outil-num {
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-4);
   color: var(--coral-light);
 }
 
 .outil-title {
   font-family: var(--f-display);
   font-size: var(--text-xl);
-  font-weight: 400;
+  font-weight: var(--weight-regular);
   line-height: 1.2;
   color: var(--white);
 }
 
 .outil-body {
   font-size: var(--text-sm);
-  font-weight: 300;
-  line-height: 1.7;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-6);
   color: var(--white-60);
 }

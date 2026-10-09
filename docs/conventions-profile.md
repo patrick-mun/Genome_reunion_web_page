@@ -59,6 +59,12 @@ Texte : `--text-2xs` à `--text-2xl` (0,65 à 1,8 rem) et `--text-fluid-1` à `-
 Rayons : `--radius-xs`, `-sm`, `-md`, `-lg`, `-pill`.
 Ombres : `--shadow-sm`, `-md`, `-lg`, `-accent-sm`, `-accent-md`, `-accent-lg`, `-efs`.
 
+## Typographie (CSS-13)
+
+Graisses : `--weight-light`, `-regular`, `-medium`, `-semibold`, `-bold` (300 à 700), imposées par Stylelint hors `fonts.css` (les descripteurs `@font-face` n'acceptent pas `var()`).
+Interlignes : `--leading-1` à `--leading-6` (1 à 1,7). Approche : `--tracking-neg-2`, `-neg-1` (−0,03 et −0,02 em) et `--tracking-1` à `--tracking-5` (0,06 à 0,18 em).
+Seules les valeurs employées au moins trois fois sont des jetons ; les autres restent écrites dans leur règle (contrôle par relecture).
+
 ## Dérogations
 
 | Règle                                                                | Choix du projet                             | Raison                                                                                                           |

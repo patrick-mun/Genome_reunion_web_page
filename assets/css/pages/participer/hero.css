@@ -37,8 +37,8 @@
   margin-bottom: var(--space-4);
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-5);
   text-transform: uppercase;
   color: var(--teal-light);
   opacity: 0;
@@ -52,9 +52,9 @@
   margin-bottom: var(--space-5);
   font-family: var(--f-display);
   font-size: var(--text-fluid-7);
-  font-weight: 300;
+  font-weight: var(--weight-light);
   line-height: 0.95;
-  letter-spacing: -0.03em;
+  letter-spacing: var(--tracking-neg-2);
   color: var(--white);
   opacity: 0;
   transform: translateY(20px);
@@ -71,8 +71,8 @@
 .page-hero-sub {
   max-width: 540px;
   font-size: var(--text-fluid-1);
-  font-weight: 300;
-  line-height: 1.7;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-6);
   color: var(--white-60);
   opacity: 0;
   transform: translateY(16px);

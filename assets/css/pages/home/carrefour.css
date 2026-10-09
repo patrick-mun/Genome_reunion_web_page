@@ -31,9 +31,9 @@
   margin-bottom: var(--space-5);
   font-family: var(--f-display);
   font-size: var(--text-fluid-4);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: var(--weight-light);
+  line-height: var(--leading-2);
+  letter-spacing: var(--tracking-neg-1);
   color: var(--navy);
 }
 
@@ -45,7 +45,7 @@
 .carrefour-stat-num {
   font-family: var(--f-display);
   font-size: var(--text-2xl);
-  font-weight: 300;
+  font-weight: var(--weight-light);
   color: var(--navy);
 }
 
@@ -170,6 +170,6 @@
 .legend-pct {
   font-family: var(--f-ui);
   font-size: var(--text-xs);
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
   color: var(--stone);
 }

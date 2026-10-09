@@ -98,6 +98,40 @@
   --text-fluid-8: clamp(3.2rem, 8vw, 7.5rem);
   --text-fluid-9: clamp(6rem, 16vw, 13rem);
 
+  /* ── GRAISSES ──
+     Graisses employées par les règles. Chaque police hébergée ne couvre qu'une partie
+     de l'échelle (voir fonts.css) : le navigateur prend alors la graisse disponible la plus proche.
+  */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ── INTERLIGNES ──
+     Échelle de rang 1 à 6 (1 à 1,7), des titres serrés au texte courant (CSS-13).
+     Les valeurs employées moins de trois fois restent écrites dans leur règle.
+  */
+  --leading-1: 1;
+  --leading-2: 1.1;
+  --leading-3: 1.3;
+  --leading-4: 1.4;
+  --leading-5: 1.6;
+  --leading-6: 1.7;
+
+  /* ── APPROCHE ──
+     Espacement des lettres : rangs négatifs pour resserrer les grands titres,
+     rangs 1 à 5 pour espacer les libellés en capitales (CSS-13).
+     Les valeurs employées moins de trois fois restent écrites dans leur règle.
+  */
+  --tracking-neg-2: -0.03em;
+  --tracking-neg-1: -0.02em;
+  --tracking-1: 0.06em;
+  --tracking-2: 0.08em;
+  --tracking-3: 0.12em;
+  --tracking-4: 0.15em;
+  --tracking-5: 0.18em;
+
   /* ── RAYONS ──
      Rayons de bordure de xs à lg, plus --radius-pill pour les boutons et étiquettes en pilule.
   */
