@@ -1,6 +1,6 @@
 /* ============================================================
    assets/css/pages/home/paille-en-queue.css
-   Rôle : couche et styles des paille-en-queue animés dans le hero.
+   Rôle : couche et peinture des paille-en-queue animés dans le hero.
    Pages concernées : index.html.
    ============================================================ */
 
@@ -36,27 +36,26 @@
   overflow: visible;
 }
 
-.paille-body {
+/* ── PEINTURE DE L'OISEAU ──
+   Classes posées par bird-svg.js : plumage blanc, marques noires de l'espèce (masque, barre en
+   chevron, bout des ailes), liseré blanc qui garde la pointe des ailes lisible sur le ciel, bec.
+*/
+.paille-plumage {
   fill: var(--white);
 }
 
-.paille-wings path {
-  fill: var(--white-95);
+.paille-mark {
+  fill: var(--navy-deep);
 }
 
-.paille-tail {
+/* Épaisseur en unités du dessin (viewBox de 100) : environ 0,6 px à l'écran. */
+.paille-outline {
   fill: none;
   stroke: var(--white);
-  stroke-width: 1.1;
-  stroke-linecap: round;
+  stroke-width: 0.9;
+  stroke-linejoin: round;
 }
 
 .paille-beak {
-  opacity: 0.95;
-  fill: var(--coral);
-}
-
-.paille-eye {
-  opacity: 0.55;
-  fill: var(--navy);
+  fill: var(--amber);
 }

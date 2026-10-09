@@ -8,6 +8,7 @@
 
 import { clamp } from './geometry.js';
 import { getRandomBetween, pickRandomIndex } from './random.js';
+import { BIRD_VIEWBOX } from './bird-svg.js';
 import {
   advanceWings,
   computeThrust,
@@ -15,8 +16,6 @@ import {
   createWings,
   startFlapping,
 } from './bird-wings.js';
-
-export const BIRD_VIEWBOX = { width: 72, height: 82 };
 
 /* ── DESTINATIONS ──
    Points du « ciel » du hero, ou sorties hors champ. Une destination est choisie plutôt devant
@@ -255,6 +254,10 @@ export function computeTailAngle(bird) {
 /* ── ÉTAT ET IMAGE PAR IMAGE ── */
 
 const REENTRY_DELAY_S = { min: 0.8, max: 4 };
+// Taille du dessin à l'écran (fraction du viewBox de bird-svg.js) : 60 à 82 px d'envergure.
+// Les oiseaux les plus grands paraissent plus proches, donc un peu plus opaques.
+const SCALE_RANGE = { min: 0.6, max: 0.82 };
+const OPACITY_RANGE = { min: 0.93, max: 0.99 };
 const ENTRY_HEADING_JITTER_RAD = (15 * Math.PI) / 180;
 
 /**
@@ -265,14 +268,17 @@ const ENTRY_HEADING_JITTER_RAD = (15 * Math.PI) / 180;
  * @returns {object} État de l'oiseau (taille, vitesses, position, cap, ailes, délai…).
  */
 export function createBird(index, world, random = Math.random) {
-  const scale = getRandomBetween(0.68, 0.96, random);
+  const scale = getRandomBetween(SCALE_RANGE.min, SCALE_RANGE.max, random);
+  const nearness = (scale - SCALE_RANGE.min) / (SCALE_RANGE.max - SCALE_RANGE.min);
   const cruiseSpeed = getRandomBetween(86, 128, random);
   const start = getOffscreenPoint(world, index % 2 === 0 ? 'left' : 'right', random);
   const heading = start.x < 0 ? 0 : Math.PI;
   return {
     cw: BIRD_VIEWBOX.width * scale,
     ch: BIRD_VIEWBOX.height * scale,
-    finalOpacity: (0.78 + scale * 0.22).toFixed(2),
+    finalOpacity: (OPACITY_RANGE.min + nearness * (OPACITY_RANGE.max - OPACITY_RANGE.min)).toFixed(
+      2,
+    ),
     cruiseSpeed,
     speed: cruiseSpeed,
     pos: { x: start.x, y: start.y },

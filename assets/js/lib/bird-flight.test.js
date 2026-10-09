@@ -10,7 +10,6 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   advanceBird,
-  BIRD_VIEWBOX,
   chooseDestination,
   computeBirdPose,
   computeMaxTurnRate,
@@ -23,6 +22,7 @@ import {
   pickSkyPoint,
   wrapAngle,
 } from './bird-flight.js';
+import { BIRD_VIEWBOX } from './bird-svg.js';
 import { createSeededRandom, createSequence } from './fake-random.js';
 
 const world = { width: 1280, height: 860 };
@@ -115,8 +115,9 @@ test('createBird crée un oiseau hors du hero, non encore apparu, tourné vers l
   assert.ok(bird.pos.x < 0);
   assert.equal(bird.heading, 0);
   assert.equal(bird.angle, 90);
-  assert.ok(bird.cw >= BIRD_VIEWBOX.width * 0.68 && bird.cw <= BIRD_VIEWBOX.width * 0.96);
-  assert.ok(Number(bird.finalOpacity) >= 0.78 && Number(bird.finalOpacity) <= 1);
+  assert.ok(bird.cw >= BIRD_VIEWBOX.width * 0.6 && bird.cw <= BIRD_VIEWBOX.width * 0.82);
+  assert.equal(bird.ch / bird.cw, BIRD_VIEWBOX.height / BIRD_VIEWBOX.width);
+  assert.ok(Number(bird.finalOpacity) >= 0.93 && Number(bird.finalOpacity) <= 0.99);
   assert.equal(bird.speed, bird.cruiseSpeed);
 });
 

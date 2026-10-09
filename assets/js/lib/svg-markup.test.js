@@ -8,14 +8,21 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { BIRD_PIVOTS, buildBirdSvg, formatTailTransform, formatWingTransform } from './bird-svg.js';
+import {
+  BIRD_PIVOTS,
+  BIRD_VIEWBOX,
+  buildBirdSvg,
+  formatTailTransform,
+  formatWingTransform,
+  mirrorPath,
+} from './bird-svg.js';
 import { buildGeckoSvg } from './gecko-svg.js';
 
 const countOf = (text, pattern) => (text.match(pattern) || []).length;
 
 test('buildBirdSvg est un svg unique et fermé', () => {
   const svg = buildBirdSvg();
-  assert.ok(svg.startsWith('<svg viewBox="0 0 72 82">'));
+  assert.ok(svg.startsWith(`<svg viewBox="0 0 ${BIRD_VIEWBOX.width} ${BIRD_VIEWBOX.height}">`));
   assert.ok(svg.endsWith('</svg>'));
   assert.equal(countOf(svg, /<svg/g), 1);
   assert.equal(countOf(svg, /<g[ >]/g), countOf(svg, /<\/g>/g));
@@ -36,7 +43,22 @@ test('formatWingTransform fait pivoter et raccourcit chaque aile autour de son �
     `translate(${x},${y}) rotate(4.00) scale(0.750,1) translate(${-x},${-y})`,
   );
   // Balayage vers l'avant : l'aile droite tourne dans l'autre sens.
-  assert.match(formatWingTransform('right', pose), /^translate\(38,22\) rotate\(-4\.00\)/);
+  const right = BIRD_PIVOTS.rightShoulder;
+  assert.ok(
+    formatWingTransform('right', pose).startsWith(`translate(${right.x},${right.y}) rotate(-4.00)`),
+  );
+});
+
+test("mirrorPath reflète un tracé autour d'une verticale", () => {
+  assert.equal(mirrorPath('M45.6,19.5 C40,17.8 3,28.6 Z', 50), 'M54.4,19.5 C60,17.8 97,28.6 Z');
+  assert.equal(mirrorPath(mirrorPath('M12.25,4 L30,8', 50), 50), 'M12.25,4 L30,8');
+});
+
+test('buildBirdSvg dessine un oiseau symétrique : chaque forme de gauche a son reflet à droite', () => {
+  const svg = buildBirdSvg();
+  const left = svg.match(/<g data-wing-left>(.*?)<\/g>/)[1];
+  const right = svg.match(/<g data-wing-right>(.*?)<\/g>/)[1];
+  assert.equal(mirrorPath(left, 50), right);
 });
 
 test('formatTailTransform fait pivoter les brins à leur base', () => {
@@ -97,6 +119,10 @@ test('buildGeckoSvg et buildBirdSvg exposent les classes de peinture attendues',
   ]) {
     assert.match(gecko, new RegExp(`class="${cls}"`), cls);
   }
-  assert.match(buildBirdSvg(), /class="paille-beak"/);
-  assert.match(buildBirdSvg(), /class="paille-eye"/);
+  const bird = buildBirdSvg();
+  for (const cls of ['paille-plumage', 'paille-outline', 'paille-beak']) {
+    assert.match(bird, new RegExp(`class="${cls}"`), cls);
+  }
+  // Masque, barre en chevron et bout de chaque aile : six marques noires, trois par côté.
+  assert.equal(countOf(bird, /class="paille-mark"/g), 6);
 });
