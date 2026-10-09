@@ -124,7 +124,7 @@ Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ord
 1. `tokens.css` : valeurs de conception, seul endroit où les valeurs brutes sont permises ;
 2. `base.css` : reset, `html`, `body` ;
 3. `components/*.css` : composants partagés par les deux pages, chacun avec ses media queries ;
-4. `pages/home/*.css` (un fichier par section de l'accueil : hero, stats, probleme, change, carrefour, methode, outils, equipe, partenaires, cta, paille-en-queue, margouillat) ou `pages/participer/*.css` (hero, partenariat, collectes, inscription) : styles propres à une page ;
+4. `pages/home/*.css` (un fichier par section de l'accueil : hero, stats, probleme, change, carrefour, methode, outils, equipe, partenaires, cta, paille-en-queue, margouillat, maloya) ou `pages/participer/*.css` (hero, partenariat, collectes, inscription) : styles propres à une page ;
 5. `utilities.css` : `.reveal`, chargé en dernier car il doit l'emporter sur les transitions des composants.
 
 ---
@@ -147,10 +147,11 @@ Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-�
 - `hero-parallax.js` : parallaxe souris (`[data-parallax-depth]`) ;
 - `donut-geometry.js` et `donut-chart.js` : arcs de l'anneau calculés à partir des pourcentages de la légende (`.js-ancestry-legend-pct`), puis tracés au scroll (`.js-donut`) ;
 - `motion.js` : préférence `prefers-reduced-motion` et état de pause manuelle (classe `is-motion-paused` sur `<html>`) ;
-- `motion-toggle.js` : bouton « Mettre en pause les animations » du pied de page (`.js-motion-toggle`), qui suspend les vagues, la parallaxe, les oiseaux et le margouillat (WCAG 2.2.2) ;
+- `motion-toggle.js` : bouton « Mettre en pause les animations » du pied de page (`.js-motion-toggle`), qui suspend les vagues, la parallaxe, les oiseaux, le margouillat et la frise du maloya (WCAG 2.2.2) ;
 - `geometry.js`, `random.js`, `animation-loop.js` : calculs purs partagés (bornes, interpolation, angles, tirages injectables) et boucle `requestAnimationFrame` ;
 - `bird-flight.js`, `bird-wings.js`, `bird-svg.js` et `paille-en-queue.js` : vol et battement d'ailes des oiseaux (purs), balisage SVG et transformations, puis branchement au DOM ;
 - `gecko-motion.js`, `gecko-pose.js`, `gecko-svg.js` et `margouillat.js` : même découpage pour le margouillat ;
+- `maloya-rhythm.js`, `maloya-limbs.js`, `maloya-musicians.js`, `maloya-dancers.js`, `maloya-fire.js` et `maloya-scene.js` (purs), `maloya-figures.js` et `maloya-svg.js` (balisage SVG), puis `maloya.js` (DOM, `.js-maloya`) : frise du maloya de la section carrefour ;
 - `placement.js` : pose `--x`, `--y` et `--angle` sur un élément animé (utilisé par les animations du hero et des sections).
 
 Le JS ne pose aucun style direct (JS-11) : il bascule des classes d'état (`is-revealed`, `is-drawn`, `is-born`, `is-scrolled`) ou pose des variables CSS (`--progress`, `--reveal-delay`, `--parallax-x`, `--x`…) que le CSS consomme.
@@ -159,7 +160,7 @@ Chaque module vérifie que ses éléments existent avant de s'en servir.
 
 Tests : la logique pure (modules sans `document` ni `window`) est testée par des fichiers `*.test.js` voisins, lancés par `npm test` (`node --test`, aucune dépendance). `fake-random.js` fournit des générateurs déterministes.
 
-Mouvement réduit : en `prefers-reduced-motion: reduce`, les animations JS (parallaxe, oiseaux, margouillat, compteurs, donut) ne démarrent pas, et le CSS neutralise chaque mouvement par un bloc `@media` placé juste après sa règle.
+Mouvement réduit : en `prefers-reduced-motion: reduce`, les animations JS (parallaxe, oiseaux, margouillat, compteurs, donut) ne démarrent pas, la frise du maloya reste une image fixe, et le CSS neutralise chaque mouvement par un bloc `@media` placé juste après sa règle.
 
 ---
 
@@ -176,6 +177,21 @@ Techniques utilisées :
 - queue : les brins suivent la courbe des virages avec retard et frémissent légèrement ;
 - dessin (`bird-svg.js`) : paille-en-queue à brins blancs vu du dessous, ailes longues et pointues coudées au poignet, signes de l'espèce (barre noire en chevron et bout noir des ailes, masque noir, bec jaune orangé, longs brins) ; chaque forme n'est écrite que pour le côté gauche, le côté droit en est le reflet (`mirrorPath`) ; couleurs dans `pages/home/paille-en-queue.css` (`--white`, `--navy-deep`, `--amber`) ;
 - désactivé si `prefers-reduced-motion` ou écran < 760 px ; figé par le bouton de pause.
+
+---
+
+### `assets/js/lib/maloya.js`
+
+Frise décorative en bas de la section « Carrefour génétique » : cinq musiciens de maloya en arc autour d'un feu de bois (roulèr, sati, pikèr, bobre, kayamb), deux danseuses et un danseur, en aplats colorés.
+
+- rythme ternaire (`maloya-rhythm.js`) : mesure de 4 temps de 3 pulsations, frappes propres à chaque instrument ; les mains et baguettes touchent l'instrument exactement à chaque frappe ; tempo 96 temps par minute ;
+- musiciens (`maloya-musicians.js`) : poses de profil, bras et jambes par cinématique inverse (`maloya-limbs.js`) ; le rang du fond est plus petit et plus haut pour suggérer le cercle ;
+- danse (`maloya-dancers.js`) : pieds ancrés à la largeur des épaules, qui glissent à tour de rôle d'un petit pas sur chaque temps, genoux fléchis, bassin ample, buste droit et détendu, petite dérive latérale sur deux mesures ; les danseuses échangent main levée et main sur la jupe toutes les deux mesures ;
+- feu (`maloya-fire.js`) : flammes, halo et étincelles en temps réel ;
+- `maloya-scene.js` calcule chaque image (valeurs à poser), `maloya.js` les recopie dans les attributs du SVG tant que la frise est visible ;
+- diversité suggérée par des teintes de peau différentes et des tenues créoles communes (chemises claires, pantalons roulés, chapeaux de paille, jupes longues, foulards madras), sans marqueur « ethnique » ; couleurs dans `tokens.css` (`--maloya-*`) et `pages/home/maloya.css` ;
+- frise aux proportions 1080 × 150, au moins 100 px de haut : sur un écran étroit, elle est recadrée autour du feu (musiciens et danseur visibles) au lieu d'être réduite ;
+- image fixe en mouvement réduit ; figée par le bouton de pause.
 
 ---
 
@@ -202,6 +218,7 @@ Travaux récents effectués :
 - ✅ Polices Google hébergées dans `assets/fonts/` : plus aucune requête vers un service tiers (performance, RGPD).
 - ✅ Sources uniques (sprite SVG, couleurs, anneau calculé depuis la légende) et test de synchronisation des deux pages.
 - ✅ Jetons de typographie et d'espacements responsives, préfixes de classes par composant, boutons regroupés dans `components/button.css`.
+- ✅ Logo POPgen en fichier image ; frise animée du maloya en bas de la section carrefour (modules purs testés, image fixe en mouvement réduit).
 
 ---
 
@@ -282,7 +299,7 @@ git pull origin main
 Une valeur ne s'écrit qu'à un endroit :
 
 - **Logo et vagues** : un seul dessin dans `assets/images/sprite.svg`, référencé par `<use href="assets/images/sprite.svg#logo">` (identifiants `logo`, `wave-1` à `wave-3`). Les couleurs y sont des variables CSS héritées de l'élément `<use>` : ne pas ouvrir le sprite seul. Un commentaire XML ne peut pas contenir `--`.
-- **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*` et `paille-*` du CSS. Seuls les logos des partenaires (`efs-logo.svg`, `popgen-logo.svg`), œuvres de tiers, gardent leurs couleurs.
+- **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`, `maloya-figures.js`, `maloya-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*`, `paille-*` et `maloya-*` du CSS (pour la frise, une palette par personnage, `maloya-cast-*`). Seuls les logos des partenaires (`efs-logo.svg`, `popgen-logo.svg`), œuvres de tiers, gardent leurs couleurs.
 - **Anneau des ascendances** : les pourcentages de la légende (`.ancestry-legend-pct`) sont l'unique source. Les arcs sont calculés par `donut-geometry.js` ; l'ordre des cercles du SVG doit suivre celui de la légende, et leur couleur vient de la classe `origin-<origine>` partagée avec la légende.
 
 ## Parties communes aux deux pages

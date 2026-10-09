@@ -31,6 +31,38 @@
   --gecko-pad: #c8e6a0; /* margouillat : coussinets des doigts */
   --efs-red: #e2001a; /* rouge de la marque EFS, réservé à la page Participer */
 
+  /* Frise du maloya (pages/home/maloya.css) : une teinte de peau par personnage, tenues,
+     matières des instruments et du feu. */
+  --maloya-skin-1: #6e452f;
+  --maloya-skin-2: #e2b48f;
+  --maloya-skin-3: #9a6444;
+  --maloya-skin-4: #4a2c1d;
+  --maloya-skin-5: #c99470;
+  --maloya-skin-6: #d4a17c;
+  --maloya-skin-7: #b98262;
+  --maloya-skin-8: #5c3a26;
+  --maloya-hair: #1d1612;
+  --maloya-linen: #f4efe4;
+  --maloya-blush: #f0c9b8;
+  --maloya-beige: #e9d6ab;
+  --maloya-khaki: #7a6a4f;
+  --maloya-wood: #8a5a34;
+  --maloya-wood-dark: #4c301d;
+  --maloya-ember: #5a3a26; /* bûches et baguettes */
+  --maloya-straw: #d9bf78;
+  --maloya-straw-dark: #a8893f;
+  --maloya-drum-skin: #ecdfc4;
+  --maloya-metal: #a9b0b6;
+  --maloya-metal-light: #e4e7ea;
+  --maloya-bamboo: #c9b45e;
+  --maloya-bamboo-node: #8c7a34;
+  --maloya-bow: #6b4423;
+  --maloya-string: #3b2a1d;
+  --maloya-gourd: #b4803a;
+  --maloya-gourd-mouth: #5a3a1c;
+  --maloya-flame: #f0a52f;
+  --maloya-flame-core: #fde4a6;
+
   /* ── OPACITÉS ──
      Variantes translucides des couleurs, en --<couleur>-<pourcentage> (CSS-14) : 5, 10, 20, 40, 60, 80, 95.
      Une nouvelle opacité demande un nouveau jeton, pas un rgba() dans une règle.
@@ -43,6 +75,9 @@
   --teal-light-10: rgb(159 211 224 / 10%);
   --coral-10: rgb(232 101 74 / 10%);
   --coral-40: rgb(232 101 74 / 40%);
+  --coral-deep-60: rgb(218 60 28 / 60%);
+  --navy-60: rgb(15 58 86 / 60%);
+  --maloya-flame-40: rgb(240 165 47 / 40%);
   --white-05: rgb(255 255 255 / 5%);
   --white-10: rgb(255 255 255 / 10%);
   --white-20: rgb(255 255 255 / 20%);
