@@ -2,7 +2,7 @@
    assets/js/lib/maloya-scene.test.js
    Rôle : tests de maloya-scene.js, maloya-svg.js et maloya-figures.js : chaque partie dessinée
    reçoit une valeur à chaque image, et le mouvement de chaque personnage, simulé image par
-   image, est continu, boucle sans saut et garde des coudes ouverts.
+   image sur une phrase entière, est continu, boucle sans saut et garde des coudes ouverts.
    Pages concernées : aucune (tests unitaires, lancés par node --test).
    Accroches : aucune.
    ============================================================ */
@@ -11,21 +11,33 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { computeAngleDifference } from './geometry.js';
 import { computeMemberPose, computeSceneFrame } from './maloya-scene.js';
-import { buildCapsulePath } from './maloya-figures.js';
 import { buildMaloyaSvg, CAST, formatPartTransform, SCENE } from './maloya-svg.js';
 
 const TEMPO_BPM = 96;
 const FPS = 60;
-const LOOP_BEATS = 16; // plus long cycle de la scène : l'échange des bras des danseuses
+const LOOP_BEATS = 32; // plus long cycle de la scène : la phrase de huit mesures
 
+// Points suivis d'une pose : articulations des chaînes (sans angle), parties rigides (avec).
 function flattenParts(pose) {
-  const parts = { torso: pose.torso, head: pose.head };
+  const parts = { head: pose.head };
+  const addChain = (name, chain) =>
+    chain.forEach((p, i) => {
+      parts[`${name}-${i}`] = { x: p.x, y: p.y, angle: 0 };
+    });
+  addChain('spine', pose.spine ?? pose.trunk.map((level) => level.center));
+  for (const [i, level] of (pose.trunk ?? []).entries()) {
+    parts[`level-${i}`] = { ...level.center, angle: level.angle };
+  }
   for (const [side, arm] of Object.entries(pose.arms)) {
-    for (const bone of ['upper', 'fore', 'hand']) parts[`${side}-${bone}`] = arm[bone];
+    addChain(`${side}-arm`, arm.chain);
+    parts[`${side}-hand`] = arm.hand;
   }
   for (const [side, leg] of Object.entries(pose.legs ?? {})) {
-    for (const bone of ['thigh', 'shin', 'foot']) parts[`${side}-${bone}`] = leg[bone];
+    addChain(`${side}-leg`, leg.chain);
+    parts[`${side}-foot`] = leg.foot;
   }
+  for (const [side, foot] of Object.entries(pose.feet ?? {})) parts[`${side}-foot`] = foot;
+  if (pose.instrument) parts.instrument = pose.instrument;
   return parts;
 }
 
@@ -63,8 +75,7 @@ test('le SVG est bien formé et à la taille de la scène', () => {
   assert.equal(new Set(CAST.map((m) => m.id)).size, CAST.length);
 });
 
-test('formats de dessin : segment arrondi et transformation d’une partie', () => {
-  assert.equal(buildCapsulePath(10, 4, 2), 'M-2,0 A2,2 0 0 1 2,0 L1,10 A1,1 0 0 1 -1,10 Z');
+test('transformation d’une partie rigide : déplacement à son pivot puis rotation', () => {
   assert.equal(
     formatPartTransform({ x: 1.234, y: -5, angle: 30.126 }),
     'translate(1.23,-5) rotate(30.13)',

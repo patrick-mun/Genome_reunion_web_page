@@ -2,7 +2,7 @@
    assets/js/lib/maloya.js
    Rôle : frise animée du maloya en bas de la section « Carrefour génétique » : musiciens
    autour d'un feu de bois et danseurs. Construit le SVG, puis le met à jour à chaque image
-   tant que la frise est visible.
+   tant que la frise est visible (seuls les attributs qui changent sont réécrits).
    Pages concernées : accueil.
    Accroches : .js-maloya (conteneur), [data-part] dans le SVG construit.
    Mouvement réduit : une seule image fixe. Le bouton de pause du pied de page fige la frise.
@@ -27,19 +27,26 @@ function collectParts(container) {
   return parts;
 }
 
-function applyFrame(parts, frame) {
-  for (const [name, value] of Object.entries(frame.transforms)) {
-    parts[name].setAttribute('transform', value);
-  }
-  for (const [name, value] of Object.entries(frame.paths)) parts[name].setAttribute('d', value);
-  frame.sparks.forEach((spark, i) => {
-    const el = parts[`spark-${i}`];
-    el.setAttribute('cx', spark.cx);
-    el.setAttribute('cy', spark.cy);
-    el.setAttribute('opacity', spark.opacity);
-  });
-  parts.glow.setAttribute('transform', frame.glow.transform);
-  parts.glow.setAttribute('opacity', frame.glow.opacity);
+// Recopie une image dans les attributs, en sautant ceux qui n'ont pas changé (membres immobiles).
+function createFrameWriter(parts) {
+  const last = new Map();
+  const write = (name, attribute, value) => {
+    const key = `${name} ${attribute}`;
+    if (last.get(key) === value) return;
+    last.set(key, value);
+    parts[name].setAttribute(attribute, value);
+  };
+  return (frame) => {
+    for (const [name, value] of Object.entries(frame.transforms)) write(name, 'transform', value);
+    for (const [name, value] of Object.entries(frame.paths)) write(name, 'd', value);
+    frame.sparks.forEach((spark, i) => {
+      write(`spark-${i}`, 'cx', spark.cx);
+      write(`spark-${i}`, 'cy', spark.cy);
+      write(`spark-${i}`, 'opacity', spark.opacity);
+    });
+    write('glow', 'transform', frame.glow.transform);
+    write('glow', 'opacity', frame.glow.opacity);
+  };
 }
 
 function trackVisibility(container) {
@@ -64,9 +71,9 @@ export function initMaloya() {
 
   // eslint-disable-next-line no-restricted-properties -- SVG construit uniquement à partir de constantes du module
   container.innerHTML = buildMaloyaSvg();
-  const parts = collectParts(container);
+  const applyFrame = createFrameWriter(collectParts(container));
   const clock = { beats: START_BEATS, seconds: START_SECONDS };
-  applyFrame(parts, computeSceneFrame(clock.beats, clock.seconds));
+  applyFrame(computeSceneFrame(clock.beats, clock.seconds));
   if (prefersReducedMotion()) return;
 
   const visibility = trackVisibility(container);
@@ -74,7 +81,7 @@ export function initMaloya() {
     (now, dt) => {
       clock.beats += (dt * TEMPO_BPM) / 60;
       clock.seconds += dt;
-      applyFrame(parts, computeSceneFrame(clock.beats, clock.seconds));
+      applyFrame(computeSceneFrame(clock.beats, clock.seconds));
     },
     () => !visibility.isVisible || isMotionPaused(),
   );

@@ -1,14 +1,22 @@
 /* ============================================================
    assets/js/lib/maloya-scene.js
    Rôle : image complète de la frise du maloya à un instant (calcul pur) : transformations des
-   parties de chaque personnage, tracés recalculés (jupes, plis, flammes), halo et étincelles.
-   Le DOM n'a plus qu'à recopier ces valeurs dans les attributs.
+   parties rigides de chaque personnage (tête, mains, pieds, instrument), contours de son corps
+   et de ses vêtements, tracés de la jupe, des plis et des flammes, halo et étincelles. Le DOM
+   n'a plus qu'à recopier ces valeurs dans les attributs.
    Pages concernées : accueil.
    Accroches : aucune (module de calcul pur).
    ============================================================ */
 
-import { computeDancerPose, computeManPose } from './maloya-dancers.js';
+import {
+  computeDancerBodyPaths,
+  computeManBodyPaths,
+  computeProfileBodyPaths,
+} from './maloya-bodies.js';
+import { computeDancerPose } from './maloya-dancers.js';
 import { computeFlames, computeGlow, computeSparks } from './maloya-fire.js';
+import { formatNumber } from './maloya-limbs.js';
+import { computeManPose } from './maloya-man.js';
 import {
   computeBobrePose,
   computeKayambPose,
@@ -17,11 +25,16 @@ import {
   ROULER,
   SATI,
 } from './maloya-musicians.js';
-import { CAST, formatPartTransform, formatTurnTransform } from './maloya-svg.js';
+import { CAST, formatPartTransform } from './maloya-svg.js';
 
 const SEATED = { rouler: ROULER, sati: SATI, piker: PIKER };
 const STANDING = { bobre: computeBobrePose, kayamb: computeKayambPose };
-const formatNumber = (n) => Number(n.toFixed(2));
+const BODY_PATHS = {
+  seated: computeProfileBodyPaths,
+  standing: computeProfileBodyPaths,
+  dancer: computeDancerBodyPaths,
+  man: computeManBodyPaths,
+};
 
 /**
  * Pose d'un personnage de la distribution.
@@ -31,28 +44,31 @@ const formatNumber = (n) => Number(n.toFixed(2));
  */
 export function computeMemberPose(member, beats) {
   const t = beats + (member.offset ?? 0);
-  if (member.kind === 'seated') return computeSeatedPose(t, SEATED[member.instrument]);
-  if (member.kind === 'standing') return STANDING[member.instrument](t);
-  if (member.kind === 'dancer') return computeDancerPose(t);
-  return computeManPose(t);
-}
-
-function addLimbTransforms(transforms, id, limbs, bones) {
-  for (const [side, limb] of Object.entries(limbs ?? {})) {
-    for (const bone of bones) transforms[`${id}-${side}-${bone}`] = formatPartTransform(limb[bone]);
+  if (member.kind === 'seated') {
+    return computeSeatedPose(t, SEATED[member.instrument], member.style);
   }
+  if (member.kind === 'standing') return STANDING[member.instrument](t, member.style);
+  if (member.kind === 'dancer') return computeDancerPose(t, member.style);
+  return computeManPose(t, member.style);
 }
 
-function addMemberValues(transforms, paths, id, pose) {
-  transforms[`${id}-torso`] = formatPartTransform(pose.torso);
+function addMemberValues(transforms, paths, member, pose) {
+  const { id } = member;
   transforms[`${id}-head`] = formatPartTransform(pose.head);
-  addLimbTransforms(transforms, id, pose.arms, ['upper', 'fore', 'hand']);
-  addLimbTransforms(transforms, id, pose.legs, ['thigh', 'shin', 'foot']);
+  for (const [side, arm] of Object.entries(pose.arms)) {
+    transforms[`${id}-${side}-hand`] = formatPartTransform(arm.hand);
+  }
+  for (const [side, leg] of Object.entries(pose.legs ?? {})) {
+    transforms[`${id}-${side}-foot`] = formatPartTransform(leg.foot);
+  }
+  for (const [side, foot] of Object.entries(pose.feet ?? {})) {
+    transforms[`${id}-${side}-foot`] = formatPartTransform(foot);
+  }
   if (pose.instrument) transforms[`${id}-instrument`] = formatPartTransform(pose.instrument);
-  if (pose.turn) transforms[`${id}-turn`] = formatTurnTransform(pose.turn);
-  if (pose.feet) {
-    transforms[`${id}-left-foot`] = formatPartTransform(pose.feet.left);
-    transforms[`${id}-right-foot`] = formatPartTransform(pose.feet.right);
+  for (const [part, d] of Object.entries(BODY_PATHS[member.kind](pose))) {
+    paths[`${id}-${part}`] = d;
+    // Membre éloigné : le voile reprend le même contour.
+    if (part.startsWith('far-')) paths[`${id}-${part}-shade`] = d;
   }
   if (pose.skirt) {
     paths[`${id}-skirt`] = pose.skirt;
@@ -67,14 +83,14 @@ function addMemberValues(transforms, paths, id, pose) {
  * @param {number} beats Temps musical, en temps (musiciens et danseurs).
  * @param {number} seconds Temps réel, en secondes (feu).
  * @returns {{transforms: Record<string, string>, paths: Record<string, string>,
- *   sparks: Array<{cx: number, cy: number, opacity: number}>,
- *   glow: {transform: string, opacity: number}}} Valeurs à poser dans les attributs.
+ *   sparks: Array<{cx: string, cy: string, opacity: string}>,
+ *   glow: {transform: string, opacity: string}}} Valeurs à poser dans les attributs.
  */
 export function computeSceneFrame(beats, seconds) {
   const transforms = {};
   const paths = {};
   for (const member of CAST) {
-    addMemberValues(transforms, paths, member.id, computeMemberPose(member, beats));
+    addMemberValues(transforms, paths, member, computeMemberPose(member, beats));
   }
 
   const flames = computeFlames(seconds);

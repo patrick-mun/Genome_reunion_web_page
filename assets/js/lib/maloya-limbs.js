@@ -110,18 +110,28 @@ export function solveTwoBone(root, target, upper, lower, bendSign) {
   };
 }
 
-const formatNumber = (n) => Number(n.toFixed(2));
-
 /**
- * Tracé lissé (Catmull-Rom converti en courbes de Bézier) passant par une suite de points.
- * @param {Array<{x: number, y: number}>} points Points de passage (au moins 2).
- * @param {boolean} [isClosed] Vrai pour refermer la forme.
- * @returns {string} Attribut `d`.
+ * Nombre arrondi au centième, écrit pour un tracé ou une transformation (« -12.5 », « 3.07 »,
+ * « 0 »). Écrit à la main : plusieurs fois plus rapide que toFixed, sur les milliers de
+ * nombres de chaque image.
+ * @param {number} n Nombre.
+ * @returns {string} Nombre écrit, sans zéro inutile.
  */
-export function buildSmoothPath(points, isClosed = false) {
+export function formatNumber(n) {
+  const rounded = Math.round(n * 100);
+  const abs = rounded < 0 ? -rounded : rounded;
+  const units = Math.floor(abs / 100);
+  const cents = abs - units * 100;
+  let decimals = '';
+  if (cents >= 10) decimals = cents % 10 === 0 ? `.${cents / 10}` : `.${cents}`;
+  else if (cents > 0) decimals = `.0${cents}`;
+  return `${rounded < 0 ? '-' : ''}${units}${decimals}`;
+}
+
+function formatCurves(points, isClosed) {
   const n = points.length;
   const at = (i) => (isClosed ? points[(i + n) % n] : points[clamp(i, 0, n - 1)]);
-  const parts = [`M${formatNumber(points[0].x)},${formatNumber(points[0].y)}`];
+  const parts = [];
   for (let i = 0; i < (isClosed ? n : n - 1); i++) {
     const [p0, p1, p2, p3] = [at(i - 1), at(i), at(i + 1), at(i + 2)];
     const c1 = { x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6 };
@@ -130,6 +140,28 @@ export function buildSmoothPath(points, isClosed = false) {
       `C${formatNumber(c1.x)},${formatNumber(c1.y)} ${formatNumber(c2.x)},${formatNumber(c2.y)} ${formatNumber(p2.x)},${formatNumber(p2.y)}`,
     );
   }
+  return parts;
+}
+
+/**
+ * Tracé lissé (Catmull-Rom converti en courbes de Bézier) passant par une suite de points.
+ * @param {Array<{x: number, y: number}>} points Points de passage (au moins 2).
+ * @param {boolean} [isClosed] Vrai pour refermer la forme.
+ * @returns {string} Attribut `d`.
+ */
+export function buildSmoothPath(points, isClosed = false) {
+  const parts = [`M${formatNumber(points[0].x)},${formatNumber(points[0].y)}`];
+  parts.push(...formatCurves(points, isClosed));
   if (isClosed) parts.push('Z');
   return parts.join(' ');
+}
+
+/**
+ * Suite de courbes lissées du premier point au dernier, sans déplacement initial : pour
+ * continuer un tracé déjà commencé au premier point.
+ * @param {Array<{x: number, y: number}>} points Points de passage (au moins 2).
+ * @returns {string} Commandes `C` successives.
+ */
+export function buildSmoothCurves(points) {
+  return formatCurves(points, false).join(' ');
 }
