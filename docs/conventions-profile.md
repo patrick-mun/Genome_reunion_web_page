@@ -33,6 +33,7 @@ Valeurs de conception : `assets/css/tokens.css` (seul fichier où les valeurs br
 
 | Rôle                                                 | Chemin                                                   |
 | ---------------------------------------------------- | -------------------------------------------------------- |
+| Polices (@font-face)                                 | `assets/css/fonts.css`                                   |
 | Tokens (valeurs uniquement)                          | `assets/css/tokens.css`                                  |
 | Base (reset, base, layout, utilitaires)              | `assets/css/base.css`                                    |
 | Composants (un fichier par composant)                | `assets/css/components/`                                 |

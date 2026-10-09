@@ -34,6 +34,7 @@ Le site doit expliquer simplement :
 │
 ├── assets/                     # Ressources statiques
 │   ├── css/
+│   │   ├── fonts.css           # @font-face des polices hébergées (assets/fonts/)
 │   │   ├── tokens.css          # Valeurs de conception (couleurs, échelles)
 │   │   ├── base.css            # Reset, html, body
 │   │   ├── utilities.css       # Apparition au défilement (.reveal), chargé en dernier
@@ -42,6 +43,7 @@ Le site doit expliquer simplement :
 │   ├── js/
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)
+│   ├── fonts/                  # Polices (woff2) et licences
 │   └── images/                 # Images et logos
 │
 └── docs/                       # Documentation de travail interne
