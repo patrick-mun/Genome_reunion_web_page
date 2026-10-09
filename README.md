@@ -26,7 +26,11 @@ Le site doit expliquer simplement :
 .
 ├── index.html                  # Page d'accueil
 ├── participer.html             # Page d'information participation
+├── favicon.ico                 # Icône du site
 ├── README.md                   # Présentation du dépôt
+├── package.json, .nvmrc        # Outils de vérification (Node 22)
+├── tooling/, .githooks/        # Contrôles HTML/CSS et hook pré-commit
+├── .github/                    # Action de vérification et Dependabot
 │
 ├── assets/                     # Ressources statiques
 │   ├── css/
@@ -51,7 +55,7 @@ Le site doit expliquer simplement :
 
 Deux fichiers servent à encadrer les prochaines modifications :
 
-- [`docs/PLAN_CORRECTION.md`](docs/PLAN_CORRECTION.md) : plan étape par étape des corrections à réaliser ;
+- [`docs/PLAN_CORRECTION.md`](docs/PLAN_CORRECTION.md) : plan étape par étape des corrections, avec un tableau d'avancement (les étapes éditoriales restent à valider par l'équipe) ;
 - [`docs/index.md`](docs/index.md) : résumé opérationnel du contexte, des fichiers et des points sensibles.
 
 Ces fichiers doivent être consultés avant toute modification importante.
@@ -158,7 +162,7 @@ Le dépôt a été restauré sur `main` après une correction globale trop rapid
 Les conventions de code (CSS, HTML, JS) sont vérifiées automatiquement.
 
 ```bash
-npm ci               # installe les outils et active le hook pré-commit
+npm ci               # installe les outils et active le hook pré-commit (Node 22, voir .nvmrc)
 npm run verify       # lint + formatage + tests (ce que lance le hook)
 npm run lint         # Stylelint, html-validate, ESLint, contrôles HTML et classes CSS inutilisées
 npm run format       # reformate avec Prettier
@@ -167,4 +171,5 @@ npm test             # tests unitaires (node --test)
 
 - **Avant chaque commit** : `.githooks/pre-commit` lance `npm run verify`. Contournement ponctuel : `git commit --no-verify`.
 - **Sur GitHub** : l'action `.github/workflows/verify.yml` lance les mêmes contrôles à chaque pull request et à chaque push sur `main`.
+- **Dépendances** : Dependabot propose chaque semaine une PR groupée pour les outils de vérification, validée par la CI. Aucune dépendance n'est livrée avec le site (0 vulnérabilité en production). `npm audit` signale 9 alertes sur la chaîne Stylelint (`braces`, dépendance transitive de développement) : aucun correctif n'est publié, et Stylelint n'analyse que nos propres fichiers.
 - Pour rendre la vérification obligatoire avant fusion, activer la règle de protection de branche « Require status checks » sur `main` (réglage GitHub, pas dans le dépôt).

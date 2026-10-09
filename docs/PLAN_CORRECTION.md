@@ -8,6 +8,8 @@ La règle de travail est simple : **une correction = une petite branche ou une p
 
 Ce document sert de plan de correction. Le fichier `index.md` sert de contexte de reprise pour comprendre rapidement le dépôt, les fichiers importants et les décisions prises.
 
+> **Mise à jour du 9 octobre 2026.** Les étapes techniques (0, 1, 7) sont réalisées : voir le tableau ci-dessous. Les étapes éditoriales (2 à 6) concernent le **contenu** : elles relèvent de l'équipe projet, et l'état indiqué est un constat sur le texte actuel, pas une validation.
+
 ---
 
 ## État de départ
@@ -15,6 +17,22 @@ Ce document sert de plan de correction. Le fichier `index.md` sert de contexte d
 Le dépôt a été restauré sur `main` après une correction globale trop rapide. L'objectif est maintenant de reprendre les améliorations avec une méthode progressive.
 
 L'état visuel actuel doit être considéré comme le **rendu de référence initial**. Toute modification devra pouvoir être comparée à cet état.
+
+---
+
+## État d'avancement
+
+| Étape | Sujet                                | Statut         | Constat                                                                                                                                           |
+| ----- | ------------------------------------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Documentation de travail             | Fait           | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                |
+| 1     | JavaScript multi-pages               | Fait           | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                         |
+| 2     | Chiffres clés                        | À valider      | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés              |
+| 3     | Formulations médicales               | À valider      | les trois passages cités ne figurent plus dans `index.html`                                                                                       |
+| 4     | Vocabulaire scientifique             | À valider      | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                    |
+| 5     | Page participation                   | À valider      | tableau de dates de collecte, appel « Je m'inscris » (lien `mailto:`) et mention du consentement présents : dates et ouverture réelle à confirmer |
+| 6     | Partenaires et gouvernance           | À valider      | statut de chaque partenaire à confirmer (EFS indiqué comme confirmé dans `docs/index.md`)                                                         |
+| 7     | Accessibilité et qualité web         | Fait côté code | meta description, contrastes AA, repères et listes sémantiques, `lang`, favicon, plus de style inline ni de lien mort                             |
+| 8     | README et documentation de diffusion | En cours       | à finaliser quand le contenu est validé                                                                                                           |
 
 ---
 
@@ -38,16 +56,18 @@ L'état visuel actuel doit être considéré comme le **rendu de référence ini
 Fichiers concernés :
 
 - `README.md`
-- `PLAN_CORRECTION.md`
-- `index.md`
+- `docs/PLAN_CORRECTION.md`
+- `docs/index.md`
 
 Impact visuel : aucun.
 
-Statut : en cours.
+Statut : fait.
 
 ---
 
 ### Étape 1 — Correction JavaScript invisible
+
+> **Fait.** `script.js` a été remplacé par des modules ES (`assets/js/pages/`, `assets/js/lib/`) qui testent chacun l'existence de leurs éléments. Le texte ci-dessous est conservé comme historique.
 
 **Objectif :** éviter que `script.js` plante sur les pages qui ne contiennent pas toutes les sections de la page d'accueil.
 
@@ -57,7 +77,7 @@ Problème identifié :
 - Sur `participer.html`, certains éléments peuvent être absents.
 - Le script doit vérifier l'existence des éléments avant d'appliquer les animations.
 
-Fichiers concernés :
+Fichiers concernés (à l'époque) :
 
 - `script.js`
 
@@ -197,6 +217,8 @@ Impact visuel attendu : faible.
 
 ### Étape 7 — Accessibilité et qualité web
 
+> **Fait côté code** (octobre 2026) : meta description, contrastes WCAG AA mesurés, repères `header`/`main`, listes et titres sémantiques, `lang`, favicon, styles inline supprimés, liens internes vérifiés. Voir `docs/conventions-profile.md`.
+
 **Objectif :** améliorer la robustesse du site sans modifier fortement le design.
 
 Actions possibles :
@@ -212,8 +234,8 @@ Fichiers concernés :
 
 - `index.html`
 - `participer.html`
-- `styles.css`
-- `script.js`
+- `assets/css/` (anciennement `styles.css`)
+- `assets/js/` (anciennement `script.js`)
 
 Impact visuel attendu : faible.
 
@@ -226,8 +248,8 @@ Impact visuel attendu : faible.
 Fichiers concernés :
 
 - `README.md`
-- `PLAN_CORRECTION.md`
-- `index.md`
+- `docs/PLAN_CORRECTION.md`
+- `docs/index.md`
 
 Impact visuel : aucun.
 
@@ -246,7 +268,7 @@ git checkout -b correction-etape-X-description
 Puis :
 
 1. modifier uniquement les fichiers nécessaires ;
-2. tester localement ;
+2. tester localement (`npm run verify` : lint, formatage et tests, lancés aussi par le hook pré-commit et la CI) ;
 3. créer une PR ;
 4. vérifier le rendu ;
 5. merger seulement si le rendu est accepté.
