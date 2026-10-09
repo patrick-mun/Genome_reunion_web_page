@@ -59,7 +59,7 @@ Le site doit expliquer :
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
-│   └── images/                 # sprite.svg (logo, vagues), efs-logo.svg, favicon.svg, apple-touch-icon.png
+│   └── images/                 # sprite.svg (logo, vagues), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png
 │
 └── docs/
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
@@ -179,9 +179,9 @@ Techniques utilisées :
 
 ---
 
-### `assets/images/efs-logo.svg`
+### `assets/images/efs-logo.svg` et `assets/images/popgen-logo.svg`
 
-Logo EFS SVG utilisé dans `participer.html`.
+Logos des partenaires, œuvres de tiers reproduites telles quelles avec leurs propres couleurs, chargés par `<img>` : EFS dans `index.html` et `participer.html`, POPgen dans `index.html` (lien à ajouter quand son URL sera connue).
 
 Point d'attention : ne pas modifier sans vérifier le rendu.
 
@@ -282,7 +282,7 @@ git pull origin main
 Une valeur ne s'écrit qu'à un endroit :
 
 - **Logo et vagues** : un seul dessin dans `assets/images/sprite.svg`, référencé par `<use href="assets/images/sprite.svg#logo">` (identifiants `logo`, `wave-1` à `wave-3`). Les couleurs y sont des variables CSS héritées de l'élément `<use>` : ne pas ouvrir le sprite seul. Un commentaire XML ne peut pas contenir `--`.
-- **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*` et `paille-*` du CSS. Seul le logo POPgen, œuvre d'un tiers, garde ses couleurs.
+- **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*` et `paille-*` du CSS. Seuls les logos des partenaires (`efs-logo.svg`, `popgen-logo.svg`), œuvres de tiers, gardent leurs couleurs.
 - **Anneau des ascendances** : les pourcentages de la légende (`.ancestry-legend-pct`) sont l'unique source. Les arcs sont calculés par `donut-geometry.js` ; l'ordre des cercles du SVG doit suivre celui de la légende, et leur couleur vient de la classe `origin-<origine>` partagée avec la légende.
 
 ## Parties communes aux deux pages
