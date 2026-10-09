@@ -53,6 +53,12 @@
   gap: var(--space-5);
 }
 
+@media (max-width: 900px) {
+  .probleme-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
 .probleme-card {
   padding: var(--space-6) var(--space-6);
   background: var(--white);
