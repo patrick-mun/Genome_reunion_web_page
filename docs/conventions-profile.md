@@ -69,6 +69,12 @@ Graisses : `--weight-light`, `-regular`, `-medium`, `-semibold`, `-bold` (300 à
 Interlignes : `--leading-1` à `--leading-6` (1 à 1,7). Approche : `--tracking-neg-2`, `-neg-1` (−0,03 et −0,02 em) et `--tracking-1` à `--tracking-5` (0,06 à 0,18 em).
 Seules les valeurs employées au moins trois fois sont des jetons ; les autres restent écrites dans leur règle (contrôle par relecture).
 
+## Durées, largeurs et calques (CSS-13)
+
+Durées de transition : `--duration-1` à `--duration-5` (0,2 à 0,8 s) ; les délais d'enchaînement des apparitions restent dans leurs règles.
+Largeur du contenu : `--content-width` (1080 px).
+Calques : `--layer-1` à `--layer-3` dans les sections, puis `--layer-nav`, `--layer-progress`, `--layer-skip-link` ; tout `z-index` passe par eux (imposé par Stylelint).
+
 ## Dérogations
 
 | Règle                                                                | Choix du projet                             | Raison                                                                                                           |

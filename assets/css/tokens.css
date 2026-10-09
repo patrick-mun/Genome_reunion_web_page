@@ -163,6 +163,33 @@
   --shadow-accent-lg: 0 20px 48px var(--coral-40);
   --shadow-efs: 0 16px 40px var(--efs-red-40);
 
+  /* ── LARGEURS ──
+     Largeur maximale du contenu des sections (texte et grilles), centré dans la page.
+  */
+  --content-width: 1080px;
+
+  /* ── CALQUES ──
+     Ordre d'empilement (z-index). Rangs 1 à 3 dans une section : 1 pour la couche du margouillat
+     et le contenu des héros (devant les vagues), 2 pour les contenus devant le margouillat,
+     3 pour les oiseaux du hero. Puis les éléments fixes de la page, du plus bas au plus haut.
+  */
+  --layer-1: 1;
+  --layer-2: 2;
+  --layer-3: 3;
+  --layer-nav: 100;
+  --layer-progress: 1000;
+  --layer-skip-link: 1100;
+
+  /* ── DURÉES ──
+     Durées des transitions, de rang 1 à 5 (0,2 à 0,8 s) : survols, puis apparitions (CSS-13).
+     Les délais d'enchaînement des apparitions restent dans leurs règles.
+  */
+  --duration-1: 0.2s;
+  --duration-2: 0.25s;
+  --duration-3: 0.4s;
+  --duration-4: 0.7s;
+  --duration-5: 0.8s;
+
   /* ── MOUVEMENT ──
      Courbes d'animation partagées : --ease-out pour les apparitions, --ease-spring pour le rebond des boutons.
   */

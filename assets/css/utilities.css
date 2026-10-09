@@ -14,8 +14,8 @@
   opacity: 0;
   transform: translateY(24px);
   transition:
-    opacity 0.7s var(--ease-out),
-    transform 0.7s var(--ease-out);
+    opacity var(--duration-4) var(--ease-out),
+    transform var(--duration-4) var(--ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {

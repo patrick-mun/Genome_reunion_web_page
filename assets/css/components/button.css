@@ -26,8 +26,8 @@
   color: var(--white);
   border-radius: var(--radius-pill);
   transition:
-    transform 0.25s var(--ease-spring),
-    box-shadow 0.25s;
+    transform var(--duration-2) var(--ease-spring),
+    box-shadow var(--duration-2);
 }
 
 .btn-solid:hover {
@@ -87,8 +87,8 @@
   border: 1px solid var(--white-20);
   border-radius: var(--radius-pill);
   transition:
-    border-color 0.2s,
-    color 0.2s;
+    border-color var(--duration-1),
+    color var(--duration-1);
 }
 
 .btn-secondary:hover {
@@ -104,7 +104,7 @@
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-1);
   color: var(--white-60);
-  transition: color 0.2s;
+  transition: color var(--duration-1);
 }
 
 .btn-scroll:hover {
@@ -112,7 +112,7 @@
 }
 
 .btn-scroll::after {
-  transition: transform 0.2s;
+  transition: transform var(--duration-1);
   content: '↓';
 }
 

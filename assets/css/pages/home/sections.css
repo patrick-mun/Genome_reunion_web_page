@@ -6,17 +6,17 @@
 
 /* ── SECTIONS COMMUNES ──
    Gabarit des sections de contenu : marges verticales et colonne centrée de 1080 px.
-   .section-inner passe devant la couche du margouillat (z-index 2 contre 1).
+   .section-inner passe devant la couche du margouillat (--layer-2 contre --layer-1).
 */
 
 .section {
   padding: var(--space-section-y) var(--space-gutter);
 }
 
-/* z-index 2 : contenus passés devant le margouillat (z-index 1), cartes et textes inclus. */
+/* --layer-2 : contenus passés devant le margouillat (--layer-1), cartes et textes inclus. */
 .section-inner {
   position: relative;
-  z-index: 2;
-  max-width: 1080px;
+  z-index: var(--layer-2);
+  max-width: var(--content-width);
   margin: 0 auto;
 }

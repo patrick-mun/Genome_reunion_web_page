@@ -6,14 +6,14 @@
 
 /* ── LIEN D'ÉVITEMENT ──
    Premier élément focalisable de la page (WCAG 2.4.1) : masqué au-dessus de l'écran,
-   il glisse en vue au focus clavier. Reste devant la navigation (z-index 1100).
+   il glisse en vue au focus clavier. Reste devant la navigation (--layer-skip-link).
 */
 
 .skip-link {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1100;
+  z-index: var(--layer-skip-link);
   padding: var(--space-3) var(--space-5);
   color: var(--white);
   background: var(--navy);

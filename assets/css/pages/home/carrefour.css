@@ -107,7 +107,7 @@
 /* Arcs tracés progressivement une fois l'anneau entré dans l'écran. */
 
 .donut.is-drawn circle {
-  transition: stroke-dasharray 0.7s var(--ease-out);
+  transition: stroke-dasharray var(--duration-4) var(--ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {

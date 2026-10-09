@@ -6,7 +6,7 @@
 
 /* ── PIED DE PAGE ──
    Signature, liens, mention du projet et bouton de pause des animations.
-   Ses contenus passent à z-index 2 pour rester devant le margouillat (z-index 1) ;
+   Ses contenus passent au calque --layer-2 pour rester devant le margouillat (--layer-1) ;
    le pied de page passe en colonne sous 900 px.
 */
 
@@ -47,7 +47,7 @@ footer {
   text-transform: uppercase;
   text-decoration: none;
   color: var(--white-60);
-  transition: color 0.2s;
+  transition: color var(--duration-1);
 }
 
 .footer-link:hover {
@@ -60,12 +60,12 @@ footer {
   color: var(--white-60);
 }
 
-/* Contenus du pied de page passés devant le margouillat (z-index 1 sur l'accueil) */
+/* Contenus du pied de page passés devant le margouillat (--layer-1 sur l'accueil) */
 .footer-brand,
 .footer-nav,
 .footer-copy {
   position: relative;
-  z-index: 2;
+  z-index: var(--layer-2);
 }
 
 .motion-toggle {

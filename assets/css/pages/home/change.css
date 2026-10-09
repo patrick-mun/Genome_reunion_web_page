@@ -43,7 +43,7 @@
 .change-card {
   padding: var(--space-7) var(--space-6);
   background: var(--white-05);
-  transition: background 0.25s;
+  transition: background var(--duration-2);
 }
 
 .change-card:hover {
