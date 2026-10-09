@@ -9,21 +9,15 @@
    Une seule colonne sous 900 px.
 */
 .partenariat {
-  padding: var(--space-9) var(--space-7);
+  padding: var(--space-section-y) var(--space-gutter);
   background: var(--cream);
-}
-
-@media (max-width: 900px) {
-  .partenariat {
-    padding: var(--space-8) var(--space-5);
-  }
 }
 
 .partenariat-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-columns);
   max-width: 1080px;
   margin: 0 auto;
 }
@@ -31,7 +25,6 @@
 @media (max-width: 900px) {
   .partenariat-inner {
     grid-template-columns: 1fr;
-    gap: var(--space-7);
   }
 }
 

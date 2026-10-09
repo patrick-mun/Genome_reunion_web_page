@@ -49,6 +49,10 @@ lors de l'éclatement des media queries).
 
 4, 8, 12, 16, 24, 32, 48, 72, 120 px (`--space-1` … `--space-9`), plus deux filets `--space-hairline` (1 px) et `--space-line` (2 px) pour les grilles à séparateurs.
 
+## Espacements responsives (CSS-06)
+
+Les espacements qui changent sous 900 px sont des jetons par rôle (`--space-gutter`, `--space-section-y`, `--space-columns`, `--space-steps`, `--space-nav-y`, `--space-footer-y`, `--space-stats-y`), redéfinis dans un seul bloc `@media` en fin de `tokens.css`. Les composants n'ont plus de media query d'espacement ; les leurs ne changent que la mise en page (colonnes, affichage).
+
 ## Échelle d'opacité (CSS-14)
 
 5, 10, 20, 40, 60, 80, 95 % (`--<couleur>-<pourcentage>`, ex. `--white-60`, `--navy-05`).

@@ -16,7 +16,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-5);
-  padding: var(--space-7);
+  padding: var(--space-footer-y) var(--space-gutter);
   background: var(--navy-deep);
   border-top: 1px solid var(--white-05);
 }
@@ -24,7 +24,6 @@ footer {
 @media (max-width: 900px) {
   footer {
     flex-direction: column;
-    padding: var(--space-6) var(--space-5);
   }
 }
 

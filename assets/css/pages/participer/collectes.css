@@ -9,14 +9,8 @@
    Les badges se distinguent par leur couleur : .badge-nord en marine, .badge-sud en teal.
 */
 .collectes {
-  padding: var(--space-9) var(--space-7);
+  padding: var(--space-section-y) var(--space-gutter);
   background: var(--sand);
-}
-
-@media (max-width: 900px) {
-  .collectes {
-    padding: var(--space-8) var(--space-5);
-  }
 }
 
 .collectes-inner {

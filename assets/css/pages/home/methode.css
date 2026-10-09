@@ -26,13 +26,12 @@
 .methode-steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-7);
+  gap: var(--space-steps);
 }
 
 @media (max-width: 900px) {
   .methode-steps {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
   }
 }
 

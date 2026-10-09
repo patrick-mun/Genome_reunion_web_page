@@ -10,16 +10,10 @@
 */
 .inscription {
   position: relative;
-  padding: var(--space-9) var(--space-7);
+  padding: var(--space-section-y) var(--space-gutter);
   overflow: hidden;
   text-align: center;
   background: var(--navy-deep);
-}
-
-@media (max-width: 900px) {
-  .inscription {
-    padding: var(--space-8) var(--space-5);
-  }
 }
 
 .inscription-inner {

@@ -16,15 +16,9 @@
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  padding: var(--space-9) var(--space-7) var(--space-8);
+  padding: var(--space-9) var(--space-gutter) var(--space-8);
   overflow: hidden;
   background: var(--navy);
-}
-
-@media (max-width: 900px) {
-  .hero {
-    padding: var(--space-9) var(--space-5) var(--space-8);
-  }
 }
 
 .hero-inner {
