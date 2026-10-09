@@ -1,11 +1,11 @@
 /* ============================================================
    assets/css/pages/home/cta.css
-   Rôle : appel final à participer et grand bouton.
+   Rôle : appel final à participer (bouton .btn-primary-lg, dans components/button.css).
    Pages concernées : index.html.
    ============================================================ */
 
 /* ── APPEL À PARTICIPER ──
-   Appel final sur fond marine avec le grand bouton .btn-large (ombre corail au survol).
+   Appel final sur fond marine avec le grand bouton .btn-primary-lg.
    overflow: hidden contient les couches décoratives ; le contenu reste devant le margouillat.
 */
 
@@ -43,37 +43,4 @@
   font-size: var(--text-base);
   line-height: var(--leading-6);
   color: var(--white-60);
-}
-
-.btn-large {
-  display: inline-block;
-  padding: var(--space-5) var(--space-7);
-  font-family: var(--f-ui);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--white);
-  background: var(--coral-deep);
-  border-radius: var(--radius-pill);
-  transition:
-    transform 0.25s var(--ease-spring),
-    box-shadow 0.25s;
-}
-
-.btn-large:hover {
-  box-shadow: var(--shadow-accent-lg);
-  transform: translateY(-4px);
-}
-
-.btn-large:active {
-  transform: scale(0.97);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .btn-large:hover,
-  .btn-large:active {
-    transform: none;
-  }
 }
