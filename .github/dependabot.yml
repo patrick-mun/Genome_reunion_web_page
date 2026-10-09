@@ -1,0 +1,23 @@
+# Met à jour les dépendances de développement et les actions GitHub.
+# Les mises à jour npm sont groupées (une PR par semaine au plus) ; la CI (verify) les valide.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    groups:
+      outils-de-verification:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: 'Dépendances'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: 'CI'

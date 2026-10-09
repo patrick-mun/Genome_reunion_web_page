@@ -43,7 +43,11 @@ Le site doit expliquer :
 .
 ├── index.html                  # Page d'accueil
 ├── participer.html             # Page d'information participation
+├── favicon.ico                 # Icône du site (les autres icônes sont dans assets/images/)
 ├── README.md                   # Présentation du dépôt
+├── package.json, .nvmrc        # Outils de vérification (Node 22)
+├── tooling/, .githooks/        # Contrôles HTML/CSS et hook pré-commit
+├── .github/                    # Action de vérification et Dependabot
 │
 ├── assets/
 │   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
@@ -53,7 +57,7 @@ Le site doit expliquer :
 │   ├── css/utilities.css       # .reveal, chargé en dernier
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
-│   └── images/efs-logo.svg     # Logo EFS
+│   └── images/                 # efs-logo.svg, favicon.svg, apple-touch-icon.png
 │
 └── docs/
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
@@ -185,10 +189,11 @@ Le dépôt est propre et organisé. La structure `assets/` / `docs/` est en plac
 Travaux récents effectués :
 
 - ✅ Réorganisation du dépôt (assets/, docs/) et suppression des fichiers morts.
-- ✅ Gardes JavaScript ajoutées dans `script.js` (compatibilité multi-pages).
+- ✅ JavaScript découpé en modules ES testés (`assets/js/pages/`, `assets/js/lib/`) ; chaque module vérifie ses éléments (compatibilité multi-pages).
 - ✅ Partenariat EFS confirmé et libellés mis à jour dans `participer.html`.
 - ✅ URL du site ajoutée dans le README.
-- ✅ Commentaires de maintenance ajoutés dans `paille-en-queue.js`.
+- ✅ Conformité aux conventions de code web (CSS, HTML, JS) : outillage, tokens, CSS découpé par section, contrastes AA, accessibilité, contrôles automatiques (`npm run verify`, hook pré-commit, GitHub Action).
+- ✅ Hygiène du dépôt : favicon, `.nvmrc` et `engines`, Dependabot.
 
 ---
 
@@ -198,7 +203,7 @@ Travaux récents effectués :
 2. `index.html` : adoucir les promesses médicales trop fortes.
 3. `index.html` : stabiliser le vocabulaire autour de `référentiel génomique réunionnais`.
 4. `participer.html` : sécuriser les dates de collecte et les promesses de bilan sanguin.
-5. `styles.css` : ajustements visuels uniquement après validation des contenus.
+5. `assets/css/` : ajustements visuels uniquement après validation des contenus.
 
 ---
 

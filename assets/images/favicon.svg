@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Génome Réunion</title>
+  <rect width="64" height="64" rx="14" fill="#fbfaf7"/>
+  <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(7.5 12) scale(0.6)">
+    <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="#0f3a56"/>
+    <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="#1e6e8c" transform="translate(0,16)"/>
+    <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="#e8654a" transform="translate(0,32)"/>
+    <circle cx="84" cy="8" r="2.6" fill="#0f3a56" stroke="none"/>
+    <circle cx="84" cy="24" r="2.6" fill="#1e6e8c" stroke="none"/>
+    <circle cx="84" cy="40" r="2.6" fill="#e8654a" stroke="none"/>
+  </g>
+</svg>
