@@ -68,7 +68,7 @@ export const CAST = [
     head: 'hair',
   },
   { id: 'dancer2', kind: 'dancer', x: 248, row: 'front', offset: 5 },
-  { id: 'man', kind: 'man', x: 754, row: 'front', offset: 0 },
+  { id: 'man', kind: 'man', x: 754, row: 'front', offset: 1 },
   { id: 'dancer1', kind: 'dancer', x: 834, row: 'front', offset: 0 },
 ];
 
@@ -82,6 +82,16 @@ const path = (cls, d) => `<path class="${cls}" d="${d}" />`;
  */
 export function formatPartTransform(part) {
   return `translate(${formatNumber(part.x)},${formatNumber(part.y)}) rotate(${formatNumber(part.angle)})`;
+}
+
+/**
+ * Transformation du tour sur soi : rétrécissement horizontal autour de l'axe du danseur.
+ * @param {{x: number, scaleX: number}} turn Axe du danseur et échelle horizontale.
+ * @returns {string} Valeur de l'attribut `transform`.
+ */
+export function formatTurnTransform(turn) {
+  const x = formatNumber(turn.x);
+  return `translate(${x},0) scale(${formatNumber(turn.scaleX)},1) translate(${-x},0)`;
 }
 
 /* ── FEU ──

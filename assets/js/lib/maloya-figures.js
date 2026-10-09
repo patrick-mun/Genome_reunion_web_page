@@ -34,6 +34,10 @@ const group = (id, part, inner) => `<g data-part="${id}-${part}">${inner}</g>`;
 
 const SHIRT_TORSO =
   'M-9,0 C-10.5,-10 -10.5,-22 -7.5,-31 Q-4,-36 1.5,-35.5 Q6,-35 7.5,-31 C9.5,-22 9.5,-10 9,0 A9,9 0 0 1 -9,0 Z';
+// Bassin et fesses en tissu du pantalon, par-dessus le bas de la chemise (rentrée) : bord de
+// taille droit, arrondi dessous, plus plein vers l'arrière (fesses).
+const PELVIS =
+  'M-10.6,-7 L9.2,-7 C9.9,-3 9.9,0 9.4,1.6 C8,7 3,10 -2,10 C-7.6,10 -11.6,6 -11.5,0.6 C-11.4,-2.4 -10.9,-5 -10.6,-7 Z';
 const PROFILE_HEAD =
   'M-1,-5 C-7,-5 -8.5,-11 -8,-15 C-7.5,-21 -3,-24 1,-24 C5.5,-24 8,-21 8.4,-16.5 L10,-13.5 L8.6,-12.8 C8.8,-10 8.4,-7.5 6.5,-6 C4.5,-4.6 2,-4.8 -1,-5 Z';
 const NECK = 'M-3,1 L-2.8,-5 L3.2,-5 L3.4,1 Z';
@@ -144,7 +148,11 @@ export function buildProfileFigure(member) {
     'head',
     path('maloya-skin', NECK) + path('maloya-skin', PROFILE_HEAD) + PROFILE_HEADWEAR[member.head],
   );
-  const torso = group(id, 'torso', path('maloya-shirt', SHIRT_TORSO));
+  const torso = group(
+    id,
+    'torso',
+    path('maloya-shirt', SHIRT_TORSO) + path('maloya-trousers', PELVIS),
+  );
   const stick = instrument === 'sati' || instrument === 'piker' ? STICK : '';
   const nearArm = buildProfileArm(id, 'near', instrument === 'bobre' ? BOBRE_STICK : stick);
   const farArm = buildProfileArm(id, 'far', stick);
@@ -154,8 +162,8 @@ export function buildProfileFigure(member) {
     rouler: [far, farArm, ROULER_DRUM, torso, head, near, nearArm],
     sati: [STOOL, far, farArm, torso, head, near, SATI_PLATE, nearArm],
     piker: [STOOL, far, farArm, PIKER_BAMBOO, torso, head, near, nearArm],
-    bobre: [far, torso, head, near, group(id, 'instrument', BOBRE_BOW), farArm, nearArm],
-    kayamb: [far, torso, head, near, farArm, group(id, 'instrument', KAYAMB), nearArm],
+    bobre: [far, farArm, torso, head, near, group(id, 'instrument', BOBRE_BOW), nearArm],
+    kayamb: [far, farArm, torso, head, near, group(id, 'instrument', KAYAMB), nearArm],
   };
   const isWide = instrument === 'rouler' || instrument === 'piker';
   const shadow = `<ellipse class="maloya-shadow" cx="${instrument === 'piker' ? 22 : 0}" cy="0" rx="${isWide ? 44 : 26}" ry="4" />`;
@@ -220,6 +228,8 @@ export function buildDancerFigure({ id }) {
     [0, 1, 2]
       .map((i) => `<path class="maloya-skirt-fold" data-part="${id}-fold-${i}" d="" />`)
       .join(''),
+    // Seuls le buste, la tête et les bras tournent ; la jupe en cloche reste ronde.
+    `<g data-part="${id}-turn">`,
     group(id, 'torso', path('maloya-blouse', BLOUSE) + path('maloya-sash', SASH)),
     group(
       id,
@@ -230,6 +240,7 @@ export function buildDancerFigure({ id }) {
     ),
     buildFrontArm(id, 'left', sleeve),
     buildFrontArm(id, 'right', sleeve),
+    '</g>',
   ].join('');
 }
 
@@ -253,11 +264,13 @@ export function buildManFigure({ id }) {
     ].join('');
   return [
     '<ellipse class="maloya-shadow" cx="0" cy="0" rx="26" ry="3.5" />',
+    `<g data-part="${id}-turn">`,
     leg('left'),
     leg('right'),
     group(id, 'torso', path('maloya-shirt', MAN_SHIRT) + path('maloya-trousers', MAN_BELT)),
     group(id, 'head', path('maloya-skin', FRONT_NECK) + FRONT_FACE + FRONT_HAT),
     buildFrontArm(id, 'left', sleeve),
     buildFrontArm(id, 'right', sleeve),
+    '</g>',
   ].join('');
 }

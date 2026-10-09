@@ -51,10 +51,15 @@ test('un intervalle court entre deux frappes donne une levée plus basse', () =>
   assert.ok(roll < full / 2);
 });
 
-test('l’accent du premier temps retombe à zéro en un temps', () => {
-  assert.equal(computeDownbeatAccent(0), 1);
-  assert.equal(computeDownbeatAccent(4), 1);
+test('l’accent du premier temps monte sans saut puis retombe à zéro en un temps', () => {
+  assert.equal(computeDownbeatAccent(0), 0);
+  assert.equal(computeDownbeatAccent(0.15), 1);
+  assert.equal(computeDownbeatAccent(4.15), 1);
   assert.equal(computeDownbeatAccent(1.5), 0);
+  for (let beats = 0; beats < 4; beats += 0.01) {
+    const step = Math.abs(computeDownbeatAccent(beats + 0.01) - computeDownbeatAccent(beats));
+    assert.ok(step < 0.2, `saut de ${step} à ${beats}`);
+  }
 });
 
 test('la secousse du kayamb reste bornée et continue', () => {

@@ -17,7 +17,7 @@ import {
   ROULER,
   SATI,
 } from './maloya-musicians.js';
-import { CAST, formatPartTransform } from './maloya-svg.js';
+import { CAST, formatPartTransform, formatTurnTransform } from './maloya-svg.js';
 
 const SEATED = { rouler: ROULER, sati: SATI, piker: PIKER };
 const STANDING = { bobre: computeBobrePose, kayamb: computeKayambPose };
@@ -49,6 +49,7 @@ function addMemberValues(transforms, paths, id, pose) {
   addLimbTransforms(transforms, id, pose.arms, ['upper', 'fore', 'hand']);
   addLimbTransforms(transforms, id, pose.legs, ['thigh', 'shin', 'foot']);
   if (pose.instrument) transforms[`${id}-instrument`] = formatPartTransform(pose.instrument);
+  if (pose.turn) transforms[`${id}-turn`] = formatTurnTransform(pose.turn);
   if (pose.feet) {
     transforms[`${id}-left-foot`] = formatPartTransform(pose.feet.left);
     transforms[`${id}-right-foot`] = formatPartTransform(pose.feet.right);
