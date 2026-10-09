@@ -1,0 +1,79 @@
+/* ============================================================
+   assets/css/pages/home/cta.css
+   Rôle : appel final à participer et grand bouton.
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── APPEL À PARTICIPER ──
+   Appel final sur fond marine avec le grand bouton .btn-large (ombre corail au survol).
+   overflow: hidden contient les couches décoratives ; le contenu reste devant le margouillat.
+*/
+
+.cta {
+  position: relative;
+  padding: var(--space-9) var(--space-7);
+  overflow: hidden;
+  text-align: center;
+  background: var(--navy);
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 2; /* au-dessus de la couche margouillat (z-index 1) */
+}
+
+.cta-title {
+  margin-bottom: var(--space-5);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-6);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+
+.cta-title em {
+  font-style: normal;
+  color: var(--coral);
+}
+
+.cta-sub {
+  max-width: 460px;
+  margin: 0 auto var(--space-7);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--white-60);
+}
+
+.btn-large {
+  display: inline-block;
+  padding: var(--space-5) var(--space-7);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--coral);
+  border-radius: var(--radius-pill);
+  transition:
+    transform 0.25s var(--ease-spring),
+    box-shadow 0.25s;
+}
+
+.btn-large:hover {
+  box-shadow: var(--shadow-accent-lg);
+  transform: translateY(-4px);
+}
+
+.btn-large:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-large:hover,
+  .btn-large:active {
+    transform: none;
+  }
+}

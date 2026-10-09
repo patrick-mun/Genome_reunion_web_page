@@ -49,7 +49,7 @@ Le site doit expliquer :
 │   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
 │   ├── css/base.css            # Reset, html, body
 │   ├── css/components/         # nav, footer, vagues, lien d'évitement, barre de progression, eyebrow
-│   ├── css/pages/              # home.css, participer.css
+│   ├── css/pages/              # home/ (une section par fichier), participer.css
 │   ├── css/utilities.css       # .reveal, chargé en dernier
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
@@ -117,7 +117,7 @@ Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ord
 1. `tokens.css` : valeurs de conception, seul endroit où les valeurs brutes sont permises ;
 2. `base.css` : reset, `html`, `body` ;
 3. `components/*.css` : composants partagés par les deux pages, chacun avec ses media queries ;
-4. `pages/home.css` ou `pages/participer.css` : styles propres à une page ;
+4. `pages/home/*.css` (un fichier par section de l'accueil : hero, stats, probleme, change, carrefour, methode, outils, equipe, partenaires, cta, paille-en-queue, margouillat) ou `pages/participer.css` : styles propres à une page ;
 5. `utilities.css` : `.reveal`, chargé en dernier car il doit l'emporter sur les transitions des composants.
 
 ---

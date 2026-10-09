@@ -1,0 +1,221 @@
+/* ============================================================
+   assets/css/pages/home/hero.css
+   Rôle : bandeau d'accueil (hero) et ses boutons.
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── HERO ──
+   Bandeau d'accueil plein écran sur fond marine : surtitre créole, titre, sous-titre, texte et boutons.
+   Les textes sont révélés par hero-reveal.js (classe is-revealed) ; la parallaxe souris passe par `translate`.
+   Les vagues sont dans components/waves.css, les oiseaux plus bas dans ce fichier.
+*/
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-9) var(--space-7) var(--space-8);
+  overflow: hidden;
+  background: var(--navy);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding: var(--space-9) var(--space-5) var(--space-8);
+  }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.hero-creole {
+  margin-bottom: var(--space-6);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-2);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--teal-light);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+}
+
+.hero-title {
+  margin-bottom: var(--space-6);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-8);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.9s var(--ease-out) 0.1s,
+    transform 0.9s var(--ease-out) 0.1s;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--coral);
+}
+
+.hero-subtitle {
+  margin-top: calc(var(--space-4) * -1);
+  margin-bottom: var(--space-7);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.8s var(--ease-out) 0.25s,
+    transform 0.8s var(--ease-out) 0.25s;
+}
+
+.hero-body {
+  max-width: 520px;
+  margin-bottom: var(--space-7);
+  font-size: var(--text-fluid-1);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--white-60);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s var(--ease-out) 0.2s,
+    transform 0.8s var(--ease-out) 0.2s;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s var(--ease-out) 0.3s,
+    transform 0.8s var(--ease-out) 0.3s;
+}
+
+/* État d'apparition posé par hero-reveal.js après le délai de data-hero-reveal. */
+
+.hero-creole.is-revealed,
+.hero-title.is-revealed,
+.hero-subtitle.is-revealed,
+.hero-body.is-revealed,
+.hero-actions.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-creole,
+  .hero-title,
+  .hero-subtitle,
+  .hero-body,
+  .hero-actions {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Parallaxe souris : hero-parallax.js pose --parallax-x et --parallax-y. La
+   propriété `translate` se compose avec `transform` (apparition) sans la remplacer. */
+
+.hero-creole,
+.hero-title,
+.hero-body,
+.hero-actions {
+  translate: var(--parallax-x, 0) var(--parallax-y, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-creole,
+  .hero-title,
+  .hero-body,
+  .hero-actions {
+    translate: none;
+  }
+}
+
+/* ── BOUTONS DU HERO ──
+   Bouton principal corail (ombre au survol) et lien secondaire à flèche.
+   Le soulèvement au survol est neutralisé en mouvement réduit.
+*/
+.btn-primary {
+  padding: var(--space-4) var(--space-6);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--coral);
+  border-radius: var(--radius-pill);
+  transition:
+    transform 0.25s var(--ease-spring),
+    box-shadow 0.25s;
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-accent-md);
+  transform: translateY(-3px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover,
+  .btn-primary:active {
+    transform: none;
+  }
+}
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--white-60);
+  transition: color 0.2s;
+}
+
+.btn-ghost:hover {
+  color: var(--white);
+}
+
+.btn-ghost::after {
+  transition: transform 0.2s;
+  content: '↓';
+}
+
+.btn-ghost:hover::after {
+  transform: translateY(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-ghost:hover::after {
+    transform: none;
+  }
+}

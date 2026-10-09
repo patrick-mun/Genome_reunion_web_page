@@ -1,0 +1,79 @@
+/* ============================================================
+   assets/css/pages/home/methode.css
+   Rôle : section « Méthode » : trois étapes numérotées.
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── SECTION MÉTHODE ──
+   Trois étapes numérotées (.step) en trois colonnes, une seule sous 900 px.
+*/
+
+.methode {
+  background: var(--cream);
+}
+
+.methode-title {
+  max-width: 540px;
+  margin-bottom: var(--space-8);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-4);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+.methode-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-7);
+}
+
+@media (max-width: 900px) {
+  .methode-steps {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.step {
+  position: relative;
+  padding-top: var(--space-5);
+  border-top: 1.5px solid var(--sand);
+}
+
+.step::before {
+  position: absolute;
+  top: -1.5px;
+  left: 0;
+  width: 40px;
+  height: 1.5px;
+  background: var(--teal);
+  content: '';
+}
+
+.step-count {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--f-ui);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.step-title {
+  margin-bottom: var(--space-3);
+  font-family: var(--f-display);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--navy);
+}
+
+.step-body {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--stone);
+}

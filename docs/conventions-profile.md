@@ -37,6 +37,7 @@ Valeurs de conception : `assets/css/tokens.css` (seul fichier où les valeurs br
 | Base (reset, base, layout, utilitaires) | `assets/css/base.css`      |
 | Composants (un fichier par composant)   | `assets/css/components/`   |
 | Pages (un fichier par page)             | `assets/css/pages/`        |
+| Page découpée par section (accueil)     | `assets/css/pages/home/`   |
 | Utilitaires (chargés en dernier)        | `assets/css/utilities.css` |
 
 ## Sens des media queries (CSS-05)

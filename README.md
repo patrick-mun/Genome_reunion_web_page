@@ -34,7 +34,7 @@ Le site doit expliquer simplement :
 │   │   ├── base.css            # Reset, html, body
 │   │   ├── utilities.css       # Apparition au défilement (.reveal), chargé en dernier
 │   │   ├── components/         # Un fichier par composant partagé (nav, footer, vagues…)
-│   │   └── pages/              # Un fichier par page (home.css, participer.css)
+│   │   └── pages/              # Un dossier ou fichier par page (home/ : une section par fichier, participer.css)
 │   ├── js/
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)
