@@ -15,11 +15,14 @@
   --teal-light: #9fd3e0;
   --teal-mid: #cfe3ea;
   --coral: #e8654a;
+  --coral-deep: #da3c1c; /* fond sous texte blanc, ou texte sur fond clair : contraste 4,5:1 */
+  --coral-light: #eb7a62; /* petit texte sur fond sombre : contraste 4,5:1 */
   --amber: #c0852c;
+  --amber-deep: #9d6d24; /* fond sous texte blanc : contraste 4,5:1 */
   --cream: #fbfaf7;
   --sand: #edeae2;
   --slate: #16242e;
-  --stone: #6a7178;
+  --stone: #646a71;
   --graphite: #41494f;
   --white: #fff;
   --efs-red: #e2001a; /* rouge de la marque EFS, réservé à la page Participer */

@@ -77,7 +77,7 @@
 
       <!-- HERO PAGE -->
       <section class="page-hero">
-        <div class="hero-waves">
+        <div class="hero-waves" aria-hidden="true">
           <svg
             class="wave-1"
             viewBox="0 0 2880 220"
@@ -212,9 +212,9 @@
             </p>
           </div>
 
-          <div class="collectes-grid">
+          <ul role="list" class="collectes-grid">
             <!-- EFS NORD -->
-            <div class="collecte-block reveal js-reveal">
+            <li class="collecte-block reveal js-reveal">
               <div class="collecte-block-header">
                 <div>
                   <div class="collecte-zone">
@@ -293,10 +293,10 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </li>
 
             <!-- EFS SUD -->
-            <div class="collecte-block reveal reveal-delay-1 js-reveal">
+            <li class="collecte-block reveal reveal-delay-1 js-reveal">
               <div class="collecte-block-header">
                 <div>
                   <div class="collecte-zone">
@@ -375,8 +375,8 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
+            </li>
+          </ul>
 
           <!-- Note -->
           <p class="collectes-note reveal js-reveal">
@@ -398,32 +398,32 @@
             La participation se déroule en trois étapes. Comptez environ 30 minutes sur place.
           </p>
 
-          <div class="inscription-steps">
-            <div class="inscription-step reveal js-reveal">
+          <ol role="list" class="inscription-steps">
+            <li class="inscription-step reveal js-reveal">
               <span class="inscription-step-num">01</span>
               <div class="inscription-step-text">
                 <strong>Inscrivez-vous en ligne ou sur place</strong>
                 Choisissez une date de collecte proche de chez vous et réservez votre créneau.
                 L'inscription est gratuite et sans engagement.
               </div>
-            </div>
-            <div class="inscription-step reveal reveal-delay-1 js-reveal">
+            </li>
+            <li class="inscription-step reveal reveal-delay-1 js-reveal">
               <span class="inscription-step-num">02</span>
               <div class="inscription-step-text">
                 <strong>Rendez-vous à la collecte avec votre pièce d'identité</strong>
                 Une équipe médicale EFS réalise un petit prélèvement sanguin et vous explique
                 l'étude. Un formulaire de consentement est signé sur place.
               </div>
-            </div>
-            <div class="inscription-step reveal reveal-delay-2 js-reveal">
+            </li>
+            <li class="inscription-step reveal reveal-delay-2 js-reveal">
               <span class="inscription-step-num">03</span>
               <div class="inscription-step-text">
                 <strong>Contribuez au référentiel réunionnais</strong>Votre participation aide à
                 mieux documenter la diversité génétique de La Réunion, dans un cadre encadré par le
                 consentement et la confidentialité des données.
               </div>
-            </div>
-          </div>
+            </li>
+          </ol>
 
           <div class="cta-buttons reveal reveal-delay-3 js-reveal">
             <a href="mailto:genome.reunion@chu-reunion.fr" class="btn-efs">Je m'inscris</a>

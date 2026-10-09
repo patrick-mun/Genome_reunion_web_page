@@ -55,3 +55,18 @@
 .text-line {
   display: block;
 }
+
+/* ── TEXTE MASQUÉ ──
+   Titre ou libellé lu par les lecteurs d'écran mais invisible à l'écran (clip, pas display: none,
+   qui le retirerait de l'arbre d'accessibilité). Sert à nommer une section sans titre visible.
+*/
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(50%);
+}

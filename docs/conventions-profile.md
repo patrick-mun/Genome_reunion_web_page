@@ -60,6 +60,6 @@ Ombres : `--shadow-sm`, `-md`, `-lg`, `-accent-sm`, `-accent-md`, `-accent-lg`, 
 
 ## Dérogations
 
-| Règle    | Choix du projet | Raison |
-| -------- | --------------- | ------ |
-| (aucune) |                 |        |
+| Règle                                                                | Choix du projet                             | Raison                                                                                                           |
+| -------------------------------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| HTML-11 (html-validate `no-redundant-role`, `prefer-native-element`) | `role="list"` autorisé sur `<ul>` et `<ol>` | Safari/VoiceOver retire la sémantique de liste quand `list-style: none` est posé ; le rôle explicite la rétablit |

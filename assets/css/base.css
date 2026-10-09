@@ -16,6 +16,11 @@
   box-sizing: border-box;
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 html {
   scroll-behavior: smooth;
 }

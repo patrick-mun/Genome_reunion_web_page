@@ -32,7 +32,7 @@ footer {
   font-family: var(--f-display);
   font-size: var(--text-md);
   font-style: italic;
-  color: var(--white-40);
+  color: var(--white-60);
 }
 
 .footer-nav {
@@ -47,7 +47,7 @@ footer {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--white-40);
+  color: var(--white-60);
   transition: color 0.2s;
 }
 
@@ -58,7 +58,7 @@ footer {
 .footer-copy {
   font-family: var(--f-ui);
   font-size: var(--text-xs);
-  color: var(--white-20);
+  color: var(--white-60);
 }
 
 /* Contenus du pied de page passés devant le margouillat (z-index 1 sur l'accueil) */

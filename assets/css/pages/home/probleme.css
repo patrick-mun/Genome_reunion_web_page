@@ -81,7 +81,7 @@
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--coral-deep);
 }
 
 .pb-item-text {
