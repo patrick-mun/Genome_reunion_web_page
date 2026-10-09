@@ -4,11 +4,11 @@
    Pages concernées : toutes.
    ============================================================ */
 
-/* ── NAV ── */
-
-/* Couleurs des liens et du logo portées par des variables locales : l'état
-   .is-scrolled (posé par le JS) les redéfinit sans multiplier les sélecteurs. */
-
+/* ── NAV ──
+   Barre fixe en haut de page : transparente sur le hero, opaque une fois la page défilée.
+   Les couleurs des liens et du logo sont des variables locales ; l'état .is-scrolled (posé par
+   nav-scroll.js) les redéfinit sans multiplier les sélecteurs. Liens masqués sous 900 px.
+*/
 .nav {
   --nav-link-color: var(--white-60);
   --nav-link-hover-color: var(--white);

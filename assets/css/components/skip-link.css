@@ -4,9 +4,10 @@
    Pages concernées : toutes.
    ============================================================ */
 
-/* ── LIEN D'ÉVITEMENT ── */
-
-/* Premier élément focalisable de la page : masqué hors écran, visible au focus clavier. */
+/* ── LIEN D'ÉVITEMENT ──
+   Premier élément focalisable de la page (WCAG 2.4.1) : masqué au-dessus de l'écran,
+   il glisse en vue au focus clavier. Reste devant la navigation (z-index 1100).
+*/
 
 .skip-link {
   position: absolute;

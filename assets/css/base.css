@@ -4,8 +4,10 @@
    Pages concernées : toutes.
    ============================================================ */
 
-/* ── RESET ── */
-
+/* ── RESET ──
+   Remet marges et espacements à zéro et fixe box-sizing: border-box partout.
+   Le défilement fluide de html est neutralisé en mouvement réduit (CSS-41).
+*/
 *,
 *::before,
 *::after {
@@ -24,6 +26,10 @@ html {
   }
 }
 
+/* ── BASE ──
+   Police, couleur et fond du document.
+   overflow-x: hidden masque les débordements horizontaux des couches décoratives.
+*/
 body {
   font-family: var(--f-body);
   color: var(--slate);

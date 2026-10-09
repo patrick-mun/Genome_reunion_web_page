@@ -4,7 +4,11 @@
    Pages concernées : toutes.
    ============================================================ */
 
-/* ── FOOTER ── */
+/* ── PIED DE PAGE ──
+   Signature, liens, mention du projet et bouton de pause des animations.
+   Ses contenus passent à z-index 2 pour rester devant le margouillat (z-index 1) ;
+   le pied de page passe en colonne sous 900 px.
+*/
 
 footer {
   display: flex;

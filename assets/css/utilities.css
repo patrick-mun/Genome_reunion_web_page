@@ -4,7 +4,11 @@
    Pages concernées : toutes.
    ============================================================ */
 
-/* ── REVEAL AU SCROLL ── */
+/* ── REVEAL AU SCROLL ──
+   .reveal masque un bloc, .visible (posé par scroll-reveal.js) l'affiche ; .reveal-delay-N
+   échelonne les apparitions. Chargé en dernier pour l'emporter sur les transitions des
+   composants (cartes, boutons).
+*/
 
 .reveal {
   opacity: 0;
@@ -43,9 +47,11 @@
   transition-delay: 0.4s;
 }
 
-/* ── LIGNES DE TEXTE ── */
-
-/* Chaque segment d'un titre reste sur sa propre ligne, sans <br> de mise en page (HTML-43). */
+/* ── LIGNES DE TEXTE ──
+   Chaque segment d'un titre reste sur sa propre ligne, sans <br> de mise en page (HTML-43).
+   À poser sur un <span> dans le titre : display: block coupe la ligne comme un <br>,
+   sans le défaut de lecture (le texte garde ses espaces).
+*/
 .text-line {
   display: block;
 }
