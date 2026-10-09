@@ -58,21 +58,21 @@
             <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(10,8)">
               <path
                 d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="#0F3A56"
+                stroke="var(--navy)"
               />
               <path
                 d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="#1E6E8C"
+                stroke="var(--teal)"
                 transform="translate(0,16)"
               />
               <path
                 d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="#E8654A"
+                stroke="var(--coral)"
                 transform="translate(0,32)"
               />
-              <circle cx="84" cy="8" r="2.6" fill="#0F3A56" stroke="none" />
-              <circle cx="84" cy="24" r="2.6" fill="#1E6E8C" stroke="none" />
-              <circle cx="84" cy="40" r="2.6" fill="#E8654A" stroke="none" />
+              <circle cx="84" cy="8" r="2.6" fill="var(--navy)" stroke="none" />
+              <circle cx="84" cy="24" r="2.6" fill="var(--teal)" stroke="none" />
+              <circle cx="84" cy="40" r="2.6" fill="var(--coral)" stroke="none" />
             </g>
           </svg>
           <span class="nav-logo-text">Génome Réunion</span>
@@ -98,7 +98,7 @@
               d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
                C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
                L2880,220 L0,220 Z"
-              fill="#091F30"
+              fill="var(--navy-deep)"
             />
           </svg>
           <svg
@@ -112,7 +112,7 @@
                C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
                C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
                L2880,220 L0,220 Z"
-              fill="#1E6E8C"
+              fill="var(--teal)"
             />
           </svg>
           <svg
@@ -126,7 +126,7 @@
                C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
                C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
                L2880,220 L0,220 Z"
-              fill="#E8654A"
+              fill="var(--coral)"
             />
           </svg>
         </div>
@@ -318,85 +318,33 @@
             <!-- Donut chart -->
             <div class="reveal reveal-delay-2 js-reveal">
               <svg class="donut js-donut" aria-hidden="true" viewBox="0 0 100 100">
-                <!-- Afrique/Malgache 45% → 162° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#0F3A56"
-                  stroke-width="14"
-                  stroke-dasharray="106.8 237.9"
-                  stroke-dashoffset="0"
-                />
-                <!-- Inde 25% → 90° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#1E6E8C"
-                  stroke-width="14"
-                  stroke-dasharray="59.7 285.0"
-                  stroke-dashoffset="-106.8"
-                />
-                <!-- Européen 15% → 54° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#E8654A"
-                  stroke-width="14"
-                  stroke-dasharray="35.8 308.9"
-                  stroke-dashoffset="-166.5"
-                />
-                <!-- Zarabe 8% → 28.8° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#C0852C"
-                  stroke-width="14"
-                  stroke-dasharray="19.1 325.6"
-                  stroke-dashoffset="-202.3"
-                />
-                <!-- Chine 7% → 25.2° -->
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  fill="none"
-                  stroke="#9FD3E0"
-                  stroke-width="14"
-                  stroke-dasharray="16.7 328.0"
-                  stroke-dashoffset="-221.4"
-                />
+                <circle class="origin-africa" cx="50" cy="50" r="38" />
+                <circle class="origin-india" cx="50" cy="50" r="38" />
+                <circle class="origin-europe" cx="50" cy="50" r="38" />
+                <circle class="origin-zarabe" cx="50" cy="50" r="38" />
+                <circle class="origin-asia" cx="50" cy="50" r="38" />
               </svg>
 
               <div class="ancestry-legend">
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-africa js-legend-dot"
-                    >Afrique &amp; Malgache</span
-                  >
-                  <span class="legend-pct">45 %</span>
+                  <span class="legend-dot origin-africa js-legend-dot">Afrique &amp; Malgache</span>
+                  <span class="legend-pct js-legend-pct">45 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-india js-legend-dot">Inde du Sud</span>
-                  <span class="legend-pct">25 %</span>
+                  <span class="legend-dot origin-india js-legend-dot">Inde du Sud</span>
+                  <span class="legend-pct js-legend-pct">25 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-europe js-legend-dot">Européen</span>
-                  <span class="legend-pct">15 %</span>
+                  <span class="legend-dot origin-europe js-legend-dot">Européen</span>
+                  <span class="legend-pct js-legend-pct">15 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-zarabe js-legend-dot">Zarabe / Gujarati</span>
-                  <span class="legend-pct">8 %</span>
+                  <span class="legend-dot origin-zarabe js-legend-dot">Zarabe / Gujarati</span>
+                  <span class="legend-pct js-legend-pct">8 %</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-dot legend-dot-asia js-legend-dot">Chine / Asie</span>
-                  <span class="legend-pct">7 %</span>
+                  <span class="legend-dot origin-asia js-legend-dot">Chine / Asie</span>
+                  <span class="legend-pct js-legend-pct">7 %</span>
                 </div>
                 <p class="ancestry-legend-note">Valeurs illustratives</p>
               </div>
@@ -626,7 +574,7 @@
               d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
                C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
                L2880,220 L0,220 Z"
-              fill="#091F30"
+              fill="var(--navy-deep)"
             />
           </svg>
           <svg
@@ -640,7 +588,7 @@
                C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
                C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
                L2880,220 L0,220 Z"
-              fill="#1E6E8C"
+              fill="var(--teal)"
             />
           </svg>
           <svg
@@ -654,7 +602,7 @@
                C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
                C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
                L2880,220 L0,220 Z"
-              fill="#E8654A"
+              fill="var(--coral)"
             />
           </svg>
         </div>

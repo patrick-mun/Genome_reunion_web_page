@@ -25,6 +25,9 @@
   --stone: #646a71;
   --graphite: #41494f;
   --white: #fff;
+  --gecko-green: #8cc152; /* margouillat : peau */
+  --gecko-dark: #3e5a2b; /* margouillat : contours et taches */
+  --gecko-pad: #c8e6a0; /* margouillat : coussinets des doigts */
   --efs-red: #e2001a; /* rouge de la marque EFS, réservé à la page Participer */
 
   /* ── OPACITÉS ──

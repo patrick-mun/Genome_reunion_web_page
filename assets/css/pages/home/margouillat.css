@@ -34,3 +34,67 @@
   display: block;
   overflow: visible;
 }
+
+/* Peinture du margouillat : le balisage (lib/gecko-svg.js) ne porte aucune couleur. */
+.gecko-limb-edge,
+.gecko-limb {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.gecko-limb-edge {
+  stroke: var(--gecko-dark);
+  stroke-width: 7;
+}
+
+.gecko-limb {
+  stroke: var(--gecko-green);
+  stroke-width: 4.2;
+}
+
+.gecko-toe {
+  fill: var(--gecko-pad);
+  stroke: var(--gecko-dark);
+  stroke-width: 1.1;
+}
+
+.gecko-tail-edge {
+  fill: var(--gecko-dark);
+}
+
+.gecko-tail {
+  fill: var(--gecko-green);
+}
+
+.gecko-skin {
+  fill: var(--gecko-green);
+  stroke: var(--gecko-dark);
+  stroke-width: 2.4;
+}
+
+.gecko-spot {
+  opacity: 0.28;
+  fill: var(--gecko-dark);
+}
+
+.gecko-eye {
+  fill: var(--white);
+  stroke: var(--gecko-dark);
+  stroke-width: 1.6;
+}
+
+.gecko-pupil {
+  fill: var(--slate);
+}
+
+.gecko-nostril {
+  opacity: 0.55;
+  fill: var(--gecko-dark);
+}
+
+.gecko-mouth {
+  fill: none;
+  stroke: var(--gecko-dark);
+  stroke-linecap: round;
+  stroke-width: 1.7;
+}

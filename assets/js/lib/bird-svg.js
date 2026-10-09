@@ -1,8 +1,9 @@
 /* ============================================================
    assets/js/lib/bird-svg.js
-   Rôle : balisage SVG d'un paille-en-queue (chaîne constante, sans DOM).
+   Rôle : balisage SVG d'un paille-en-queue (chaîne constante, sans DOM, sans couleur).
    Pages concernées : accueil.
-   Accroches : [data-wings] et [data-tail], retrouvés par paille-en-queue.js.
+   Accroches : [data-wings] et [data-tail], retrouvés par paille-en-queue.js. Les couleurs
+   viennent des classes paille-* de pages/home/paille-en-queue.css.
    ============================================================ */
 
 /**
@@ -22,8 +23,8 @@ export function birdSVG() {
     '<path d="M38,18 C47,12 62,16 70,35 C59,31 47,28 38,26 Z" />',
     '</g>',
     '<path class="paille-body" d="M36,4 C40,12 40.8,26 38.4,41 C37.4,48 34.6,48 33.6,41 C31.2,26 32,12 36,4 Z" />',
-    '<path d="M36,2 L41,8 L36.8,7 Z" fill="#E8654A" opacity=".95" />',
-    '<circle cx="37.6" cy="9.5" r=".9" fill="#0F3A56" opacity=".55" />',
+    '<path class="paille-beak" d="M36,2 L41,8 L36.8,7 Z" />',
+    '<circle class="paille-eye" cx="37.6" cy="9.5" r=".9" />',
     '</svg>',
   ].join('');
 }

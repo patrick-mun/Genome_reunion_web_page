@@ -61,15 +61,48 @@
   color: var(--stone);
 }
 
+/* ── ORIGINES ──
+   Couleur de chaque origine, définie une seule fois dans --c : l'arc de l'anneau et la pastille de
+   la légende portent la même classe origin-<origine>.
+*/
+.origin-africa {
+  --c: var(--navy);
+}
+
+.origin-india {
+  --c: var(--teal);
+}
+
+.origin-europe {
+  --c: var(--coral);
+}
+
+.origin-zarabe {
+  --c: var(--amber);
+}
+
+.origin-asia {
+  --c: var(--teal-light);
+}
+
 /* ── ANNEAU DES ASCENDANCES ──
-   SVG en anneau pivoté de -90° pour partir du haut. Ses arcs sont tracés par donut-chart.js,
-   qui ajoute la classe is-drawn au svg quand il entre dans l'écran.
+   SVG en anneau pivoté de -90° pour partir du haut. Les arcs sont calculés par donut-chart.js à partir
+   des pourcentages de la légende (--arc-length, --arc-gap, --arc-offset) ; la classe is-drawn,
+   posée quand l'anneau entre dans l'écran, anime leur tracé.
 */
 
 .donut {
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
+}
+
+.donut circle {
+  fill: none;
+  stroke: var(--c);
+  stroke-dasharray: var(--arc-length, 0) var(--arc-gap, 999);
+  stroke-dashoffset: var(--arc-offset, 0);
+  stroke-width: 14;
 }
 
 /* Arcs tracés progressivement une fois l'anneau entré dans l'écran. */
@@ -86,7 +119,7 @@
 
 /* ── LÉGENDE DE L'ANNEAU ──
    Une ligne par origine (.legend-item). La couleur de chaque pastille vient de --c, définie par
-   .legend-dot-<origine> ; legend-dots.js ajoute le repère .legend-dot-marker qui la porte.
+   .origin-<origine> ; legend-dots.js ajoute le repère .legend-dot-marker qui la porte.
 */
 .ancestry-legend {
   display: flex;
@@ -116,26 +149,6 @@
   height: 8px;
   border-radius: var(--radius-xs);
   content: '';
-}
-
-.legend-dot-africa {
-  --c: var(--navy);
-}
-
-.legend-dot-india {
-  --c: var(--teal);
-}
-
-.legend-dot-europe {
-  --c: var(--coral);
-}
-
-.legend-dot-zarabe {
-  --c: var(--amber);
-}
-
-.legend-dot-asia {
-  --c: var(--teal-light);
 }
 
 .ancestry-legend-note {
