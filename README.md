@@ -44,7 +44,7 @@ Le site doit expliquer simplement :
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)
 │   ├── fonts/                  # Polices (woff2) et licences
-│   └── images/                 # Images et logos
+│   └── images/                 # Images, logos et sprite SVG (logo, vagues)
 │
 └── docs/                       # Documentation de travail interne
     ├── PLAN_CORRECTION.md      # Plan de correction progressive

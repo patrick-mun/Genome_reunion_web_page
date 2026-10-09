@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!--
+    Dessins du site référencés par <use href="assets/images/sprite.svg#identifiant"> : une seule copie.
+    Les couleurs sont des variables CSS de tokens.css, héritées de l'élément <use> : ce fichier
+    n'est pas fait pour être ouvert seul (les couleurs y seraient noires).
+    Attention : un commentaire XML ne peut pas contenir deux tirets consécutifs.
+  -->
+  <symbol id="wave-1" viewBox="0 0 2880 220" preserveAspectRatio="none">
+    <path d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50 C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90 L2880,220 L0,220 Z" fill="var(--navy-deep)" />
+  </symbol>
+  <symbol id="wave-2" viewBox="0 0 2880 220" preserveAspectRatio="none">
+    <path d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130 C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135 C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130 L2880,220 L0,220 Z" fill="var(--teal)" />
+  </symbol>
+  <symbol id="wave-3" viewBox="0 0 2880 220" preserveAspectRatio="none">
+    <path d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165 C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160 C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158 L2880,220 L0,220 Z" fill="var(--coral)" />
+  </symbol>
+  <symbol id="logo" viewBox="0 0 110 60">
+    <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(10,8)"> <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="var(--navy)" /> <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="var(--teal)" transform="translate(0,16)" /> <path d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8" stroke="var(--coral)" transform="translate(0,32)" /> <circle cx="84" cy="8" r="2.6" fill="var(--navy)" stroke="none" /> <circle cx="84" cy="24" r="2.6" fill="var(--teal)" stroke="none" /> <circle cx="84" cy="40" r="2.6" fill="var(--coral)" stroke="none" /> </g>
+  </symbol>
+</svg>
