@@ -1,0 +1,293 @@
+/* ============================================================
+   assets/css/pages/home/maloya.css
+   Rôle : frise animée du maloya en bas de la section « Carrefour génétique » (musiciens autour
+   d'un feu de bois, danseurs) : boîte de la frise, matières et palette de chaque personnage.
+   Pages concernées : index.html.
+   ============================================================ */
+
+/* ── FRISE ──
+   Conteneur rempli par maloya.js, aux proportions de la scène (1080 × 150). En dessous de
+   720 px de large, la hauteur minimale l'emporte : le SVG (preserveAspectRatio slice) est
+   recadré autour du feu au lieu de réduire les personnages.
+*/
+
+.maloya {
+  width: 100%; /* largeur fixée : la hauteur minimale ne l'élargit pas par le rapport */
+  min-height: 100px;
+  aspect-ratio: 1080 / 150;
+  margin-top: var(--space-8);
+}
+
+.maloya-scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── PERSONNAGES ──
+   Une classe par personnage (maloya-cast-*, posée par maloya-svg.js) fixe ses teintes dans des
+   variables --cast-* ; les matières ci-dessous les lisent. Une teinte de peau par personnage.
+*/
+
+.maloya-cast-rouler {
+  --cast-skin: var(--maloya-skin-1);
+  --cast-shirt: var(--maloya-linen);
+  --cast-trousers: var(--navy);
+  --cast-hat-band: var(--coral-deep);
+}
+
+.maloya-cast-kayamb {
+  --cast-skin: var(--maloya-skin-2);
+  --cast-shirt: var(--teal-mid);
+  --cast-trousers: var(--maloya-khaki);
+  --cast-hair: var(--maloya-hair);
+}
+
+.maloya-cast-sati {
+  --cast-skin: var(--maloya-skin-3);
+  --cast-shirt: var(--cream);
+  --cast-trousers: var(--teal);
+  --cast-bandana: var(--coral-deep);
+}
+
+.maloya-cast-bobre {
+  --cast-skin: var(--maloya-skin-4);
+  --cast-shirt: var(--maloya-beige);
+  --cast-trousers: var(--navy-deep);
+  --cast-hat-band: var(--teal);
+}
+
+.maloya-cast-piker {
+  --cast-skin: var(--maloya-skin-5);
+  --cast-shirt: var(--maloya-blush);
+  --cast-trousers: var(--stone);
+  --cast-hair: var(--maloya-hair);
+}
+
+.maloya-cast-man {
+  --cast-skin: var(--maloya-skin-6);
+  --cast-shirt: var(--cream);
+  --cast-trousers: var(--amber-deep);
+  --cast-hat-band: var(--navy);
+}
+
+.maloya-cast-dancer1 {
+  --cast-skin: var(--maloya-skin-7);
+  --cast-skirt: var(--coral);
+  --cast-fold: var(--coral-deep-60);
+  --cast-sash: var(--amber);
+  --cast-madras: var(--amber);
+  --cast-madras-line: var(--coral-deep);
+  --cast-madras-thread: var(--teal);
+}
+
+.maloya-cast-dancer2 {
+  --cast-skin: var(--maloya-skin-8);
+  --cast-skirt: var(--teal);
+  --cast-fold: var(--navy-60);
+  --cast-sash: var(--coral);
+  --cast-madras: var(--coral);
+  --cast-madras-line: var(--amber);
+  --cast-madras-thread: var(--cream);
+}
+
+/* ── VÊTEMENTS ET PEAU ──
+   Membres éloignés : même forme recouverte de .maloya-shade, voile sombre translucide.
+*/
+
+.maloya-skin {
+  fill: var(--cast-skin);
+}
+
+.maloya-shirt {
+  fill: var(--cast-shirt);
+}
+
+.maloya-trousers {
+  fill: var(--cast-trousers);
+}
+
+.maloya-shade {
+  fill: var(--navy-deep-20);
+}
+
+.maloya-hair {
+  fill: var(--cast-hair);
+}
+
+.maloya-hat {
+  fill: var(--maloya-straw);
+}
+
+.maloya-hat-band {
+  fill: var(--cast-hat-band);
+}
+
+.maloya-bandana {
+  fill: var(--cast-bandana);
+}
+
+.maloya-blouse {
+  fill: var(--cream);
+}
+
+.maloya-sash {
+  fill: var(--cast-sash);
+}
+
+.maloya-skirt {
+  fill: var(--cast-skirt);
+}
+
+/* Épaisseurs en unités du dessin (scène de 1080 de large) : environ 1 px à l'écran. */
+.maloya-skirt-fold {
+  fill: none;
+  stroke: var(--cast-fold);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+.maloya-madras {
+  fill: var(--cast-madras);
+}
+
+.maloya-madras-line {
+  fill: none;
+  stroke: var(--cast-madras-line);
+  stroke-width: 1.6;
+}
+
+.maloya-madras-thread {
+  fill: none;
+  stroke: var(--cast-madras-thread);
+  stroke-width: 0.6;
+}
+
+.maloya-shadow {
+  fill: var(--navy-10);
+}
+
+/* ── INSTRUMENTS ──
+   Roulèr (bois cerclé, peau), tabourets, sati (métal), pikèr (bambou sur fourches), bobre (arc,
+   corde, calebasse), kayamb (cadre de tiges), baguettes.
+*/
+
+.maloya-wood {
+  fill: var(--maloya-wood);
+}
+
+.maloya-band {
+  fill: none;
+  stroke: var(--maloya-wood-dark);
+  stroke-width: 1.4;
+}
+
+.maloya-band-thick {
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.maloya-drum-skin {
+  fill: var(--maloya-drum-skin);
+}
+
+.maloya-metal {
+  fill: var(--maloya-metal);
+}
+
+.maloya-metal-light {
+  fill: var(--maloya-metal-light);
+}
+
+.maloya-bamboo {
+  fill: var(--maloya-bamboo);
+}
+
+.maloya-bamboo-node {
+  fill: none;
+  stroke: var(--maloya-bamboo-node);
+  stroke-width: 1;
+}
+
+.maloya-bow {
+  fill: none;
+  stroke: var(--maloya-bow);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.maloya-string {
+  fill: none;
+  stroke: var(--maloya-string);
+  stroke-width: 0.5;
+}
+
+.maloya-gourd {
+  fill: var(--maloya-gourd);
+}
+
+.maloya-gourd-mouth {
+  fill: var(--maloya-gourd-mouth);
+}
+
+.maloya-straw {
+  fill: var(--maloya-straw);
+}
+
+.maloya-straw-dark {
+  fill: none;
+  stroke: var(--maloya-straw-dark);
+  stroke-width: 0.9;
+}
+
+.maloya-stick {
+  fill: none;
+  stroke: var(--maloya-ember);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* ── FEU ──
+   Bûches, trois couches de flammes, étincelles ; halo et lueur au sol en dégradés radiaux qui
+   s'éteignent vers le bord (stop-opacity 0).
+*/
+
+.maloya-log {
+  fill: none;
+  stroke: var(--maloya-ember);
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.maloya-log-front {
+  stroke-width: 6;
+}
+
+.maloya-flame-outer {
+  fill: var(--coral);
+}
+
+.maloya-flame-mid {
+  fill: var(--maloya-flame);
+}
+
+.maloya-flame-core {
+  fill: var(--maloya-flame-core);
+}
+
+.maloya-spark {
+  fill: var(--maloya-flame);
+}
+
+.maloya-glow-in {
+  stop-color: var(--maloya-flame-40);
+}
+
+.maloya-glow-out {
+  stop-color: var(--maloya-flame);
+  stop-opacity: 0;
+}
+
+.maloya-floor-in {
+  stop-color: var(--coral-40);
+}

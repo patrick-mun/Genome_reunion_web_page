@@ -5,11 +5,13 @@
    ============================================================ */
 
 /* ── SECTION CARREFOUR ──
-   Texte et chiffres à gauche, anneau des ascendances et légende à droite.
-   Les deux colonnes se superposent sous 900 px.
+   Texte et chiffres à gauche, anneau des ascendances et légende à droite, puis la frise du
+   maloya (maloya.css). Les deux colonnes se superposent sous 900 px.
 */
 
+/* Sans marge basse : la frise du maloya pose son sol sur le bas de la section. */
 .carrefour {
+  padding-bottom: 0;
   background: var(--sand);
 }
 
