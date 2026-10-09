@@ -50,6 +50,7 @@ Le site doit expliquer :
 ├── .github/                    # Action de vérification et Dependabot
 │
 ├── assets/
+│   ├── css/fonts.css           # @font-face des polices hébergées (assets/fonts/)
 │   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
 │   ├── css/base.css            # Reset, html, body
 │   ├── css/components/         # nav, footer, vagues, lien d'évitement, barre de progression, eyebrow
@@ -57,6 +58,7 @@ Le site doit expliquer :
 │   ├── css/utilities.css       # .reveal, chargé en dernier
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
+│   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
 │   └── images/                 # efs-logo.svg, favicon.svg, apple-touch-icon.png
 │
 └── docs/
@@ -118,6 +120,7 @@ Points sensibles :
 
 Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ordre :
 
+0. `fonts.css` : `@font-face` des polices hébergées (`assets/fonts/`, aucun appel à Google Fonts) ;
 1. `tokens.css` : valeurs de conception, seul endroit où les valeurs brutes sont permises ;
 2. `base.css` : reset, `html`, `body` ;
 3. `components/*.css` : composants partagés par les deux pages, chacun avec ses media queries ;
@@ -194,6 +197,7 @@ Travaux récents effectués :
 - ✅ URL du site ajoutée dans le README.
 - ✅ Conformité aux conventions de code web (CSS, HTML, JS) : outillage, tokens, CSS découpé par section, contrastes AA, accessibilité, contrôles automatiques (`npm run verify`, hook pré-commit, GitHub Action).
 - ✅ Hygiène du dépôt : favicon, `.nvmrc` et `engines`, Dependabot.
+- ✅ Polices Google hébergées dans `assets/fonts/` : plus aucune requête vers un service tiers (performance, RGPD).
 
 ---
 

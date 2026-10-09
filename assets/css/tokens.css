@@ -53,7 +53,8 @@
   --efs-red-40: rgb(226 0 26 / 40%);
 
   /* ── POLICES ──
-     Spectral pour les titres, DM Sans pour le texte, Space Grotesk pour l'interface.
+     Spectral pour les titres, DM Sans pour le texte, Space Grotesk pour l'interface. Les fichiers sont
+   hébergés (assets/fonts/, déclarés dans fonts.css) : les noms de famille doivent y correspondre.
   */
   --f-display: 'Spectral', georgia, serif;
   --f-body: 'DM Sans', system-ui, sans-serif;
