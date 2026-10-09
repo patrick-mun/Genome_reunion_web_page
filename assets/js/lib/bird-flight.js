@@ -6,13 +6,13 @@
    ============================================================ */
 
 import {
-  angleDifference,
+  computeAngleDifference,
   buildBezierPath,
   clamp,
-  headingToAngle,
+  computeHeadingAngle,
   sampleAlong,
 } from './geometry.js';
-import { rand, randomIndex } from './random.js';
+import { getRandomBetween, pickRandomIndex } from './random.js';
 
 export const BIRD_VIEWBOX = { width: 72, height: 82 };
 
@@ -28,10 +28,10 @@ const MIN_TURN_SPEED = 8;
  * @param {() => number} [random] Générateur dans [0, 1[.
  * @returns {{x: number, y: number}} Point dans le hero.
  */
-export function skyPoint(world, random = Math.random) {
+export function pickSkyPoint(world, random = Math.random) {
   return {
-    x: rand(world.width * 0.06, world.width * 0.94, random),
-    y: rand(world.height * 0.08, world.height * 0.72, random),
+    x: getRandomBetween(world.width * 0.06, world.width * 0.94, random),
+    y: getRandomBetween(world.height * 0.08, world.height * 0.72, random),
   };
 }
 
@@ -42,21 +42,27 @@ export function skyPoint(world, random = Math.random) {
  * @param {() => number} [random] Générateur dans [0, 1[.
  * @returns {{x: number, y: number}} Point situé à OFFSCREEN_MARGIN_PX hors du hero.
  */
-export function offscreenPoint(world, side, random = Math.random) {
+export function getOffscreenPoint(world, side, random = Math.random) {
   if (side === 'left') {
-    return { x: -OFFSCREEN_MARGIN_PX, y: rand(world.height * 0.1, world.height * 0.7, random) };
+    return {
+      x: -OFFSCREEN_MARGIN_PX,
+      y: getRandomBetween(world.height * 0.1, world.height * 0.7, random),
+    };
   }
   if (side === 'right') {
     return {
       x: world.width + OFFSCREEN_MARGIN_PX,
-      y: rand(world.height * 0.1, world.height * 0.7, random),
+      y: getRandomBetween(world.height * 0.1, world.height * 0.7, random),
     };
   }
   if (side === 'top') {
-    return { x: rand(world.width * 0.1, world.width * 0.9, random), y: -OFFSCREEN_MARGIN_PX };
+    return {
+      x: getRandomBetween(world.width * 0.1, world.width * 0.9, random),
+      y: -OFFSCREEN_MARGIN_PX,
+    };
   }
   return {
-    x: rand(world.width * 0.1, world.width * 0.9, random),
+    x: getRandomBetween(world.width * 0.1, world.width * 0.9, random),
     y: world.height + OFFSCREEN_MARGIN_PX,
   };
 }
@@ -67,10 +73,10 @@ export function offscreenPoint(world, side, random = Math.random) {
  * @param {() => number} [random] Générateur dans [0, 1[.
  * @returns {{x: number, y: number}} Point hors du hero.
  */
-export function randomOffscreenPoint(world, random = Math.random) {
-  return offscreenPoint(
+export function pickRandomOffscreenPoint(world, random = Math.random) {
+  return getOffscreenPoint(
     world,
-    OFFSCREEN_SIDES[randomIndex(OFFSCREEN_SIDES.length, random)],
+    OFFSCREEN_SIDES[pickRandomIndex(OFFSCREEN_SIDES.length, random)],
     random,
   );
 }
@@ -99,11 +105,11 @@ export function createFlight(bird, endPoint, options, now, random = Math.random)
   const currentHeading = ((bird.angle - 90) * Math.PI) / 180;
   const hx = Math.cos(currentHeading);
   const hy = Math.sin(currentHeading);
-  const turn = Math.abs(angleDifference(headingToAngle(dx, dy), bird.angle)) / 180;
+  const turn = Math.abs(computeAngleDifference(computeHeadingAngle(dx, dy), bird.angle)) / 180;
 
-  const sway = rand(-1, 1, random) * Math.min(dist * 0.32, 190);
+  const sway = getRandomBetween(-1, 1, random) * Math.min(dist * 0.32, 190);
   const out = clamp(dist * 0.4, 110, 360);
-  const lift = options.lift || rand(-90, 60, random);
+  const lift = options.lift || getRandomBetween(-90, 60, random);
   const wide = 1 + turn * 1.1;
 
   const p1 = {
@@ -131,34 +137,34 @@ export function createFlight(bird, endPoint, options, now, random = Math.random)
  * @returns {object} État de l'oiseau (taille, vitesse, position, phase d'aile, délai…).
  */
 export function createBird(index, world, random = Math.random) {
-  const scale = rand(0.68, 0.96, random);
-  const start = offscreenPoint(world, index % 2 === 0 ? 'left' : 'right', random);
+  const scale = getRandomBetween(0.68, 0.96, random);
+  const start = getOffscreenPoint(world, index % 2 === 0 ? 'left' : 'right', random);
   return {
     cw: BIRD_VIEWBOX.width * scale,
     ch: BIRD_VIEWBOX.height * scale,
     finalOpacity: (0.78 + scale * 0.22).toFixed(2),
-    speed: rand(86, 128, random),
-    phase: rand(0, Math.PI * 2, random),
-    phaseOff: rand(0, Math.PI * 2, random),
+    speed: getRandomBetween(86, 128, random),
+    phase: getRandomBetween(0, Math.PI * 2, random),
+    phaseOff: getRandomBetween(0, Math.PI * 2, random),
     pos: { x: start.x, y: start.y },
     prev: { x: start.x, y: start.y },
     angle: start.x < 0 ? 90 : -90,
     seg: null,
-    delay: index * 850 + rand(0, 500, random),
-    born: false,
+    delay: index * 850 + getRandomBetween(0, 500, random),
+    isBorn: false,
     t0base: 0,
   };
 }
 
 function enterFromOffscreen(bird, now, world, random) {
-  const start = randomOffscreenPoint(world, random);
+  const start = pickRandomOffscreenPoint(world, random);
   bird.pos = { x: start.x, y: start.y };
   bird.prev = { x: start.x, y: start.y };
   bird.angle = start.x < 0 ? 90 : -90;
   bird.seg = createFlight(
     bird,
-    skyPoint(world, random),
-    { lift: rand(-110, 40, random), durScale: 1.05 },
+    pickSkyPoint(world, random),
+    { lift: getRandomBetween(-110, 40, random), durScale: 1.05 },
     now,
     random,
   );
@@ -167,12 +173,12 @@ function enterFromOffscreen(bird, now, world, random) {
 function planNextFlight(bird, now, world, random) {
   const target =
     random() < RETURN_OFFSCREEN_CHANCE
-      ? randomOffscreenPoint(world, random)
-      : skyPoint(world, random);
+      ? pickRandomOffscreenPoint(world, random)
+      : pickSkyPoint(world, random);
   bird.seg = createFlight(
     bird,
     target,
-    { lift: rand(-115, 70, random), durScale: rand(0.92, 1.18, random) },
+    { lift: getRandomBetween(-115, 70, random), durScale: getRandomBetween(0.92, 1.18, random) },
     now,
     random,
   );
@@ -195,7 +201,7 @@ function followSegment(bird, now, world, random) {
  * @param {number} speed Vitesse de l'oiseau, en pixels par seconde.
  * @returns {number} Battements par seconde, entre 1,6 et 3,6.
  */
-export function flapFrequency(speed) {
+export function computeFlapFrequency(speed) {
   return clamp(2.0 + Math.min(speed, 180) * 0.004, 1.6, 3.6);
 }
 
@@ -210,11 +216,11 @@ export function flapFrequency(speed) {
  * @returns {boolean} Vrai à l'image où l'oiseau entre en scène (le DOM le révèle alors).
  */
 export function advanceBird(bird, now, dt, world, random = Math.random) {
-  let justBorn = false;
-  if (!bird.born) {
+  let isNewlyBorn = false;
+  if (!bird.isBorn) {
     if (now < bird.t0base + bird.delay) return false;
-    bird.born = true;
-    justBorn = true;
+    bird.isBorn = true;
+    isNewlyBorn = true;
     enterFromOffscreen(bird, now, world, random);
   }
 
@@ -226,10 +232,11 @@ export function advanceBird(bird, now, dt, world, random = Math.random) {
   bird.prev = { x: bird.pos.x, y: bird.pos.y };
 
   if (speed > MIN_TURN_SPEED) {
-    bird.angle += angleDifference(headingToAngle(vx, vy), bird.angle) * clamp(dt * 3.1, 0, 1);
+    bird.angle +=
+      computeAngleDifference(computeHeadingAngle(vx, vy), bird.angle) * clamp(dt * 3.1, 0, 1);
   }
-  bird.phase += dt * flapFrequency(speed) * Math.PI * 2;
-  return justBorn;
+  bird.phase += dt * computeFlapFrequency(speed) * Math.PI * 2;
+  return isNewlyBorn;
 }
 
 /**
@@ -238,7 +245,7 @@ export function advanceBird(bird, now, dt, world, random = Math.random) {
  * @returns {{wingSpan: number, tailSway: number, bob: number}} Envergure (0,5 à 1),
  *   balancement de la queue en degrés et ondulation verticale en pixels.
  */
-export function birdPose(bird) {
+export function computeBirdPose(bird) {
   return {
     wingSpan: 0.5 + 0.5 * (0.5 + 0.5 * Math.sin(bird.phase)),
     tailSway: 4.8 * Math.sin(bird.phase * 0.5 + 0.6 + bird.phaseOff),

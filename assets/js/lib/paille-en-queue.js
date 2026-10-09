@@ -6,8 +6,8 @@
    ============================================================ */
 
 import { startFrameLoop } from './animation-loop.js';
-import { advanceBird, birdPose, createBird } from './bird-flight.js';
-import { birdSVG } from './bird-svg.js';
+import { advanceBird, computeBirdPose, createBird } from './bird-flight.js';
+import { buildBirdSvg } from './bird-svg.js';
 import { isMotionPaused, prefersReducedMotion } from './motion.js';
 import { placeElement } from './placement.js';
 
@@ -15,7 +15,7 @@ const BIRD_COUNT = 3;
 const MIN_VIEWPORT_WIDTH_PX = 760;
 const VISIBILITY_THRESHOLD = 0.02;
 
-function heroSize(hero) {
+function measureHero(hero) {
   const rect = hero.getBoundingClientRect();
   return { width: rect.width, height: rect.height };
 }
@@ -29,11 +29,17 @@ function createLayer(hero) {
   return layer;
 }
 
+/**
+ * Crée l'élément d'un oiseau dans la couche, à la taille de son état, et retrouve ses parties animées.
+ * @param {HTMLElement} layer Couche qui reçoit l'oiseau.
+ * @param {{cw: number, ch: number}} bird État de l'oiseau (largeur et hauteur du SVG).
+ * @returns {{el: HTMLElement, wings: Element, tail: Element}} Élément, ailes et queue.
+ */
 function createBirdElement(layer, bird) {
   const el = document.createElement('div');
   el.className = 'paille';
   // eslint-disable-next-line no-restricted-properties -- SVG construit uniquement à partir de constantes du module
-  el.innerHTML = birdSVG();
+  el.innerHTML = buildBirdSvg();
   layer.appendChild(el);
 
   const svg = el.firstElementChild;
@@ -47,7 +53,7 @@ function createBirdElement(layer, bird) {
 }
 
 function applyPose(bird, parts) {
-  const pose = birdPose(bird);
+  const pose = computeBirdPose(bird);
   parts.wings.setAttribute(
     'transform',
     `translate(36,0) scale(${pose.wingSpan.toFixed(3)},1) translate(-36,0)`,
@@ -57,11 +63,11 @@ function applyPose(bird, parts) {
 }
 
 function trackHeroVisibility(hero) {
-  const state = { visible: true };
+  const state = { isVisible: true };
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(
       ([entry]) => {
-        state.visible = entry.isIntersecting;
+        state.isVisible = entry.isIntersecting;
       },
       { threshold: VISIBILITY_THRESHOLD },
     ).observe(hero);
@@ -82,7 +88,7 @@ export function initPailleEnQueue() {
   const layer = createLayer(hero);
   const t0base = performance.now();
   const birds = Array.from({ length: BIRD_COUNT }, (_, index) => {
-    const bird = createBird(index, heroSize(hero));
+    const bird = createBird(index, measureHero(hero));
     bird.t0base = t0base;
     const parts = createBirdElement(layer, bird);
     placeElement(parts.el, bird.pos.x - bird.cw / 2, bird.pos.y - bird.ch / 2, bird.angle);
@@ -92,17 +98,17 @@ export function initPailleEnQueue() {
 
   startFrameLoop(
     (now, dt) => {
-      const world = heroSize(hero);
+      const world = measureHero(hero);
       birds.forEach(({ bird, parts }) => {
-        const justBorn = advanceBird(bird, now, dt, world);
-        if (!bird.born) return;
-        if (justBorn) {
+        const isNewlyBorn = advanceBird(bird, now, dt, world);
+        if (!bird.isBorn) return;
+        if (isNewlyBorn) {
           parts.el.style.setProperty('--opacity', bird.finalOpacity);
           parts.el.classList.add('is-born');
         }
         applyPose(bird, parts);
       });
     },
-    () => !visibility.visible || isMotionPaused(),
+    () => !visibility.isVisible || isMotionPaused(),
   );
 }

@@ -6,13 +6,13 @@
    ============================================================ */
 
 /**
- * Ajoute la classe `visible` à chaque `.js-reveal` quand il entre dans l'écran.
+ * Ajoute la classe `is-visible` à chaque `.js-reveal` quand il entre dans l'écran.
  */
 export function initScrollReveal() {
   const revealEls = document.querySelectorAll('.js-reveal');
 
   if (!('IntersectionObserver' in window)) {
-    revealEls.forEach((el) => el.classList.add('visible'));
+    revealEls.forEach((el) => el.classList.add('is-visible'));
     return;
   }
 
@@ -20,7 +20,7 @@ export function initScrollReveal() {
     (entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add('visible');
+          e.target.classList.add('is-visible');
           revealObs.unobserve(e.target);
         }
       });

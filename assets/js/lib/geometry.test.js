@@ -1,13 +1,20 @@
+/* ============================================================
+   assets/js/lib/geometry.test.js
+   Rôle : tests de geometry.js (courbes de Bézier, trajets à vitesse constante et angles).
+   Pages concernées : aucune (tests unitaires, lancés par node --test).
+   Accroches : aucune.
+   ============================================================ */
+
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
-  angleDifference,
-  bezier,
+  computeAngleDifference,
+  computeBezierPoint,
   buildBezierPath,
   clamp,
-  headingToAngle,
+  computeHeadingAngle,
   sampleAlong,
-  smoothstep,
+  computeSmoothstep,
 } from './geometry.js';
 
 const near = (actual, expected, epsilon = 1e-9) =>
@@ -19,31 +26,31 @@ test('clamp borne des deux côtés', () => {
   assert.equal(clamp(42, 0, 10), 10);
 });
 
-test('smoothstep vaut 0 en 0, 1 en 1 et 0,5 au milieu', () => {
-  assert.equal(smoothstep(0), 0);
-  assert.equal(smoothstep(1), 1);
-  assert.equal(smoothstep(0.5), 0.5);
+test('computeSmoothstep vaut 0 en 0, 1 en 1 et 0,5 au milieu', () => {
+  assert.equal(computeSmoothstep(0), 0);
+  assert.equal(computeSmoothstep(1), 1);
+  assert.equal(computeSmoothstep(0.5), 0.5);
 });
 
-test('bezier part du premier point et arrive au dernier', () => {
+test('computeBezierPoint part du premier point et arrive au dernier', () => {
   const p = [
     { x: 0, y: 0 },
     { x: 10, y: 40 },
     { x: 60, y: 40 },
     { x: 100, y: 0 },
   ];
-  assert.deepEqual(bezier(...p, 0), p[0]);
-  assert.deepEqual(bezier(...p, 1), p[3]);
+  assert.deepEqual(computeBezierPoint(...p, 0), p[0]);
+  assert.deepEqual(computeBezierPoint(...p, 1), p[3]);
 });
 
-test('bezier sur une droite régulière reste sur la droite', () => {
+test('computeBezierPoint sur une droite régulière reste sur la droite', () => {
   const line = [
     { x: 0, y: 0 },
     { x: 10, y: 10 },
     { x: 20, y: 20 },
     { x: 30, y: 30 },
   ];
-  const mid = bezier(...line, 0.5);
+  const mid = computeBezierPoint(...line, 0.5);
   near(mid.x, 15);
   near(mid.y, 15);
 });
@@ -95,16 +102,16 @@ test('sampleAlong supporte un trajet de longueur nulle', () => {
   assert.deepEqual(sampleAlong(path, 0.5), still);
 });
 
-test('angleDifference prend le chemin le plus court', () => {
-  assert.equal(angleDifference(10, 350), 20);
-  assert.equal(angleDifference(350, 10), -20);
-  assert.equal(angleDifference(90, 90), 0);
-  assert.equal(Math.abs(angleDifference(180, 0)), 180);
+test('computeAngleDifference prend le chemin le plus court', () => {
+  assert.equal(computeAngleDifference(10, 350), 20);
+  assert.equal(computeAngleDifference(350, 10), -20);
+  assert.equal(computeAngleDifference(90, 90), 0);
+  assert.equal(Math.abs(computeAngleDifference(180, 0)), 180);
 });
 
-test('headingToAngle : 0 vers le haut, 90 vers la droite, 180 vers le bas', () => {
-  near(headingToAngle(0, -1), 0);
-  near(headingToAngle(1, 0), 90);
-  near(headingToAngle(0, 1), 180);
-  near(headingToAngle(-1, 0), 270);
+test('computeHeadingAngle : 0 vers le haut, 90 vers la droite, 180 vers le bas', () => {
+  near(computeHeadingAngle(0, -1), 0);
+  near(computeHeadingAngle(1, 0), 90);
+  near(computeHeadingAngle(0, 1), 180);
+  near(computeHeadingAngle(-1, 0), 270);
 });

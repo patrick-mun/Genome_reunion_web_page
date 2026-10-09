@@ -12,7 +12,7 @@
  * @param {() => number} [random] Générateur dans [0, 1[ (défaut : Math.random).
  * @returns {number} Valeur tirée.
  */
-export function rand(min, max, random = Math.random) {
+export function getRandomBetween(min, max, random = Math.random) {
   return min + random() * (max - min);
 }
 
@@ -22,6 +22,6 @@ export function rand(min, max, random = Math.random) {
  * @param {() => number} [random] Générateur dans [0, 1[ (défaut : Math.random).
  * @returns {number} Indice tiré.
  */
-export function randomIndex(length, random = Math.random) {
+export function pickRandomIndex(length, random = Math.random) {
   return Math.floor(random() * length);
 }

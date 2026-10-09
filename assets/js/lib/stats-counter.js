@@ -40,7 +40,7 @@ export function initStatsCounter() {
   const statItems = document.querySelectorAll('.js-stat-item');
 
   if (!('IntersectionObserver' in window)) {
-    statItems.forEach((el) => el.classList.add('visible'));
+    statItems.forEach((el) => el.classList.add('is-visible'));
     return;
   }
 
@@ -48,7 +48,7 @@ export function initStatsCounter() {
     (entries) => {
       entries.forEach((e) => {
         if (!e.isIntersecting) return;
-        e.target.classList.add('visible');
+        e.target.classList.add('is-visible');
         const counter = e.target.querySelector('.js-count');
         if (counter) animateCounter(counter);
         statObs.unobserve(e.target);

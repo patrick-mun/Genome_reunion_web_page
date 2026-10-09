@@ -23,7 +23,7 @@ function setArcLength(circle, length) {
  * @returns {{circles: SVGCircleElement[], lengths: number[]}|null} Cercles et longueurs finales
  *   des arcs, ou null si la légende et l'anneau ne correspondent pas.
  */
-function layoutArcs(donutSvg) {
+function applyArcLayout(donutSvg) {
   const circles = Array.from(donutSvg.children).filter((el) => el.tagName === 'circle');
   const shares = Array.from(document.querySelectorAll('.js-legend-pct'), (el) =>
     parseShare(el.textContent),
@@ -49,7 +49,7 @@ export function initDonutChart() {
   const donutSvg = document.querySelector('.js-donut');
   if (!donutSvg) return;
 
-  const layout = layoutArcs(donutSvg);
+  const layout = applyArcLayout(donutSvg);
   if (!layout) return;
   const { circles, lengths } = layout;
 

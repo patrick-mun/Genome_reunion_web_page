@@ -59,7 +59,7 @@ Le site doit expliquer :
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
-│   └── images/                 # efs-logo.svg, favicon.svg, apple-touch-icon.png
+│   └── images/                 # sprite.svg (logo, vagues), efs-logo.svg, favicon.svg, apple-touch-icon.png
 │
 └── docs/
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
@@ -275,5 +275,14 @@ git pull origin main
 
 Une valeur ne s'écrit qu'à un endroit :
 
+- **Logo et vagues** : un seul dessin dans `assets/images/sprite.svg`, référencé par `<use href="assets/images/sprite.svg#logo">` (identifiants `logo`, `wave-1` à `wave-3`). Les couleurs y sont des variables CSS héritées de l'élément `<use>` : ne pas ouvrir le sprite seul. Un commentaire XML ne peut pas contenir `--`.
 - **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*` et `paille-*` du CSS. Seul le logo POPgen, œuvre d'un tiers, garde ses couleurs.
 - **Anneau des ascendances** : les pourcentages de la légende (`.legend-pct`) sont l'unique source. Les arcs sont calculés par `donut-geometry.js` ; l'ordre des cercles du SVG doit suivre celui de la légende, et leur couleur vient de la classe `origin-<origine>` partagée avec la légende.
+
+## Parties communes aux deux pages
+
+Le site n'a pas d'étape de génération : la navigation, le pied de page, le lien d'évitement, la barre de progression et les feuilles partagées sont écrits dans chaque page. Pour éviter qu'ils divergent :
+
+- modifier **les deux pages ensemble** ;
+- `tooling/pages-sync.test.js` (lancé par `npm test`, le hook pré-commit et la CI) échoue si ces parties diffèrent, hors cibles des liens et libellé du lien d'action (« Participer » / « S'inscrire ») ;
+- il vérifie aussi que le sprite SVG est bien formé, que chaque `<use>` a son symbole, qu'aucun dessin du sprite n'est recopié, et que chaque lien interne mène à une ancre existante.

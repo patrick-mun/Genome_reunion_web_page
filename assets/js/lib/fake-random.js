@@ -10,7 +10,7 @@
  * @param {number[]} values Valeurs dans [0, 1[ à rejouer.
  * @returns {() => number} Fonction utilisable à la place de Math.random.
  */
-export function sequence(values) {
+export function createSequence(values) {
   let index = 0;
   return () => values[index++ % values.length];
 }
@@ -20,7 +20,7 @@ export function sequence(values) {
  * @param {number} seed Graine entière.
  * @returns {() => number} Fonction renvoyant des valeurs dans [0, 1[.
  */
-export function seeded(seed) {
+export function createSeededRandom(seed) {
   let state = seed >>> 0;
   return () => {
     state = (Math.imul(state, 1664525) + 1013904223) >>> 0;

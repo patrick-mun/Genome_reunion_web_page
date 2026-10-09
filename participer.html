@@ -54,35 +54,11 @@
     <div id="progress" class="progress-bar js-progress"></div>
 
     <header>
-      <!-- NAV (identique) -->
+      <!-- ── NAV ── -->
       <nav id="nav" class="nav js-nav">
         <a href="index.html" class="nav-logo">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 110 60"
-            fill="none"
-            role="img"
-            aria-label="Génome Réunion"
-          >
-            <g fill="none" stroke-width="5" stroke-linecap="round" transform="translate(10,8)">
-              <path
-                d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="var(--navy)"
-              />
-              <path
-                d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="var(--teal)"
-                transform="translate(0,16)"
-              />
-              <path
-                d="M0,11 C11,1 22,1 32,11 C42,21 53,21 63,11 C71,3 79,3 84,8"
-                stroke="var(--coral)"
-                transform="translate(0,32)"
-              />
-              <circle cx="84" cy="8" r="2.6" fill="var(--navy)" stroke="none" />
-              <circle cx="84" cy="24" r="2.6" fill="var(--teal)" stroke="none" />
-              <circle cx="84" cy="40" r="2.6" fill="var(--coral)" stroke="none" />
-            </g>
+          <svg viewBox="0 0 110 60" role="img" aria-label="Génome Réunion">
+            <use href="assets/images/sprite.svg#logo" />
           </svg>
           <span class="nav-logo-text">Génome Réunion</span>
         </a>
@@ -94,49 +70,17 @@
         <a href="#inscription" class="nav-cta">S'inscrire</a>
       </nav>
 
-      <!-- HERO PAGE -->
+      <!-- ── HERO ── -->
       <section class="page-hero">
         <div class="hero-waves" aria-hidden="true">
-          <svg
-            class="wave-1"
-            viewBox="0 0 2880 220"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,90 C80,40 180,20 320,55 C460,90 520,140 680,155 C840,170 920,160 1060,120 C1200,80 1280,35 1440,50
-               C1600,65 1680,130 1820,155 C1960,180 2080,160 2200,115 C2320,70 2400,40 2560,55 C2720,70 2800,100 2880,90
-               L2880,220 L0,220 Z"
-              fill="var(--navy-deep)"
-            />
+          <svg class="wave-1" viewBox="0 0 2880 220" preserveAspectRatio="none">
+            <use href="assets/images/sprite.svg#wave-1" />
           </svg>
-          <svg
-            class="wave-2"
-            viewBox="0 0 2880 220"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,130 C100,90 260,70 420,100 C580,130 640,170 800,175 C960,180 1080,155 1220,130
-               C1360,105 1460,80 1580,95 C1700,110 1800,150 1960,168 C2120,186 2280,165 2420,135
-               C2560,105 2680,85 2800,115 C2840,125 2860,128 2880,130
-               L2880,220 L0,220 Z"
-              fill="var(--teal)"
-            />
+          <svg class="wave-2" viewBox="0 0 2880 220" preserveAspectRatio="none">
+            <use href="assets/images/sprite.svg#wave-2" />
           </svg>
-          <svg
-            class="wave-3"
-            viewBox="0 0 2880 220"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,158 C60,145 140,138 240,148 C340,158 420,172 540,178 C660,184 760,178 880,165
-               C1000,152 1080,140 1200,145 C1320,150 1420,168 1540,175 C1660,182 1780,172 1900,160
-               C2020,148 2100,138 2220,144 C2340,150 2440,166 2560,173 C2680,180 2780,168 2880,158
-               L2880,220 L0,220 Z"
-              fill="var(--coral)"
-            />
+          <svg class="wave-3" viewBox="0 0 2880 220" preserveAspectRatio="none">
+            <use href="assets/images/sprite.svg#wave-3" />
           </svg>
         </div>
 
@@ -158,7 +102,7 @@
     </header>
 
     <main id="contenu">
-      <!-- PARTENARIAT EFS -->
+      <!-- ── PARTENARIAT EFS ── -->
       <section id="partenariat" class="partenariat">
         <div class="partenariat-inner">
           <div class="partenariat-text reveal js-reveal">
@@ -192,7 +136,7 @@
             </div>
           </div>
 
-          <!-- Carte logo EFS grande -->
+          <!-- ── CARTE DU LOGO EFS ── -->
           <div class="efs-logo-card reveal reveal-delay-2 js-reveal">
             <div class="efs-logo-title">Partenaire des collectes</div>
 
@@ -216,7 +160,7 @@
         </div>
       </section>
 
-      <!-- CALENDRIER DES COLLECTES -->
+      <!-- ── CALENDRIER DES COLLECTES ── -->
       <section id="collectes" class="collectes">
         <div class="collectes-inner">
           <div class="collectes-header reveal js-reveal">
@@ -232,7 +176,7 @@
           </div>
 
           <ul role="list" class="collectes-grid">
-            <!-- EFS NORD -->
+            <!-- ── EFS NORD ── -->
             <li class="collecte-block reveal js-reveal">
               <div class="collecte-block-header">
                 <div>
@@ -314,7 +258,7 @@
               </table>
             </li>
 
-            <!-- EFS SUD -->
+            <!-- ── EFS SUD ── -->
             <li class="collecte-block reveal reveal-delay-1 js-reveal">
               <div class="collecte-block-header">
                 <div>
@@ -397,7 +341,7 @@
             </li>
           </ul>
 
-          <!-- Note -->
+          <!-- ── NOTE DU CALENDRIER ── -->
           <p class="collectes-note reveal js-reveal">
             Calendrier mis à jour régulièrement. Inscription préalable recommandée. Vous recevrez
             une convocation par courrier avant chaque date.
@@ -405,7 +349,7 @@
         </div>
       </section>
 
-      <!-- INSCRIPTION -->
+      <!-- ── INSCRIPTION ── -->
       <section id="inscription" class="inscription">
         <div class="inscription-inner">
           <p class="eyebrow light reveal js-reveal">Comment participer</p>
@@ -449,7 +393,7 @@
             <a href="index.html" class="btn-outline">En savoir plus</a>
           </div>
 
-          <!-- Contact -->
+          <!-- ── CONTACT ── -->
           <p class="inscription-contact reveal js-reveal">
             Questions ? Contactez-nous :
             <a href="mailto:genome.reunion@chu-reunion.fr" class="inscription-contact-link"
@@ -460,7 +404,7 @@
       </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- ── PIED DE PAGE ── -->
     <footer>
       <div class="footer-brand">
         Le premier référentiel génomique dédié à la population réunionnaise.
