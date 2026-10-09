@@ -25,10 +25,13 @@ import {
   ROULER,
   SATI,
 } from './maloya-musicians.js';
-import { CAST, formatPartTransform } from './maloya-svg.js';
+import { CAST, formatPartTransform, SCENE } from './maloya-svg.js';
 
 const SEATED = { rouler: ROULER, sati: SATI, piker: PIKER };
 const STANDING = { bobre: computeBobrePose, kayamb: computeKayambPose };
+// Demi-largeur de ce qu'anime un personnage (jupe évasée, mains, instrument), en unités.
+const MEMBER_REACH = 50;
+const FULL_VIEW = { from: 0, to: SCENE.width };
 const BODY_PATHS = {
   seated: computeProfileBodyPaths,
   standing: computeProfileBodyPaths,
@@ -82,14 +85,17 @@ function addMemberValues(transforms, paths, member, pose) {
  * Image de la frise.
  * @param {number} beats Temps musical, en temps (musiciens et danseurs).
  * @param {number} seconds Temps réel, en secondes (feu).
+ * @param {{from: number, to: number}} [view] Partie visible de la scène, en abscisses : les
+ *   personnages hors champ (bords recadrés sur un écran étroit) ne sont pas calculés.
  * @returns {{transforms: Record<string, string>, paths: Record<string, string>,
  *   sparks: Array<{cx: string, cy: string, opacity: string}>,
  *   glow: {transform: string, opacity: string}}} Valeurs à poser dans les attributs.
  */
-export function computeSceneFrame(beats, seconds) {
+export function computeSceneFrame(beats, seconds, view = FULL_VIEW) {
   const transforms = {};
   const paths = {};
   for (const member of CAST) {
+    if (member.x + MEMBER_REACH < view.from || member.x - MEMBER_REACH > view.to) continue;
     addMemberValues(transforms, paths, member, computeMemberPose(member, beats));
   }
 

@@ -10,7 +10,6 @@
    Accroches : aucune (module de calcul pur).
    ============================================================ */
 
-import { addPoints, rotatePoint } from './maloya-limbs.js';
 import { buildBandOutline, buildChainOutline } from './maloya-outlines.js';
 
 // Demi-largeurs à chaque point d'une chaîne : un nombre (symétrique) ou [côté 0, côté 1].
@@ -63,10 +62,13 @@ function buildLimb(chain, skin, cloth, clothEnd) {
 
 // Bande à la taille (ceinture), parallèle à la ligne de taille.
 function buildWaistBand(waistLevel, band) {
+  const { center, normal } = waistLevel;
+  // Vers le bas du corps : le côté 0 (vers +x) tourné d'un quart de tour.
+  const down = { x: -normal.y, y: normal.x };
   const level = (dy, half) => ({
-    center: addPoints(waistLevel.center, rotatePoint({ x: 0, y: dy }, waistLevel.angle)),
+    center: { x: center.x + down.x * dy, y: center.y + down.y * dy },
     half: [half, half],
-    angle: waistLevel.angle,
+    normal,
   });
   return buildBandOutline([level(band.below, band.halves[0]), level(-band.above, band.halves[1])], {
     start: 'flat',

@@ -18,7 +18,7 @@ import {
   DEFAULT_STYLE,
   MAX_SHIFT,
 } from './maloya-groove.js';
-import { addPoints, lerpPoint, rotatePoint } from './maloya-limbs.js';
+import { addPoints, computeBoneAngle, lerp, rotatePoint } from './maloya-limbs.js';
 import { BODY } from './maloya-musicians.js';
 
 const MAN_TRUNK = {
@@ -37,23 +37,27 @@ const MAN_FOOT_SPREAD = 10.5;
 const ARM_LAG = 0.2; // en temps : les bras se balancent après le bassin
 const DIP = 5; // plongée de fin de phrase, en unités
 
-// Bras souples, mains près des hanches : elles suivent le bassin avec retard (balancier) ; en
-// fin de phrase, elles s'ouvrent à hauteur de poitrine.
+// Bras menés par leurs angles (pas de cible à atteindre) : on passe sans saut du bras au repos
+// au bras ouvert. raise : écart du bras depuis la verticale, vers l'extérieur ; bend : angle de
+// l'avant-bras par rapport au bras (négatif : ramené vers le corps), en degrés.
+const ARM_REST = { raise: 12, bend: -25 }; // le long du corps, mains près des hanches
+const ARM_OPEN = { raise: 75, bend: 35 }; // ouverts, mains un peu plus hautes que les coudes
+const ARM_SWING = 8; // balancier des deux bras, qui suivent le bassin avec retard, en degrés
+
 function computeManArm(shoulder, sign, swing, open) {
-  const rest = { x: shoulder.x + sign * 13 + 3 * swing, y: shoulder.y + 25 - 2 * sign * swing };
-  const wide = { x: shoulder.x + sign * 24, y: shoulder.y + 7 };
-  const limb = computeFrontalLimb(
-    shoulder,
-    lerpPoint(rest, wide, open),
-    [BODY.upperArm, BODY.forearm],
-    sign,
-    1,
-  );
+  const raise = lerp(ARM_REST.raise, ARM_OPEN.raise, open) + sign * ARM_SWING * swing;
+  const bend = lerp(ARM_REST.bend, ARM_OPEN.bend, open);
+  const toward = (deg, length) => {
+    const a = (deg * Math.PI) / 180;
+    return { x: sign * length * Math.sin(a), y: length * Math.cos(a) };
+  };
+  const elbow = addPoints(shoulder, toward(raise, BODY.upperArm));
+  const wrist = addPoints(elbow, toward(raise + bend, BODY.forearm));
   return {
-    chain: limb.chain,
-    hand: { ...limb.chain[2], angle: limb.tipAngle },
-    elbowBend: limb.bend,
-    shortfall: limb.shortfall,
+    chain: [shoulder, elbow, wrist],
+    hand: { ...wrist, angle: computeBoneAngle(elbow, wrist) },
+    elbowBend: 180 - Math.abs(bend),
+    shortfall: 0,
   };
 }
 

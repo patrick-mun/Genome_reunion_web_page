@@ -136,15 +136,18 @@ export function computeFrontTrunk({ waist, centerX, beats, style }, size) {
   const top = { x: centerX + UPPER_FOLLOW * (waist.x - centerX), y: waist.y - size.top };
   const chest = { x: lerp(waist.x, top.x, 0.6), y: waist.y - size.chest };
   const onShoulders = (local) => addPoints(top, rotatePoint(local, shoulderTilt));
+  // Niveau de contour (maloya-outlines.js), avec son inclinaison en degrés.
+  const level = (center, half, angle) => ({
+    center,
+    half: [half, half],
+    normal: rotatePoint({ x: 1, y: 0 }, angle),
+    angle,
+  });
   return {
     levels: [
-      { center: waist, half: [size.waistHalf, size.waistHalf], angle: hipTilt },
-      {
-        center: chest,
-        half: [size.chestHalf, size.chestHalf],
-        angle: (hipTilt + shoulderTilt) / 2,
-      },
-      { center: top, half: [size.topHalf, size.topHalf], angle: shoulderTilt },
+      level(waist, size.waistHalf, hipTilt),
+      level(chest, size.chestHalf, (hipTilt + shoulderTilt) / 2),
+      level(top, size.topHalf, shoulderTilt),
     ],
     hipTilt,
     shoulders: {

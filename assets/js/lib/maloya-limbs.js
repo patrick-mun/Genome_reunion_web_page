@@ -128,19 +128,22 @@ export function formatNumber(n) {
   return `${rounded < 0 ? '-' : ''}${units}${decimals}`;
 }
 
+// Courbes de Bézier d'un Catmull-Rom, écrites directement (appelé des milliers de fois par image).
 function formatCurves(points, isClosed) {
   const n = points.length;
   const at = (i) => (isClosed ? points[(i + n) % n] : points[clamp(i, 0, n - 1)]);
-  const parts = [];
+  let out = '';
   for (let i = 0; i < (isClosed ? n : n - 1); i++) {
-    const [p0, p1, p2, p3] = [at(i - 1), at(i), at(i + 1), at(i + 2)];
-    const c1 = { x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6 };
-    const c2 = { x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6 };
-    parts.push(
-      `C${formatNumber(c1.x)},${formatNumber(c1.y)} ${formatNumber(c2.x)},${formatNumber(c2.y)} ${formatNumber(p2.x)},${formatNumber(p2.y)}`,
-    );
+    const p0 = at(i - 1);
+    const p1 = at(i);
+    const p2 = at(i + 1);
+    const p3 = at(i + 2);
+    out +=
+      `${i ? ' ' : ''}C${formatNumber(p1.x + (p2.x - p0.x) / 6)},${formatNumber(p1.y + (p2.y - p0.y) / 6)}` +
+      ` ${formatNumber(p2.x - (p3.x - p1.x) / 6)},${formatNumber(p2.y - (p3.y - p1.y) / 6)}` +
+      ` ${formatNumber(p2.x)},${formatNumber(p2.y)}`;
   }
-  return parts;
+  return out;
 }
 
 /**
@@ -150,10 +153,8 @@ function formatCurves(points, isClosed) {
  * @returns {string} Attribut `d`.
  */
 export function buildSmoothPath(points, isClosed = false) {
-  const parts = [`M${formatNumber(points[0].x)},${formatNumber(points[0].y)}`];
-  parts.push(...formatCurves(points, isClosed));
-  if (isClosed) parts.push('Z');
-  return parts.join(' ');
+  const start = `M${formatNumber(points[0].x)},${formatNumber(points[0].y)}`;
+  return `${start} ${formatCurves(points, isClosed)}${isClosed ? ' Z' : ''}`;
 }
 
 /**
@@ -163,5 +164,5 @@ export function buildSmoothPath(points, isClosed = false) {
  * @returns {string} Commandes `C` successives.
  */
 export function buildSmoothCurves(points) {
-  return formatCurves(points, false).join(' ');
+  return formatCurves(points, false);
 }

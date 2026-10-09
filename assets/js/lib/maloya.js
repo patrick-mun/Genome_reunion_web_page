@@ -2,7 +2,8 @@
    assets/js/lib/maloya.js
    Rôle : frise animée du maloya en bas de la section « Carrefour génétique » : musiciens
    autour d'un feu de bois et danseurs. Construit le SVG, puis le met à jour à chaque image
-   tant que la frise est visible (seuls les attributs qui changent sont réécrits).
+   tant que la frise est visible (seuls les attributs qui changent sont réécrits, et les
+   personnages hors champ d'un écran étroit ne sont pas recalculés).
    Pages concernées : accueil.
    Accroches : .js-maloya (conteneur), [data-part] dans le SVG construit.
    Mouvement réduit : une seule image fixe. Le bouton de pause du pied de page fige la frise.
@@ -10,7 +11,7 @@
 
 import { startFrameLoop } from './animation-loop.js';
 import { computeSceneFrame } from './maloya-scene.js';
-import { buildMaloyaSvg } from './maloya-svg.js';
+import { buildMaloyaSvg, SCENE } from './maloya-svg.js';
 import { isMotionPaused, prefersReducedMotion } from './motion.js';
 
 const TEMPO_BPM = 96;
@@ -49,6 +50,26 @@ function createFrameWriter(parts) {
   };
 }
 
+// Partie visible de la scène : sur un écran étroit, la frise est recadrée autour du feu
+// (preserveAspectRatio « xMidYMax slice ») et les personnages des bords sont hors champ.
+function measureView(container) {
+  const { clientWidth: width, clientHeight: height } = container;
+  if (!width || !height) return { from: 0, to: SCENE.width };
+  const scale = Math.max(width / SCENE.width, height / SCENE.height);
+  const half = width / scale / 2;
+  return { from: SCENE.width / 2 - half, to: SCENE.width / 2 + half };
+}
+
+function trackView(container) {
+  const state = { view: measureView(container) };
+  const update = () => {
+    state.view = measureView(container);
+  };
+  if ('ResizeObserver' in window) new ResizeObserver(update).observe(container);
+  else window.addEventListener('resize', update);
+  return state;
+}
+
 function trackVisibility(container) {
   const state = { isVisible: true };
   if ('IntersectionObserver' in window) {
@@ -77,11 +98,12 @@ export function initMaloya() {
   if (prefersReducedMotion()) return;
 
   const visibility = trackVisibility(container);
+  const framing = trackView(container);
   startFrameLoop(
     (now, dt) => {
       clock.beats += (dt * TEMPO_BPM) / 60;
       clock.seconds += dt;
-      applyFrame(computeSceneFrame(clock.beats, clock.seconds));
+      applyFrame(computeSceneFrame(clock.beats, clock.seconds, framing.view));
     },
     () => !visibility.isVisible || isMotionPaused(),
   );

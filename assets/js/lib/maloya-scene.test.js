@@ -64,6 +64,17 @@ test('chaque partie dessinée reçoit une valeur à chaque image, et inversement
   assert.deepEqual([...drawn].sort(), given.sort());
 });
 
+test('hors champ (écran étroit, frise recadrée autour du feu), les bords ne sont pas calculés', () => {
+  // Téléphone de 360 px : frise de 312 × 100 px, soit les abscisses 306 à 774 de la scène.
+  const frame = computeSceneFrame(1.7, 2.3, { from: 306, to: 774 });
+  const animated = new Set(Object.keys(frame.transforms).map((part) => part.split('-')[0]));
+  assert.ok(!animated.has('dancer1') && !animated.has('dancer2'));
+  for (const id of ['piker', 'rouler', 'sati', 'bobre', 'kayamb', 'man']) {
+    assert.ok(animated.has(id), id);
+  }
+  assert.ok('flame-core' in frame.paths);
+});
+
 test('le SVG est bien formé et à la taille de la scène', () => {
   const svg = buildMaloyaSvg();
   assert.match(svg, new RegExp(`^<svg[^>]* viewBox="0 0 ${SCENE.width} ${SCENE.height}"`));

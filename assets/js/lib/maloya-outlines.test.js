@@ -29,9 +29,8 @@ function bentArm(interior) {
 }
 
 const sidePoint = (level, side) => {
-  const a = (level.angle * Math.PI) / 180;
   const h = side === 0 ? level.half[0] : -level.half[1];
-  return { x: level.center.x + h * Math.cos(a), y: level.center.y + h * Math.sin(a) };
+  return { x: level.center.x + h * level.normal.x, y: level.center.y + h * level.normal.y };
 };
 
 test('les niveaux passent par les bouts et par l’articulation, avec les largeurs prévues', () => {
@@ -90,10 +89,10 @@ test('le contour est fermé ; bouts arrondis ou droits selon la demande', () => 
 
 test('un bout arrondi dépasse le dernier niveau de sa hauteur d’arrondi', () => {
   const levels = [
-    { center: { x: 0, y: 0 }, half: [4, 4], angle: 0 },
-    { center: { x: 0, y: -10 }, half: [4, 4], angle: 0 },
+    { center: { x: 0, y: 0 }, half: [4, 4], normal: { x: 1, y: 0 } },
+    { center: { x: 0, y: -10 }, half: [4, 4], normal: { x: 1, y: 0 } },
   ];
-  // Niveaux qui montent (angle 0 : côté 0 vers +x) : le bout de fin bombe vers le haut.
+  // Niveaux qui montent (côté 0 vers +x) : le bout de fin bombe vers le haut.
   const d = buildBandOutline(levels, { start: 'flat', end: 0.5 });
   const ys = [...d.matchAll(/-?[\d.]+,(-?[\d.]+)/g)].map((m) => Number(m[1]));
   near(Math.min(...ys), -12, 1e-9);
