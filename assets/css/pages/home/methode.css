@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* ── SECTION MÉTHODE ──
-   Trois étapes numérotées (.step) en trois colonnes, une seule sous 900 px.
+   Trois étapes numérotées (.methode-step) en trois colonnes, une seule sous 900 px.
 */
 
 .methode {
@@ -35,13 +35,13 @@
   }
 }
 
-.step {
+.methode-step {
   position: relative;
   padding-top: var(--space-5);
   border-top: 1.5px solid var(--sand);
 }
 
-.step::before {
+.methode-step::before {
   position: absolute;
   top: -1.5px;
   left: 0;
@@ -51,7 +51,7 @@
   content: '';
 }
 
-.step-count {
+.methode-step-count {
   display: block;
   margin-bottom: var(--space-2);
   font-family: var(--f-ui);
@@ -62,7 +62,7 @@
   color: var(--teal);
 }
 
-.step-title {
+.methode-step-title {
   margin-bottom: var(--space-3);
   font-family: var(--f-display);
   font-size: var(--text-lg);
@@ -71,7 +71,7 @@
   color: var(--navy);
 }
 
-.step-body {
+.methode-step-body {
   font-size: var(--text-sm);
   line-height: var(--leading-6);
   color: var(--stone);

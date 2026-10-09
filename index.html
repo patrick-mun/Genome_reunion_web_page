@@ -82,14 +82,14 @@
 
       <!-- ── HERO ── -->
       <section id="hero" class="hero js-hero">
-        <div class="hero-waves" aria-hidden="true">
-          <svg class="wave-1" viewBox="0 0 2880 220" preserveAspectRatio="none">
+        <div class="waves" aria-hidden="true">
+          <svg class="waves-1" viewBox="0 0 2880 220" preserveAspectRatio="none">
             <use href="assets/images/sprite.svg#wave-1" />
           </svg>
-          <svg class="wave-2" viewBox="0 0 2880 220" preserveAspectRatio="none">
+          <svg class="waves-2" viewBox="0 0 2880 220" preserveAspectRatio="none">
             <use href="assets/images/sprite.svg#wave-2" />
           </svg>
-          <svg class="wave-3" viewBox="0 0 2880 220" preserveAspectRatio="none">
+          <svg class="waves-3" viewBox="0 0 2880 220" preserveAspectRatio="none">
             <use href="assets/images/sprite.svg#wave-3" />
           </svg>
         </div>
@@ -163,35 +163,35 @@
         <div class="section-inner">
           <div class="probleme-hero">
             <h2 class="eyebrow reveal js-reveal">Pourquoi c'est urgent</h2>
-            <div class="big-stat reveal reveal-delay-1 js-reveal"><em>≥ 80</em>%</div>
-            <p class="big-stat-label reveal reveal-delay-2 js-reveal">
+            <div class="probleme-stat reveal reveal-delay-1 js-reveal"><em>≥ 80</em>%</div>
+            <p class="probleme-stat-label reveal reveal-delay-2 js-reveal">
               des individus présents dans les grandes bases génomiques mondiales sont d'origine
               européenne — les populations admixées restent donc moins bien documentées.
             </p>
-            <p class="big-stat-note reveal reveal-delay-2 js-reveal">
+            <p class="probleme-stat-note reveal reveal-delay-2 js-reveal">
               Bases de fréquences · panels de référence · outils d'interprétation
             </p>
           </div>
           <ul role="list" class="probleme-cards">
-            <li class="pb-item reveal js-reveal">
-              <div class="pb-item-num">Posologie</div>
-              <p class="pb-item-text">
+            <li class="probleme-card reveal js-reveal">
+              <div class="probleme-card-num">Posologie</div>
+              <p class="probleme-card-text">
                 Les bases internationales documentent encore insuffisamment les profils
                 pharmacogénétiques des populations admixées de l'océan Indien. Ce manque limite la
                 lecture fine des variations locales.
               </p>
             </li>
-            <li class="pb-item reveal reveal-delay-1 js-reveal">
-              <div class="pb-item-num">Diagnostic</div>
-              <p class="pb-item-text">
+            <li class="probleme-card reveal reveal-delay-1 js-reveal">
+              <div class="probleme-card-num">Diagnostic</div>
+              <p class="probleme-card-text">
                 Sans base locale de fréquences de variants, un variant peut être classé comme rare
                 ou incertain alors qu'il correspond simplement à la diversité propre de la
                 population réunionnaise.
               </p>
             </li>
-            <li class="pb-item reveal reveal-delay-2 js-reveal">
-              <div class="pb-item-num">Prévention</div>
-              <p class="pb-item-text">
+            <li class="probleme-card reveal reveal-delay-2 js-reveal">
+              <div class="probleme-card-num">Prévention</div>
+              <p class="probleme-card-text">
                 Les modèles construits sur d'autres populations peuvent perdre en précision
                 lorsqu'ils sont appliqués à une population fortement admixée et fondatrice.
               </p>
@@ -203,7 +203,7 @@
       <!-- ── CE QUE ÇA CHANGE ── -->
       <section id="change" class="change section">
         <div class="section-inner">
-          <p class="eyebrow light reveal js-reveal">Ce que ça change</p>
+          <p class="eyebrow eyebrow-inverse reveal js-reveal">Ce que ça change</p>
           <h2 class="change-title reveal reveal-delay-1 js-reveal">
             Une base locale pour mieux comparer.
           </h2>
@@ -289,25 +289,35 @@
               </svg>
 
               <div class="ancestry-legend">
-                <div class="legend-item">
-                  <span class="legend-dot origin-africa js-legend-dot">Afrique &amp; Malgache</span>
-                  <span class="legend-pct js-legend-pct">45 %</span>
+                <div class="ancestry-legend-item">
+                  <span class="ancestry-legend-dot origin-africa js-ancestry-legend-dot"
+                    >Afrique &amp; Malgache</span
+                  >
+                  <span class="ancestry-legend-pct js-ancestry-legend-pct">45 %</span>
                 </div>
-                <div class="legend-item">
-                  <span class="legend-dot origin-india js-legend-dot">Inde du Sud</span>
-                  <span class="legend-pct js-legend-pct">25 %</span>
+                <div class="ancestry-legend-item">
+                  <span class="ancestry-legend-dot origin-india js-ancestry-legend-dot"
+                    >Inde du Sud</span
+                  >
+                  <span class="ancestry-legend-pct js-ancestry-legend-pct">25 %</span>
                 </div>
-                <div class="legend-item">
-                  <span class="legend-dot origin-europe js-legend-dot">Européen</span>
-                  <span class="legend-pct js-legend-pct">15 %</span>
+                <div class="ancestry-legend-item">
+                  <span class="ancestry-legend-dot origin-europe js-ancestry-legend-dot"
+                    >Européen</span
+                  >
+                  <span class="ancestry-legend-pct js-ancestry-legend-pct">15 %</span>
                 </div>
-                <div class="legend-item">
-                  <span class="legend-dot origin-zarabe js-legend-dot">Zarabe / Gujarati</span>
-                  <span class="legend-pct js-legend-pct">8 %</span>
+                <div class="ancestry-legend-item">
+                  <span class="ancestry-legend-dot origin-zarabe js-ancestry-legend-dot"
+                    >Zarabe / Gujarati</span
+                  >
+                  <span class="ancestry-legend-pct js-ancestry-legend-pct">8 %</span>
                 </div>
-                <div class="legend-item">
-                  <span class="legend-dot origin-asia js-legend-dot">Chine / Asie</span>
-                  <span class="legend-pct js-legend-pct">7 %</span>
+                <div class="ancestry-legend-item">
+                  <span class="ancestry-legend-dot origin-asia js-ancestry-legend-dot"
+                    >Chine / Asie</span
+                  >
+                  <span class="ancestry-legend-pct js-ancestry-legend-pct">7 %</span>
                 </div>
                 <p class="ancestry-legend-note">Valeurs illustratives</p>
               </div>
@@ -325,26 +335,26 @@
             <span class="text-line">un référentiel local.</span>
           </h2>
           <ol role="list" class="methode-steps">
-            <li class="step reveal js-reveal">
-              <span class="step-count">Étape 01</span>
-              <h3 class="step-title">Cartographier la diversité génétique</h3>
-              <p class="step-body">
+            <li class="methode-step reveal js-reveal">
+              <span class="methode-step-count">Étape 01</span>
+              <h3 class="methode-step-title">Cartographier la diversité génétique</h3>
+              <p class="methode-step-body">
                 2 500 volontaires réunionnais sont génotypés par puce SNP afin de décrire la
                 structure génétique de la cohorte et ses principales composantes.
               </p>
             </li>
-            <li class="step reveal reveal-delay-1 js-reveal">
-              <span class="step-count">Étape 02</span>
-              <h3 class="step-title">Documenter le phasage familial</h3>
-              <p class="step-body">
+            <li class="methode-step reveal reveal-delay-1 js-reveal">
+              <span class="methode-step-count">Étape 02</span>
+              <h3 class="methode-step-title">Documenter le phasage familial</h3>
+              <p class="methode-step-body">
                 100 familles nucléaires permettent de consolider le phasage haplotypique et de mieux
                 suivre la transmission des segments génétiques.
               </p>
             </li>
-            <li class="step reveal reveal-delay-2 js-reveal">
-              <span class="step-count">Étape 03</span>
-              <h3 class="step-title">Sélectionner les génomes complets WGS</h3>
-              <p class="step-body">
+            <li class="methode-step reveal reveal-delay-2 js-reveal">
+              <span class="methode-step-count">Étape 03</span>
+              <h3 class="methode-step-title">Sélectionner les génomes complets WGS</h3>
+              <p class="methode-step-body">
                 350 génomes complets WGS sont sélectionnés à partir des données SNP pour représenter
                 au mieux la diversité géographique et génétique de La Réunion.
               </p>
@@ -356,7 +366,7 @@
       <!-- ── OUTILS ── -->
       <section id="outils" class="outils section">
         <div class="section-inner">
-          <p class="eyebrow light reveal js-reveal">Ce que ça permet</p>
+          <p class="eyebrow eyebrow-inverse reveal js-reveal">Ce que ça permet</p>
           <h2 class="outils-title reveal reveal-delay-1 js-reveal">
             <span class="text-line">Quatre modules</span>
             <span class="text-line">d'aide à l'analyse.</span>
@@ -411,42 +421,42 @@
             partenaires locaux et nationaux.
           </p>
 
-          <ul role="list" class="team-grid">
-            <li class="team-card reveal js-reveal">
-              <div class="team-avatar team-avatar-1">BD</div>
+          <ul role="list" class="equipe-grid">
+            <li class="equipe-card reveal js-reveal">
+              <div class="equipe-avatar equipe-avatar-1">BD</div>
               <div>
-                <div class="team-name">Pr Bérénice Doray</div>
-                <div class="team-role">Chef de service · Génétique médicale</div>
+                <div class="equipe-name">Pr Bérénice Doray</div>
+                <div class="equipe-role">Chef de service · Génétique médicale</div>
               </div>
             </li>
-            <li class="team-card reveal reveal-delay-1 js-reveal">
-              <div class="team-avatar team-avatar-2">PM</div>
+            <li class="equipe-card reveal reveal-delay-1 js-reveal">
+              <div class="equipe-avatar equipe-avatar-2">PM</div>
               <div>
-                <div class="team-name">Patrick Munier</div>
-                <div class="team-role">
+                <div class="equipe-name">Patrick Munier</div>
+                <div class="equipe-role">
                   Porteur · Initiateur et coordinateur · Génétique des populations
                 </div>
               </div>
             </li>
-            <li class="team-card reveal reveal-delay-2 js-reveal">
-              <div class="team-avatar team-avatar-3">TH</div>
+            <li class="equipe-card reveal reveal-delay-2 js-reveal">
+              <div class="equipe-avatar equipe-avatar-3">TH</div>
               <div>
-                <div class="team-name">Dr Thomas Huby</div>
-                <div class="team-role">Co-porteur scientifique · Coordinateur</div>
+                <div class="equipe-name">Dr Thomas Huby</div>
+                <div class="equipe-role">Co-porteur scientifique · Coordinateur</div>
               </div>
             </li>
-            <li class="team-card reveal reveal-delay-3 js-reveal">
-              <div class="team-avatar team-avatar-4">SG</div>
+            <li class="equipe-card reveal reveal-delay-3 js-reveal">
+              <div class="equipe-avatar equipe-avatar-4">SG</div>
               <div>
-                <div class="team-name">Susie Guilly</div>
-                <div class="team-role">Ingénieure de recherche</div>
+                <div class="equipe-name">Susie Guilly</div>
+                <div class="equipe-role">Ingénieure de recherche</div>
               </div>
             </li>
-            <li class="team-card reveal reveal-delay-4 js-reveal">
-              <div class="team-avatar team-avatar-5">FF</div>
+            <li class="equipe-card reveal reveal-delay-4 js-reveal">
+              <div class="equipe-avatar equipe-avatar-5">FF</div>
               <div>
-                <div class="team-name">Dr Fanny Ferroul</div>
-                <div class="team-role">Génétique médicale</div>
+                <div class="equipe-name">Dr Fanny Ferroul</div>
+                <div class="equipe-role">Génétique médicale</div>
               </div>
             </li>
           </ul>
@@ -526,14 +536,14 @@
             >Je veux participer</a
           >
         </div>
-        <div class="hero-waves" aria-hidden="true">
-          <svg class="wave-1" viewBox="0 0 2880 220" preserveAspectRatio="none">
+        <div class="waves" aria-hidden="true">
+          <svg class="waves-1" viewBox="0 0 2880 220" preserveAspectRatio="none">
             <use href="assets/images/sprite.svg#wave-1" />
           </svg>
-          <svg class="wave-2" viewBox="0 0 2880 220" preserveAspectRatio="none">
+          <svg class="waves-2" viewBox="0 0 2880 220" preserveAspectRatio="none">
             <use href="assets/images/sprite.svg#wave-2" />
           </svg>
-          <svg class="wave-3" viewBox="0 0 2880 220" preserveAspectRatio="none">
+          <svg class="waves-3" viewBox="0 0 2880 220" preserveAspectRatio="none">
             <use href="assets/images/sprite.svg#wave-3" />
           </svg>
         </div>

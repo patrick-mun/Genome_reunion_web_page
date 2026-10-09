@@ -143,9 +143,9 @@ Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-�
 - `hero-reveal.js` : apparition du hero (`[data-hero-reveal]`, délai en ms) ;
 - `scroll-reveal.js` : apparition au scroll (`.js-reveal`) ;
 - `stats-counter.js` : compteurs animés (`.js-stat-item`, `.js-count`) ;
-- `legend-dots.js` : marqueurs de couleur de la légende (`.js-legend-dot`) ;
+- `legend-dots.js` : marqueurs de couleur de la légende (`.js-ancestry-legend-dot`) ;
 - `hero-parallax.js` : parallaxe souris (`[data-parallax-depth]`) ;
-- `donut-geometry.js` et `donut-chart.js` : arcs de l'anneau calculés à partir des pourcentages de la légende (`.js-legend-pct`), puis tracés au scroll (`.js-donut`) ;
+- `donut-geometry.js` et `donut-chart.js` : arcs de l'anneau calculés à partir des pourcentages de la légende (`.js-ancestry-legend-pct`), puis tracés au scroll (`.js-donut`) ;
 - `motion.js` : préférence `prefers-reduced-motion` et état de pause manuelle (classe `is-motion-paused` sur `<html>`) ;
 - `motion-toggle.js` : bouton « Mettre en pause les animations » du pied de page (`.js-motion-toggle`), qui suspend les vagues, la parallaxe, les oiseaux et le margouillat (WCAG 2.2.2) ;
 - `geometry.js`, `random.js`, `animation-loop.js` : calculs purs partagés (Bézier, angles, tirages injectables) et boucle `requestAnimationFrame` ;
@@ -277,7 +277,7 @@ Une valeur ne s'écrit qu'à un endroit :
 
 - **Logo et vagues** : un seul dessin dans `assets/images/sprite.svg`, référencé par `<use href="assets/images/sprite.svg#logo">` (identifiants `logo`, `wave-1` à `wave-3`). Les couleurs y sont des variables CSS héritées de l'élément `<use>` : ne pas ouvrir le sprite seul. Un commentaire XML ne peut pas contenir `--`.
 - **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*` et `paille-*` du CSS. Seul le logo POPgen, œuvre d'un tiers, garde ses couleurs.
-- **Anneau des ascendances** : les pourcentages de la légende (`.legend-pct`) sont l'unique source. Les arcs sont calculés par `donut-geometry.js` ; l'ordre des cercles du SVG doit suivre celui de la légende, et leur couleur vient de la classe `origin-<origine>` partagée avec la légende.
+- **Anneau des ascendances** : les pourcentages de la légende (`.ancestry-legend-pct`) sont l'unique source. Les arcs sont calculés par `donut-geometry.js` ; l'ordre des cercles du SVG doit suivre celui de la légende, et leur couleur vient de la classe `origin-<origine>` partagée avec la légende.
 
 ## Parties communes aux deux pages
 

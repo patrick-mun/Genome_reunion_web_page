@@ -6,7 +6,7 @@
 
 /* ── COLLECTES ──
    Calendrier sur fond sable : un bloc par site (.collecte-block), en grille d'une colonne sous 900 px.
-   Les badges se distinguent par leur couleur : .badge-nord en marine, .badge-sud en teal.
+   Les badges se distinguent par leur couleur : .collecte-zone-nord en marine, .collecte-zone-sud en teal.
 */
 .collectes {
   padding: var(--space-section-y) var(--space-gutter);
@@ -77,11 +77,11 @@
   border-radius: var(--radius-pill);
 }
 
-.badge-nord {
+.collecte-zone-nord {
   background: var(--navy);
 }
 
-.badge-sud {
+.collecte-zone-sud {
   background: var(--teal);
 }
 
@@ -116,7 +116,7 @@
 
 /* ── TABLEAU DES COLLECTES ──
    Une ligne par date (.collecte-row) : la dernière n'a pas de filet, le survol teinte la ligne.
-   Les colonnes sont .td-date, .td-lieu, .td-adresse et .td-horaire.
+   Les colonnes sont .collecte-date, .collecte-lieu, .collecte-adresse et .collecte-horaire.
 */
 .collecte-table {
   width: 100%;
@@ -156,7 +156,7 @@
   background: var(--teal-light-10);
 }
 
-.td-date {
+.collecte-date {
   font-family: var(--f-ui);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
@@ -164,17 +164,17 @@
   color: var(--navy);
 }
 
-.td-lieu {
+.collecte-lieu {
   font-weight: var(--weight-medium);
   color: var(--slate);
 }
 
-.td-adresse {
+.collecte-adresse {
   font-size: var(--text-sm);
   color: var(--stone);
 }
 
-.td-horaire {
+.collecte-horaire {
   font-family: var(--f-ui);
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);

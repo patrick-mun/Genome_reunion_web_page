@@ -6,7 +6,7 @@
 
 /* ── EYEBROW ──
    Surtitre en capitales au-dessus d'un titre de section.
-   La variante .light s'emploie sur les fonds sombres.
+   La variante .eyebrow-inverse s'emploie sur les fonds sombres.
 */
 
 .eyebrow {
@@ -19,6 +19,6 @@
   color: var(--teal);
 }
 
-.eyebrow.light {
+.eyebrow-inverse {
   color: var(--teal-light);
 }

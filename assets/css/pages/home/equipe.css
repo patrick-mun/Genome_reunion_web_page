@@ -5,8 +5,8 @@
    ============================================================ */
 
 /* ── SECTION ÉQUIPE ──
-   Cinq cartes (.team-card) en grille, deux colonnes sous 900 px. Chaque avatar prend sa teinte
-   de .team-avatar-1 à -5. Les partenaires suivent, en bas de la section.
+   Cinq cartes (.equipe-card) en grille, deux colonnes sous 900 px. Chaque avatar prend sa teinte
+   de .equipe-avatar-1 à -5. Les partenaires suivent, en bas de la section.
 */
 
 .equipe {
@@ -31,7 +31,7 @@
   color: var(--stone);
 }
 
-.team-grid {
+.equipe-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: var(--space-5);
@@ -39,12 +39,12 @@
 }
 
 @media (max-width: 900px) {
-  .team-grid {
+  .equipe-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.team-card {
+.equipe-card {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -57,18 +57,18 @@
     box-shadow 0.25s;
 }
 
-.team-card:hover {
+.equipe-card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .team-card:hover {
+  .equipe-card:hover {
     transform: none;
   }
 }
 
-.team-avatar {
+.equipe-avatar {
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -83,27 +83,27 @@
   border-radius: var(--radius-md);
 }
 
-.team-avatar-1 {
+.equipe-avatar-1 {
   background: var(--navy);
 }
 
-.team-avatar-2 {
+.equipe-avatar-2 {
   background: var(--coral-deep);
 }
 
-.team-avatar-3 {
+.equipe-avatar-3 {
   background: var(--teal);
 }
 
-.team-avatar-4 {
+.equipe-avatar-4 {
   background: var(--amber-deep);
 }
 
-.team-avatar-5 {
+.equipe-avatar-5 {
   background: var(--graphite);
 }
 
-.team-name {
+.equipe-name {
   font-family: var(--f-ui);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
@@ -111,7 +111,7 @@
   color: var(--slate);
 }
 
-.team-role {
+.equipe-role {
   font-size: var(--text-xs);
   line-height: var(--leading-4);
   color: var(--stone);
