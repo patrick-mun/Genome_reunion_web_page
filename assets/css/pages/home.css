@@ -1025,14 +1025,10 @@
 
 .paille-body {
   fill: var(--white);
-  stroke: var(--navy-20);
-  stroke-width: 0.5;
 }
 
 .paille-wings path {
   fill: var(--white-95);
-  stroke: var(--navy-20);
-  stroke-width: 0.4;
 }
 
 .paille-tail {
