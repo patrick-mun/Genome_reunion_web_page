@@ -148,8 +148,8 @@ Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-�
 - `donut-geometry.js` et `donut-chart.js` : arcs de l'anneau calculés à partir des pourcentages de la légende (`.js-ancestry-legend-pct`), puis tracés au scroll (`.js-donut`) ;
 - `motion.js` : préférence `prefers-reduced-motion` et état de pause manuelle (classe `is-motion-paused` sur `<html>`) ;
 - `motion-toggle.js` : bouton « Mettre en pause les animations » du pied de page (`.js-motion-toggle`), qui suspend les vagues, la parallaxe, les oiseaux et le margouillat (WCAG 2.2.2) ;
-- `geometry.js`, `random.js`, `animation-loop.js` : calculs purs partagés (Bézier, angles, tirages injectables) et boucle `requestAnimationFrame` ;
-- `bird-flight.js`, `bird-svg.js` et `paille-en-queue.js` : trajectoires et pose des oiseaux (purs), balisage SVG, puis branchement au DOM ;
+- `geometry.js`, `random.js`, `animation-loop.js` : calculs purs partagés (bornes, interpolation, angles, tirages injectables) et boucle `requestAnimationFrame` ;
+- `bird-flight.js`, `bird-wings.js`, `bird-svg.js` et `paille-en-queue.js` : vol et battement d'ailes des oiseaux (purs), balisage SVG et transformations, puis branchement au DOM ;
 - `gecko-motion.js`, `gecko-pose.js`, `gecko-svg.js` et `margouillat.js` : même découpage pour le margouillat ;
 - `placement.js` : pose `--x`, `--y` et `--angle` sur un élément animé (utilisé par les animations du hero et des sections).
 
@@ -169,11 +169,12 @@ Animation décorative du hero : 3 oiseaux (paille-en-queue) en vol continu.
 
 Techniques utilisées :
 
-- courbes bezier cubiques pour les trajectoires ;
-- paramétrage par longueur d'arc pour une vitesse visuelle constante ;
-- tangente de départ alignée sur le cap courant pour éviter les virages brusques ;
-- battements d'ailes et oscillation de la queue pilotés par `requestAnimationFrame` ;
-- désactivé si `prefers-reduced-motion` ou écran < 760 px.
+- vol piloté (`bird-flight.js`) : l'oiseau garde un cap et une vitesse et tourne vers ses destinations sans descendre sous un rayon de virage de 140 px ; il s'incline et se redresse progressivement, et son corps suit toujours la direction du vol (pas de glissade de côté ni de demi-tour sur place) ;
+- destinations choisies plutôt devant l'oiseau, avec une légère dérive du cap pour que les trajets serpentent ; une destination contournée depuis plus de 270° est abandonnée (pas de ronde sans fin) ;
+- vitesse continue : l'oiseau accélère en battant des ailes et ralentit en glissade ; sorti du hero, il patiente puis revient par un autre côté ;
+- ailes (`bird-wings.js`) : séries de battements (abaissement plus long que la remontée, poignet replié en remontée) et glissades ailes tendues, enchaînées sans saut ; chaque aile pivote à son épaule, et l'inclinaison en virage les déséquilibre (surtout en glissade) ;
+- queue : les brins suivent la courbe des virages avec retard et frémissent légèrement ;
+- désactivé si `prefers-reduced-motion` ou écran < 760 px ; figé par le bouton de pause.
 
 ---
 
