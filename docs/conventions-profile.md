@@ -14,6 +14,10 @@ Commande de contrôle lancée avant chaque commit : `npm run verify` (lint, form
 
 Les versions installées sont figées dans `package-lock.json`.
 
+ESLint couvre `assets/js` et `tooling/` (globales Node pour les outils). `tooling/check-html.mjs` et `tooling/check-dead-code.mjs` sont des copies conformes des outils du skill : on les met à jour depuis le skill, sans les modifier ici.
+
+Vérification du rendu avant une PR qui touche le HTML ou le CSS : `npm run visual -- main` (captures, styles calculés, mouvement et états interactifs comparés à `main`). Toute différence de rendu doit être voulue et annoncée.
+
 ## Organisation du JS (JS-02)
 
 | Rôle                    | Chemin             |

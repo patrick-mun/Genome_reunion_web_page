@@ -29,7 +29,7 @@ Le site doit expliquer simplement :
 ├── favicon.ico                 # Icône du site
 ├── README.md                   # Présentation du dépôt
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
-├── tooling/, .githooks/        # Contrôles HTML/CSS et hook pré-commit
+├── tooling/, .githooks/        # Contrôles HTML/CSS, vérification du rendu, hook pré-commit
 ├── .github/                    # Action de vérification et Dependabot
 │
 ├── assets/                     # Ressources statiques
@@ -167,9 +167,26 @@ npm run verify       # lint + formatage + tests (ce que lance le hook)
 npm run lint         # Stylelint, html-validate, ESLint, contrôles HTML et classes CSS inutilisées
 npm run format       # reformate avec Prettier
 npm test             # tests unitaires (node --test)
+npm run visual       # compare le rendu de la copie de travail à HEAD (voir ci-dessous)
 ```
 
-- **Avant chaque commit** : `.githooks/pre-commit` lance `npm run verify`. Contournement ponctuel : `git commit --no-verify`.
+**Vérification du rendu** (`tooling/visual-check.mjs`, hors CI) : extrait une version de référence
+dans un dossier temporaire, sert les deux versions en HTTP et compare, pour chaque page, les
+captures pleine page et les styles calculés à 1280, 820 et 390 px, les propriétés de mouvement
+(transitions, animations, calques) et les états survol, clic et focus. Code de sortie 1 en cas
+d'écart ; les captures différentes sont enregistrées dans `visual-check-output/` (ignoré par git).
+
+```bash
+npm run visual                    # copie de travail comparée au dernier commit (HEAD)
+npm run visual -- main            # branche courante comparée à main
+npm run visual -- main --browser "/chemin/vers/chrome"   # autre navigateur Chromium
+```
+
+Il utilise Google Chrome installé sur la machine (`playwright-core` ne télécharge aucun
+navigateur) ; sinon passer `--browser <chemin>` ou la variable `VISUAL_BROWSER`. Firefox et Safari
+ne sont pas couverts. Compter environ deux minutes.
+
+- **Avant chaque commit** : `.githooks/pre-commit` lance `npm run verify` (pas `npm run visual`, trop lent). Contournement ponctuel : `git commit --no-verify`.
 - **Sur GitHub** : l'action `.github/workflows/verify.yml` lance les mêmes contrôles à chaque pull request et à chaque push sur `main`.
 - **Dépendances** : Dependabot propose chaque semaine une PR groupée pour les outils de vérification, validée par la CI. Aucune dépendance n'est livrée avec le site (0 vulnérabilité en production). `npm audit` signale 9 alertes sur la chaîne Stylelint (`braces`, dépendance transitive de développement) : aucun correctif n'est publié, et Stylelint n'analyse que nos propres fichiers.
 - Pour rendre la vérification obligatoire avant fusion, activer la règle de protection de branche « Require status checks » sur `main` (réglage GitHub, pas dans le dépôt).

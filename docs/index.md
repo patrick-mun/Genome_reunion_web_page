@@ -46,7 +46,7 @@ Le site doit expliquer :
 ├── favicon.ico                 # Icône du site (les autres icônes sont dans assets/images/)
 ├── README.md                   # Présentation du dépôt
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
-├── tooling/, .githooks/        # Contrôles HTML/CSS et hook pré-commit
+├── tooling/, .githooks/        # Contrôles HTML/CSS, vérification du rendu (npm run visual), hook pré-commit
 ├── .github/                    # Action de vérification et Dependabot
 │
 ├── assets/
