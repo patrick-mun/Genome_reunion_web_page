@@ -6,7 +6,9 @@
     "lint": "stylelint \"assets/css/**/*.css\" && html-validate \"*.html\" && eslint assets/js && node tooling/check-html.mjs . && node tooling/check-dead-code.mjs .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --test"
+    "test": "node --test",
+    "verify": "npm run lint && npm run format:check && npm test",
+    "prepare": "node tooling/install-hooks.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
