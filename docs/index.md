@@ -45,6 +45,7 @@ Le site doit expliquer :
 ├── participer.html             # Page d'information participation
 ├── mentions-legales.html       # Mentions légales (contenu à fournir)
 ├── confidentialite.html        # Politique de confidentialité (contenu à fournir)
+├── 404.html                    # Page d'erreur (servie par GitHub Pages pour toute adresse inconnue)
 ├── favicon.ico                 # Icône du site (les autres icônes sont dans assets/images/)
 ├── README.md                   # Présentation du dépôt
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
@@ -113,6 +114,19 @@ Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuil
 
 - Icônes LinkedIn, Facebook et Instagram dans le pied de page (`.footer-social`, tracés Simple Icons CC0 dans le sprite). Les réseaux ne sont pas encore ouverts : chaque `<a class="footer-social-link">` n'a volontairement pas d'`href`. Quand un compte existe, ajouter `href` (et `target`/`rel` si besoin) et retirer « (bientôt disponible) » de l'`aria-label` de l'icône.
 - Balises de partage `og:*` et `twitter:card` dans le `<head>` de chaque page ; `og:title` et `og:description` doivent rester identiques au `<title>` et à la description (testé). Pas encore d'`og:image` ni d'`og:url` : ils attendent l'URL définitive du site.
+
+---
+
+### `404.html`
+
+Page d'erreur : même navigation et même pied de page que les autres pages (gardés synchronisés par
+`tooling/pages-sync.test.js`), un bandeau avec deux boutons (accueil, participer). Style :
+`assets/css/pages/erreur/erreur.css` ; entrée JS : `assets/js/pages/erreur.js`.
+**Limite connue :** GitHub Pages sert cette page pour n'importe quelle adresse inconnue, mais ses chemins
+sont relatifs. Pour une adresse à un seul niveau (`/inexistante.html`) tout s'affiche ; pour une adresse
+plus profonde (`/a/b/inexistante`), les feuilles de style et les liens se résolvent depuis ce dossier et
+la page apparaît sans style. Remède, une fois l'adresse définitive connue : ajouter dans le `<head>` de
+`404.html` une balise `<base href="/">` (domaine propre) ou `<base href="/Genome_reunion_web_page/">` (adresse `github.io`).
 
 ---
 

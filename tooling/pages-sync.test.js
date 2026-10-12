@@ -1,8 +1,8 @@
 /* ============================================================
    tooling/pages-sync.test.js
-   Rôle : garde-fou contre la dérive entre les pages du site (accueil, participer, pages légales) : parties communes
+   Rôle : garde-fou contre la dérive entre les pages du site (accueil, participer, 404, pages légales) : parties communes
    (navigation, pied de page, en-tête du <body>, feuilles partagées), sprite SVG et liens internes.
-   Pages concernées : index.html, participer.html, mentions-legales.html, confidentialite.html (fichiers analysés, pas modifiés).
+   Pages concernées : index.html, participer.html, 404.html, mentions-legales.html, confidentialite.html (fichiers analysés, pas modifiés).
    Accroches : aucune (lancé par node --test).
    ============================================================ */
 
@@ -13,11 +13,13 @@ import { test } from 'node:test';
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const home = read('index.html');
 const participer = read('participer.html');
+const erreur = read('404.html');
 const mentions = read('mentions-legales.html');
 const confidentialite = read('confidentialite.html');
 const pages = {
   'index.html': home,
   'participer.html': participer,
+  '404.html': erreur,
   'mentions-legales.html': mentions,
   'confidentialite.html': confidentialite,
 };
