@@ -6,6 +6,8 @@ Ce dépôt contient une page visuelle destinée à présenter le projet à un pu
 
 **Hébergement :** à définir. Ce dépôt GitHub sert à la construction et à la conservation du code ; l'adresse `github.io` éventuelle n'est pas l'adresse définitive.
 
+**Mise en ligne :** `npm run set-site-url -- https://adresse-definitive/` prépare une copie du site avec les balises `canonical` et `og:url`, `sitemap.xml`, `robots.txt` et une page 404 aux chemins absolus (détails dans `docs/index.md`).
+
 ---
 
 ## Objectif du site

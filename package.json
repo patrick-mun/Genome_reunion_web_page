@@ -13,7 +13,8 @@
     "verify": "npm run lint && npm run format:check && npm run test:quiet",
     "prepare": "node tooling/install-hooks.mjs",
     "test:quiet": "node --test --test-reporter=dot",
-    "visual": "node tooling/visual-check.mjs"
+    "visual": "node tooling/visual-check.mjs",
+    "set-site-url": "node tooling/set-site-url.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

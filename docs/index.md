@@ -126,13 +126,30 @@ Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuil
 Page d'erreur : même navigation et même pied de page que les autres pages (gardés synchronisés par
 `tooling/pages-sync.test.js`), un bandeau avec deux boutons (accueil, participer). Style :
 `assets/css/pages/erreur/erreur.css` ; entrée JS : `assets/js/pages/erreur.js`.
-**Limite connue :** les chemins de cette page sont relatifs. Elle s'affiche correctement pour une adresse
-inconnue à un seul niveau (`/inexistante.html`) ; pour une adresse plus profonde (`/a/b/inexistante`), les
-feuilles de style et les liens se résolvent depuis ce dossier et la page apparaît sans style (mesuré en simulant
-le comportement de GitHub Pages). Remède, une fois l'hébergeur et l'adresse connus : une balise
-`<base href="/">` dans le `<head>` (site à la racine du domaine). Selon l'hébergeur, il faut aussi déclarer la
-page côté serveur (par exemple `error_page 404` pour nginx, `ErrorDocument 404` pour Apache) en gardant le
-code HTTP 404 ; GitHub Pages la sert automatiquement.
+**Limite connue :** dans le dépôt, les chemins de cette page sont relatifs. Elle s'affiche correctement pour une
+adresse inconnue à un seul niveau (`/inexistante.html`) ; pour une adresse plus profonde (`/a/b/inexistante`), les
+feuilles de style et les liens se résolvent depuis ce dossier et la page apparaît sans style. La commande de mise en
+ligne (voir « Mise en ligne ») règle ce point : sa copie de `404.html` a des chemins absolus. Une balise `<base>`
+ne convient pas : elle ferait aussi pointer le lien d'évitement `#contenu` vers l'accueil. Selon l'hébergeur, il faut
+en plus déclarer la page côté serveur (`error_page 404` pour nginx, `ErrorDocument 404` pour Apache) en gardant le
+code HTTP 404.
+
+### Mise en ligne : `npm run set-site-url`
+
+Les sources ne contiennent aucune adresse absolue (l'hébergeur n'est pas choisi). Quand l'adresse définitive est
+connue :
+
+```
+npm run set-site-url -- https://exemple.fr/ [--out dossier] [--image assets/images/partage.png --image-alt "texte"]
+```
+
+La commande écrit une copie prête à déployer (par défaut dans `.site-dist/`, ignoré par git, vide ou absent
+avant le lancement) avec, pour chaque page : `<link rel="canonical">` et `og:url`, ainsi que `og:image`,
+`twitter:image` et la carte `summary_large_image` si `--image` est donné ; `sitemap.xml` ; `robots.txt` ; une
+`404.html` aux chemins absolus. Les sources ne sont pas modifiées. Logique pure dans `tooling/site-url.js`,
+testée avec la commande elle-même sur les vraies pages (`tooling/site-url.test.js`). Limites : aucune image de
+partage n'existe encore dans le dépôt ; `robots.txt` n'est lu qu'à la racine du domaine ; la commande ne
+configure pas le serveur (en-têtes de sécurité, cache, redirections).
 
 ---
 
