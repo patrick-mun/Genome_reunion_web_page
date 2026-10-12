@@ -131,13 +131,30 @@ test('commande : refuse un dossier de sortie non vide, une adresse invalide et u
   assert.match(runCommand('https://exemple.fr', '--out', join(SOURCE_ROOT, 'assets', 'x')).stderr, /refusé/);
 });
 
-test('commande : avec une image existante, og:image et twitter:image sont posées', () => {
-  const out = join(workFolder, 'avec-image');
-  const result = runCommand('https://exemple.fr', '--out', out, '--image', 'assets/images/apple-touch-icon.png', '--image-alt', 'Logo');
+test('commande : l\'image de partage par défaut est posée, avec son texte alternatif', () => {
+  const out = join(workFolder, 'image-par-defaut');
+  const result = runCommand('https://exemple.fr/genome', '--out', out);
   assert.equal(result.status, 0, result.stderr);
   const html = readFileSync(join(out, 'index.html'), 'utf8');
-  assert.ok(html.includes('<meta property="og:image" content="https://exemple.fr/assets/images/apple-touch-icon.png" />'));
+  assert.ok(html.includes('<meta property="og:image" content="https://exemple.fr/genome/assets/images/partage.png" />'));
+  assert.match(html, /og:image:alt" content="Génome Réunion : Mieux lire nos génomes\./);
   assert.ok(html.includes('twitter:card" content="summary_large_image"'));
+  assert.ok(existsSync(join(out, 'assets/images/partage.png')), 'image non copiée');
+});
+
+test('commande : --image remplace l\'image par défaut, --no-image la retire', () => {
+  const custom = join(workFolder, 'image-choisie');
+  assert.equal(runCommand('https://exemple.fr', '--out', custom, '--image', 'assets/images/apple-touch-icon.png', '--image-alt', 'Logo').status, 0);
+  const html = readFileSync(join(custom, 'index.html'), 'utf8');
+  assert.ok(html.includes('og:image" content="https://exemple.fr/assets/images/apple-touch-icon.png"'));
+  assert.ok(html.includes('og:image:alt" content="Logo"'));
+
+  const none = join(workFolder, 'sans-image');
+  assert.equal(runCommand('https://exemple.fr', '--out', none, '--no-image').status, 0);
+  const plain = readFileSync(join(none, 'index.html'), 'utf8');
+  assert.doesNotMatch(plain, /og:image|twitter:image/);
+  assert.match(plain, /twitter:card" content="summary"/);
+  assert.match(runCommand('https://exemple.fr', '--out', join(workFolder, 'x'), '--no-image', '--image', 'a.png').stderr, /incompatibles/);
 });
 
 test('removeNoindex : retire la seule ligne noindex, sans effet si elle manque', () => {

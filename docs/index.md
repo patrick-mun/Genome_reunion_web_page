@@ -140,18 +140,17 @@ Les sources ne contiennent aucune adresse absolue (l'hébergeur n'est pas choisi
 connue :
 
 ```
-npm run set-site-url -- https://exemple.fr/ [--out dossier] [--image assets/images/partage.png --image-alt "texte"] [--keep-noindex]
+npm run set-site-url -- https://exemple.fr/ [--out dossier] [--image chemin --image-alt "texte"] [--no-image] [--keep-noindex]
 ```
 
 La commande écrit une copie prête à déployer (par défaut dans `.site-dist/`, ignoré par git, vide ou absent
 avant le lancement) avec, pour chaque page : `<link rel="canonical">` et `og:url`, ainsi que `og:image`,
-`twitter:image` et la carte `summary_large_image` si `--image` est donné ; `sitemap.xml` ; `robots.txt` ; une
+`twitter:image` (avec `og:image:alt`) et la carte `summary_large_image`, avec l'image de partage `assets/images/partage.png` (1 200 × 630, titre « Mieux lire nos génomes. » sur les vagues du site ; `--image` en choisit une autre, `--no-image` n'en met pas); `sitemap.xml` ; `robots.txt` ; une
 `404.html` aux chemins absolus. **`noindex` :** les sources portent `<meta name="robots" content="noindex" />`
 sur toutes les pages (préproduction : les moteurs ne doivent pas référencer le brouillon, qui reste consultable
 par son adresse) ; la copie de production le retire, sauf avec `--keep-noindex` (préproduction à l'adresse finale).
 `noindex` n'est pas une protection d'accès. Les sources ne sont pas modifiées. Logique pure dans `tooling/site-url.js`,
-testée avec la commande elle-même sur les vraies pages (`tooling/site-url.test.js`). Limites : aucune image de
-partage n'existe encore dans le dépôt ; `robots.txt` n'est lu qu'à la racine du domaine ; la commande ne
+testée avec la commande elle-même sur les vraies pages (`tooling/site-url.test.js`). Limites : l'image de partage est un fichier fixe (pour changer son texte, il faut la refaire) ; `robots.txt` n'est lu qu'à la racine du domaine ; la commande ne
 configure pas le serveur (en-têtes de sécurité, cache, redirections).
 
 ---

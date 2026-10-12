@@ -1,9 +1,10 @@
 /* ============================================================
    tooling/set-site-url.mjs
    Rôle : prépare une copie du site prête à déployer pour une adresse donnée : canonical, og:url,
-   og:image (si une image est fournie), sitemap.xml, robots.txt, et chemins absolus dans 404.html.
+   og:image (image de partage par défaut, ou celle de --image), sitemap.xml, robots.txt, et chemins absolus dans 404.html.
    Les sources ne sont jamais modifiées : le dépôt reste sans adresse absolue.
-   Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>] [--keep-noindex]
+   Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>] [--no-image] [--keep-noindex]
+   L'image de partage par défaut est assets/images/partage.png (--no-image pour s'en passer).
    La balise noindex des sources (préproduction) est retirée de la copie, sauf avec --keep-noindex.
    Pages concernées : toutes les pages .html de la racine.
    Accroches : aucune (outil de mise en ligne).
@@ -16,33 +17,36 @@ import { absolutizeLinks, addSeoTags, buildRobots, buildSitemap, pageUrl, parseS
 
 const DEFAULT_OUT = '.site-dist'; // dossier caché : ignoré par les contrôles du dépôt
 const ERROR_PAGE = '404.html';
+const DEFAULT_IMAGE = 'assets/images/partage.png';
+const DEFAULT_IMAGE_ALT = 'Génome Réunion : Mieux lire nos génomes. Référentiel génomique réunionnais.';
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 /**
  * Lit les arguments de la ligne de commande.
  * @param {string[]} args Arguments après le nom du script.
- * @returns {{siteUrl: string, out: string, image?: string, imageAlt?: string, keepNoindex?: boolean}} Options.
+ * @returns {{siteUrl: string, out: string, image?: string, imageAlt?: string, keepNoindex?: boolean, noImage?: boolean}} Options.
  */
 function parseArgs(args) {
   const options = { out: DEFAULT_OUT };
-  const flags = { '--out': 'out', '--image': 'image', '--image-alt': 'imageAlt' };
+  const valueFlags = { '--out': 'out', '--image': 'image', '--image-alt': 'imageAlt' };
+  const switchFlags = { '--keep-noindex': 'keepNoindex', '--no-image': 'noImage' };
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--keep-noindex') {
-      options.keepNoindex = true;
-    } else if (flags[args[i]]) {
-      if (args[i + 1] === undefined) fail(`${args[i]} attend une valeur.`);
-      options[flags[args[i]]] = args[++i];
-    } else if (args[i].startsWith('--')) {
-      fail(`Option inconnue : ${args[i]}`);
-    } else if (options.siteUrl === undefined) {
-      options.siteUrl = args[i];
+    const arg = args[i];
+    if (arg in switchFlags) {
+      options[switchFlags[arg]] = true;
+    } else if (arg in valueFlags) {
+      if (args[i + 1] === undefined) fail(`${arg} attend une valeur.`);
+      options[valueFlags[arg]] = args[++i];
+    } else if (arg.startsWith('--') || options.siteUrl !== undefined) {
+      fail(`Argument inattendu : ${arg}`);
     } else {
-      fail(`Argument en trop : ${args[i]}`);
+      options.siteUrl = arg;
     }
   }
   if (options.siteUrl === undefined) {
-    fail('Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>] [--keep-noindex]');
+    fail('Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>] [--no-image] [--keep-noindex]');
   }
+  if (options.noImage && options.image) fail('--no-image et --image sont incompatibles.');
   return options;
 }
 
@@ -84,8 +88,9 @@ try {
 const out = resolve(options.out);
 checkOutputFolder(out);
 
-const imagePath = options.image?.replace(/^\/+/, '');
+const imagePath = options.noImage ? undefined : (options.image ?? DEFAULT_IMAGE).replace(/^\/+/, '');
 if (imagePath && !existsSync(join(repoRoot, imagePath))) fail(`Image introuvable : ${imagePath}`);
+const imageAlt = options.image ? options.imageAlt : (options.imageAlt ?? DEFAULT_IMAGE_ALT);
 const imageUrl = imagePath ? `${site.origin}${site.basePath}${imagePath}` : undefined;
 
 mkdirSync(out, { recursive: true });
@@ -101,7 +106,7 @@ for (const file of pages) {
     if (file === ERROR_PAGE) {
       writeFileSync(join(out, file), absolutizeLinks(source, site.basePath));
     } else {
-      writeFileSync(join(out, file), addSeoTags(source, { canonicalUrl: pageUrl(site, file), imageUrl, imageAlt: options.imageAlt }));
+      writeFileSync(join(out, file), addSeoTags(source, { canonicalUrl: pageUrl(site, file), imageUrl, imageAlt }));
       indexed.push(pageUrl(site, file));
     }
   } catch (error) {
@@ -117,4 +122,4 @@ console.log(`  ${indexed.length} pages avec canonical et og:url, ${ERROR_PAGE} a
 console.log(options.keepNoindex ? '  noindex conservé (--keep-noindex) : le site ne sera pas indexé.' : '  noindex retiré : le site pourra être indexé.');
 if (!site.secure) console.warn('  Attention : adresse en http://, préférer https:// en production.');
 if (site.basePath !== '/') console.warn('  Attention : site dans un sous-dossier ; les moteurs ne lisent robots.txt qu\'à la racine du domaine.');
-if (!imageUrl) console.warn('  Pas d\'image de partage (--image) : og:image et twitter:image ne sont pas posées.');
+if (!imageUrl) console.warn('  Pas d\'image de partage (--no-image) : og:image et twitter:image ne sont pas posées.');
