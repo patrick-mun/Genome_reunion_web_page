@@ -3,7 +3,8 @@
    Rôle : prépare une copie du site prête à déployer pour une adresse donnée : canonical, og:url,
    og:image (si une image est fournie), sitemap.xml, robots.txt, et chemins absolus dans 404.html.
    Les sources ne sont jamais modifiées : le dépôt reste sans adresse absolue.
-   Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>]
+   Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>] [--keep-noindex]
+   La balise noindex des sources (préproduction) est retirée de la copie, sauf avec --keep-noindex.
    Pages concernées : toutes les pages .html de la racine.
    Accroches : aucune (outil de mise en ligne).
    ============================================================ */
@@ -11,7 +12,7 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { absolutizeLinks, addSeoTags, buildRobots, buildSitemap, pageUrl, parseSiteUrl } from './site-url.js';
+import { absolutizeLinks, addSeoTags, buildRobots, buildSitemap, pageUrl, parseSiteUrl, removeNoindex } from './site-url.js';
 
 const DEFAULT_OUT = '.site-dist'; // dossier caché : ignoré par les contrôles du dépôt
 const ERROR_PAGE = '404.html';
@@ -20,13 +21,15 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 /**
  * Lit les arguments de la ligne de commande.
  * @param {string[]} args Arguments après le nom du script.
- * @returns {{siteUrl: string, out: string, image?: string, imageAlt?: string}} Options.
+ * @returns {{siteUrl: string, out: string, image?: string, imageAlt?: string, keepNoindex?: boolean}} Options.
  */
 function parseArgs(args) {
   const options = { out: DEFAULT_OUT };
   const flags = { '--out': 'out', '--image': 'image', '--image-alt': 'imageAlt' };
   for (let i = 0; i < args.length; i++) {
-    if (flags[args[i]]) {
+    if (args[i] === '--keep-noindex') {
+      options.keepNoindex = true;
+    } else if (flags[args[i]]) {
       if (args[i + 1] === undefined) fail(`${args[i]} attend une valeur.`);
       options[flags[args[i]]] = args[++i];
     } else if (args[i].startsWith('--')) {
@@ -38,7 +41,7 @@ function parseArgs(args) {
     }
   }
   if (options.siteUrl === undefined) {
-    fail('Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>]');
+    fail('Usage : npm run set-site-url -- <adresse> [--out <dossier>] [--image <chemin>] [--image-alt <texte>] [--keep-noindex]');
   }
   return options;
 }
@@ -92,7 +95,8 @@ cpSync(join(repoRoot, 'favicon.ico'), join(out, 'favicon.ico'));
 const pages = readdirSync(repoRoot).filter((name) => name.endsWith('.html'));
 const indexed = [];
 for (const file of pages) {
-  const source = readFileSync(join(repoRoot, file), 'utf8');
+  const original = readFileSync(join(repoRoot, file), 'utf8');
+  const source = options.keepNoindex ? original : removeNoindex(original);
   try {
     if (file === ERROR_PAGE) {
       writeFileSync(join(out, file), absolutizeLinks(source, site.basePath));
@@ -110,6 +114,7 @@ writeFileSync(join(out, 'robots.txt'), buildRobots(sitemapUrl));
 
 console.log(`Site préparé pour ${site.origin}${site.basePath} dans ${out}`);
 console.log(`  ${indexed.length} pages avec canonical et og:url, ${ERROR_PAGE} aux chemins absolus, sitemap.xml, robots.txt`);
+console.log(options.keepNoindex ? '  noindex conservé (--keep-noindex) : le site ne sera pas indexé.' : '  noindex retiré : le site pourra être indexé.');
 if (!site.secure) console.warn('  Attention : adresse en http://, préférer https:// en production.');
 if (site.basePath !== '/') console.warn('  Attention : site dans un sous-dossier ; les moteurs ne lisent robots.txt qu\'à la racine du domaine.');
 if (!imageUrl) console.warn('  Pas d\'image de partage (--image) : og:image et twitter:image ne sont pas posées.');

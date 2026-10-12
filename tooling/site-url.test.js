@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, 
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { after, test } from 'node:test';
-import { absolutizeLinks, addSeoTags, buildRobots, buildSitemap, pageUrl, parseSiteUrl } from './site-url.js';
+import { absolutizeLinks, addSeoTags, buildRobots, buildSitemap, pageUrl, parseSiteUrl, removeNoindex } from './site-url.js';
 
 const SCRIPT = new URL('./set-site-url.mjs', import.meta.url).pathname;
 const SOURCE_ROOT = new URL('..', import.meta.url).pathname;
@@ -138,4 +138,30 @@ test('commande : avec une image existante, og:image et twitter:image sont posée
   const html = readFileSync(join(out, 'index.html'), 'utf8');
   assert.ok(html.includes('<meta property="og:image" content="https://exemple.fr/assets/images/apple-touch-icon.png" />'));
   assert.ok(html.includes('twitter:card" content="summary_large_image"'));
+});
+
+test('removeNoindex : retire la seule ligne noindex, sans effet si elle manque', () => {
+  const html = '<head>\n    <meta name="viewport" content="a" />\n    <meta name="robots" content="noindex" />\n    <title>t</title>\n</head>';
+  assert.equal(removeNoindex(html), '<head>\n    <meta name="viewport" content="a" />\n    <title>t</title>\n</head>');
+  assert.equal(removeNoindex('<head></head>'), '<head></head>');
+});
+
+test('noindex : posé dans les sources de toutes les pages, retiré de la copie de production', () => {
+  const pages = readdirSync(SOURCE_ROOT).filter((name) => name.endsWith('.html'));
+  for (const file of pages) {
+    assert.match(readFileSync(join(SOURCE_ROOT, file), 'utf8'), /<meta name="robots" content="noindex" \/>/, `${file} : noindex absent des sources`);
+  }
+  const out = join(workFolder, 'production');
+  assert.equal(runCommand('https://exemple.fr', '--out', out).status, 0);
+  for (const file of pages) {
+    assert.doesNotMatch(readFileSync(join(out, file), 'utf8'), /name="robots"/, `${file} : noindex resté dans la copie de production`);
+  }
+});
+
+test('noindex : --keep-noindex le conserve dans la copie', () => {
+  const out = join(workFolder, 'preprod');
+  assert.equal(runCommand('https://exemple.fr', '--out', out, '--keep-noindex').status, 0);
+  for (const file of readdirSync(out).filter((name) => name.endsWith('.html'))) {
+    assert.match(readFileSync(join(out, file), 'utf8'), /<meta name="robots" content="noindex" \/>/, file);
+  }
 });

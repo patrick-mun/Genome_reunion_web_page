@@ -8,6 +8,7 @@
    ============================================================ */
 
 const TWITTER_CARD_LINE = /^([ \t]*)<meta name="twitter:card" content="summary" \/>$/m;
+const NOINDEX_LINE = /^[ \t]*<meta name="robots" content="noindex" \/>\r?\n/m;
 const URL_ATTRIBUTE = /\b(href|src)="([^"]*)"/g;
 const HAS_SCHEME = /^[a-z][a-z0-9+.-]*:/i;
 
@@ -79,6 +80,16 @@ export function addSeoTags(html, { canonicalUrl, imageUrl, imageAlt }) {
     tags.push(`<meta name="twitter:image" content="${escapeMarkup(imageUrl)}" />`);
   }
   return html.replace(TWITTER_CARD_LINE, [`${indent}${card}`, ...tags.map((tag) => `${indent}${tag}`)].join('\n'));
+}
+
+/**
+ * Retire la balise noindex posée dans les sources pendant la construction : la copie de production doit
+ * pouvoir être indexée. Sans effet si la page n'a pas cette balise.
+ * @param {string} html Source d'une page.
+ * @returns {string} Page sans balise noindex.
+ */
+export function removeNoindex(html) {
+  return html.replace(NOINDEX_LINE, '');
 }
 
 /**
