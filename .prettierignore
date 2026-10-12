@@ -3,3 +3,4 @@ node_modules/
 .htmlvalidate.json
 *.config.mjs
 tooling/
+.site-dist/
