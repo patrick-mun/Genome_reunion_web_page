@@ -103,8 +103,12 @@ Points sensibles :
 
 Pages légales : même navigation et même pied de page que les autres pages (gardés synchronisés par
 `tooling/pages-sync.test.js`), un bandeau de titre puis une section par rubrique (`.legal-section`).
-Les rubriques sont des cadres `À compléter` (`.legal-todo`) : le texte doit venir du CHU (DPO). Ne pas
-fusionner tant qu'un bloc `.legal-todo` reste dans une page. Le site n'utilise ni cookie ni stockage local.
+Le texte est prérempli ; ce que les documents ne fixent pas reste surligné (`.legal-blank`), et un avis en
+tête de page (`.legal-todo`) signale que le DPO doit valider. Ne pas fusionner tant que l'avis et les
+surlignages restent dans une page. La politique de confidentialité ne traite que le site (visite,
+e-mails reçus, hébergeur, cookies, droits) ; la recherche Génome Réunion (dossier MR-004) a sa propre
+information (note remise par l'EFS, fiche du répertoire public de la PDS) et n'y figure que par un renvoi.
+Le site n'utilise ni cookie ni stockage local.
 Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuille de style :
 `assets/css/pages/legal/legal.css` ; entrée JS : `assets/js/pages/legal.js`.
 
