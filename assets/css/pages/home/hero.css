@@ -6,7 +6,7 @@
 
 /* ── HERO ──
    Bandeau d'accueil plein écran sur fond marine : surtitre créole, titre, sous-titre, texte et boutons.
-   Les textes sont révélés par hero-reveal.js (classe is-revealed) ; la parallaxe souris passe par `translate`.
+   Les textes sont révélés par hero-reveal.js (classe is-revealed), et visibles d'emblée sans JavaScript ; la parallaxe souris passe par `translate`.
    Les vagues sont dans components/waves.css, les oiseaux dans paille-en-queue.css.
 */
 
@@ -115,7 +115,7 @@
   transform: translateY(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (scripting: none) {
   .hero-creole,
   .hero-title,
   .hero-subtitle,
