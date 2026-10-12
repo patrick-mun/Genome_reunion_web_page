@@ -11,7 +11,7 @@
 
 import { startFrameLoop } from './animation-loop.js';
 import { computeSceneFrame } from './maloya-scene.js';
-import { buildMaloyaSvg, SCENE } from './maloya-svg.js';
+import { buildMaloyaSvg, FRAME, SCENE } from './maloya-svg.js';
 import { isMotionPaused, prefersReducedMotion } from './motion.js';
 
 const TEMPO_BPM = 96;
@@ -55,9 +55,10 @@ function createFrameWriter(parts) {
 function measureView(container) {
   const { clientWidth: width, clientHeight: height } = container;
   if (!width || !height) return { from: 0, to: SCENE.width };
-  const scale = Math.max(width / SCENE.width, height / SCENE.height);
+  const scale = Math.max(width / FRAME.width, height / SCENE.height);
   const half = width / scale / 2;
-  return { from: SCENE.width / 2 - half, to: SCENE.width / 2 + half };
+  const center = FRAME.from + FRAME.width / 2;
+  return { from: center - half, to: center + half };
 }
 
 function trackView(container) {

@@ -13,6 +13,10 @@ import { SPARK_COUNT } from './maloya-fire.js';
 import { formatNumber } from './maloya-limbs.js';
 
 export const SCENE = { width: 1080, height: 150, ground: 142 };
+// Cadrage affiché : le groupe (jupes, bras et flammes compris) occupe de x = 206 à 877 ; la fenêtre,
+// centrée sur le feu, laisse 50 px de marge de chaque côté et agrandit les figures d'environ 1,4.
+// Le rapport `aspect-ratio` de .maloya (maloya.css) doit rester FRAME.width / SCENE.height.
+export const FRAME = { from: 155, width: 770 };
 export const FIRE_X = 540;
 const BACK_ROW = { ground: 133, scale: 0.86 };
 // Classe de palette d'un personnage : préfixe suivi de son identifiant (maloya-cast-rouler…).
@@ -169,7 +173,7 @@ function buildFigure(member) {
 export function buildMaloyaSvg() {
   const figures = (isBack) => CAST.filter((m) => (m.row === 'back') === isBack).map(buildFigure);
   return [
-    `<svg class="maloya-scene" viewBox="0 0 ${SCENE.width} ${SCENE.height}" preserveAspectRatio="xMidYMax slice">`,
+    `<svg class="maloya-scene" viewBox="${FRAME.from} 0 ${FRAME.width} ${SCENE.height}" preserveAspectRatio="xMidYMax slice">`,
     '<defs>',
     '<radialGradient id="maloya-glow"><stop offset="0" class="maloya-glow-in" /><stop offset="1" class="maloya-glow-out" /></radialGradient>',
     '<radialGradient id="maloya-floor"><stop offset="0" class="maloya-floor-in" /><stop offset="1" class="maloya-glow-out" /></radialGradient>',

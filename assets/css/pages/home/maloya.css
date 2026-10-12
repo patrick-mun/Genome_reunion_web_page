@@ -6,15 +6,15 @@
    ============================================================ */
 
 /* ── FRISE ──
-   Conteneur rempli par maloya.js, aux proportions de la scène (1080 × 150). En dessous de
-   720 px de large, la hauteur minimale l'emporte : le SVG (preserveAspectRatio slice) est
+   Conteneur rempli par maloya.js, aux proportions du cadrage de la scène (770 × 150, voir FRAME dans
+   maloya-svg.js). En dessous de 513 px de large, la hauteur minimale l'emporte : le SVG (preserveAspectRatio slice) est
    recadré autour du feu au lieu de réduire les personnages.
 */
 
 .maloya {
   width: 100%; /* largeur fixée : la hauteur minimale ne l'élargit pas par le rapport */
   min-height: 100px;
-  aspect-ratio: 1080 / 150;
+  aspect-ratio: 770 / 150;
   margin-top: var(--space-8);
 }
 

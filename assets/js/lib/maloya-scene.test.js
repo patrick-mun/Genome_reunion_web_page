@@ -8,10 +8,11 @@
    ============================================================ */
 
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { computeAngleDifference } from './geometry.js';
 import { computeMemberPose, computeSceneFrame } from './maloya-scene.js';
-import { buildMaloyaSvg, CAST, formatPartTransform, SCENE } from './maloya-svg.js';
+import { buildMaloyaSvg, CAST, FIRE_X, FRAME, formatPartTransform, SCENE } from './maloya-svg.js';
 
 const TEMPO_BPM = 96;
 const FPS = 60;
@@ -77,7 +78,10 @@ test('hors champ (écran étroit, frise recadrée autour du feu), les bords ne s
 
 test('le SVG est bien formé et à la taille de la scène', () => {
   const svg = buildMaloyaSvg();
-  assert.match(svg, new RegExp(`^<svg[^>]* viewBox="0 0 ${SCENE.width} ${SCENE.height}"`));
+  assert.match(
+    svg,
+    new RegExp(`^<svg[^>]* viewBox="${FRAME.from} 0 ${FRAME.width} ${SCENE.height}"`),
+  );
   for (const tag of ['g', 'defs', 'pattern', 'radialGradient']) {
     const opened = svg.split(`<${tag}`).length - 1;
     const closed = svg.split(`</${tag}>`).length - 1;
@@ -117,5 +121,26 @@ test('chaque personnage : mouvement continu, boucle sans saut, coudes ouverts, c
       flattenParts(computeMemberPose(member, LOOP_BEATS)),
     );
     assert.ok(loop.angle < 1e-6 && loop.distance < 1e-6, `${member.id} : raccord de la boucle`);
+  }
+});
+
+test('le cadrage reste dans la scène, centré sur le feu, et le CSS en suit les proportions', () => {
+  assert.ok(FRAME.from >= 0 && FRAME.from + FRAME.width <= SCENE.width, 'cadrage hors de la scène');
+  assert.equal(FRAME.from + FRAME.width / 2, FIRE_X, 'cadrage non centré sur le feu');
+  const css = readFileSync(new URL('../../css/pages/home/maloya.css', import.meta.url), 'utf8');
+  const ratio = css.match(/aspect-ratio:\s*(\d+)\s*\/\s*(\d+)/);
+  assert.deepEqual(
+    [Number(ratio[1]), Number(ratio[2])],
+    [FRAME.width, SCENE.height],
+    'aspect-ratio de .maloya différent du cadrage',
+  );
+});
+
+test('chaque personnage se tient dans le cadrage', () => {
+  for (const member of CAST) {
+    assert.ok(
+      member.x > FRAME.from && member.x < FRAME.from + FRAME.width,
+      `${member.id} (x = ${member.x}) hors du cadrage`,
+    );
   }
 });
