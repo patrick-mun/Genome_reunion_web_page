@@ -19,7 +19,7 @@ Il ne remplace pas le README public. Il sert surtout à documenter :
 - Type : site HTML/CSS/JS statique
 - Public cible : grand public, institutionnels, partenaires, non spécialistes
 - Projet : Génome Réunion
-- **Site en ligne :** https://patrick-mun.github.io/Genome_reunion_web_page/index.html
+- **Hébergement :** à définir. Ce dépôt GitHub sert à la construction et à la conservation du code ; l'adresse `github.io` éventuelle n'est pas l'adresse définitive.
 
 ---
 
@@ -45,7 +45,7 @@ Le site doit expliquer :
 ├── participer.html             # Page d'information participation
 ├── mentions-legales.html       # Mentions légales (contenu à fournir)
 ├── confidentialite.html        # Politique de confidentialité (contenu à fournir)
-├── 404.html                    # Page d'erreur (servie par GitHub Pages pour toute adresse inconnue)
+├── 404.html                    # Page d'erreur (à déclarer côté serveur selon l'hébergeur)
 ├── favicon.ico                 # Icône du site (les autres icônes sont dans assets/images/)
 ├── README.md                   # Présentation du dépôt
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
@@ -126,11 +126,13 @@ Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuil
 Page d'erreur : même navigation et même pied de page que les autres pages (gardés synchronisés par
 `tooling/pages-sync.test.js`), un bandeau avec deux boutons (accueil, participer). Style :
 `assets/css/pages/erreur/erreur.css` ; entrée JS : `assets/js/pages/erreur.js`.
-**Limite connue :** GitHub Pages sert cette page pour n'importe quelle adresse inconnue, mais ses chemins
-sont relatifs. Pour une adresse à un seul niveau (`/inexistante.html`) tout s'affiche ; pour une adresse
-plus profonde (`/a/b/inexistante`), les feuilles de style et les liens se résolvent depuis ce dossier et
-la page apparaît sans style. Remède, une fois l'adresse définitive connue : ajouter dans le `<head>` de
-`404.html` une balise `<base href="/">` (domaine propre) ou `<base href="/Genome_reunion_web_page/">` (adresse `github.io`).
+**Limite connue :** les chemins de cette page sont relatifs. Elle s'affiche correctement pour une adresse
+inconnue à un seul niveau (`/inexistante.html`) ; pour une adresse plus profonde (`/a/b/inexistante`), les
+feuilles de style et les liens se résolvent depuis ce dossier et la page apparaît sans style (mesuré en simulant
+le comportement de GitHub Pages). Remède, une fois l'hébergeur et l'adresse connus : une balise
+`<base href="/">` dans le `<head>` (site à la racine du domaine). Selon l'hébergeur, il faut aussi déclarer la
+page côté serveur (par exemple `error_page 404` pour nginx, `ErrorDocument 404` pour Apache) en gardant le
+code HTTP 404 ; GitHub Pages la sert automatiquement.
 
 ---
 
