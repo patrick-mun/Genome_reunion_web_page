@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* ── REVEAL AU SCROLL ──
-   .reveal masque un bloc, .is-visible (posé par scroll-reveal.js) l'affiche ; .reveal-delay-N
+   .reveal masque un bloc, .is-visible (posé par scroll-reveal.js) l'affiche (sans JavaScript, il reste visible) ; .reveal-delay-N
    échelonne les apparitions. Chargé en dernier pour l'emporter sur les transitions des
    composants (cartes, boutons).
 */
@@ -18,7 +18,7 @@
     transform var(--duration-4) var(--ease-out);
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (scripting: none) {
   .reveal {
     opacity: 1;
     transform: none;

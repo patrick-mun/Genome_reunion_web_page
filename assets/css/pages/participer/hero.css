@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* ── HERO DE LA PAGE ──
-   Bandeau d'en-tête de la page : surtitre, titre et texte révélés par hero-reveal.js (is-revealed).
+   Bandeau d'en-tête de la page : surtitre, titre et texte révélés par hero-reveal.js (is-revealed), visibles d'emblée sans JavaScript.
    Plus court que le hero de l'accueil (52 vh) ; les vagues viennent de components/waves.css.
 */
 .page-hero {
@@ -83,7 +83,7 @@
   transform: translateY(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (scripting: none) {
   .page-hero-kicker,
   .page-hero-title,
   .page-hero-sub {

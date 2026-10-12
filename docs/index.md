@@ -155,6 +155,8 @@ Le JS est découpé en modules ES chargés par `<script type="module">` dans le 
 Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`, `pages/legal.js`) qui
 appelle les fonctions `init…` des modules de `lib/`.
 
+**Repli sans JavaScript.** Tout contenu masqué au départ puis révélé par le JS (`.reveal`, `.stat-item`, les textes du hero) reste visible quand le script ne tourne pas : son bloc `@media (prefers-reduced-motion: reduce)` porte aussi `(scripting: none)`. Les compteurs des chiffres clés ont leur valeur finale écrite dans le HTML (test dans `tooling/pages-sync.test.js`) ; le JS les anime depuis 0. Limite : si le JS est actif mais plante au chargement, les blocs masqués le restent. Les décors générés par le JS (oiseaux, margouillat, frise du maloya, arcs de l'anneau) n'apparaissent pas sans lui.
+
 Les éléments sont retrouvés par des classes `js-…` ou des attributs `data-…`
 (jamais par `id` ni par classe de style) :
 

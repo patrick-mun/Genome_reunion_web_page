@@ -143,3 +143,11 @@ test('les balises de partage reprennent le titre et la description de chaque pag
     );
   }
 });
+
+test('chaque compteur affiche sa valeur finale dans le HTML (repli sans JavaScript)', () => {
+  const counters = [...home.matchAll(/data-target="(\d+)">([^<]*)</g)];
+  assert.ok(counters.length > 0, 'aucun compteur trouvé dans index.html');
+  for (const [, target, text] of counters) {
+    assert.equal(text, Number(target).toLocaleString('fr-FR'), `compteur ${target} : texte initial différent de la valeur finale`);
+  }
+});
