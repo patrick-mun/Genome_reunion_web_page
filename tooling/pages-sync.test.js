@@ -1,8 +1,8 @@
 /* ============================================================
    tooling/pages-sync.test.js
-   Rôle : garde-fou contre la dérive entre index.html et participer.html : parties communes
+   Rôle : garde-fou contre la dérive entre les pages du site (accueil, participer, 404) : parties communes
    (navigation, pied de page, en-tête du <body>, feuilles partagées), sprite SVG et liens internes.
-   Pages concernées : index.html, participer.html (fichiers analysés, pas modifiés).
+   Pages concernées : index.html, participer.html, 404.html (fichiers analysés, pas modifiés).
    Accroches : aucune (lancé par node --test).
    ============================================================ */
 
@@ -13,6 +13,12 @@ import { test } from 'node:test';
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const home = read('index.html');
 const participer = read('participer.html');
+const erreur = read('404.html');
+const pages = {
+  'index.html': home,
+  'participer.html': participer,
+  '404.html': erreur,
+};
 const sprite = read('assets/images/sprite.svg');
 
 /* Ce qui peut légitimement différer : la cible de chaque lien (ancre locale ou index.html#…) et le
@@ -33,13 +39,15 @@ function skeleton(fragment) {
 
 function assertSameSkeleton(name, regex) {
   const a = skeleton(home.match(regex)?.[0] ?? '');
-  const b = skeleton(participer.match(regex)?.[0] ?? '');
-  assert.ok(a.length > 1 && b.length > 1, `${name} introuvable dans l'une des pages`);
-  const i = a.findIndex((line, k) => line !== b[k]);
-  assert.ok(
-    i === -1 && a.length === b.length,
-    `${name} diffère entre les pages (ligne ${i + 1}) :\n  index.html      ${a[i]}\n  participer.html ${b[i]}`,
-  );
+  for (const [file, html] of Object.entries(pages)) {
+    const b = skeleton(html.match(regex)?.[0] ?? '');
+    assert.ok(a.length > 1 && b.length > 1, `${name} introuvable dans index.html ou ${file}`);
+    const i = a.findIndex((line, k) => line !== b[k]);
+    assert.ok(
+      i === -1 && a.length === b.length,
+      `${name} diffère entre index.html et ${file} (ligne ${i + 1}) :\n  index.html ${a[i]}\n  ${file} ${b[i]}`,
+    );
+  }
 }
 
 test('la navigation est identique dans les deux pages (hors cibles des liens)', () => {
@@ -65,12 +73,12 @@ test('les feuilles, icônes et préchargements partagés sont les mêmes et dans
           !tag.includes('property="og:title"') &&
           !tag.includes('property="og:description"'),
       );
-  assert.deepEqual(shared(home), shared(participer));
+  for (const html of Object.values(pages)) assert.deepEqual(shared(html), shared(home));
 });
 
 test('chaque <use> pointe vers un <symbol> du sprite, et chaque symbole sert', () => {
   const symbols = [...sprite.matchAll(/<symbol\b[^>]*\bid="([^"]+)"/g)].map((m) => m[1]);
-  const uses = [...(home + participer).matchAll(/<use\b[^>]*href="assets\/images\/sprite\.svg#([^"]+)"/g)].map(
+  const uses = [...Object.values(pages).join('').matchAll(/<use\b[^>]*href="assets\/images\/sprite\.svg#([^"]+)"/g)].map(
     (m) => m[1],
   );
   assert.ok(symbols.length > 0, 'aucun symbole dans le sprite');
@@ -86,7 +94,7 @@ test('le sprite est du XML bien formé : pas de « -- » dans un commentaire', (
 });
 
 test('les dessins du sprite ne sont pas recopiés dans les pages', () => {
-  for (const [name, html] of [['index.html', home], ['participer.html', participer]]) {
+  for (const [name, html] of Object.entries(pages)) {
     assert.doesNotMatch(html, /<svg\s+class="wave-\d"[^>]*>\s*<path/, `${name} : vague recopiée`);
     assert.doesNotMatch(html, /stroke-linecap="round"[^>]*transform="translate\(10,8\)"/, `${name} : logo recopié`);
   }
@@ -94,19 +102,19 @@ test('les dessins du sprite ne sont pas recopiés dans les pages', () => {
 
 test('chaque lien interne mène à une ancre qui existe', () => {
   const ids = (html) => new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
-  const pages = { 'index.html': ids(home), 'participer.html': ids(participer) };
-  for (const [name, html] of [['index.html', home], ['participer.html', participer]]) {
+  const anchors = Object.fromEntries(Object.entries(pages).map(([name, html]) => [name, ids(html)]));
+  for (const [name, html] of Object.entries(pages)) {
     for (const [, target] of html.matchAll(/<a\b[^>]*\shref="([^"]*#[^"]+)"/g)) {
       const [file, id] = target.split('#');
       const page = file === '' ? name : file;
-      assert.ok(page in pages, `${name} : lien vers une page inconnue (${target})`);
-      assert.ok(pages[page].has(id), `${name} : l'ancre #${id} n'existe pas dans ${page}`);
+      assert.ok(page in anchors, `${name} : lien vers une page inconnue (${target})`);
+      assert.ok(anchors[page].has(id), `${name} : l'ancre #${id} n'existe pas dans ${page}`);
     }
   }
 });
 
 test('les commentaires de section suivent le format « ── NOM ── » (HTML-60)', () => {
-  for (const [name, html] of [['index.html', home], ['participer.html', participer]]) {
+  for (const [name, html] of Object.entries(pages)) {
     for (const [, text] of html.matchAll(/<!--([\s\S]*?)-->/g)) {
       assert.match(text.trim(), /^── .+ ──$/, `${name} : commentaire hors format « <!-- ── NOM ── --> » : ${text.trim()}`);
     }
@@ -115,10 +123,7 @@ test('les commentaires de section suivent le format « ── NOM ── » (HTM
 
 test('les balises de partage reprennent le titre et la description de chaque page', () => {
   const content = (html, attribute) => html.match(new RegExp(`${attribute}\\s+content="([^"]*)"`))?.[1];
-  for (const [name, html] of [
-    ['index.html', home],
-    ['participer.html', participer],
-  ]) {
+  for (const [name, html] of Object.entries(pages)) {
     const title = html.match(/<title>([\s\S]*?)<\/title>/)[1];
     assert.equal(content(html, 'property="og:title"'), title, `${name} : og:title différent du <title>`);
     assert.equal(

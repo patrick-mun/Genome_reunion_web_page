@@ -1,0 +1,64 @@
+/* ============================================================
+   assets/css/pages/erreur/erreur.css
+   Rôle : bandeau de la page d'erreur 404 : code, titre, explication et boutons.
+   Pages concernées : 404.html.
+   ============================================================ */
+
+/* ── PAGE INTROUVABLE ──
+   Bandeau marine qui occupe l'écran sous la navigation fixe (liens blancs lisibles sur le marine).
+   Pas d'animation d'apparition : le message doit être lisible tout de suite, même sans JavaScript.
+*/
+.erreur {
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+  padding: var(--space-9) var(--space-gutter);
+  background: var(--navy);
+}
+
+.erreur-inner {
+  width: 100%;
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.erreur-kicker {
+  margin-bottom: var(--space-4);
+  font-family: var(--f-ui);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-5);
+  text-transform: uppercase;
+  color: var(--teal-light);
+}
+
+.erreur-title {
+  margin-bottom: var(--space-5);
+  font-family: var(--f-display);
+  font-size: var(--text-fluid-7);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-1);
+  letter-spacing: var(--tracking-neg-2);
+  color: var(--white);
+}
+
+.erreur-title em {
+  font-style: normal;
+  color: var(--coral);
+}
+
+.erreur-text {
+  max-width: 540px;
+  margin-bottom: var(--space-7);
+  font-size: var(--text-fluid-1);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-6);
+  color: var(--white-60);
+}
+
+.erreur-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
