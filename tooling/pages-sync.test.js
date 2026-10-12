@@ -58,7 +58,13 @@ test('les feuilles, icônes et préchargements partagés sont les mêmes et dans
   const shared = (html) =>
     [...html.matchAll(/<(?:link|meta)\b[^>]*?\/>/gs)]
       .map((m) => m[0].replace(/\s+/g, ' '))
-      .filter((tag) => !tag.includes('assets/css/pages/') && !tag.includes('name="description"'));
+      .filter(
+        (tag) =>
+          !tag.includes('assets/css/pages/') &&
+          !tag.includes('name="description"') &&
+          !tag.includes('property="og:title"') &&
+          !tag.includes('property="og:description"'),
+      );
   assert.deepEqual(shared(home), shared(participer));
 });
 
@@ -104,5 +110,21 @@ test('les commentaires de section suivent le format « ── NOM ── » (HTM
     for (const [, text] of html.matchAll(/<!--([\s\S]*?)-->/g)) {
       assert.match(text.trim(), /^── .+ ──$/, `${name} : commentaire hors format « <!-- ── NOM ── --> » : ${text.trim()}`);
     }
+  }
+});
+
+test('les balises de partage reprennent le titre et la description de chaque page', () => {
+  const content = (html, attribute) => html.match(new RegExp(`${attribute}\\s+content="([^"]*)"`))?.[1];
+  for (const [name, html] of [
+    ['index.html', home],
+    ['participer.html', participer],
+  ]) {
+    const title = html.match(/<title>([\s\S]*?)<\/title>/)[1];
+    assert.equal(content(html, 'property="og:title"'), title, `${name} : og:title différent du <title>`);
+    assert.equal(
+      content(html, 'property="og:description"'),
+      content(html, 'name="description"'),
+      `${name} : og:description différente de la description`,
+    );
   }
 });
