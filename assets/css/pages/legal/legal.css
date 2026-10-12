@@ -39,7 +39,8 @@
 
 /* ── CORPS ──
    Colonne de lecture sur fond crème : une section par rubrique (.legal-section).
-   .legal-todo signale un contenu à fournir : il reste visible tant que le texte n'est pas validé.
+   .legal-todo signale l'avis de validation en tête de page ; .legal-blank surligne chaque passage à
+   compléter ou à confirmer. Les deux restent visibles tant que le DPO n'a pas validé le texte.
 */
 .legal-body {
   padding: var(--space-section-y) var(--space-gutter);
@@ -55,8 +56,15 @@
   margin-top: var(--space-7);
 }
 
+.legal-intro {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-7);
+  font-size: var(--text-base);
+  line-height: var(--leading-6);
+  color: var(--slate);
+}
+
 .legal-section h2 {
-  margin-bottom: var(--space-3);
   font-family: var(--f-display);
   font-size: var(--text-xl);
   font-weight: var(--weight-regular);
@@ -71,9 +79,46 @@
 }
 
 .legal-todo {
+  margin-bottom: var(--space-6);
   padding: var(--space-3) var(--space-4);
   font-style: italic;
   background: var(--coral-10);
   border-radius: var(--radius-xs);
   border-left: var(--space-1) solid var(--coral);
+}
+
+/* Rythme vertical des rubriques : un seul espacement entre titre, paragraphes et listes. */
+.legal-section p,
+.legal-section ul {
+  margin-top: var(--space-3);
+}
+
+.legal-section h3 {
+  margin-top: var(--space-5);
+  font-family: var(--f-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-1);
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.legal-section ul {
+  padding-left: var(--space-5);
+  list-style: disc;
+}
+
+.legal-section li:not(:first-child) {
+  margin-top: var(--space-2);
+}
+
+.legal-section a {
+  color: var(--teal);
+}
+
+.legal-blank {
+  padding: 0 var(--space-1);
+  font-style: italic;
+  background: var(--coral-10);
+  border-radius: var(--radius-xs);
 }
