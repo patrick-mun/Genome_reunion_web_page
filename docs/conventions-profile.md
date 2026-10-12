@@ -27,7 +27,7 @@ Vérification du rendu avant une PR qui touche le HTML ou le CSS : `npm run visu
 
 ## Titre de page (HTML-02)
 
-Format du `<title>` : `Page — Génome Réunion` (la page d'accueil : `Génome Réunion`).
+Format du `<title>` : `Page — Génome Réunion` (la page d'accueil : `Génome Réunion — Référentiel génomique réunionnais`, pour que le titre décrive le projet dans les résultats de recherche).
 
 ## Fichier de tokens
 
