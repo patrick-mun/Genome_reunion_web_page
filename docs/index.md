@@ -43,6 +43,8 @@ Le site doit expliquer :
 .
 ├── index.html                  # Page d'accueil
 ├── participer.html             # Page d'information participation
+├── mentions-legales.html       # Mentions légales (contenu à fournir)
+├── confidentialite.html        # Politique de confidentialité (contenu à fournir)
 ├── 404.html                    # Page d'erreur (servie par GitHub Pages pour toute adresse inconnue)
 ├── favicon.ico                 # Icône du site (les autres icônes sont dans assets/images/)
 ├── README.md                   # Présentation du dépôt
@@ -55,9 +57,9 @@ Le site doit expliquer :
 │   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
 │   ├── css/base.css            # Reset, html, body
 │   ├── css/components/         # nav, footer, boutons, vagues, lien d'évitement, barre de progression, eyebrow
-│   ├── css/pages/              # home/ et participer/ (une section par fichier)
+│   ├── css/pages/              # home/ et participer/ (une section par fichier ; legal/ pour les pages légales)
 │   ├── css/utilities.css       # .reveal, chargé en dernier
-│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js)
+│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js, legal.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
 │   └── images/                 # sprite.svg (logo, vagues), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png
@@ -94,6 +96,21 @@ Points sensibles :
 - éviter les promesses médicales trop directes ;
 - remplacer progressivement `4 IA` par une formulation plus institutionnelle ;
 - vérifier les partenaires affichés avant diffusion externe.
+
+---
+
+### `mentions-legales.html` et `confidentialite.html`
+
+Pages légales : même navigation et même pied de page que les autres pages (gardés synchronisés par
+`tooling/pages-sync.test.js`), un bandeau de titre puis une section par rubrique (`.legal-section`).
+Le texte est prérempli ; ce que les documents ne fixent pas reste surligné (`.legal-blank`), et un avis en
+tête de page (`.legal-todo`) signale que le DPO doit valider. Ne pas fusionner tant que l'avis et les
+surlignages restent dans une page. La politique de confidentialité ne traite que le site (visite,
+e-mails reçus, hébergeur, cookies, droits) ; la recherche Génome Réunion (dossier MR-004) a sa propre
+information (note remise par l'EFS, fiche du répertoire public de la PDS) et n'y figure que par un renvoi.
+Le site n'utilise ni cookie ni stockage local.
+Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuille de style :
+`assets/css/pages/legal/legal.css` ; entrée JS : `assets/js/pages/legal.js`.
 
 ---
 
@@ -153,7 +170,7 @@ Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ord
 ### `assets/js/pages/` et `assets/js/lib/`
 
 Le JS est découpé en modules ES chargés par `<script type="module">` dans le `<head>`.
-Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`) qui
+Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`, `pages/legal.js`) qui
 appelle les fonctions `init…` des modules de `lib/`.
 
 **Repli sans JavaScript.** Tout contenu masqué au départ puis révélé par le JS (`.reveal`, `.stat-item`, les textes du hero) reste visible quand le script ne tourne pas : son bloc `@media (prefers-reduced-motion: reduce)` porte aussi `(scripting: none)`. Les compteurs des chiffres clés ont leur valeur finale écrite dans le HTML (test dans `tooling/pages-sync.test.js`) ; le JS les anime depuis 0. Limite : si le JS est actif mais plante au chargement, les blocs masqués le restent. Les décors générés par le JS (oiseaux, margouillat, frise du maloya, arcs de l'anneau) n'apparaissent pas sans lui.
@@ -255,7 +272,8 @@ mais chaque étape reste à valider par l'équipe projet. Restent notamment :
 
 1. `participer.html` : dates de collecte et ouverture réelle des inscriptions à confirmer.
 2. `index.html` et `participer.html` : statut de chaque partenaire à confirmer ; lien du logo POPgen à ajouter.
-3. `assets/css/` : ajustements visuels uniquement après validation des contenus.
+3. `mentions-legales.html`, `confidentialite.html` : texte à fournir par le CHU (DPO), blocs `.legal-todo` à remplacer.
+4. `assets/css/` : ajustements visuels uniquement après validation des contenus.
 
 ---
 

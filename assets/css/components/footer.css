@@ -1,6 +1,7 @@
 /* ============================================================
    assets/css/components/footer.css
-   Rôle : pied de page, ses liens, les icônes de réseaux sociaux et le bouton de pause des animations.
+   Rôle : pied de page, ses liens (navigation et pages légales), les icônes de réseaux sociaux et le bouton
+   de pause des animations.
    Pages concernées : toutes.
    ============================================================ */
 
@@ -34,13 +35,15 @@ footer {
   color: var(--white-60);
 }
 
-.footer-nav {
+.footer-nav,
+.footer-legal {
   display: flex;
   gap: var(--space-6);
   list-style: none;
 }
 
-.footer-link {
+.footer-link,
+.footer-legal-link {
   font-family: var(--f-ui);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-2);
@@ -50,7 +53,8 @@ footer {
   transition: color var(--duration-1);
 }
 
-.footer-link:hover {
+.footer-link:hover,
+.footer-legal-link:hover {
   color: var(--white-80);
 }
 
@@ -76,6 +80,7 @@ footer {
 /* Contenus du pied de page passés devant le margouillat (--layer-1 sur l'accueil) */
 .footer-brand,
 .footer-nav,
+.footer-legal,
 .footer-social,
 .footer-copy {
   position: relative;

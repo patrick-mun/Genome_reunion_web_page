@@ -1,8 +1,8 @@
 /* ============================================================
    tooling/pages-sync.test.js
-   Rôle : garde-fou contre la dérive entre les pages du site (accueil, participer, 404) : parties communes
+   Rôle : garde-fou contre la dérive entre les pages du site (accueil, participer, 404, pages légales) : parties communes
    (navigation, pied de page, en-tête du <body>, feuilles partagées), sprite SVG et liens internes.
-   Pages concernées : index.html, participer.html, 404.html (fichiers analysés, pas modifiés).
+   Pages concernées : index.html, participer.html, 404.html, mentions-legales.html, confidentialite.html (fichiers analysés, pas modifiés).
    Accroches : aucune (lancé par node --test).
    ============================================================ */
 
@@ -14,10 +14,14 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 const home = read('index.html');
 const participer = read('participer.html');
 const erreur = read('404.html');
+const mentions = read('mentions-legales.html');
+const confidentialite = read('confidentialite.html');
 const pages = {
   'index.html': home,
   'participer.html': participer,
   '404.html': erreur,
+  'mentions-legales.html': mentions,
+  'confidentialite.html': confidentialite,
 };
 const sprite = read('assets/images/sprite.svg');
 
@@ -117,6 +121,14 @@ test('les commentaires de section suivent le format « ── NOM ── » (HTM
   for (const [name, html] of Object.entries(pages)) {
     for (const [, text] of html.matchAll(/<!--([\s\S]*?)-->/g)) {
       assert.match(text.trim(), /^── .+ ──$/, `${name} : commentaire hors format « <!-- ── NOM ── --> » : ${text.trim()}`);
+    }
+  }
+});
+
+test('chaque page porte les liens vers les pages légales, et ces pages existent', () => {
+  for (const [name, html] of Object.entries(pages)) {
+    for (const file of ['mentions-legales.html', 'confidentialite.html']) {
+      assert.match(html, new RegExp(`class="footer-legal-link" href="${file}"`), `${name} : lien vers ${file} absent du pied de page`);
     }
   }
 });
