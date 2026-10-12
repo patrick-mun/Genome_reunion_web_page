@@ -68,7 +68,13 @@ test('les feuilles, icônes et préchargements partagés sont les mêmes et dans
   const shared = (html) =>
     [...html.matchAll(/<(?:link|meta)\b[^>]*?\/>/gs)]
       .map((m) => m[0].replace(/\s+/g, ' '))
-      .filter((tag) => !tag.includes('assets/css/pages/') && !tag.includes('name="description"'));
+      .filter(
+        (tag) =>
+          !tag.includes('assets/css/pages/') &&
+          !tag.includes('name="description"') &&
+          !tag.includes('property="og:title"') &&
+          !tag.includes('property="og:description"'),
+      );
   for (const html of Object.values(pages)) assert.deepEqual(shared(html), shared(home));
 });
 
@@ -122,5 +128,18 @@ test('chaque page porte les liens vers les pages légales, et ces pages existent
     for (const file of ['mentions-legales.html', 'confidentialite.html']) {
       assert.match(html, new RegExp(`class="footer-legal-link" href="${file}"`), `${name} : lien vers ${file} absent du pied de page`);
     }
+  }
+});
+
+test('les balises de partage reprennent le titre et la description de chaque page', () => {
+  const content = (html, attribute) => html.match(new RegExp(`${attribute}\\s+content="([^"]*)"`))?.[1];
+  for (const [name, html] of Object.entries(pages)) {
+    const title = html.match(/<title>([\s\S]*?)<\/title>/)[1];
+    assert.equal(content(html, 'property="og:title"'), title, `${name} : og:title différent du <title>`);
+    assert.equal(
+      content(html, 'property="og:description"'),
+      content(html, 'name="description"'),
+      `${name} : og:description différente de la description`,
+    );
   }
 });

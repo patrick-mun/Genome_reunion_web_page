@@ -109,6 +109,13 @@ Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuil
 
 ---
 
+### Pied de page et partage
+
+- Icônes LinkedIn, Facebook et Instagram dans le pied de page (`.footer-social`, tracés Simple Icons CC0 dans le sprite). Les réseaux ne sont pas encore ouverts : chaque `<a class="footer-social-link">` n'a volontairement pas d'`href`. Quand un compte existe, ajouter `href` (et `target`/`rel` si besoin) et retirer « (bientôt disponible) » de l'`aria-label` de l'icône.
+- Balises de partage `og:*` et `twitter:card` dans le `<head>` de chaque page ; `og:title` et `og:description` doivent rester identiques au `<title>` et à la description (testé). Pas encore d'`og:image` ni d'`og:url` : ils attendent l'URL définitive du site.
+
+---
+
 ### `participer.html`
 
 Page d'information sur la participation.
