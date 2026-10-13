@@ -6,6 +6,8 @@ Ce dépôt contient une page visuelle destinée à présenter le projet à un pu
 
 **Hébergement :** à définir. Ce dépôt GitHub sert à la construction et à la conservation du code ; l'adresse `github.io` éventuelle n'est pas l'adresse définitive.
 
+**Calendrier de collecte :** `npm run collectes -- fichier.csv` met à jour les tableaux de `participer.html` à partir d'un CSV exporté d'Excel (détails dans `docs/index.md`).
+
 **Mise en ligne :** `npm run set-site-url -- https://adresse-definitive/` prépare une copie du site avec les balises `canonical` et `og:url`, `sitemap.xml`, `robots.txt` et l'image de partage `og:image`, une page 404 aux chemins absolus, et retire la balise `noindex` des sources (détails dans `docs/index.md`). Tant que le site est en préproduction, toutes les pages portent `noindex` : elles restent consultables mais ne sont pas référencées.
 
 ---

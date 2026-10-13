@@ -14,7 +14,8 @@
     "prepare": "node tooling/install-hooks.mjs",
     "test:quiet": "node --test --test-reporter=dot",
     "visual": "node tooling/visual-check.mjs",
-    "set-site-url": "node tooling/set-site-url.mjs"
+    "set-site-url": "node tooling/set-site-url.mjs",
+    "collectes": "node tooling/update-collectes.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

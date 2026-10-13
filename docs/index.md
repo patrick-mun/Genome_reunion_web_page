@@ -134,6 +134,35 @@ ne convient pas : elle ferait aussi pointer le lien d'évitement `#contenu` vers
 en plus déclarer la page côté serveur (`error_page 404` pour nginx, `ErrorDocument 404` pour Apache) en gardant le
 code HTTP 404.
 
+### Calendrier de collecte : `npm run collectes`
+
+Les deux tableaux du calendrier de `participer.html` (zones Nord et Sud) se mettent à jour à partir d'un
+fichier CSV exporté d'Excel, sans toucher au HTML à la main :
+
+```
+npm run collectes -- [fichier.csv] [--page page.html] [--today AAAA-MM-JJ] [--keep-past] [--check]
+```
+
+- **Fichier :** `data/collectes.csv` par défaut, colonnes `zone ; date ; lieu ; adresse ; horaires`
+  (ordre libre ; la première ligne porte les noms). `zone` : Nord ou Sud. `date` : `05/11/2026` ou `2026-11-05`.
+  `horaires` : `8h-13h` devient `8h – 13h`. `adresse` est facultative. Dans Excel : _Enregistrer sous_
+  → _CSV UTF-8_ (ou _CSV (séparateur : point-virgule)_) ; le séparateur `;` ou `,` est détecté, le BOM
+  retiré, et un fichier en Windows-1252 (accents d'Excel en français) est reconnu.
+- **Ce que fait la commande :** retire les dates passées (date du jour à La Réunion ; `--keep-past` les
+  garde), trie par date, calcule elle-même le jour de la semaine (« Ven. 5 nov. 2026 »), échappe le texte,
+  et remplace uniquement le contenu des deux `<tbody>`. Sans date à venir pour une zone, le tableau affiche
+  « Aucune date programmée pour le moment. ». `--check` montre le résultat sans écrire.
+- **Erreurs :** zone inconnue, date invalide, lieu ou horaires manquants sont listés avec leur numéro de ligne ;
+  dans ce cas rien n'est modifié.
+- **À savoir :** les dates de `data/collectes.csv` livré sont **fictives** (reprises de la page d'origine, les
+  jours de la semaine y étaient faux) : à remplacer par les vraies avant de lancer la commande, sinon les
+  tableaux seront vidés (toutes passées). Fichier Excel natif (.xlsx) non géré : il faudrait ajouter une
+  bibliothèque ; exporter en CSV suffit. Le résultat est un changement de `participer.html` à relire et à
+  commiter (la commande ne s'exécute pas à la mise en ligne). Logique pure dans `tooling/collectes.js`,
+  testée avec la commande elle-même sur une copie de la vraie page (`tooling/collectes.test.js`).
+
+---
+
 ### Mise en ligne : `npm run set-site-url`
 
 Les sources ne contiennent aucune adresse absolue (l'hébergeur n'est pas choisi). Quand l'adresse définitive est
