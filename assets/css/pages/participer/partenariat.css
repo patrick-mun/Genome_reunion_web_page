@@ -24,7 +24,10 @@
 
 @media (max-width: 900px) {
   .partenariat-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(
+      0,
+      1fr
+    ); /* sans le minimum à 0, la carte la plus large élargit la colonne (322 px sur 320) */
   }
 }
 
