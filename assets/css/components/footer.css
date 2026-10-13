@@ -39,7 +39,7 @@ footer {
 .footer-legal {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3) var(--space-6);
+  gap: var(--space-3) var(--space-links);
   list-style: none;
 }
 
