@@ -8,7 +8,7 @@
 /* ── PIED DE PAGE ──
    Signature, liens, mention du projet et bouton de pause des animations.
    Ses contenus passent au calque --layer-2 pour rester devant le margouillat (--layer-1) ;
-   le pied de page passe en colonne sous 900 px.
+   le pied de page passe en colonne sous 900 px ; les listes de liens passent à la ligne si la largeur manque (sans cela la page débordait à 360 px).
 */
 
 footer {
@@ -38,7 +38,8 @@ footer {
 .footer-nav,
 .footer-legal {
   display: flex;
-  gap: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-links);
   list-style: none;
 }
 
