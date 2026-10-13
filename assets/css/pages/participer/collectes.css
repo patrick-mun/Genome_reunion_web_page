@@ -117,6 +117,8 @@
 /* ── TABLEAU DES COLLECTES ──
    Une ligne par date (.collecte-row) : la dernière n'a pas de filet, le survol teinte la ligne.
    Les colonnes sont .collecte-date, .collecte-lieu, .collecte-adresse et .collecte-horaire.
+   Sous 900 px, la marge des cellules se resserre (--space-cell-x) et la date peut passer à la ligne :
+   sans cela le tableau (421 px) dépassait son bloc sur un téléphone et la colonne des horaires était coupée.
 */
 .collecte-table {
   width: 100%;
@@ -128,7 +130,7 @@
 }
 
 .collecte-table th {
-  padding: var(--space-3) var(--space-5);
+  padding: var(--space-3) var(--space-cell-x);
   font-family: var(--f-ui);
   font-size: var(--text-2xs);
   font-weight: var(--weight-semibold);
@@ -140,7 +142,7 @@
 }
 
 .collecte-table td {
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-4) var(--space-cell-x);
   font-size: var(--text-sm);
   line-height: var(--leading-4);
   color: var(--slate);
@@ -162,6 +164,12 @@
   font-weight: var(--weight-semibold);
   white-space: nowrap;
   color: var(--navy);
+}
+
+@media (max-width: 900px) {
+  .collecte-date {
+    white-space: normal;
+  }
 }
 
 .collecte-lieu {

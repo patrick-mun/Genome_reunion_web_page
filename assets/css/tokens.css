@@ -118,6 +118,7 @@
   --space-steps: var(--space-7); /* écart des étapes de la méthode */
   --space-nav-y: var(--space-5);
   --space-footer-y: var(--space-7);
+  --space-cell-x: var(--space-5); /* marge latérale des cellules du tableau des collectes */
   --space-stats-y: var(--space-7);
 
   /* ── TEXTE ──
@@ -243,6 +244,7 @@
     --space-steps: var(--space-6);
     --space-nav-y: var(--space-4);
     --space-footer-y: var(--space-6);
+    --space-cell-x: var(--space-3);
     --space-stats-y: var(--space-5);
   }
 }
