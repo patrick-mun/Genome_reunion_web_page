@@ -14,7 +14,7 @@
 }
 
 .legal-hero-inner {
-  max-width: 70ch;
+  max-width: var(--measure-text);
   margin: 0 auto;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .legal-body-inner {
-  max-width: 70ch;
+  max-width: var(--measure-text);
   margin: 0 auto;
 }
 

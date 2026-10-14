@@ -36,7 +36,7 @@
   text-transform: uppercase;
   color: var(--teal-light);
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(var(--reveal-shift-sm));
   transition:
     opacity var(--duration-4) var(--ease-out) 0.1s,
     transform var(--duration-4) var(--ease-out) 0.1s;
@@ -51,7 +51,7 @@
   letter-spacing: var(--tracking-neg-2);
   color: var(--white);
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(var(--reveal-shift));
   transition:
     opacity var(--duration-5) var(--ease-out) 0.2s,
     transform var(--duration-5) var(--ease-out) 0.2s;
@@ -63,13 +63,13 @@
 }
 
 .page-hero-sub {
-  max-width: 540px;
+  max-width: var(--measure-lead);
   font-size: var(--text-fluid-1);
   font-weight: var(--weight-light);
   line-height: var(--leading-6);
   color: var(--white-60);
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(var(--reveal-shift-sm));
   transition:
     opacity var(--duration-5) var(--ease-out) 0.35s,
     transform var(--duration-5) var(--ease-out) 0.35s;

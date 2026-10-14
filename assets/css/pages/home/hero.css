@@ -36,7 +36,7 @@
   letter-spacing: 0.04em;
   color: var(--teal-light);
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(var(--reveal-shift));
   transition:
     opacity var(--duration-5) var(--ease-out),
     transform var(--duration-5) var(--ease-out);
@@ -72,7 +72,7 @@
   text-transform: uppercase;
   color: var(--teal-light);
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(var(--reveal-shift-sm));
   transition:
     opacity var(--duration-5) var(--ease-out) 0.25s,
     transform var(--duration-5) var(--ease-out) 0.25s;
@@ -86,7 +86,7 @@
   line-height: var(--leading-6);
   color: var(--white-60);
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(var(--reveal-shift));
   transition:
     opacity var(--duration-5) var(--ease-out) 0.2s,
     transform var(--duration-5) var(--ease-out) 0.2s;
@@ -98,7 +98,7 @@
   align-items: center;
   gap: var(--space-5);
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(var(--reveal-shift));
   transition:
     opacity var(--duration-5) var(--ease-out) 0.3s,
     transform var(--duration-5) var(--ease-out) 0.3s;

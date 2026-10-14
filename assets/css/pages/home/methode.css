@@ -13,7 +13,7 @@
 }
 
 .methode-title {
-  max-width: 540px;
+  max-width: var(--measure-lead);
   margin-bottom: var(--space-8);
   font-family: var(--f-display);
   font-size: var(--text-fluid-4);
