@@ -76,11 +76,16 @@ Seules les valeurs employées au moins trois fois sont des jetons ; les autres r
 ## Durées, largeurs et calques (CSS-13)
 
 Durées de transition : `--duration-1` à `--duration-5` (0,2 à 0,8 s) ; les délais d'enchaînement des apparitions restent dans leurs règles.
-Largeur du contenu : `--content-width` (1080 px).
+Largeur du contenu : `--content-width` (1080 px) ; longueurs de ligne `--measure-text` et `--measure-lead` ; cible tactile minimale `--target-min` (24 px) ; décalages d'apparition `--reveal-shift` et `--reveal-shift-sm`.
 Calques : `--layer-1` à `--layer-3` dans les sections, puis `--layer-nav`, `--layer-progress`, `--layer-skip-link` ; tout `z-index` passe par eux (imposé par Stylelint).
 
 ## Dérogations
 
-| Règle                                                                | Choix du projet                             | Raison                                                                                                           |
-| -------------------------------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| HTML-11 (html-validate `no-redundant-role`, `prefer-native-element`) | `role="list"` autorisé sur `<ul>` et `<ol>` | Safari/VoiceOver retire la sémantique de liste quand `list-style: none` est posé ; le rôle explicite la rétablit |
+| Règle                                                                | Choix du projet                                            | Raison                                                                                                                                      |
+| -------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| HTML-11 (html-validate `no-redundant-role`, `prefer-native-element`) | `role="list"` autorisé sur `<ul>` et `<ol>`                | Safari/VoiceOver retire la sémantique de liste quand `list-style: none` est posé ; le rôle explicite la rétablit                            |
+| CSS-13 (`declaration-strict-value`) dans `fonts.css`                 | Valeurs brutes permises pour les descripteurs `@font-face` | `var()` n'est pas permis dans ces descripteurs                                                                                              |
+| JS-10 (accroches DOM) dans `tooling/`                                | Sélecteurs DOM libres dans les outils                      | Ils inspectent des pages avec Playwright ; ce ne sont pas des accroches du site                                                             |
+| JS-xx `no-console` dans `tooling/`                                   | `console` permis                                           | Scripts Node en ligne de commande : la sortie console est leur interface                                                                    |
+| JS-32 `max-depth` sur `check-html.mjs` et `check-dead-code.mjs`      | Désactivé                                                  | Copies conformes du skill, mises à jour depuis le skill et non ici                                                                          |
+| CSS-xx breakpoint 900 px                                             | Répété dans les `@media`                                   | Une media query n'accepte pas de variable CSS ; les valeurs responsives passent par les jetons redéfinis dans l'unique bloc de `tokens.css` |

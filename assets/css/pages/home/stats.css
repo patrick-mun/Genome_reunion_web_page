@@ -29,7 +29,7 @@
   z-index: var(--layer-2); /* devant la couche margouillat, comme .section-inner */
   padding: var(--space-5) var(--space-6);
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(var(--reveal-shift-sm));
   transition:
     opacity 0.6s var(--ease-out),
     transform 0.6s var(--ease-out);

@@ -119,6 +119,8 @@
   --space-nav-y: var(--space-5);
   --space-footer-y: var(--space-7);
   --space-cell-x: var(--space-5); /* marge latérale des cellules du tableau des collectes */
+  --reveal-shift: 20px; /* décalage de départ des apparitions */
+  --reveal-shift-sm: 16px; /* décalage de départ des apparitions secondaires */
   --space-links: var(--space-6); /* écart entre les liens du pied de page */
   --space-stats-y: var(--space-7);
 
@@ -203,6 +205,9 @@
      Largeur maximale du contenu des sections (texte et grilles), centré dans la page.
   */
   --content-width: 1080px;
+  --measure-text: 70ch; /* longueur de ligne des textes courants (pages légales, erreur) */
+  --measure-lead: 540px; /* largeur des paragraphes d'introduction */
+  --target-min: 24px; /* hauteur minimale d'une cible tactile (WCAG 2.5.8) */
 
   /* ── CALQUES ──
      Ordre d'empilement (z-index). Rangs 1 à 3 dans une section : 1 pour la couche du margouillat
