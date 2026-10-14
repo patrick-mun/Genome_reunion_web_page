@@ -30,12 +30,14 @@ Le site doit expliquer simplement :
 .
 ├── index.html                  # Page d'accueil
 ├── participer.html             # Page d'information participation
-├── mentions-legales.html       # Mentions légales (contenu à fournir)
-├── confidentialite.html        # Politique de confidentialité (contenu à fournir)
+├── mentions-legales.html       # Mentions légales (préremplies, à valider par le DPO)
+├── confidentialite.html        # Politique de confidentialité du site (préremplie, à valider par le DPO)
+├── 404.html                    # Page d'erreur (à déclarer côté serveur selon l'hébergeur)
 ├── favicon.ico                 # Icône du site
+├── data/                       # collectes.csv : dates de collecte (npm run collectes)
 ├── README.md                   # Présentation du dépôt
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
-├── tooling/, .githooks/        # Contrôles HTML/CSS, vérification du rendu, hook pré-commit
+├── tooling/, .githooks/        # Contrôles, vérification du rendu, mise en ligne (set-site-url), calendrier (collectes), hook pré-commit
 ├── .github/                    # Action de vérification et Dependabot
 │
 ├── assets/                     # Ressources statiques
@@ -45,7 +47,7 @@ Le site doit expliquer simplement :
 │   │   ├── base.css            # Reset, html, body
 │   │   ├── utilities.css       # Apparition au défilement (.reveal), chargé en dernier
 │   │   ├── components/         # Un fichier par composant partagé (nav, footer, vagues…)
-│   │   └── pages/              # Un dossier par page, une section par fichier (home/, participer/, legal/)
+│   │   └── pages/              # Un dossier par page, une section par fichier (home/, participer/, legal/, erreur/)
 │   ├── js/
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)
@@ -54,6 +56,7 @@ Le site doit expliquer simplement :
 │
 └── docs/                       # Documentation de travail interne
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
+    ├── conventions-profile.md  # Profil de conventions du projet (choix et dérogations)
     └── index.md               # Index de contexte pour reprise de travail
 ```
 
@@ -84,8 +87,9 @@ Le JavaScript et la qualité du code sont traités. Restent, dans cet ordre, les
 1. Valider le bloc des chiffres clés.
 2. Valider les formulations médicales.
 3. Valider le vocabulaire scientifique.
-4. Sécuriser la page participation (dates de collecte, ouverture des inscriptions).
+4. Sécuriser la page participation : ouverture des inscriptions, et vraies dates de collecte dans `data/collectes.csv` puis `npm run collectes` (les dates actuelles sont fictives).
 5. Confirmer les partenaires et statuts institutionnels.
+6. Faire valider par le DPO les pages légales (mentions légales, confidentialité), renseigner l'hébergeur, puis retirer l'avis de validation et les surlignages.
 
 ---
 
@@ -147,12 +151,14 @@ Avant diffusion externe, vérifier :
 - `base locale de fréquences de variants` ;
 - `ressource génomique dédiée à la population réunionnaise` ;
 - `modules d'aide à l'analyse clinique` ;
-- `modalités de participation à confirmer`.
+- `modalités de participation à confirmer` ;
+- `pseudonymisation` : l'EFS attribue un code et garde seul le lien avec l'identité.
 
 À éviter sans précision :
 
 - `génome de référence` ;
 - `4 IA` ;
+- `anonymisation` pour les données des participants (elles sont pseudonymisées) ;
 - promesses directes de bénéfice clinique individuel ;
 - dates de collecte non confirmées ;
 - partenaires présentés comme acquis sans convention.
@@ -174,13 +180,15 @@ npm run lint         # Stylelint, html-validate, ESLint, contrôles HTML et clas
 npm run format       # reformate avec Prettier
 npm test             # tests unitaires (node --test)
 npm run visual       # compare le rendu de la copie de travail à HEAD (voir ci-dessous)
+npm run collectes    # met à jour le calendrier de participer.html depuis data/collectes.csv
+npm run set-site-url # prépare la copie de production pour l'adresse définitive
 ```
 
 **Vérification du rendu** (`tooling/visual-check.mjs`, hors CI) : extrait une version de référence
 dans un dossier temporaire, sert les deux versions en HTTP et compare, pour chaque page, les
 captures pleine page et les styles calculés à 1280, 820 et 390 px, les propriétés de mouvement
 (transitions, animations, calques) et les états survol, clic et focus. Code de sortie 1 en cas
-d'écart ; les captures différentes sont enregistrées dans `visual-check-output/` (ignoré par git).
+d'écart ; les captures différentes sont enregistrées dans `visual-check-output/` (ignoré par git). Une page absente de la référence (page nouvelle) est signalée, pas comparée.
 
 ```bash
 npm run visual                    # copie de travail comparée au dernier commit (HEAD)
@@ -195,4 +203,4 @@ ne sont pas couverts. Compter environ deux minutes.
 - **Avant chaque commit** : `.githooks/pre-commit` lance `npm run verify` (pas `npm run visual`, trop lent). Contournement ponctuel : `git commit --no-verify`.
 - **Sur GitHub** : l'action `.github/workflows/verify.yml` lance les mêmes contrôles à chaque pull request et à chaque push sur `main`.
 - **Dépendances** : Dependabot propose chaque semaine une PR groupée pour les outils de vérification, validée par la CI. Aucune dépendance n'est livrée avec le site (0 vulnérabilité en production). `npm audit` signale 9 alertes sur la chaîne Stylelint (`braces`, dépendance transitive de développement) : aucun correctif n'est publié, et Stylelint n'analyse que nos propres fichiers.
-- Pour rendre la vérification obligatoire avant fusion, activer la règle de protection de branche « Require status checks » sur `main` (réglage GitHub, pas dans le dépôt).
+- **Protection de `main`** (réglage du dépôt GitHub, pas dans le code) : un « ruleset » interdit la suppression de `main` et les poussées forcées, et exige le contrôle `verify` vert avant fusion, sans obligation de mettre la branche à jour (relevé le 13 octobre 2026 par l'API publique ; la liste des contournements n'y est pas visible).

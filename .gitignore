@@ -1,3 +1,19 @@
+# Dépendances installées par npm ci
 node_modules/
+
+# Sorties des outils du dépôt (npm run visual, npm run set-site-url)
 visual-check-output/
 .site-dist/
+
+# Fichiers du système et journaux
+.DS_Store
+Thumbs.db
+*.log
+
+# Secrets éventuels : le dépôt est public, rien de confidentiel ne doit y entrer
+.env
+.env.*
+
+# Classeurs Excel et leurs verrous : seul l'export CSV (data/collectes.csv) est versionné
+*.xlsx
+~$*

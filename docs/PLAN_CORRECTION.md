@@ -8,7 +8,7 @@ La règle de travail est simple : **une correction = une petite branche ou une p
 
 Ce document sert de plan de correction. Le fichier `index.md` sert de contexte de reprise pour comprendre rapidement le dépôt, les fichiers importants et les décisions prises.
 
-> **Mise à jour du 9 octobre 2026.** Les étapes techniques (0, 1, 7) sont réalisées : voir le tableau ci-dessous. Les étapes éditoriales (2 à 6) concernent le **contenu** : elles relèvent de l'équipe projet, et l'état indiqué est un constat sur le texte actuel, pas une validation.
+> **Mise à jour du 14 octobre 2026.** Les étapes techniques (0, 1, 7) sont réalisées, ainsi que la préparation de la mise en ligne côté code (étapes 9 et 10). Les étapes éditoriales (2 à 6) et la validation des pages légales (étape 9) concernent le **contenu** : elles relèvent de l'équipe projet et du DPO, et l'état indiqué est un constat sur le texte actuel, pas une validation. L'hébergement final n'est pas choisi : ce dépôt GitHub sert à la construction et à la conservation du code.
 
 ---
 
@@ -22,17 +22,19 @@ L'état visuel actuel doit être considéré comme le **rendu de référence ini
 
 ## État d'avancement
 
-| Étape | Sujet                                | Statut         | Constat                                                                                                                                           |
-| ----- | ------------------------------------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0     | Documentation de travail             | Fait           | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                |
-| 1     | JavaScript multi-pages               | Fait           | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                         |
-| 2     | Chiffres clés                        | À valider      | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés              |
-| 3     | Formulations médicales               | À valider      | les trois passages cités ne figurent plus dans `index.html`                                                                                       |
-| 4     | Vocabulaire scientifique             | À valider      | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                    |
-| 5     | Page participation                   | À valider      | tableau de dates de collecte, appel « Je m'inscris » (lien `mailto:`) et mention du consentement présents : dates et ouverture réelle à confirmer |
-| 6     | Partenaires et gouvernance           | À valider      | statut de chaque partenaire à confirmer (EFS indiqué comme confirmé dans `docs/index.md`)                                                         |
-| 7     | Accessibilité et qualité web         | Fait côté code | meta description, contrastes AA, repères et listes sémantiques, `lang`, favicon, plus de style inline ni de lien mort                             |
-| 8     | README et documentation de diffusion | En cours       | à finaliser quand le contenu est validé                                                                                                           |
+| Étape | Sujet                                | Statut                            | Constat                                                                                                                                                                                                                                                                                                                    |
+| ----- | ------------------------------------ | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Documentation de travail             | Fait                              | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                                                                                                                                                                                         |
+| 1     | JavaScript multi-pages               | Fait                              | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                                                                                                                                                                                                  |
+| 2     | Chiffres clés                        | À valider                         | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés                                                                                                                                                                                       |
+| 3     | Formulations médicales               | À valider                         | les trois passages cités ne figurent plus dans `index.html`                                                                                                                                                                                                                                                                |
+| 4     | Vocabulaire scientifique             | À valider                         | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                                                                                                                                                                                             |
+| 5     | Page participation                   | À valider                         | tableau de dates de collecte, appel « Je m'inscris » (lien `mailto:`) et mention du consentement présents : dates et ouverture réelle à confirmer ; le calendrier reste fictif : `npm run collectes` le met à jour depuis `data/collectes.csv` (vraies dates à fournir) ; « pseudonymisation » au lieu d'« anonymisation » |
+| 6     | Partenaires et gouvernance           | À valider                         | statut de chaque partenaire à confirmer (EFS indiqué comme confirmé dans `docs/index.md`)                                                                                                                                                                                                                                  |
+| 7     | Accessibilité et qualité web         | Fait côté code                    | meta description, contrastes AA, repères et listes sémantiques, `lang`, favicon, plus de style inline ni de lien mort, repli sans JavaScript, débordements mobile corrigés (320 à 1 280 px)                                                                                                                                |
+| 8     | README et documentation de diffusion | En cours                          | à finaliser quand le contenu est validé                                                                                                                                                                                                                                                                                    |
+| 9     | Pages légales et RGPD                | Préremplies, à valider par le DPO | mentions légales et politique de confidentialité du site dans `main` (préproduction), passages à compléter surlignés ; hébergeur, DPO, bases légales et durées des e-mails à fournir                                                                                                                                       |
+| 10    | Mise en ligne (SEO, hébergeur)       | Préparée côté code                | `noindex` en préproduction, balises de partage, image de partage, 404, `npm run set-site-url` ; hébergeur et adresse définitive à choisir                                                                                                                                                                                  |
 
 ---
 
@@ -173,6 +175,8 @@ Points à vérifier :
 - le partenariat EFS ne doit pas être formulé comme définitivement opérationnel si la convention n'est pas signée ;
 - éviter la promesse d'un bilan sanguin complet si ce point n'est pas validé.
 
+État (octobre 2026) : les dates affichées restent fictives. `npm run collectes` remplace le contenu des deux tableaux à partir d'un CSV exporté d'Excel (`data/collectes.csv`) ; il manque les vraies dates et l'ouverture réelle des inscriptions.
+
 Approche proposée :
 
 - conserver la structure visuelle ;
@@ -253,6 +257,39 @@ Fichiers concernés :
 
 Impact visuel : aucun.
 
+### Étape 9 — Pages légales et RGPD
+
+**Objectif :** publier des mentions légales et une politique de confidentialité justes, centrées sur l'usage du site.
+
+État (octobre 2026) : `mentions-legales.html` et `confidentialite.html` sont dans `main`, préremplies à partir du dossier MR-004 (éditeur, hébergeur, responsable de traitement, droits, cookies). La politique ne traite que le site (visite, e-mails reçus, hébergeur) ; la recherche a sa propre information (note remise par l'EFS, fiche du répertoire public de la PDS).
+
+À faire avec le DPO : coordonnées du DPO, éditeur, directeur de la publication, finalité, base légale et durée de conservation des e-mails, hébergeur (non choisi), puis retirer l'avis de validation (`.legal-todo`) et les surlignages (`.legal-blank`).
+
+Fichiers concernés :
+
+- `mentions-legales.html`
+- `confidentialite.html`
+- `assets/css/pages/legal/legal.css`
+
+Impact visuel : limité à ces deux pages.
+
+---
+
+### Étape 10 — Mise en ligne (SEO, hébergeur)
+
+**Objectif :** préparer le passage de la préproduction à l'adresse définitive sans réécrire les pages.
+
+État (octobre 2026) : les sources ne contiennent aucune adresse absolue et portent `noindex`. `npm run set-site-url -- <adresse>` produit une copie prête à déployer (canonical, `og:url`, `og:image`, sitemap, robots, 404 à chemins absolus, retrait du `noindex`).
+
+À faire : choisir l'hébergeur et l'adresse, lancer la commande, configurer le serveur (en-têtes de sécurité, cache, déclaration de la 404), renseigner l'hébergeur dans les pages légales, mettre à jour les redirections du dépôt `Genome-Reunion-page` (QR code du livret donneur).
+
+Fichiers concernés :
+
+- `tooling/set-site-url.mjs`, `tooling/site-url.js`
+- `404.html`, `assets/images/partage.png`
+
+Impact visuel : aucun.
+
 ---
 
 ## Workflow recommandé
@@ -299,6 +336,9 @@ git push origin correction-etape-1-js
 - Niveau de formulation accepté par la communication institutionnelle.
 - Mention éthique/RGPD à intégrer dans la page participation.
 - Existence ou non d'un formulaire d'inscription officiel.
+- Hébergeur et adresse définitive du site.
+- Coordonnées du DPO, éditeur et directeur de la publication, bases légales et durées de conservation des e-mails reçus.
+- Dates de collecte réelles (`data/collectes.csv`) et URL du logo POPgen.
 
 ---
 
