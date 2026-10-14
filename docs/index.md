@@ -43,13 +43,14 @@ Le site doit expliquer :
 .
 ├── index.html                  # Page d'accueil
 ├── participer.html             # Page d'information participation
-├── mentions-legales.html       # Mentions légales (contenu à fournir)
-├── confidentialite.html        # Politique de confidentialité (contenu à fournir)
+├── mentions-legales.html       # Mentions légales (préremplies, à valider par le DPO)
+├── confidentialite.html        # Politique de confidentialité du site (préremplie, à valider par le DPO)
 ├── 404.html                    # Page d'erreur (à déclarer côté serveur selon l'hébergeur)
 ├── favicon.ico                 # Icône du site (les autres icônes sont dans assets/images/)
 ├── README.md                   # Présentation du dépôt
+├── data/collectes.csv          # Dates de collecte (source de npm run collectes ; dates fictives à remplacer)
 ├── package.json, .nvmrc        # Outils de vérification (Node 22)
-├── tooling/, .githooks/        # Contrôles HTML/CSS, vérification du rendu (npm run visual), hook pré-commit
+├── tooling/, .githooks/        # Contrôles, vérification du rendu (npm run visual), mise en ligne (set-site-url), calendrier (collectes), hook pré-commit
 ├── .github/                    # Action de vérification et Dependabot
 │
 ├── assets/
@@ -57,15 +58,16 @@ Le site doit expliquer :
 │   ├── css/tokens.css          # Valeurs de conception (couleurs, échelles)
 │   ├── css/base.css            # Reset, html, body
 │   ├── css/components/         # nav, footer, boutons, vagues, lien d'évitement, barre de progression, eyebrow
-│   ├── css/pages/              # home/ et participer/ (une section par fichier ; legal/ pour les pages légales)
+│   ├── css/pages/              # home/, participer/, legal/ (pages légales) et erreur/ (page 404) : une section par fichier
 │   ├── css/utilities.css       # .reveal, chargé en dernier
-│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js, legal.js)
+│   ├── js/pages/               # Point d'entrée par page (home.js, participer.js, legal.js, erreur.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
-│   └── images/                 # sprite.svg (logo, vagues), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png
+│   └── images/                 # sprite.svg (logo, vagues, icônes de réseaux sociaux), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png, partage.png (image de partage 1 200 × 630)
 │
 └── docs/
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
+    ├── conventions-profile.md  # Profil de conventions du projet (choix et dérogations)
     └── index.md                # Ce fichier
 ```
 
@@ -104,8 +106,8 @@ Points sensibles :
 Pages légales : même navigation et même pied de page que les autres pages (gardés synchronisés par
 `tooling/pages-sync.test.js`), un bandeau de titre puis une section par rubrique (`.legal-section`).
 Le texte est prérempli ; ce que les documents ne fixent pas reste surligné (`.legal-blank`), et un avis en
-tête de page (`.legal-todo`) signale que le DPO doit valider. Ne pas fusionner tant que l'avis et les
-surlignages restent dans une page. La politique de confidentialité ne traite que le site (visite,
+tête de page (`.legal-todo`) signale que le DPO doit valider. Ces pages sont déjà dans `main` (préproduction) :
+avant la mise en ligne définitive, retirer l'avis et les surlignages après validation et renseigner l'hébergeur. La politique de confidentialité ne traite que le site (visite,
 e-mails reçus, hébergeur, cookies, droits) ; la recherche Génome Réunion (dossier MR-004) a sa propre
 information (note remise par l'EFS, fiche du répertoire public de la PDS) et n'y figure que par un renvoi.
 Le site n'utilise ni cookie ni stockage local.
@@ -211,8 +213,8 @@ Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ord
 0. `fonts.css` : `@font-face` des polices hébergées (`assets/fonts/`, aucun appel à Google Fonts) ;
 1. `tokens.css` : valeurs de conception, seul endroit où les valeurs brutes sont permises ;
 2. `base.css` : reset, `html`, `body` ;
-3. `components/*.css` : composants partagés par les deux pages, chacun avec ses media queries ;
-4. `pages/home/*.css` (un fichier par section de l'accueil : hero, stats, probleme, change, carrefour, methode, outils, equipe, partenaires, cta, paille-en-queue, margouillat, maloya) ou `pages/participer/*.css` (hero, partenariat, collectes, inscription) : styles propres à une page ;
+3. `components/*.css` : composants partagés par les pages, chacun avec ses media queries ;
+4. `pages/home/*.css` (un fichier par section de l'accueil : hero, stats, probleme, change, carrefour, methode, outils, equipe, partenaires, cta, paille-en-queue, margouillat, maloya) ou `pages/participer/*.css` (hero, partenariat, collectes, inscription), `pages/legal/legal.css` (pages légales) ou `pages/erreur/erreur.css` (page 404) : styles propres à une page ;
 5. `utilities.css` : `.reveal`, chargé en dernier car il doit l'emporter sur les transitions des composants.
 
 ---
@@ -220,7 +222,7 @@ Le CSS est découpé par rôle (CSS-02) et chargé par des `<link>` dans cet ord
 ### `assets/js/pages/` et `assets/js/lib/`
 
 Le JS est découpé en modules ES chargés par `<script type="module">` dans le `<head>`.
-Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`, `pages/legal.js`) qui
+Chaque page charge un seul point d'entrée (`pages/home.js`, `pages/participer.js`, `pages/legal.js`, `pages/erreur.js`) qui
 appelle les fonctions `init…` des modules de `lib/`.
 
 **Repli sans JavaScript.** Tout contenu masqué au départ puis révélé par le JS (`.reveal`, `.stat-item`, les textes du hero) reste visible quand le script ne tourne pas : son bloc `@media (prefers-reduced-motion: reduce)` porte aussi `(scripting: none)`. Les compteurs des chiffres clés ont leur valeur finale écrite dans le HTML (test dans `tooling/pages-sync.test.js`) ; le JS les anime depuis 0. Limite : si le JS est actif mais plante au chargement, les blocs masqués le restent. Les décors générés par le JS (oiseaux, margouillat, frise du maloya, arcs de l'anneau) n'apparaissent pas sans lui.
@@ -311,7 +313,13 @@ Travaux récents effectués :
 - ✅ Polices Google hébergées dans `assets/fonts/` : plus aucune requête vers un service tiers (performance, RGPD).
 - ✅ Sources uniques (sprite SVG, couleurs, anneau calculé depuis la légende) et test de synchronisation des deux pages.
 - ✅ Jetons de typographie et d'espacements responsives, préfixes de classes par composant, boutons regroupés dans `components/button.css`.
-- ✅ Logo POPgen en fichier image ; frise animée du maloya en bas de la section carrefour (modules purs testés, image fixe en mouvement réduit).
+- ✅ Logo POPgen en fichier image ; frise animée du maloya en bas de la section carrefour (modules purs testés, image fixe en mouvement réduit), agrandie d'environ 1,4 sur ordinateur (`FRAME`).
+- ✅ Pages légales préremplies (à valider par le DPO), page 404, titre d'accueil descriptif, `noindex` en préproduction, balises de partage et image de partage, icônes de réseaux sociaux (liens à ajouter à l'ouverture des comptes).
+- ✅ Mise en ligne préparée sans hébergeur : `npm run set-site-url` (canonical, `og:url`, `og:image`, sitemap, robots, 404 à chemins absolus, retrait du `noindex`).
+- ✅ Calendrier de collecte alimenté par un CSV : `npm run collectes`.
+- ✅ Repli sans JavaScript (contenu visible, chiffres clés corrects) ; mobile : tableau des collectes lisible, plus de débordement de page de 320 à 1 280 px.
+- ✅ `participer.html` : « pseudonymisation » au lieu d'« anonymisation ».
+- ✅ `main` protégée (ruleset GitHub : `verify` obligatoire, suppression et poussée forcée interdites).
 
 ---
 
@@ -323,8 +331,10 @@ mais chaque étape reste à valider par l'équipe projet. Restent notamment :
 
 1. `participer.html` : dates de collecte et ouverture réelle des inscriptions à confirmer.
 2. `index.html` et `participer.html` : statut de chaque partenaire à confirmer ; lien du logo POPgen à ajouter.
-3. `mentions-legales.html`, `confidentialite.html` : texte à fournir par le CHU (DPO), blocs `.legal-todo` à remplacer.
-4. `assets/css/` : ajustements visuels uniquement après validation des contenus.
+3. `mentions-legales.html`, `confidentialite.html` : validation par le DPO, coordonnées du DPO, éditeur, directeur de la publication, durées et bases légales des e-mails ; hébergeur à renseigner (non choisi) ; retirer ensuite l'avis `.legal-todo` et les surlignages `.legal-blank`.
+4. Mise en ligne : adresse définitive et hébergeur, puis `npm run set-site-url` (canonical, `og:url`, `og:image`, sitemap, robots), configuration serveur (en-têtes de sécurité, cache, déclaration de la 404) et mise à jour des redirections du dépôt `Genome-Reunion-page`.
+5. Dates de collecte réelles dans `data/collectes.csv`, puis `npm run collectes`.
+6. `assets/css/` : ajustements visuels uniquement après validation des contenus.
 
 ---
 
@@ -336,8 +346,8 @@ Pour chaque correction :
 2. créer une branche courte ;
 3. modifier un seul sujet ;
 4. créer une PR ;
-5. vérifier le rendu ;
-6. merger seulement après validation.
+5. vérifier le rendu (`npm run visual -- origin/main`) ;
+6. merger seulement après validation et contrôle `verify` vert (obligatoire : `main` est protégée).
 
 ```bash
 git checkout main
@@ -396,10 +406,10 @@ Une valeur ne s'écrit qu'à un endroit :
 - **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`, `maloya-figures.js`, `maloya-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*`, `paille-*` et `maloya-*` du CSS (pour la frise, une palette par personnage, `maloya-cast-*`). Seuls les logos des partenaires (`efs-logo.svg`, `popgen-logo.svg`), œuvres de tiers, gardent leurs couleurs.
 - **Anneau des ascendances** : les pourcentages de la légende (`.ancestry-legend-pct`) sont l'unique source. Les arcs sont calculés par `donut-geometry.js` ; l'ordre des cercles du SVG doit suivre celui de la légende, et leur couleur vient de la classe `origin-<origine>` partagée avec la légende.
 
-## Parties communes aux deux pages
+## Parties communes aux pages
 
-Le site n'a pas d'étape de génération : la navigation, le pied de page, le lien d'évitement, la barre de progression et les feuilles partagées sont écrits dans chaque page. Pour éviter qu'ils divergent :
+Le site n'a pas d'étape de génération : la navigation, le pied de page, le lien d'évitement, la barre de progression, les balises de partage et les feuilles partagées sont écrits dans chaque page (accueil, participer, 404, mentions légales, confidentialité). Pour éviter qu'ils divergent :
 
-- modifier **les deux pages ensemble** ;
+- modifier **toutes les pages ensemble** ;
 - `tooling/pages-sync.test.js` (lancé par `npm test`, le hook pré-commit et la CI) échoue si ces parties diffèrent, hors cibles des liens et libellé du lien d'action (« Participer » / « S'inscrire ») ;
 - il vérifie aussi que le sprite SVG est bien formé, que chaque `<use>` a son symbole, qu'aucun dessin du sprite n'est recopié, et que chaque lien interne mène à une ancre existante.

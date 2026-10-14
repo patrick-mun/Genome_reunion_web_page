@@ -16,7 +16,7 @@ Les versions installées sont figées dans `package-lock.json`.
 
 ESLint couvre `assets/js` et `tooling/` (globales Node pour les outils). `tooling/check-html.mjs` et `tooling/check-dead-code.mjs` sont des copies conformes des outils du skill : on les met à jour depuis le skill, sans les modifier ici.
 
-Vérification du rendu avant une PR qui touche le HTML ou le CSS : `npm run visual -- main` (captures, styles calculés, mouvement et états interactifs comparés à `main`). Toute différence de rendu doit être voulue et annoncée.
+Vérification du rendu avant une PR qui touche le HTML ou le CSS : `npm run visual -- origin/main` (captures, styles calculés, mouvement et états interactifs comparés à `origin/main` : une `main` locale périmée fausserait la comparaison). Toute différence de rendu doit être voulue et annoncée.
 
 ## Organisation du JS (JS-02)
 
@@ -35,14 +35,14 @@ Valeurs de conception : `assets/css/tokens.css` (seul fichier où les valeurs br
 
 ## Organisation des fichiers (CSS-02)
 
-| Rôle                                                 | Chemin                                                                              |
-| ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Polices (@font-face)                                 | `assets/css/fonts.css`                                                              |
-| Tokens (valeurs uniquement)                          | `assets/css/tokens.css`                                                             |
-| Base (reset, base, layout, utilitaires)              | `assets/css/base.css`                                                               |
-| Composants (un fichier par composant)                | `assets/css/components/`                                                            |
-| Pages (un dossier par page, une section par fichier) | `assets/css/pages/home/`, `assets/css/pages/participer/`, `assets/css/pages/legal/` |
-| Utilitaires (chargés en dernier)                     | `assets/css/utilities.css`                                                          |
+| Rôle                                                 | Chemin                                                                                                          |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Polices (@font-face)                                 | `assets/css/fonts.css`                                                                                          |
+| Tokens (valeurs uniquement)                          | `assets/css/tokens.css`                                                                                         |
+| Base (reset, base, layout, utilitaires)              | `assets/css/base.css`                                                                                           |
+| Composants (un fichier par composant)                | `assets/css/components/`                                                                                        |
+| Pages (un dossier par page, une section par fichier) | `assets/css/pages/home/`, `assets/css/pages/participer/`, `assets/css/pages/legal/`, `assets/css/pages/erreur/` |
+| Utilitaires (chargés en dernier)                     | `assets/css/utilities.css`                                                                                      |
 
 ## Sens des media queries (CSS-05)
 
