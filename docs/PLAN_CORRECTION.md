@@ -35,7 +35,7 @@ L'état visuel actuel doit être considéré comme le **rendu de référence ini
 | 8     | README et documentation de diffusion | En cours                             | à finaliser quand le contenu est validé                                                                                                                                                                                                                                                                                    |
 | 9     | Pages légales et RGPD                | Préremplies, à valider par le DPO    | mentions légales et politique de confidentialité du site dans `main` (préproduction), passages à compléter surlignés ; hébergeur, DPO, bases légales et durées des e-mails à fournir                                                                                                                                       |
 | 10    | Mise en ligne (SEO, hébergeur)       | Préparée côté code                   | `noindex` en préproduction, balises de partage, image de partage, 404, `npm run set-site-url` ; hébergeur et adresse définitive à choisir                                                                                                                                                                                  |
-| 11    | Textes accessibles au grand public   | Fait, relu par l'équipe scientifique | accueil (en-tête, problème, change, carrefour, méthode, outils, équipe) et participer (partenariat) reformulés ; relus et validés le 16 octobre 2026 ; essais Safari et téléphone sans problème, Firefox non testé                                                                                                         |
+| 11    | Textes accessibles au grand public   | Fait, relu par l'équipe scientifique | accueil (en-tête, chiffres clés, problème, change, carrefour, méthode, outils, équipe) et participer (partenariat) reformulés ; relus et validés le 16 octobre 2026 ; essais Safari et téléphone sans problème, Firefox non testé                                                                                          |
 
 ---
 
@@ -297,7 +297,7 @@ Impact visuel : aucun.
 
 **Objectif :** rendre les textes lisibles par un public non spécialiste (phrases plus courtes, terme technique expliqué à sa première apparition), sans changer le fond scientifique ni promettre de bénéfice médical.
 
-État (16 octobre 2026) : les sections `hero`, `probleme`, `change`, `carrefour`, `methode`, `outils` et `equipe` de `index.html`, et `partenariat` de `participer.html`, ont été reformulées (PR 61, 62 et 63). Les reformulations, définitions comprises, ont été relues et validées par l'équipe scientifique. Le site a été essayé sur Safari et sur téléphone sans problème ; Firefox n'a pas été testé.
+État (16 octobre 2026) : le bloc des chiffres clés et les sections `hero`, `probleme`, `change`, `carrefour`, `methode`, `outils` et `equipe` de `index.html`, et `partenariat` de `participer.html`, ont été reformulées (PR 61, 62 et 63, puis le bloc des chiffres clés). Les reformulations, définitions comprises, ont été relues et validées par l'équipe scientifique. Le site a été essayé sur Safari et sur téléphone sans problème ; Firefox n'a pas été testé.
 
 Règles retenues :
 
@@ -310,7 +310,7 @@ Mesure indicative : formule de Kandel et Moles adaptée au français, comptage d
 
 Reste à traiter :
 
-- bloc des chiffres clés : « 350 génomes complets WGS » à harmoniser avec « (WGS) » de la méthode ;
+- chiffres clés : « 350 génomes entiers (WGS) sélectionnés » ne dit pas si ces génomes sont déjà séquencés ; à préciser si c'est le cas ;
 - sous-titre du bandeau de `participer.html` (« la première référence génétique de l'île ») ;
 - « Zarabe / Gujarati » dans la légende de l'anneau : explication à fournir ;
 - pages légales : registre juridique, validation par le DPO ; cohérence de la pseudonymisation avec `partenariat`.
@@ -320,7 +320,7 @@ Fichiers concernés :
 - `index.html`
 - `participer.html`
 
-Impact visuel : accueil plus haut d'environ 180 px sur ordinateur et 470 px sur mobile ; participer inchangé en hauteur.
+Impact visuel : accueil plus haut d'environ 200 px sur ordinateur et 520 px sur mobile ; participer inchangé en hauteur.
 
 ---
 
