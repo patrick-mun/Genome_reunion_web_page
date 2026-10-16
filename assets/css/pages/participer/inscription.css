@@ -1,11 +1,11 @@
 /* ============================================================
    assets/css/pages/participer/inscription.css
-   Rôle : appel à s'inscrire : étapes, rangée de boutons et contact.
+   Rôle : comment participer : étapes, rangée de boutons et contact.
    Pages concernées : participer.html.
    ============================================================ */
 
 /* ── INSCRIPTION ──
-   Appel à s'inscrire sur fond marine profond : titre, trois étapes numérotées, boutons et contact.
+   Comment participer, sur fond marine profond : titre, trois étapes numérotées, boutons et contact.
    Les textes blancs translucides passent par les jetons d'opacité.
 */
 .inscription {
