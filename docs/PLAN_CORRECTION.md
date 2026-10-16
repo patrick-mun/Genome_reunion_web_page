@@ -8,7 +8,7 @@ La règle de travail est simple : **une correction = une petite branche ou une p
 
 Ce document sert de plan de correction. Le fichier `index.md` sert de contexte de reprise pour comprendre rapidement le dépôt, les fichiers importants et les décisions prises.
 
-> **Mise à jour du 14 octobre 2026.** Les étapes techniques (0, 1, 7) sont réalisées, ainsi que la préparation de la mise en ligne côté code (étapes 9 et 10). Les étapes éditoriales (2 à 6) et la validation des pages légales (étape 9) concernent le **contenu** : elles relèvent de l'équipe projet et du DPO, et l'état indiqué est un constat sur le texte actuel, pas une validation. L'hébergement final n'est pas choisi : ce dépôt GitHub sert à la construction et à la conservation du code.
+> **Mise à jour du 16 octobre 2026.** Les étapes techniques (0, 1, 7) sont réalisées, ainsi que la préparation de la mise en ligne côté code (étapes 9 et 10). Les étapes éditoriales (2 à 6) et la validation des pages légales (étape 9) concernent le **contenu** : elles relèvent de l'équipe projet et du DPO, et l'état indiqué est un constat sur le texte actuel, pas une validation. L'hébergement final n'est pas choisi : ce dépôt GitHub sert à la construction et à la conservation du code. Depuis le 14 octobre : les textes de l'accueil et de participer ont été reformulés pour le grand public (étape 11), la page participer décrit la participation comme un don de sang à l'EFS dont les fonds de tube sont utilisés, sans prélèvement supplémentaire ni inscription (étape 12, à relire par l'EFS et le DPO), et la politique de confidentialité du site ne traite plus de la recherche.
 
 ---
 
@@ -22,20 +22,21 @@ L'état visuel actuel doit être considéré comme le **rendu de référence ini
 
 ## État d'avancement
 
-| Étape | Sujet                                | Statut                               | Constat                                                                                                                                                                                                                                                                                                                    |
-| ----- | ------------------------------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0     | Documentation de travail             | Fait                                 | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                                                                                                                                                                                         |
-| 1     | JavaScript multi-pages               | Fait                                 | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                                                                                                                                                                                                  |
-| 2     | Chiffres clés                        | À valider                            | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés                                                                                                                                                                                       |
-| 3     | Formulations médicales               | À valider                            | les trois passages cités ne figurent plus dans `index.html`                                                                                                                                                                                                                                                                |
-| 4     | Vocabulaire scientifique             | À valider                            | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                                                                                                                                                                                             |
-| 5     | Page participation                   | À valider                            | tableau de dates de collecte, appel « Je m'inscris » (lien `mailto:`) et mention du consentement présents : dates et ouverture réelle à confirmer ; le calendrier reste fictif : `npm run collectes` le met à jour depuis `data/collectes.csv` (vraies dates à fournir) ; « pseudonymisation » au lieu d'« anonymisation » |
-| 6     | Partenaires et gouvernance           | À valider                            | statut de chaque partenaire à confirmer (EFS indiqué comme confirmé dans `docs/index.md`)                                                                                                                                                                                                                                  |
-| 7     | Accessibilité et qualité web         | Fait côté code                       | meta description, contrastes AA, repères et listes sémantiques, `lang`, favicon, plus de style inline ni de lien mort, repli sans JavaScript, débordements mobile corrigés (320 à 1 280 px)                                                                                                                                |
-| 8     | README et documentation de diffusion | En cours                             | à finaliser quand le contenu est validé                                                                                                                                                                                                                                                                                    |
-| 9     | Pages légales et RGPD                | Préremplies, à valider par le DPO    | mentions légales et politique de confidentialité du site dans `main` (préproduction), passages à compléter surlignés ; hébergeur, DPO, bases légales et durées des e-mails à fournir                                                                                                                                       |
-| 10    | Mise en ligne (SEO, hébergeur)       | Préparée côté code                   | `noindex` en préproduction, balises de partage, image de partage, 404, `npm run set-site-url` ; hébergeur et adresse définitive à choisir                                                                                                                                                                                  |
-| 11    | Textes accessibles au grand public   | Fait, relu par l'équipe scientifique | accueil (en-tête, chiffres clés, problème, change, carrefour, méthode, outils, équipe) et participer (partenariat) reformulés ; relus et validés le 16 octobre 2026 ; essais Safari et téléphone sans problème, Firefox non testé                                                                                          |
+| Étape | Sujet                                | Statut                               | Constat                                                                                                                                                                                                                                                                                                                                                                                   |
+| ----- | ------------------------------------ | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Documentation de travail             | Fait                                 | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                                                                                                                                                                                                                                                        |
+| 1     | JavaScript multi-pages               | Fait                                 | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                                                                                                                                                                                                                                                                 |
+| 2     | Chiffres clés                        | À valider                            | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés                                                                                                                                                                                                                                                      |
+| 3     | Formulations médicales               | À valider                            | les trois passages cités ne figurent plus dans `index.html`                                                                                                                                                                                                                                                                                                                               |
+| 4     | Vocabulaire scientifique             | À valider                            | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                                                                                                                                                                                                                                                            |
+| 5     | Page participation                   | À valider                            | décrite selon le déroulé réel (don de sang à l'EFS, fonds de tube, livret, entretien, sans prélèvement supplémentaire ni inscription) ; bouton « Trouver une collecte » ; dates de collecte toujours fictives : `npm run collectes` les met à jour depuis `data/collectes.csv` (vraies dates à fournir) ; à relire par l'EFS et le DPO ; « pseudonymisation » au lieu d'« anonymisation » |
+| 6     | Partenaires et gouvernance           | À valider                            | statut de chaque partenaire à confirmer (EFS indiqué comme confirmé dans `docs/index.md`)                                                                                                                                                                                                                                                                                                 |
+| 7     | Accessibilité et qualité web         | Fait côté code                       | meta description, contrastes AA, repères et listes sémantiques, `lang`, favicon, plus de style inline ni de lien mort, repli sans JavaScript, débordements mobile corrigés (320 à 1 280 px)                                                                                                                                                                                               |
+| 8     | README et documentation de diffusion | En cours                             | à finaliser quand le contenu est validé                                                                                                                                                                                                                                                                                                                                                   |
+| 9     | Pages légales et RGPD                | Préremplies, à valider par le DPO    | mentions légales et politique de confidentialité du site dans `main` (préproduction), passages à compléter surlignés ; hébergeur, DPO, bases légales et durées des e-mails à fournir                                                                                                                                                                                                      |
+| 10    | Mise en ligne (SEO, hébergeur)       | Préparée côté code                   | `noindex` en préproduction, balises de partage, image de partage, 404, `npm run set-site-url` ; hébergeur et adresse définitive à choisir                                                                                                                                                                                                                                                 |
+| 11    | Textes accessibles au grand public   | Fait, relu par l'équipe scientifique | accueil (en-tête, chiffres clés, problème, change, carrefour, méthode, outils, équipe) et participer (partenariat) reformulés ; relus et validés le 16 octobre 2026 ; essais Safari et téléphone sans problème, Firefox non testé                                                                                                                                                         |
+| 12    | Participation : don de sang à l'EFS  | Fait, à relire par l'EFS et le DPO   | `participer.html` sans prélèvement ni inscription ; politique de confidentialité du site séparée de la recherche ; repère de carte dans le calendrier                                                                                                                                                                                                                                     |
 
 ---
 
@@ -172,17 +173,17 @@ Impact visuel attendu : faible.
 Points à vérifier :
 
 - les dates de collecte ne doivent pas être fictives ;
-- l'inscription ne doit pas être présentée comme ouverte si elle ne l'est pas ;
-- le partenariat EFS ne doit pas être formulé comme définitivement opérationnel si la convention n'est pas signée ;
-- éviter la promesse d'un bilan sanguin complet si ce point n'est pas validé.
+- il n'y a pas d'inscription : ne pas réintroduire de réservation, de convocation ni de formulaire ;
+- décrire la participation comme elle est : don de sang à l'EFS, fonds de tube utilisés avec l'accord du donneur, sans prélèvement supplémentaire ;
+- le partenariat EFS ne doit pas être formulé comme définitivement opérationnel si la convention n'est pas signée.
 
-État (octobre 2026) : les dates affichées restent fictives. `npm run collectes` remplace le contenu des deux tableaux à partir d'un CSV exporté d'Excel (`data/collectes.csv`) ; il manque les vraies dates et l'ouverture réelle des inscriptions.
+État (octobre 2026) : les dates affichées restent fictives. `npm run collectes` remplace le contenu des deux tableaux à partir d'un CSV exporté d'Excel (`data/collectes.csv`) ; il manque les vraies dates. L'appel « Je m'inscris » est remplacé par « Trouver une collecte » (voir l'étape 12).
 
-Approche proposée :
+Approche retenue :
 
 - conserver la structure visuelle ;
-- remplacer les dates par un bloc `calendrier à venir` ou `modalités en cours de validation` ;
-- remplacer le CTA `Je m'inscris` par `Être informé` ou `Contacter l'équipe projet` si nécessaire.
+- garder le calendrier, présenté comme celui des collectes de dons de sang de l'EFS ;
+- remplacer le CTA `Je m'inscris` par un lien vers le calendrier.
 
 Fichiers concernés :
 
@@ -262,7 +263,7 @@ Impact visuel : aucun.
 
 **Objectif :** publier des mentions légales et une politique de confidentialité justes, centrées sur l'usage du site.
 
-État (octobre 2026) : `mentions-legales.html` et `confidentialite.html` sont dans `main`, préremplies à partir du dossier MR-004 (éditeur, hébergeur, responsable de traitement, droits, cookies). La politique ne traite que le site (visite, e-mails reçus, hébergeur) ; la recherche a sa propre information (note remise par l'EFS, fiche du répertoire public de la PDS).
+État (octobre 2026) : `mentions-legales.html` et `confidentialite.html` sont dans `main`, préremplies à partir du dossier MR-004 (éditeur, hébergeur, responsable de traitement, droits, cookies). La politique est celle d'un site web ordinaire : elle ne traite que le site (visite, e-mails reçus, hébergeur, cookies, droits). La recherche a sa propre information RGPD, remise aux donneurs par l'EFS ; elle ne figure plus sur le site, ni en renvoi.
 
 À faire avec le DPO : coordonnées du DPO, éditeur, directeur de la publication, finalité, base légale et durée de conservation des e-mails, hébergeur (non choisi), puis retirer l'avis de validation (`.legal-todo`) et les surlignages (`.legal-blank`).
 
@@ -297,7 +298,7 @@ Impact visuel : aucun.
 
 **Objectif :** rendre les textes lisibles par un public non spécialiste (phrases plus courtes, terme technique expliqué à sa première apparition), sans changer le fond scientifique ni promettre de bénéfice médical.
 
-État (16 octobre 2026) : le bloc des chiffres clés et les sections `hero`, `probleme`, `change`, `carrefour`, `methode`, `outils` et `equipe` de `index.html`, et `partenariat` de `participer.html`, ont été reformulées (PR 61, 62 et 63, puis le bloc des chiffres clés). Les reformulations, définitions comprises, ont été relues et validées par l'équipe scientifique. Le site a été essayé sur Safari et sur téléphone sans problème ; Firefox n'a pas été testé.
+État (16 octobre 2026) : le bloc des chiffres clés et les sections `hero`, `probleme`, `change`, `carrefour`, `methode`, `outils` et `equipe` de `index.html`, et `partenariat` de `participer.html`, ont été reformulées (PR 61, 62 et 63, puis le bloc des chiffres clés). Les reformulations, définitions comprises, ont été relues et validées par l'équipe scientifique. Le site a été essayé sur Safari et sur téléphone sans problème (avant l'ajout du repère de carte, étape 12) ; Firefox n'a pas été testé.
 
 Règles retenues :
 
@@ -311,7 +312,7 @@ Mesure indicative : formule de Kandel et Moles adaptée au français, comptage d
 Reste à traiter :
 
 - chiffres clés : « 350 génomes entiers (WGS) sélectionnés » ne dit pas si ces génomes sont déjà séquencés ; à préciser si c'est le cas ;
-- sous-titre du bandeau de `participer.html` (« la première référence génétique de l'île ») ;
+- devise du pied de page (« Le premier référentiel génomique dédié à la population réunionnaise », cinq pages) : « premier » est-il établi ? ;
 - « Zarabe / Gujarati » dans la légende de l'anneau : explication à fournir ;
 - pages légales : registre juridique, validation par le DPO ; cohérence de la pseudonymisation avec `partenariat`.
 
@@ -321,6 +322,24 @@ Fichiers concernés :
 - `participer.html`
 
 Impact visuel : accueil plus haut d'environ 200 px sur ordinateur et 520 px sur mobile ; participer inchangé en hauteur.
+
+---
+
+### Étape 12 — Participation : don de sang à l'EFS, sans inscription
+
+**Objectif :** que `participer.html` décrive la participation comme elle est, et que la politique de confidentialité du site ne traite que du site.
+
+État (16 octobre 2026) : les participants sont, dans un premier temps, des donneurs de l'EFS. Il n'y a ni prélèvement supplémentaire ni inscription : avec l'accord du donneur, les fonds de tube des analyses faites par l'EFS sont utilisés pour ce programme de recherche. Un livret explicatif est remis à l'arrivée ; lors de l'entretien, le médecin de l'EFS répond aux questions et recueille l'accord. La page (bandeau, description, partenariat, calendrier, trois étapes, bouton « Trouver une collecte ») et l'appel final de l'accueil sont réécrits en ce sens (PR 66) ; « S'inscrire » devient « Participer » sur les cinq pages. La politique de confidentialité ne traite plus de la recherche, qui a sa propre information RGPD remise par l'EFS (PR 67). Les adresses du calendrier ont un repère de carte, lien vers Google Maps ouvert dans un nouvel onglet, au bleu du hero (PR 68 et 69) ; la page ne charge aucun service tiers, Google n'étant contacté qu'au clic.
+
+À faire avec l'EFS et le DPO : relire la description du consentement (fonds de tube, livret, entretien, « sans prélèvement supplémentaire », « sans inscription ») pour qu'elle corresponde à ce que les donneurs reçoivent. Dates de collecte réelles à fournir.
+
+Fichiers concernés :
+
+- `participer.html`, `index.html` (appel final)
+- `confidentialite.html`, `mentions-legales.html`
+- `tooling/collectes.js`, `assets/css/pages/participer/collectes.css`, `assets/images/sprite.svg`
+
+Impact visuel : participer environ 170 px plus haut sur ordinateur et 300 px sur mobile (textes plus complets, repère de carte compris) ; politique de confidentialité plus courte (environ 285 px sur ordinateur, 500 px sur mobile).
 
 ---
 
@@ -366,8 +385,10 @@ git push origin correction-etape-1-js
 - Statut des financements ou demandes FEDER.
 - Liste validée des partenaires.
 - Niveau de formulation accepté par la communication institutionnelle.
-- Mention éthique/RGPD à intégrer dans la page participation.
-- Existence ou non d'un formulaire d'inscription officiel.
+- Relecture par l'EFS et le DPO de la description du consentement sur la page participation (fonds de tube, livret, entretien, « sans prélèvement supplémentaire », « sans inscription »).
+- La devise du pied de page (« Le premier référentiel génomique dédié à la population réunionnaise ») : « premier » est-il établi ?
+- Les 350 génomes (WGS) : déjà séquencés ou à séquencer ?
+- Explication de « Zarabe / Gujarati » dans la légende de l'anneau.
 - Hébergeur et adresse définitive du site.
 - Coordonnées du DPO, éditeur et directeur de la publication, bases légales et durées de conservation des e-mails reçus.
 - Dates de collecte réelles (`data/collectes.csv`) et URL du logo POPgen.
@@ -380,6 +401,7 @@ Le site peut être ambitieux visuellement, mais le texte doit rester prudent :
 
 - ne pas promettre un bénéfice clinique individuel immédiat ;
 - ne pas annoncer une collecte opérationnelle non validée ;
+- ne pas parler de prélèvement ni d'inscription pour le projet : la participation passe par le don de sang à l'EFS, sans démarche ni prélèvement supplémentaire ;
 - ne pas présenter des partenaires comme officiellement engagés sans convention ;
 - ne pas confondre référentiel local et génome humain de référence ;
 - ne pas utiliser `IA` comme argument principal sans expliquer qu'il s'agit de modules d'aide à l'analyse.

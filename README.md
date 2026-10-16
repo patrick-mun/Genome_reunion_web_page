@@ -52,7 +52,7 @@ Le site doit expliquer simplement :
 │   │   ├── pages/              # Point d'entrée par page (modules ES)
 │   │   └── lib/                # Modules partagés (animations, comportements)
 │   ├── fonts/                  # Polices (woff2) et licences
-│   └── images/                 # Images, logos et sprite SVG (logo, vagues)
+│   └── images/                 # Images, logos et sprite SVG (logo, vagues, icônes)
 │
 └── docs/                       # Documentation de travail interne
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
@@ -87,7 +87,7 @@ Le JavaScript et la qualité du code sont traités. Restent, dans cet ordre, les
 1. Valider le bloc des chiffres clés.
 2. Valider les formulations médicales.
 3. Valider le vocabulaire scientifique.
-4. Sécuriser la page participation : ouverture des inscriptions, et vraies dates de collecte dans `data/collectes.csv` puis `npm run collectes` (les dates actuelles sont fictives).
+4. Sécuriser la page participation : vraies dates de collecte dans `data/collectes.csv` puis `npm run collectes` (les dates actuelles sont fictives), et relecture par l'EFS et le DPO de la description du consentement (il n'y a pas d'inscription : la participation passe par le don de sang à l'EFS).
 5. Confirmer les partenaires et statuts institutionnels.
 6. Faire valider par le DPO les pages légales (mentions légales, confidentialité), renseigner l'hébergeur, puis retirer l'avis de validation et les surlignages.
 
@@ -137,6 +137,7 @@ Avant diffusion externe, vérifier :
 - le statut réel des partenaires ;
 - l'adresse de contact officielle ;
 - les formulations liées à l'EFS et aux collectes ;
+- la description de la participation (donneurs de l'EFS, fonds de tube, livret, entretien avec le médecin, accord du donneur), à faire relire par l'EFS et le DPO ;
 - la conformité des pages de participation avec le cadre éthique, RGPD et hospitalier ;
 - les promesses médicales, qui doivent rester prudentes ;
 - l'usage du terme `IA`, qui doit être explicité ou remplacé par une formulation plus institutionnelle.
@@ -151,7 +152,8 @@ Avant diffusion externe, vérifier :
 - `base locale de fréquences de variants` ;
 - `ressource génomique dédiée à la population réunionnaise` ;
 - `modules d'aide à l'analyse clinique` ;
-- `modalités de participation à confirmer` ;
+- `métissage`, `métissé`, `issu du métissage` ;
+- `donneur de l'EFS`, `fonds de tube` (ce qui reste dans les tubes après les analyses habituelles), `sans prélèvement supplémentaire` ;
 - `pseudonymisation` : l'EFS attribue un code et garde seul le lien avec l'identité.
 
 À éviter sans précision :
@@ -159,6 +161,9 @@ Avant diffusion externe, vérifier :
 - `génome de référence` ;
 - `4 IA` ;
 - `anonymisation` pour les données des participants (elles sont pseudonymisées) ;
+- `mélangé` (employer `métissé` ou `métissage`) ;
+- `prélèvement sanguin` pour le projet et `inscription` : le projet utilise les fonds de tube des analyses de l'EFS, sans prélèvement supplémentaire ni inscription ;
+- `premier`, `première` (référentiel, référence) tant que ce n'est pas établi ;
 - promesses directes de bénéfice clinique individuel ;
 - dates de collecte non confirmées ;
 - partenaires présentés comme acquis sans convention.
