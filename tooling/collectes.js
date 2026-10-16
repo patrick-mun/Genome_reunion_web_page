@@ -27,6 +27,15 @@ function escapeHtml(value) {
 }
 
 /**
+ * Échappe un texte pour une valeur d'attribut HTML entre guillemets doubles.
+ * @param {string} value Texte brut.
+ * @returns {string} Texte échappé.
+ */
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/"/g, '&quot;');
+}
+
+/**
  * Choisit le séparateur d'un CSV : Excel en français écrit des points-virgules.
  * @param {string} text Contenu du fichier.
  * @returns {string} « ; » ou « , ».
@@ -176,13 +185,48 @@ export function selectEntries(entries, today, keepPast) {
 }
 
 /**
+ * Construit l'adresse d'une recherche Google Maps : le lieu, l'adresse et « La Réunion » (le nom du lieu aide
+ * Google à le trouver, la région évite les homonymes d'autres communes).
+ * @param {{lieu: string, adresse: string}} entry Entrée du calendrier.
+ * @returns {string} Adresse web, non échappée pour le HTML.
+ */
+export function mapsUrl(entry) {
+  const query = [entry.lieu, entry.adresse, 'La Réunion'].filter(Boolean).join(', ');
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+/**
+ * Écrit le bloc de l'adresse d'une ligne : un lien vers Google Maps, ouvert dans un nouvel onglet. Le nom
+ * accessible commence par le texte visible, puis annonce la destination.
+ * @param {{lieu: string, adresse: string}} entry Entrée du calendrier, adresse non vide.
+ * @param {number} depth Profondeur d'indentation du bloc, à partir de l'indentation des lignes.
+ * @returns {string} Bloc <div> indenté, au format de Prettier.
+ */
+export function buildAddress(entry, depth) {
+  const pad = (extra) => ROW_INDENT + '  '.repeat(depth + extra);
+  const text = escapeHtml(entry.adresse);
+  return [
+    `${pad(0)}<div class="collecte-adresse">`,
+    `${pad(1)}<a`,
+    `${pad(2)}class="collecte-adresse-link"`,
+    `${pad(2)}href="${escapeAttribute(mapsUrl(entry))}"`,
+    `${pad(2)}target="_blank"`,
+    `${pad(2)}rel="noopener noreferrer"`,
+    `${pad(2)}aria-label="${escapeAttribute(entry.adresse)} — voir sur Google Maps (nouvel onglet)"`,
+    `${pad(2)}>${text}</a`,
+    `${pad(1)}>`,
+    `${pad(0)}</div>`,
+  ].join('\n');
+}
+
+/**
  * Écrit une ligne du tableau, au balisage de participer.html.
  * @param {{date: string, lieu: string, adresse: string, horaires: string}} entry Entrée du calendrier.
  * @returns {string} Ligne <tr> indentée.
  */
 export function buildRow(entry) {
   const pad = (depth) => ROW_INDENT + '  '.repeat(depth);
-  const address = entry.adresse ? `\n${pad(2)}<div class="collecte-adresse">${escapeHtml(entry.adresse)}</div>` : '';
+  const address = entry.adresse ? `\n${buildAddress(entry, 2)}` : '';
   return [
     `${pad(0)}<tr class="collecte-row">`,
     `${pad(1)}<td class="collecte-date">${formatDate(entry.date)}</td>`,
