@@ -22,19 +22,20 @@ L'état visuel actuel doit être considéré comme le **rendu de référence ini
 
 ## État d'avancement
 
-| Étape | Sujet                                | Statut                            | Constat                                                                                                                                                                                                                                                                                                                    |
-| ----- | ------------------------------------ | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0     | Documentation de travail             | Fait                              | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                                                                                                                                                                                         |
-| 1     | JavaScript multi-pages               | Fait                              | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                                                                                                                                                                                                  |
-| 2     | Chiffres clés                        | À valider                         | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés                                                                                                                                                                                       |
-| 3     | Formulations médicales               | À valider                         | les trois passages cités ne figurent plus dans `index.html`                                                                                                                                                                                                                                                                |
-| 4     | Vocabulaire scientifique             | À valider                         | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                                                                                                                                                                                             |
-| 5     | Page participation                   | À valider                         | tableau de dates de collecte, appel « Je m'inscris » (lien `mailto:`) et mention du consentement présents : dates et ouverture réelle à confirmer ; le calendrier reste fictif : `npm run collectes` le met à jour depuis `data/collectes.csv` (vraies dates à fournir) ; « pseudonymisation » au lieu d'« anonymisation » |
-| 6     | Partenaires et gouvernance           | À valider                         | statut de chaque partenaire à confirmer (EFS indiqué comme confirmé dans `docs/index.md`)                                                                                                                                                                                                                                  |
-| 7     | Accessibilité et qualité web         | Fait côté code                    | meta description, contrastes AA, repères et listes sémantiques, `lang`, favicon, plus de style inline ni de lien mort, repli sans JavaScript, débordements mobile corrigés (320 à 1 280 px)                                                                                                                                |
-| 8     | README et documentation de diffusion | En cours                          | à finaliser quand le contenu est validé                                                                                                                                                                                                                                                                                    |
-| 9     | Pages légales et RGPD                | Préremplies, à valider par le DPO | mentions légales et politique de confidentialité du site dans `main` (préproduction), passages à compléter surlignés ; hébergeur, DPO, bases légales et durées des e-mails à fournir                                                                                                                                       |
-| 10    | Mise en ligne (SEO, hébergeur)       | Préparée côté code                | `noindex` en préproduction, balises de partage, image de partage, 404, `npm run set-site-url` ; hébergeur et adresse définitive à choisir                                                                                                                                                                                  |
+| Étape | Sujet                                | Statut                               | Constat                                                                                                                                                                                                                                                                                                                    |
+| ----- | ------------------------------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Documentation de travail             | Fait                                 | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                                                                                                                                                                                         |
+| 1     | JavaScript multi-pages               | Fait                                 | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                                                                                                                                                                                                  |
+| 2     | Chiffres clés                        | À valider                            | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés                                                                                                                                                                                       |
+| 3     | Formulations médicales               | À valider                            | les trois passages cités ne figurent plus dans `index.html`                                                                                                                                                                                                                                                                |
+| 4     | Vocabulaire scientifique             | À valider                            | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                                                                                                                                                                                             |
+| 5     | Page participation                   | À valider                            | tableau de dates de collecte, appel « Je m'inscris » (lien `mailto:`) et mention du consentement présents : dates et ouverture réelle à confirmer ; le calendrier reste fictif : `npm run collectes` le met à jour depuis `data/collectes.csv` (vraies dates à fournir) ; « pseudonymisation » au lieu d'« anonymisation » |
+| 6     | Partenaires et gouvernance           | À valider                            | statut de chaque partenaire à confirmer (EFS indiqué comme confirmé dans `docs/index.md`)                                                                                                                                                                                                                                  |
+| 7     | Accessibilité et qualité web         | Fait côté code                       | meta description, contrastes AA, repères et listes sémantiques, `lang`, favicon, plus de style inline ni de lien mort, repli sans JavaScript, débordements mobile corrigés (320 à 1 280 px)                                                                                                                                |
+| 8     | README et documentation de diffusion | En cours                             | à finaliser quand le contenu est validé                                                                                                                                                                                                                                                                                    |
+| 9     | Pages légales et RGPD                | Préremplies, à valider par le DPO    | mentions légales et politique de confidentialité du site dans `main` (préproduction), passages à compléter surlignés ; hébergeur, DPO, bases légales et durées des e-mails à fournir                                                                                                                                       |
+| 10    | Mise en ligne (SEO, hébergeur)       | Préparée côté code                   | `noindex` en préproduction, balises de partage, image de partage, 404, `npm run set-site-url` ; hébergeur et adresse définitive à choisir                                                                                                                                                                                  |
+| 11    | Textes accessibles au grand public   | Fait, relu par l'équipe scientifique | accueil (en-tête, problème, change, carrefour, méthode, outils, équipe) et participer (partenariat) reformulés ; relus et validés le 16 octobre 2026 ; essais Safari et téléphone sans problème, Firefox non testé                                                                                                         |
 
 ---
 
@@ -289,6 +290,37 @@ Fichiers concernés :
 - `404.html`, `assets/images/partage.png`
 
 Impact visuel : aucun.
+
+---
+
+### Étape 11 — Textes accessibles au grand public
+
+**Objectif :** rendre les textes lisibles par un public non spécialiste (phrases plus courtes, terme technique expliqué à sa première apparition), sans changer le fond scientifique ni promettre de bénéfice médical.
+
+État (16 octobre 2026) : les sections `hero`, `probleme`, `change`, `carrefour`, `methode`, `outils` et `equipe` de `index.html`, et `partenariat` de `participer.html`, ont été reformulées (PR 61, 62 et 63). Les reformulations, définitions comprises, ont été relues et validées par l'équipe scientifique. Le site a été essayé sur Safari et sur téléphone sans problème ; Firefox n'a pas été testé.
+
+Règles retenues :
+
+- langage clair : phrases courtes, un terme technique expliqué à sa première apparition, sans passer en FALC strict ;
+- explications intégrées au texte (pas d'info-bulle ni de glossaire) : lisible au clavier et sur mobile ;
+- vocabulaire : « métissage », « métissé » et « issu du métissage » (et non « mélangé ») ; « pseudonymisé » (et non « anonymisé ») ;
+- une section = un commit ; un avant/après validé avant chaque modification.
+
+Mesure indicative : formule de Kandel et Moles adaptée au français, comptage de syllabes approximatif, échantillons courts, donc pas une validation. Facilité (plus elle est basse, plus c'est difficile ; 60 et plus : accessible) : `outils` 19 → 31, `probleme` 26 → 39, `methode` 30 → 49, `change` 45 → 52, `partenariat` 38 → 43. Aucun outil de mesure n'est dans le dépôt.
+
+Reste à traiter :
+
+- bloc des chiffres clés : « 350 génomes complets WGS » à harmoniser avec « (WGS) » de la méthode ;
+- sous-titre du bandeau de `participer.html` (« la première référence génétique de l'île ») ;
+- « Zarabe / Gujarati » dans la légende de l'anneau : explication à fournir ;
+- pages légales : registre juridique, validation par le DPO ; cohérence de la pseudonymisation avec `partenariat`.
+
+Fichiers concernés :
+
+- `index.html`
+- `participer.html`
+
+Impact visuel : accueil plus haut d'environ 180 px sur ordinateur et 470 px sur mobile ; participer inchangé en hauteur.
 
 ---
 
