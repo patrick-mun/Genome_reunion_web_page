@@ -63,7 +63,7 @@ Le site doit expliquer :
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js, legal.js, erreur.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
-│   └── images/                 # sprite.svg (logo, vagues, icônes de réseaux sociaux), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png, partage.png (image de partage 1 200 × 630)
+│   └── images/                 # sprite.svg (logo, vagues, repère de carte, icônes de réseaux sociaux), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png, partage.png (image de partage 1 200 × 630)
 │
 └── docs/
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
@@ -107,10 +107,11 @@ Pages légales : même navigation et même pied de page que les autres pages (ga
 `tooling/pages-sync.test.js`), un bandeau de titre puis une section par rubrique (`.legal-section`).
 Le texte est prérempli ; ce que les documents ne fixent pas reste surligné (`.legal-blank`), et un avis en
 tête de page (`.legal-todo`) signale que le DPO doit valider. Ces pages sont déjà dans `main` (préproduction) :
-avant la mise en ligne définitive, retirer l'avis et les surlignages après validation et renseigner l'hébergeur. La politique de confidentialité ne traite que le site (visite,
-e-mails reçus, hébergeur, cookies, droits) ; la recherche Génome Réunion (dossier MR-004) a sa propre
-information (note remise par l'EFS, fiche du répertoire public de la PDS) et n'y figure que par un renvoi.
-Le site n'utilise ni cookie ni stockage local.
+avant la mise en ligne définitive, retirer l'avis et les surlignages après validation et renseigner l'hébergeur. La politique de confidentialité est celle d'un site web ordinaire : elle ne traite que le
+site (visite, e-mails reçus, hébergeur, cookies, droits). La recherche Génome Réunion (dossier MR-004) a sa
+propre information RGPD, remise aux donneurs par l'EFS : elle ne figure pas sur le site, ni en renvoi.
+Le site n'utilise ni cookie ni stockage local et ne charge aucun service tiers (Google Maps n'est contacté
+qu'au clic sur un repère de carte, qui ouvre un nouvel onglet).
 Le pied de page des trois pages renvoie vers elles (`.footer-legal-link`). Feuille de style :
 `assets/css/pages/legal/legal.css` ; entrée JS : `assets/js/pages/legal.js`.
 
@@ -154,6 +155,12 @@ npm run collectes -- [fichier.csv] [--page page.html] [--today AAAA-MM-JJ] [--ke
   garde), trie par date, calcule elle-même le jour de la semaine (« Ven. 5 nov. 2026 »), échappe le texte,
   et remplace uniquement le contenu des deux `<tbody>`. Sans date à venir pour une zone, le tableau affiche
   « Aucune date programmée pour le moment. ». `--check` montre le résultat sans écrire.
+- **Repère de carte :** chaque ligne a une quatrième cellule (`.collecte-carte`) avec un lien rond vers une
+  recherche Google Maps (lieu, adresse, « La Réunion »), ouvert dans un nouvel onglet
+  (`target="_blank"`, `rel="noopener noreferrer"`) ; sans adresse, la cellule reste vide. L'icône vient du
+  sprite (`icon-pin`) et prend le bleu du hero (`--navy`). Aucun script ni clé d'API : Google n'est
+  contacté qu'au clic. L'adresse de l'en-tête de chaque tableau (« Centre fixe · … ») reste du texte.
+  Adresses ambiguës pour Google (boîte postale, « Pl. du 20 Décembre ») : préciser l'adresse dans le CSV.
 - **Erreurs :** zone inconnue, date invalide, lieu ou horaires manquants sont listés avec leur numéro de ligne ;
   dans ce cas rien n'est modifié.
 - **À savoir :** les dates de `data/collectes.csv` livré sont **fictives** (reprises de la page d'origine, les
@@ -188,21 +195,27 @@ configure pas le serveur (en-têtes de sécurité, cache, redirections).
 
 ### `participer.html`
 
-Page d'information sur la participation.
+Page d'information sur la participation : les participants sont, dans un premier temps, des donneurs de
+l'EFS. Il n'y a ni prélèvement supplémentaire ni inscription : avec l'accord du donneur, les fonds de tube
+des analyses faites par l'EFS sont utilisés pour ce programme de recherche. Un livret explicatif est remis à
+l'arrivée du donneur ; lors de l'entretien, le médecin de l'EFS répond à ses questions et recueille son accord.
 
 Contient :
 
 - hero de page ;
 - section partenariat EFS (confirmé) ;
-- calendrier de collecte ;
-- étapes d'inscription ;
+- calendrier de collecte (collectes de dons de sang, avec un repère de carte par adresse) ;
+- trois étapes de participation (venir donner son sang, lire le livret et poser ses questions, donner son
+  accord) et un bouton « Trouver une collecte » ;
 - contact par email.
 
 Points sensibles :
 
 - les dates de collecte peuvent être fictives ou non validées ;
-- l'inscription ne doit pas être présentée comme ouverte si ce n'est pas officiellement le cas ;
-- éviter de promettre un bilan sanguin complet si cela n'est pas validé.
+- ne pas réintroduire d'inscription, de réservation, de convocation ni de formulaire : il n'y en a pas ;
+- ne pas parler de prélèvement pour le projet ni promettre un bilan sanguin ;
+- la description du consentement (fonds de tube, livret, entretien, « sans prélèvement supplémentaire »,
+  « sans inscription ») est à faire relire par l'EFS et le DPO avant la mise en ligne.
 
 ---
 
@@ -319,6 +332,10 @@ Travaux récents effectués :
 - ✅ Calendrier de collecte alimenté par un CSV : `npm run collectes`.
 - ✅ Repli sans JavaScript (contenu visible, chiffres clés corrects) ; mobile : tableau des collectes lisible, plus de débordement de page de 320 à 1 280 px.
 - ✅ `participer.html` : « pseudonymisation » au lieu d'« anonymisation ».
+- ✅ Textes de l'accueil et de participer reformulés pour le grand public (étape 11 du plan), relus par l'équipe scientifique ; « métissé » au lieu de « mélangé ».
+- ✅ `participer.html` décrit la participation comme elle est : don de sang à l'EFS, fonds de tube, livret, entretien, sans prélèvement supplémentaire ni inscription (à relire par l'EFS et le DPO) ; « S'inscrire » devient « Participer » sur les cinq pages.
+- ✅ Politique de confidentialité du site séparée de l'information RGPD de la recherche.
+- ✅ Calendrier : repère de carte (lien Google Maps, nouvel onglet) dans une quatrième colonne ; marges du tableau resserrées, jeton `--space-map-link`.
 - ✅ `main` protégée (ruleset GitHub : `verify` obligatoire, suppression et poussée forcée interdites).
 
 ---
@@ -329,7 +346,7 @@ Les corrections éditoriales sont suivies dans `PLAN_CORRECTION.md` (tableau d'a
 le texte actuel a déjà été repris (plus de « 4 IA », « référentiel génomique réunionnais » employé),
 mais chaque étape reste à valider par l'équipe projet. Restent notamment :
 
-1. `participer.html` : dates de collecte et ouverture réelle des inscriptions à confirmer.
+1. `participer.html` : dates de collecte réelles à fournir ; description du consentement à faire relire par l'EFS et le DPO.
 2. `index.html` et `participer.html` : statut de chaque partenaire à confirmer ; lien du logo POPgen à ajouter.
 3. `mentions-legales.html`, `confidentialite.html` : validation par le DPO, coordonnées du DPO, éditeur, directeur de la publication, durées et bases légales des e-mails ; hébergeur à renseigner (non choisi) ; retirer ensuite l'avis `.legal-todo` et les surlignages `.legal-blank`.
 4. Mise en ligne : adresse définitive et hébergeur, puis `npm run set-site-url` (canonical, `og:url`, `og:image`, sitemap, robots), configuration serveur (en-têtes de sécurité, cache, déclaration de la 404) et mise à jour des redirections du dépôt `Genome-Reunion-page`.
@@ -365,7 +382,8 @@ git checkout -b correction-<sujet>
 - `base locale de fréquences de variants` ;
 - `ressource génomique dédiée à la population réunionnaise` ;
 - `modules d'aide à l'analyse clinique` ;
-- `modalités de participation à confirmer`.
+- `métissage`, `métissé`, `issu du métissage` ;
+- `donneur de l'EFS`, `fonds de tube`, `sans prélèvement supplémentaire`.
 
 À éviter ou à revoir :
 
@@ -373,6 +391,9 @@ git checkout -b correction-<sujet>
 - `4 IA` comme argument isolé ;
 - `chaque soin s'adapte enfin à vous` ;
 - `le bon médicament à la bonne dose`, si formulé comme promesse immédiate ;
+- `mélangé` (employer `métissé` ou `métissage`) ;
+- `prélèvement sanguin` pour le projet et `inscription` (il n'y en a pas) ;
+- `premier`, `première` (référentiel, référence) tant que ce n'est pas établi ;
 - dates ou lieux de collecte non confirmés.
 
 ---
@@ -402,7 +423,7 @@ git pull origin main
 
 Une valeur ne s'écrit qu'à un endroit :
 
-- **Logo et vagues** : un seul dessin dans `assets/images/sprite.svg`, référencé par `<use href="assets/images/sprite.svg#logo">` (identifiants `logo`, `wave-1` à `wave-3`). Les couleurs y sont des variables CSS héritées de l'élément `<use>` : ne pas ouvrir le sprite seul. Un commentaire XML ne peut pas contenir `--`.
+- **Logo et vagues** : un seul dessin dans `assets/images/sprite.svg`, référencé par `<use href="assets/images/sprite.svg#logo">` (identifiants `logo`, `wave-1` à `wave-3`, `icon-pin` et les icônes de réseaux sociaux). Les couleurs y sont des variables CSS héritées de l'élément `<use>` : ne pas ouvrir le sprite seul. Un commentaire XML ne peut pas contenir `--`.
 - **Couleurs** : `assets/css/tokens.css`. Les SVG du HTML utilisent `fill="var(--navy)"`, et le balisage SVG des animations (`gecko-svg.js`, `bird-svg.js`, `maloya-figures.js`, `maloya-svg.js`) ne porte aucune couleur : elles viennent des classes `gecko-*`, `paille-*` et `maloya-*` du CSS (pour la frise, une palette par personnage, `maloya-cast-*`). Seuls les logos des partenaires (`efs-logo.svg`, `popgen-logo.svg`), œuvres de tiers, gardent leurs couleurs.
 - **Anneau des ascendances** : les pourcentages de la légende (`.ancestry-legend-pct`) sont l'unique source. Les arcs sont calculés par `donut-geometry.js` ; l'ordre des cercles du SVG doit suivre celui de la légende, et leur couleur vient de la classe `origin-<origine>` partagée avec la légende.
 
@@ -411,5 +432,5 @@ Une valeur ne s'écrit qu'à un endroit :
 Le site n'a pas d'étape de génération : la navigation, le pied de page, le lien d'évitement, la barre de progression, les balises de partage et les feuilles partagées sont écrits dans chaque page (accueil, participer, 404, mentions légales, confidentialité). Pour éviter qu'ils divergent :
 
 - modifier **toutes les pages ensemble** ;
-- `tooling/pages-sync.test.js` (lancé par `npm test`, le hook pré-commit et la CI) échoue si ces parties diffèrent, hors cibles des liens et libellé du lien d'action (« Participer » / « S'inscrire ») ;
+- `tooling/pages-sync.test.js` (lancé par `npm test`, le hook pré-commit et la CI) échoue si ces parties diffèrent, hors cibles des liens et libellé du lien d'action (« Participer » sur toutes les pages depuis la suppression de l'inscription) ;
 - il vérifie aussi que le sprite SVG est bien formé, que chaque `<use>` a son symbole, qu'aucun dessin du sprite n'est recopié, et que chaque lien interne mène à une ancre existante.
