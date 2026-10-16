@@ -12,7 +12,7 @@ import { copyFileSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from '
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { after, test } from 'node:test';
-import { buildRow, detectDelimiter, formatDate, formatHours, parseDate, readEntries, selectEntries, splitCsv } from './collectes.js';
+import { buildRow, detectDelimiter, formatDate, formatHours, mapsUrl, parseDate, readEntries, selectEntries, splitCsv } from './collectes.js';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const SCRIPT = join(ROOT, 'tooling/update-collectes.mjs');
@@ -86,6 +86,21 @@ test('buildRow : balisage identique à celui de la page, texte échappé, adress
   assert.match(html, /<td class="collecte-date">Jeu\. 5 nov\. 2026<\/td>/);
   assert.match(html, /Café &lt;Le Port&gt; &amp; Cie/);
   assert.doesNotMatch(html, /collecte-adresse/);
+});
+
+test('mapsUrl : recherche Google Maps sur le lieu, l\'adresse et La Réunion, accents et symboles encodés', () => {
+  const url = mapsUrl({ lieu: 'Café & Cie', adresse: 'Pl. du 20 Décembre, Sainte-Marie' });
+  assert.equal(url, 'https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20%26%20Cie%2C%20Pl.%20du%2020%20D%C3%A9cembre%2C%20Sainte-Marie%2C%20La%20R%C3%A9union');
+  assert.equal(new URL(url).searchParams.get('query'), 'Café & Cie, Pl. du 20 Décembre, Sainte-Marie, La Réunion');
+});
+
+test('buildRow : l\'adresse est un lien Google Maps sûr (nouvel onglet, sans référent) au nom accessible complet', () => {
+  const html = buildRow({ date: '2026-11-05', lieu: 'Mairie', adresse: '1 rue "A" & B', horaires: '9h – 15h' });
+  assert.match(html, /<a\n\s+class="collecte-adresse-link"/);
+  assert.match(html, /href="https:\/\/www\.google\.com\/maps\/search\/\?api=1&amp;query=Mairie%2C%201%20rue%20%22A%22%20%26%20B%2C%20La%20R%C3%A9union"/);
+  assert.match(html, /target="_blank"\n\s+rel="noopener noreferrer"/);
+  assert.match(html, /aria-label="1 rue &quot;A&quot; &amp; B — voir sur Google Maps \(nouvel onglet\)"/);
+  assert.match(html, />1 rue "A" &amp; B<\/a/);
 });
 
 test('commande : le modèle CSV remplit la vraie page, sans toucher au reste', () => {
