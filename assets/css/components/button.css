@@ -64,7 +64,7 @@
   background: var(--coral-deep);
 }
 
-/* Inscription aux couleurs du partenaire EFS (page Participer). */
+/* Bouton aux couleurs du partenaire EFS (page Participer). */
 .btn-efs {
   --btn-shadow: var(--shadow-efs);
   --btn-lift: -3px;
