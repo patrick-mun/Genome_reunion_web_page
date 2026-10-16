@@ -196,26 +196,28 @@ export function mapsUrl(entry) {
 }
 
 /**
- * Écrit le bloc de l'adresse d'une ligne : un lien vers Google Maps, ouvert dans un nouvel onglet. Le nom
- * accessible commence par le texte visible, puis annonce la destination.
- * @param {{lieu: string, adresse: string}} entry Entrée du calendrier, adresse non vide.
- * @param {number} depth Profondeur d'indentation du bloc, à partir de l'indentation des lignes.
- * @returns {string} Bloc <div> indenté, au format de Prettier.
+ * Écrit la cellule du repère de carte d'une ligne : un lien vers Google Maps, ouvert dans un nouvel onglet,
+ * dont le nom accessible reprend l'adresse puis annonce la destination. Cellule vide sans adresse.
+ * @param {{lieu: string, adresse: string}} entry Entrée du calendrier.
+ * @param {number} depth Profondeur d'indentation de la cellule, à partir de l'indentation des lignes.
+ * @returns {string} Cellule <td> indentée, au format de Prettier.
  */
-export function buildAddress(entry, depth) {
+export function buildMapCell(entry, depth) {
   const pad = (extra) => ROW_INDENT + '  '.repeat(depth + extra);
-  const text = escapeHtml(entry.adresse);
+  if (!entry.adresse) return `${pad(0)}<td class="collecte-carte"></td>`;
   return [
-    `${pad(0)}<div class="collecte-adresse">`,
+    `${pad(0)}<td class="collecte-carte">`,
     `${pad(1)}<a`,
-    `${pad(2)}class="collecte-adresse-link"`,
+    `${pad(2)}class="collecte-map-link"`,
     `${pad(2)}href="${escapeAttribute(mapsUrl(entry))}"`,
     `${pad(2)}target="_blank"`,
     `${pad(2)}rel="noopener noreferrer"`,
-    `${pad(2)}aria-label="${escapeAttribute(entry.adresse)} — voir sur Google Maps (nouvel onglet)"`,
-    `${pad(2)}>${text}</a`,
-    `${pad(1)}>`,
-    `${pad(0)}</div>`,
+    `${pad(2)}aria-label="Voir ${escapeAttribute(entry.adresse)} sur Google Maps (nouvel onglet)"`,
+    `${pad(2)}title="Voir sur Google Maps"`,
+    `${pad(2)}><svg class="collecte-map-icon" aria-hidden="true">`,
+    `${pad(3)}<use href="assets/images/sprite.svg#icon-pin" /></svg`,
+    `${pad(1)}></a>`,
+    `${pad(0)}</td>`,
   ].join('\n');
 }
 
@@ -226,7 +228,7 @@ export function buildAddress(entry, depth) {
  */
 export function buildRow(entry) {
   const pad = (depth) => ROW_INDENT + '  '.repeat(depth);
-  const address = entry.adresse ? `\n${buildAddress(entry, 2)}` : '';
+  const address = entry.adresse ? `\n${pad(2)}<div class="collecte-adresse">${escapeHtml(entry.adresse)}</div>` : '';
   return [
     `${pad(0)}<tr class="collecte-row">`,
     `${pad(1)}<td class="collecte-date">${formatDate(entry.date)}</td>`,
@@ -234,6 +236,7 @@ export function buildRow(entry) {
     `${pad(2)}<div class="collecte-lieu">${escapeHtml(entry.lieu)}</div>${address}`,
     `${pad(1)}</td>`,
     `${pad(1)}<td class="collecte-horaire">${escapeHtml(entry.horaires)}</td>`,
+    buildMapCell(entry, 1),
     `${pad(0)}</tr>`,
   ].join('\n');
 }
@@ -249,7 +252,7 @@ export function buildRow(entry) {
 export function replaceZoneRows(html, zone, entries) {
   const pattern = new RegExp(`(collecte-zone-badge collecte-zone-${zone}[\\s\\S]*?<tbody>\\n)[\\s\\S]*?(\\n {16}</tbody>)`);
   if (!pattern.test(html)) throw new Error(`tableau de la zone ${zone} introuvable dans la page`);
-  const empty = `${ROW_INDENT}<tr class="collecte-row">\n${ROW_INDENT}  <td colspan="3">Aucune date programmée pour le moment.</td>\n${ROW_INDENT}</tr>`;
+  const empty = `${ROW_INDENT}<tr class="collecte-row">\n${ROW_INDENT}  <td colspan="4">Aucune date programmée pour le moment.</td>\n${ROW_INDENT}</tr>`;
   const rows = entries.length > 0 ? entries.map(buildRow).join('\n') : empty;
   return html.replace(pattern, (match, start, end) => `${start}${rows}${end}`);
 }

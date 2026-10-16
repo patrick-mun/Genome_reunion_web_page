@@ -116,9 +116,9 @@
 
 /* ── TABLEAU DES COLLECTES ──
    Une ligne par date (.collecte-row) : la dernière n'a pas de filet, le survol teinte la ligne.
-   Les colonnes sont .collecte-date, .collecte-lieu, .collecte-adresse et .collecte-horaire.
-   Sous 900 px, la marge des cellules se resserre (--space-cell-x) et la date peut passer à la ligne :
-   sans cela le tableau (421 px) dépassait son bloc sur un téléphone et la colonne des horaires était coupée.
+   Les colonnes sont .collecte-date, .collecte-lieu, .collecte-adresse, .collecte-horaire et .collecte-carte.
+   Sous 900 px, la marge des cellules se resserre (--space-cell-x) : sans cela le tableau (421 px)
+   dépassait son bloc sur un téléphone et la colonne des horaires était coupée.
 */
 .collecte-table {
   width: 100%;
@@ -162,14 +162,7 @@
   font-family: var(--f-ui);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
-  white-space: nowrap;
   color: var(--navy);
-}
-
-@media (max-width: 900px) {
-  .collecte-date {
-    white-space: normal;
-  }
 }
 
 .collecte-lieu {
@@ -182,24 +175,44 @@
   color: var(--stone);
 }
 
-/* Adresse cliquable (lien vers Google Maps) : même aspect que le texte, soulignée en pointillés pour
-   signaler le lien, bleu sarcelle au survol et au clavier. */
-.collecte-adresse-link {
-  text-decoration: underline dotted;
-  color: inherit;
-  text-underline-offset: 0.2em;
-}
-
-.collecte-adresse-link:hover,
-.collecte-adresse-link:focus-visible {
-  color: var(--teal);
-  text-decoration-style: solid;
-}
-
 .collecte-horaire {
   font-family: var(--f-ui);
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
   white-space: nowrap;
   color: var(--teal);
+}
+
+/* Repère de carte : dernière colonne, un lien rond vers Google Maps au bleu du hero (--navy), plein au
+   survol et au clavier. La colonne reste la plus étroite possible (width: 1 %) pour ne pas écraser celle
+   du lieu ; la date peut passer à la ligne pour la même raison. */
+.collecte-table .collecte-carte {
+  width: 1%;
+  padding-right: var(--space-1);
+  padding-left: 0;
+  text-align: center;
+}
+
+.collecte-map-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-map-link);
+  height: var(--space-map-link);
+  color: var(--navy);
+  border-radius: var(--radius-pill);
+  transition:
+    background var(--duration-1) var(--ease-out),
+    color var(--duration-1) var(--ease-out);
+}
+
+.collecte-map-link:hover,
+.collecte-map-link:focus-visible {
+  color: var(--white);
+  background: var(--navy);
+}
+
+.collecte-map-icon {
+  width: var(--space-4);
+  height: var(--space-4);
 }
