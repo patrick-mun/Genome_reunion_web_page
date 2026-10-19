@@ -63,7 +63,7 @@ Le site doit expliquer :
 │   ├── js/pages/               # Point d'entrée par page (home.js, participer.js, legal.js, erreur.js)
 │   ├── js/lib/                 # Modules partagés (un module par comportement)
 │   ├── fonts/                  # Polices woff2 (Spectral, DM Sans, Space Grotesk) et licences OFL
-│   └── images/                 # sprite.svg (logo, vagues, repère de carte, icônes de réseaux sociaux), efs-logo.svg, popgen-logo.svg, favicon.svg, apple-touch-icon.png, partage.png (image de partage 1 200 × 630)
+│   └── images/                 # sprite.svg (logo, vagues, repère de carte, icônes de réseaux sociaux), efs-logo.svg, popgen-logo.svg, crb-logo.svg, favicon.svg, apple-touch-icon.png, partage.png (image de partage 1 200 × 630)
 │
 └── docs/
     ├── PLAN_CORRECTION.md      # Plan de correction progressive
@@ -303,9 +303,9 @@ Frise décorative en bas de la section « Carrefour génétique » : cinq musici
 
 ---
 
-### `assets/images/efs-logo.svg` et `assets/images/popgen-logo.svg`
+### `assets/images/efs-logo.svg`, `assets/images/popgen-logo.svg` et `assets/images/crb-logo.svg`
 
-Logos des partenaires, œuvres de tiers reproduites telles quelles avec leurs propres couleurs, chargés par `<img>` : EFS dans `index.html` et `participer.html`, POPgen dans `index.html` (lien à ajouter quand son URL sera connue).
+Logos des partenaires, œuvres de tiers reproduites telles quelles avec leurs propres couleurs, chargés par `<img>` : EFS dans `index.html` et `participer.html`, POPgen et CRB dans `index.html` (liens à ajouter quand leur adresse sera connue). Le logo du CRB (hauteur de 48 px, plus haut que les autres car il est presque carré et porte du texte) est une vectorisation d'un PNG fourni par l'équipe : contours tracés finement, 25 zones à dégradés SVG, fond transparent, aucune image intégrée ni ressource externe (73 Ko). Il reproduit l'original à environ 0,45 sur 255 près ; le fichier d'origine du CRB (SVG, AI ou EPS), s'il est obtenu, le remplacera avec profit.
 
 Point d'attention : ne pas modifier sans vérifier le rendu.
 
