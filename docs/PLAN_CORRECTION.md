@@ -26,7 +26,7 @@ L'état visuel actuel doit être considéré comme le **rendu de référence ini
 | ----- | ------------------------------------ | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0     | Documentation de travail             | Fait                                 | `README.md`, `docs/index.md`, `docs/conventions-profile.md` à jour                                                                                                                                                                                                                                                                                                                        |
 | 1     | JavaScript multi-pages               | Fait                                 | `script.js` n'existe plus : un module par comportement dans `assets/js/lib/`, chacun vérifie ses éléments                                                                                                                                                                                                                                                                                 |
-| 2     | Chiffres clés                        | À valider                            | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; « 350 génomes complets WGS » et « 100 familles » restent affichés                                                                                                                                                                                                                                                      |
+| 2     | Chiffres clés                        | À valider                            | « 4 IA » n'apparaît plus (« Quatre modules d'aide à l'analyse ») ; libellés au futur : « participants à analyser sur puce SNP », « familles pour étudier la transmission de l'ADN », « génomes à séquencer en entier (WGS) » (analyses, familles et génomes à réaliser)                                                                                                                   |
 | 3     | Formulations médicales               | À valider                            | les trois passages cités ne figurent plus dans `index.html`                                                                                                                                                                                                                                                                                                                               |
 | 4     | Vocabulaire scientifique             | À valider                            | « référentiel génomique réunionnais » employé ; « génome de référence » absent                                                                                                                                                                                                                                                                                                            |
 | 5     | Page participation                   | À valider                            | décrite selon le déroulé réel (don de sang à l'EFS, fonds de tube, livret, entretien, sans prélèvement supplémentaire ni inscription) ; bouton « Trouver une collecte » ; dates de collecte toujours fictives : `npm run collectes` les met à jour depuis `data/collectes.csv` (vraies dates à fournir) ; à relire par l'EFS et le DPO ; « pseudonymisation » au lieu d'« anonymisation » |
@@ -298,7 +298,7 @@ Impact visuel : aucun.
 
 **Objectif :** rendre les textes lisibles par un public non spécialiste (phrases plus courtes, terme technique expliqué à sa première apparition), sans changer le fond scientifique ni promettre de bénéfice médical.
 
-État (16 octobre 2026) : le bloc des chiffres clés et les sections `hero`, `probleme`, `change`, `carrefour`, `methode`, `outils` et `equipe` de `index.html`, et `partenariat` de `participer.html`, ont été reformulées (PR 61, 62 et 63, puis le bloc des chiffres clés). Les reformulations, définitions comprises, ont été relues et validées par l'équipe scientifique. Le site a été essayé sur Safari et sur téléphone sans problème (avant l'ajout du repère de carte, étape 12) ; Firefox n'a pas été testé.
+État (16 octobre 2026) : le bloc des chiffres clés et les sections `hero`, `probleme`, `change`, `carrefour`, `methode`, `outils` et `equipe` de `index.html`, et `partenariat` de `participer.html`, ont été reformulées (PR 61, 62 et 63, puis le bloc des chiffres clés). Les reformulations, définitions comprises, ont été relues et validées par l'équipe scientifique. Le site a été essayé sur Safari et sur téléphone sans problème (avant l'ajout du repère de carte, étape 12) ; Firefox n'a pas été testé. Le 19 octobre, les chiffres clés et la méthode ont été mis au futur : les 2 500 analyses sur puce SNP, les 100 familles et les 350 génomes (WGS) sont à réaliser, pas faits.
 
 Règles retenues :
 
@@ -311,7 +311,7 @@ Mesure indicative : formule de Kandel et Moles adaptée au français, comptage d
 
 Reste à traiter :
 
-- chiffres clés : « 350 génomes entiers (WGS) sélectionnés » ne dit pas si ces génomes sont déjà séquencés ; à préciser si c'est le cas ;
+- modules d'aide à l'analyse (« 4 modules », section « Ce que ça permet ») : existent-ils déjà ou sont-ils à développer ? Le texte est à vérifier de la même façon que les chiffres clés ;
 - devise du pied de page (« Le premier référentiel génomique dédié à la population réunionnaise », cinq pages) : « premier » est-il établi ? ;
 - « Zarabe / Gujarati » dans la légende de l'anneau : explication à fournir ;
 - pages légales : registre juridique, validation par le DPO ; cohérence de la pseudonymisation avec `partenariat`.
@@ -387,7 +387,6 @@ git push origin correction-etape-1-js
 - Niveau de formulation accepté par la communication institutionnelle.
 - Relecture par l'EFS et le DPO de la description du consentement sur la page participation (fonds de tube, livret, entretien, « sans prélèvement supplémentaire », « sans inscription »).
 - La devise du pied de page (« Le premier référentiel génomique dédié à la population réunionnaise ») : « premier » est-il établi ?
-- Les 350 génomes (WGS) : déjà séquencés ou à séquencer ?
 - Explication de « Zarabe / Gujarati » dans la légende de l'anneau.
 - Hébergeur et adresse définitive du site.
 - Coordonnées du DPO, éditeur et directeur de la publication, bases légales et durées de conservation des e-mails reçus.
