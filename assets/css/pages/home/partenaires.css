@@ -81,6 +81,13 @@
   --logo-h: 88px;
 }
 
+/* Logo très large (environ 4,8 fois plus large que haut) : il se règle sur sa largeur, que la carte limite. */
+.partenaires-logo-universite {
+  --logo-w: 168px;
+  width: min(calc(var(--logo-w) * var(--scale-partner-logo)), 100%);
+  height: auto;
+}
+
 .partenaires-logo-link:hover,
 .partenaires-pill:hover {
   background: var(--teal-light-10);
