@@ -55,7 +55,7 @@ lors de l'éclatement des media queries).
 
 ## Espacements responsives (CSS-06)
 
-Les espacements qui changent sous 900 px sont des jetons par rôle (`--space-gutter`, `--space-section-y`, `--space-columns`, `--space-steps`, `--space-nav-y`, `--space-footer-y`, `--space-stats-y`, `--space-cell-x` : marge latérale des cellules du tableau des collectes, `--space-links` : écart entre les liens du pied de page, `--space-map-link` : diamètre du lien rond « carte » du tableau des collectes), redéfinis dans un seul bloc `@media` en fin de `tokens.css`. Les composants n'ont plus de media query d'espacement ; les leurs ne changent que la mise en page (colonnes, affichage).
+Les espacements qui changent sous 900 px sont des jetons par rôle (`--space-gutter`, `--space-section-y`, `--space-columns`, `--space-steps`, `--space-nav-y`, `--space-footer-y`, `--space-stats-y`, `--space-cell-x` : marge latérale des cellules du tableau des collectes, `--space-links` : écart entre les liens du pied de page, `--space-map-link` : diamètre du lien rond « carte » du tableau des collectes, `--space-partners-gap` : écart entre les cartes des partenaires ; deux jetons voisins, `--size-partner-card` (hauteur minimale d'une carte de partenaire) et `--scale-partner-logo` (échelle des logos), sont aussi redéfinis sous 900 px), redéfinis dans un seul bloc `@media` en fin de `tokens.css`. Les composants n'ont plus de media query d'espacement ; les leurs ne changent que la mise en page (colonnes, affichage).
 
 ## Échelle d'opacité (CSS-14)
 

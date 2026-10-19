@@ -1,12 +1,15 @@
 /* ============================================================
    assets/css/pages/home/partenaires.css
-   Rôle : liste des partenaires (logos et étiquettes), en rangée.
+   Rôle : liste des partenaires, en cartes blanches (logo ou nom).
    Pages concernées : index.html.
    ============================================================ */
 
 /* ── PARTENAIRES ──
-   Liste en rangée (.partenaires-list) : une étiquette (.partenaires-pill) ou un logo par entrée. Les logos (.partenaires-logo) sont atténués au repos et
-   reprennent leur pleine opacité au survol de leur lien.
+   Grille de cartes (.partenaires-list) : une carte par partenaire, un logo (.partenaires-logo) ou un nom
+   (.partenaires-pill). Deux colonnes sous 900 px. La carte d'un lien (l'EFS) est cliquable en entier.
+   Les logos n'ont pas le même cadre ni la même densité : leur hauteur (--logo-h) est choisie pour que leur
+   surface visible paraisse équivalente (disque de l'EFS, logo carré et aéré du CRB, logo large de POPgen).
+   --scale-partner-logo les réduit sur téléphone.
 */
 
 .partenaires-title {
@@ -20,54 +23,66 @@
 }
 
 .partenaires-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-partners-gap);
+}
+
+@media (max-width: 900px) {
+  .partenaires-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.partenaires-list > li {
   display: flex;
-  flex-wrap: wrap;
+}
+
+.partenaires-pill,
+.partenaires-logo-link {
+  display: flex;
+  flex: 1;
   align-items: center;
-  gap: var(--space-3);
+  justify-content: center;
+  min-height: var(--size-partner-card);
+  padding: var(--space-4);
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--duration-1),
+    background var(--duration-1);
 }
 
 .partenaires-pill {
-  padding: var(--space-2) var(--space-4);
   font-family: var(--f-ui);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   font-weight: var(--weight-semibold);
+  text-align: center;
   color: var(--navy);
-  background: var(--sand);
-  border: 1px solid transparent;
-  border-radius: var(--radius-pill);
-  transition:
-    border-color var(--duration-1),
-    background var(--duration-1);
 }
 
-.partenaires-logo-link {
-  display: flex;
-  align-items: center;
-  padding: var(--space-2) var(--space-3);
-  background: var(--sand);
-  border: 1px solid transparent;
-  border-radius: var(--radius-pill);
-  transition:
-    border-color var(--duration-1),
-    background var(--duration-1);
-}
-
-.partenaires-logo-link .partenaires-logo {
+.partenaires-logo {
   display: block;
-  opacity: 0.75;
-  transition: opacity var(--duration-1);
+  width: auto;
+  max-width: 100%;
+  height: calc(var(--logo-h) * var(--scale-partner-logo));
 }
 
-.partenaires-logo-link:hover .partenaires-logo {
-  opacity: 1;
+.partenaires-logo-efs {
+  --logo-h: 80px;
 }
 
-.partenaires-logo-link:hover {
-  background: var(--teal-mid);
-  border-color: var(--teal);
+.partenaires-logo-popgen {
+  --logo-h: 54px;
 }
 
+.partenaires-logo-crb {
+  --logo-h: 88px;
+}
+
+.partenaires-logo-link:hover,
 .partenaires-pill:hover {
-  background: var(--teal-mid);
+  background: var(--teal-light-10);
   border-color: var(--teal);
 }
